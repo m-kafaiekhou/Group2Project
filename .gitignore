@@ -20,6 +20,7 @@ build/
 # Local development
 venv/
 .env
+.venv
 
 # Frontend
 node_modules/
