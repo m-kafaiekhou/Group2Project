@@ -1,11 +1,11 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+
 
 # Create your models here.
 
 
 class Order(models.Model):
-    phone_number = PhoneNumberField()
+    phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(max_length=2, default=None)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
