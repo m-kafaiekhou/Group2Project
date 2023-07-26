@@ -13,11 +13,11 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     quantity = models.IntegerField(max_length=4)
-    order_id = models.ForeignKey(
+    order_fk = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
     )
-    cafeitem_id = models.ForeignKey(
+    cafeitem_fk = models.ForeignKey(
         "CafeItem",
         on_delete=models.CASCADE,
     )
@@ -31,7 +31,7 @@ class CafeItem(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    sub_category_id = models.ForeignKey(
+    sub_category_fk = models.ForeignKey(
         "SubCategory", on_delete=models.SET_NULL, null=True
     )
 
@@ -53,17 +53,21 @@ class Review(models.Model):
     )
     rating = models.IntegerField(choices=RATING_COICES, default=HIGH)
 
-    cafeitem_id = models.ForeignKey(
+    cafeitem_fk = models.ForeignKey(
         CafeItem,
         on_delete=models.CASCADE,
     )
 
 
-class SubCategory(models.Model):
-    name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
-
-
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="parent_category", blank=True, null=True)
+
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
+    parent_dategory_fk = models.ForeignKey(
+        ParentCategory,
+        on_delete=models.CASCADE,
+    )
