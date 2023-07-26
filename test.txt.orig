@@ -1,0 +1,7 @@
+test
+test2
+<<<<<<< HEAD
+=======
+test3
+>>>>>>> feature/test3
+test4
