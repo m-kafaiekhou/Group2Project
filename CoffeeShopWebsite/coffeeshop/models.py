@@ -31,6 +31,10 @@ class CafeItem(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    sub_category_id = models.ForeignKey(
+        "SubCategory", on_delete=models.SET_NULL, null=True
+    )
+
 
 class Review(models.Model):
     review = models.CharField(max_length=300)
