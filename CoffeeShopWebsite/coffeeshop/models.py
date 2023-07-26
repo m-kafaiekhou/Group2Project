@@ -49,6 +49,11 @@ class Review(models.Model):
     )
     rating = models.IntegerField(choices=RATING_COICES, default=HIGH)
 
+    cafeitem_id = models.ForeignKey(
+        CafeItem,
+        on_delete=models.CASCADE,
+    )
+
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
