@@ -13,6 +13,11 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     quantity = models.IntegerField(max_length=4)
+    order_id = models.ForeignKey(
+        Order,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
 
 class CafeItem(models.Model):
