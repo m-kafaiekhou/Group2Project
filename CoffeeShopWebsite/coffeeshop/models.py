@@ -1,4 +1,5 @@
 from django.db import models
+from staff.models import Staff
 
 
 # Create your models here.
@@ -9,6 +10,11 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(max_length=2, default=None)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    staff_fk = models.ForeignKey(
+        Staff,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
 
 
 class OrderItem(models.Model):
