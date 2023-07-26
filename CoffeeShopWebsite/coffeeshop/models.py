@@ -18,14 +18,28 @@ class OrderItem(models.Model):
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to="cafe-item/", blank=True, null=True)
+    image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
 
 
 class Review(models.Model):
-    pass
+    review = models.CharField(max_length=300)
+
+    VERY_LOW = 1
+    LOW = 2
+    MIDDLE = 3
+    HIGH = 4
+    VERY_HIGH = 5
+    RATING_COICES = (
+        (VERY_LOW, 1),
+        (LOW, 2),
+        (MIDDLE, 3),
+        (HIGH, 4),
+        (VERY_HIGH, 5),
+    )
+    rating = models.IntegerField(choices=RATING_COICES, default=HIGH)
 
 
 class SubCategory(models.Model):
