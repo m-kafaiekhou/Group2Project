@@ -1,7 +1,10 @@
 test
 test2
-<<<<<<< HEAD
-=======
 test3
->>>>>>> feature/test3
 test4
+<<<<<<< HEAD
+test6
+=======
+test5
+>>>>>>> feature/test5
+test7
