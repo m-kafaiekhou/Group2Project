@@ -43,8 +43,10 @@ class Review(models.Model):
 
 
 class SubCategory(models.Model):
-    pass
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
 
 
 class ParentCategory(models.Model):
-    pass
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="parent_category", blank=True, null=True)
