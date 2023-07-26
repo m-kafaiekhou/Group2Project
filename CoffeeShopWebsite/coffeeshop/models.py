@@ -15,8 +15,11 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(max_length=4)
     order_id = models.ForeignKey(
         Order,
-        on_delete=models.SET_NULL,
-        null=True,
+        on_delete=models.CASCADE,
+    )
+    cafeitem_id = models.ForeignKey(
+        "CafeItem",
+        on_delete=models.CASCADE,
     )
 
 
