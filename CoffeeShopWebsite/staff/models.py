@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
-class NewUser(AbstractBaseUser, PermissionsMixin):
+class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     _REGEX = r'09(\d{9})$'
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
 
