@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.staff.StaffConfig",
-    "django.coffeeshop.CoffeeshopConfig",
+    "staff",
+    "coffeeshop",
 ]
 
 MIDDLEWARE = [
@@ -127,3 +127,14 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# AUTHENTICATION
+AUTH_USER_MODEL = 'staff.CustomUserModel'
+
+AUTHENTICATION_BACKENDS = [
+    'staff.backends.CustomUserBackend',
+]
+
+LOGIN_REDIRECT_URL = '/admin/'
+
+

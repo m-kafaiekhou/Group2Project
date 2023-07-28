@@ -1,5 +1,5 @@
 from django.db import models
-from staff.models import Staff
+from staff.models import CustomUserModel
 
 
 # Create your models here.
@@ -8,17 +8,17 @@ from staff.models import Staff
 class Order(models.Model):
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
-    table_number = models.IntegerField(max_length=2, default=None)
+    table_number = models.IntegerField(default=None)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     staff_fk = models.ForeignKey(
-        Staff,
+        CustomUserModel,
         on_delete=models.SET_NULL,
         null=True,
     )
 
 
 class OrderItem(models.Model):
-    quantity = models.IntegerField(max_length=4)
+    quantity = models.IntegerField()
     order_fk = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
