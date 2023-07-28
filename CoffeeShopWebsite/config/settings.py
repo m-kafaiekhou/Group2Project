@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'staff',
+    "staff",
     "coffeeshop",
 ]
 
@@ -134,5 +134,7 @@ AUTH_USER_MODEL = 'staff.CustomUserModel'
 AUTHENTICATION_BACKENDS = [
     'staff.backends.CustomUserBackend',
 ]
+
+LOGIN_REDIRECT_URL = '/admin/'
 
 
