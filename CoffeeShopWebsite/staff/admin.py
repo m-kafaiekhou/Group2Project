@@ -9,7 +9,7 @@ class UserAdminConfig(UserAdmin):
     search_fields = ('phone_number', 'last_name', 'first_name',)
     list_filter = ('phone_number', 'last_name', 'first_name', 'is_active', 'is_staff')
     ordering = ('-date_added',)
-    list_display = ('phone_number', 'last_name', 'first_name', 'is_active', 'is_staff')
+    list_display = ('phone_number', 'last_name', 'first_name', 'is_active', 'is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('phone_number', 'last_name', 'first_name',)}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
