@@ -15,12 +15,12 @@
 - This is a Django Fullstack Project and it features a website to order coffee in a coffee shop in tehran. It uses django version 4.2.3 to bring all the new features into the code. We used all the knowledge we gained so far to code a website for the manager who tasked us with this group project. the project tasks start start with a general knowledge over the project structure. As we learned from the details, first we needed to draw an ERD then build the base of the project using django frame-work from there we had to choose our site interface template to style the site. once all of these steps were done we could finaly start the main coding of the app. We bring to you our best, using all we learned from Maktab 98.
 
 ## Project Sprints
-- With all said and done we arrive at the progress of our project >>>
+With all said and done we now start the story of our progress in the project>>>
 
 ### Sprint 1 Start with Basics & Build Design
 
 #### ERD(Entity Relationship Diagram)
-- Everything starts with a good planning, in our case: we programmers need to draw the ERD for our project so we could configure the base build of our database witch alows us to build upon it. you can see our team effort below.
+Everything starts with a good planning, in our case: we programmers need to draw the ERD for our project so we could configure the base build of our database witch alows us to build upon it. you can see our team effort below. first step so chill...
 
 ![erd](ERD(v5).png)
 
@@ -31,15 +31,15 @@
 ![template](Screen1.png)
 
 
-- but as you can see we need to customise this template since it is actually a food bar site. the reason why we chose this is It's simplicity and dominant beauty. Chill, this is going to work. (^-^)
+But as you just realized we need to customize this template since it is actually a food bar site. the reason why we chose this is It's simplicity and dominant beauty. Chill, this is going to work. (^-^)
 
 
 #### Project Setup
-- In this step the setup for the project is configured and we begin to get into code. and the starting apps are staff & coffeeshop. yay, hooray.
+In this step the setup for the project is configured and we begin to get into code. and the starting apps are staff & coffeeshop. yay, hooray.
 
 
 #### Git Init
-- The git repo was initiated and the files of the project were pushed on the github.
+The git repo was initiated and the files of the project were pushed on the github.
 
 #### Basic Models 
 The first build of models in the project are done. using django models module, the basic models that got accepted by our teachers were: 
@@ -68,9 +68,10 @@ It was time to finally bring the site up with some styles in it. So we thought t
 - footer.html
 
 #### Gathering Data for the Website
-We just realized that we have no idea about what we are going to put on our cafe website.< we are programmers not coffee makers >. So the solution was the answer we always get from our teachers: Go search for your self (0_0).
+We just realized that we have no idea about what we are going to put on our cafe website.< we are programmers not coffee makers >. So the solution was the answer we always get from our teachers: Go search for it yourself (0_0).
 
-And with this last step our journy for the first sprint came to an end.(More coming right up...)
+And with this last step the first sprint came to an end.(More coming right up >>>) 
+Our journy for the coffee continues...
 
 
 
