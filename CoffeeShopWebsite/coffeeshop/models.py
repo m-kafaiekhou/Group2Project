@@ -41,6 +41,12 @@ class CafeItem(models.Model):
         "SubCategory", on_delete=models.SET_NULL, null=True
     )
 
+    @property
+    def item_rate(self):
+        reviews = self.review_set
+        rates = [rev.rating for rev in reviews]
+        return sum(rates) / len(rates)
+
 
 class Review(models.Model):
     review = models.CharField(max_length=300)
