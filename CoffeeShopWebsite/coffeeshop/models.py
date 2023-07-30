@@ -34,7 +34,7 @@ class CafeItem(models.Model):
     description = models.CharField(max_length=150)
     image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
-    price = models.IntegerField(max_length=6)
+    price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 
     sub_category_fk = models.ForeignKey(
