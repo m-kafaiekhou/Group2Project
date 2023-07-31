@@ -1,14 +1,20 @@
 from django.shortcuts import render
+from .models import Order
 
 # Create your views here.
 
 
-def add_to_cart(response, value: list[dict(str, int)]) -> None:
+def add_to_cart(response, item_pk: int, quantity: int) -> None:
     """
-    This function sets a cookie and follows cart behavior.
+    sets a cookie to add items to shopping cart.
 
-    value is a list of dictionaries:
-    [{menu_item:quantity}, ...]
+    item_pk and quantity turn into a list of dictionaries which is the
+    value of the cart cookie.
+    value = [{menu_item:quantity}, ...]
     """
+    value = list()
+    value.append({item_pk: quantity})
+
+    str_value = str(value)
     max_age = 7 * 24 * 60 * 60
-    response.set_cookie("cart", value, max_age=max_age)
+    response.set_cookie("cart", str_value, max_age=max_age)
