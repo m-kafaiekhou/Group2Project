@@ -34,3 +34,20 @@ def remove_from_cart(request, response, item_pk: int) -> None:
         str_value = str(value)
         max_age = 7 * 24 * 60 * 60
         response.set_cookie("cart", str_value, max_age=max_age)
+
+
+def update_cart(request, response, item_pk: int, quantity: int) -> None:
+    """
+    updates the quantity of each item in the shopping cart.
+    """
+    if request.COOKIES.get("cart"):
+        v = request.COOKIES.get("cart")
+        value = eval(v)
+        for dic in value:
+            if dic[item_pk]:
+                value.update({item_pk: quantity})
+        delete_cart(request, response)
+
+        str_value = str(value)
+        max_age = 7 * 24 * 60 * 60
+        response.set_cookie("cart", str_value, max_age=max_age)
