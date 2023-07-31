@@ -4,6 +4,7 @@ from .models import Order
 # Create your views here.
 
 
+# First version for cookies and sessions without testing them.
 def add_to_cart(response, item_pk: int, quantity: int) -> None:
     """
     sets a cookie to add items to shopping cart.
@@ -66,8 +67,12 @@ def create_session(request, order_id: int, phone_number: int) -> None:
 def access_session(request):
     if "last_order_id" in request.session:
         order_id = request.session.get("last_order_id")
-        order = Order.objects.get(pk=order_id)
+        last_order = Order.objects.get(pk=order_id)
+        context = {"last_order": last_order}
+        return render(request, "", context)
 
     if "phone_number" in request.session:
         phone_number = request.session.get("phone_number")
-        orders = Order.objects.filter(pk=phone_number)
+        orders = Order.objects.filter(phone_number=phone_number)
+        context = {"order_history": orders}
+        return render(request, "", context)
