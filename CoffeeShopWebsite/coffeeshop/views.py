@@ -56,3 +56,8 @@ def update_cart(request, response, item_pk: int, quantity: int) -> None:
 def delete_cart(request, response) -> None:
     if request.COOKIES.get("cart"):
         response.delete_cookie("cart")
+
+
+def create_session(request, order_id: int, phone_number: int) -> None:
+    request.session["last_order_id"] = order_id
+    request.session["phone_number"] = phone_number
