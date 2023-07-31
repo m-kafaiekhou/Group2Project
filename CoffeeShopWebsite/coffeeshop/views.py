@@ -61,3 +61,13 @@ def delete_cart(request, response) -> None:
 def create_session(request, order_id: int, phone_number: int) -> None:
     request.session["last_order_id"] = order_id
     request.session["phone_number"] = phone_number
+
+
+def access_session(request):
+    if "last_order_id" in request.session:
+        order_id = request.session.get("last_order_id")
+        order = Order.objects.get(pk=order_id)
+
+    if "phone_number" in request.session:
+        phone_number = request.session.get("phone_number")
+        orders = Order.objects.filter(pk=phone_number)
