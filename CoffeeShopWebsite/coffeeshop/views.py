@@ -51,3 +51,8 @@ def update_cart(request, response, item_pk: int, quantity: int) -> None:
         str_value = str(value)
         max_age = 7 * 24 * 60 * 60
         response.set_cookie("cart", str_value, max_age=max_age)
+
+
+def delete_cart(request, response) -> None:
+    if request.COOKIES.get("cart"):
+        response.delete_cookie("cart")
