@@ -3,13 +3,20 @@ from django.db.models import Q
 from .models import CafeItem
 from .search import SearchMenu
 
-# Create your views here.
-def menu(request) :
+
+def hemo_page(request):
+    top_rated_items = []
+    return render(request, "coffeeshop/home.html", {"top_rated_items": top_rated_items})
+
+
+def menu(request):
     cafeitem = CafeItem.objects.all()
     form = SearchMenu()
-    if 'search' in request.GET:
+    if "search" in request.GET:
         form = SearchMenu(request.GET)
         if form.is_valid():
-            cd = form.cleaned_data['search']
-            cafeitem = cafeitem.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
-    return render(request, 'menu/menu.html', {'cafeitem':cafeitem, 'form' : form})
+            cd = form.cleaned_data["search"]
+            cafeitem = cafeitem.filter(
+                Q(name__icontains=cd) | Q(description__icontains=cd)
+            )
+    return render(request, "menu/menu.html", {"cafeitem": cafeitem, "form": form})
