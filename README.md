@@ -1,5 +1,5 @@
 # 🌟 Coffee Shop RPG ☕ 🌟
-- Welcome to our humble coffee shop where we serve the finest coffee and cafe drinks in the world. For our coffee beans we use only the best offerd by coffee farmers around the world. Ladies and Gentlemen please enjoy your day with our special made coffee to your hearts desire. It needs to be said that we work for customer satisfaction and our staff are trained to serve you the best taste with the best manners. Now, The journey begins 🪶>>>
+Welcome to our humble coffee shop where we serve the finest coffee and cafe drinks in the world. For our coffee beans we use only the best offerd by coffee farmers around the world. Ladies and Gentlemen please enjoy your day with our special made coffee to your hearts desire. It needs to be said that we work for customer satisfaction and our staff are trained to serve you the best taste with the best manners. Now, The journey begins 🪶>>>
 
 ### Maktab 98 🚀
 
@@ -12,7 +12,7 @@
 ### Developer: Mohammad Ali Soltan Hosseini
 
 ## Project Details 💻 👏	
-- This is a Django Fullstack Project and it features a website to order coffee in a coffee shop in tehran city(The Quest city). It uses django version 4.2.3 (The God of Frameworks) to bring all the new features into the code(The Pain and Suffering of Programmers). We used all the knowledge we gained so far (XP Gained) to code a website for the wise manager(The Demon Lord) who tasked us with this group project(Literally the Quest). the project tasks start with a general knowledge over the project structure(Buying Wepons and Healing Potions). As we learned from the details, first we needed to draw an ERD(World Map) then build the base of the project using django frame-work from there we had to choose our site interface template to style the site(Choose the way to procede with your quest). once all of these steps were done we could finaly start the main coding of the app. We bring to you our best, using all we learned from Maktab 98.
+This is a Django Fullstack Project and it features a website to order coffee in a coffee shop in tehran city(The Quest city). It uses django version 4.2.3 (The God of Frameworks) to bring all the new features into the code(The Pain and Suffering of Programmers). We used all the knowledge we gained so far (XP Gained) to code a website for the wise manager(The Demon Lord) who tasked us with this group project(Literally the Quest). the project tasks start with a general knowledge over the project structure(Buying Wepons and Healing Potions). As we learned from the details, first we needed to draw an ERD(World Map) then build the base of the project using django frame-work from there we had to choose our site interface template to style the site(Choose the way to procede with your quest). once all of these steps were done we could finaly start the main coding of the app. We bring to you our best, using all we learned from Maktab 98.
 
 ## Project Sprints
 With all said and done we now start the story of our progress in the project >>>
@@ -26,7 +26,7 @@ Everything starts with a good planning, in our case: we programmers need to draw
 
 
 #### Template 
-- Choosing a good template was a group effort as well, there were so many obstacles but we could overcome them and choose a good template.
+Choosing a good template was a group effort as well, there were so many obstacles but we could overcome them and choose a good template.
 
 <img width="100%" src="Screen1.png">
 
