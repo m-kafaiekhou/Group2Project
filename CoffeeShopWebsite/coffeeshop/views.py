@@ -5,6 +5,7 @@ from .models import Order
 
 
 # First version for cookies and sessions without testing them.
+# ----------------------------------------------------------------------------------------------------------------------
 def add_to_cart(response, item_pk: int, quantity: int) -> None:
     """
     sets a cookie to add items to shopping cart.
@@ -88,3 +89,6 @@ def access_session(request):
     else:
         context = {}
         return render(request, "", context)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
