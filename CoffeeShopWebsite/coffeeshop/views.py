@@ -9,7 +9,7 @@ from .search import SearchMenu
 
 # First version for cookies and sessions without testing them.
 # ----------------------------------------------------------------------------------------------------------------------
-def add_to_cart(response, item_pk: int, quantity: int) -> None:
+def add_to_cart(request, response, item_pk: int, quantity: int) -> None:
     """
     sets a cookie to add items to shopping cart.
 
@@ -17,12 +17,21 @@ def add_to_cart(response, item_pk: int, quantity: int) -> None:
     value of the cart cookie.
     value = [{menu_item:quantity}, ...]
     """
-    value = list()
-    value.append({item_pk: quantity})
+    if not request.COOKIES.get("cart"):
+        value = list()
+        value.append({item_pk: quantity})
 
-    str_value = f"{value}"
-    max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
-    response.set_cookie("cart", str_value, max_age=max_age)
+        str_value = f"{value}"
+        max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
+        response.set_cookie("cart", str_value, max_age=max_age)
+    else:
+        item_dict = {item_pk: quantity}
+        v = request.COOKIES.get("cart")
+        value = eval(v)
+        value.append(item_dict)
+        str_value = f"{value}"
+        max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
+        response.set_cookie("cart", str_value, max_age=max_age)
 
 
 def remove_from_cart(request, response, item_pk: int) -> None:
