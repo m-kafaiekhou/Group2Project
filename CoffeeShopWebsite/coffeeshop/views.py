@@ -6,9 +6,6 @@ from .models import Order
 
 # Create your views here.
 
-def hemo_page(request):
-    top_rated_items = []
-    return render(request, "coffeeshop/home.html", {"top_rated_items": top_rated_items})
 
 # First version for cookies and sessions without testing them.
 # ----------------------------------------------------------------------------------------------------------------------
@@ -98,6 +95,13 @@ def access_session(request):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
+
+
+def home_page(request):
+    top_rated_items = []
+    return render(request, "coffeeshop/home.html", {"top_rated_items": top_rated_items})
+
+
 def menu(request):
     cafeitem = CafeItem.objects.all()
     form = SearchMenu()
