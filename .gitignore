@@ -39,5 +39,6 @@ package-lock.json
 *.sqlite
 *.sqlite3
 *.bak
+*.orig
 
 *ssh*
