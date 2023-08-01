@@ -18,9 +18,7 @@ def add_to_cart(response, item_pk: int, quantity: int) -> None:
     value = [{menu_item:quantity}, ...]
     """
     value = list()
-    str_pk = str(item_pk)
-    str_q = str(quantity)
-    value.append({str_pk: str_q})
+    value.append({item_pk: quantity})
 
     str_value = f"{value}"
     max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
@@ -31,12 +29,11 @@ def remove_from_cart(request, response, item_pk: int) -> None:
     """
     remove an item from the shopping cart, completely.
     """
-    str_pk = str(item_pk)
     if request.COOKIES.get("cart"):
         v = request.COOKIES.get("cart")
         value = eval(v)
         for dic in value:
-            value.remove(dic[str_pk])
+            value.remove(dic[item_pk])
         delete_cart(request, response)
 
         str_value = f"{value}"
@@ -48,14 +45,13 @@ def update_cart(request, response, item_pk: int, quantity: int) -> None:
     """
     updates the quantity of each item in the shopping cart.
     """
-    str_pk = str(item_pk)
-    str_q = str(quantity)
+
     if request.COOKIES.get("cart"):
         v = request.COOKIES.get("cart")
         value = eval(v)
         for dic in value:
-            if dic[str_pk]:
-                value.update({str_pk: str_q})
+            if dic[item_pk]:
+                value.update({item_pk: quantity})
         delete_cart(request, response)
 
         str_value = f"{value}"
