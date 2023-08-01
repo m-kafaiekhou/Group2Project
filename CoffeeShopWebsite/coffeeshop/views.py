@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import CafeItem
+from .models import CafeItem, Order, OrderItem, Review, ParentCategory, SubCategory
 from .search import SearchMenu
-from .models import Order
+
 
 # Create your views here.
 
