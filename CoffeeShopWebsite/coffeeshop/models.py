@@ -10,7 +10,7 @@ class Order(models.Model):
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    total_price = models.IntegerField()
     staff_fk = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
@@ -33,9 +33,9 @@ class OrderItem(models.Model):
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
+    image = models.ImageField(upload_to="cafe_item/", default="preview-page0.jpg")
     is_available = models.BooleanField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 
     sub_category_fk = models.ForeignKey(
@@ -80,12 +80,12 @@ class Review(models.Model):
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="parent_category", blank=True, null=True)
+    image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
 
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
+    image = models.ImageField(upload_to="sub_category", default="preview-page0.jpg")
     parent_dategory_fk = models.ForeignKey(
         ParentCategory,
         on_delete=models.CASCADE,
