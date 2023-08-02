@@ -56,12 +56,13 @@ class CafeItem(models.Model):
 
     @classmethod
     def top_rated_items(cls):
-        CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
-            "-item_rate"
-        )[:3]
+        return CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
+                "-item_rate"
+            )[:3]
 
     def category_name(self):
         return self.sub_category_fk.parent_dategory_fk
+
 
 class Review(models.Model):
     review = models.CharField(max_length=300)
