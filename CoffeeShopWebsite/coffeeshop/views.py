@@ -121,7 +121,6 @@ def menu_search(request):
 
 
 def cart_view(request):
-    request.COOKIES['cart'] = '[{"1":2}, {"2":3}]'
     cart, total = get_cart(request)
     if cart:
         return render(request, 'coffeeshop/cart.html', context={'items': cart, 'total': total})
@@ -154,6 +153,14 @@ def checkout_view(request):
 
 
 def menu(request):
+    item_pk = request.GET.get('pk', None)
+    check = None
+    if item_pk:
+        check = 1
     cafeitem = CafeItem.objects.all()
     categories = ParentCategory.objects.all()
-    return render(request, "coffeeshop/menu.html", {'cafeitem':cafeitem, 'categories': categories})
+    response = render(request, "coffeeshop/menu.html", {'cafeitem':cafeitem, 'categories': categories})
+
+    if check:
+        add_to_cart(request, response, item_pk)
+    return response
