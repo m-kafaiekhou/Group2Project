@@ -1,7 +1,7 @@
 {% load static %}
 
 <!doctype html>
-<html lang="en">
+<html lang="fa">
 
 <head>
 	<!-- Required meta tags -->
@@ -36,10 +36,10 @@
 				<a href="{% url 'home' %}" style="font-family: yekan;">خانه</a>
 			</li>
 			<li>
-				<a href="#" style="font-family: yekan;">درباره ما</a>
+				<a href="{% url 'cart' %}" style="font-family: yekan;">سبد خرید</a>
 			</li>
 			<li>
-				<a href="#" style="font-family: yekan;">منو</a>
+				<a href="{% url 'menu' %}" style="font-family: yekan;">منو</a>
 			</li>
 			<li>
 				<a href="#" style="font-family: yekan;">رزرو میز</a>
@@ -98,10 +98,10 @@
 								<a class="nav-link" href="{% url 'home' %}" style="text-align: center; font-family: yekan;">خانه</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" style="text-align: center; font-family: yekan;">درباره ما</a>
+								<a class="nav-link" href="{% url 'cart' %}" style="text-align: center; font-family: yekan;">سبد خرید</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" style="text-align: center; font-family: yekan;">منو</a>
+								<a class="nav-link" href="{% url 'menu' %}" style="text-align: center; font-family: yekan;">منو</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#" style="text-align: center; font-family: yekan;">رزرو میز</a>
@@ -141,7 +141,7 @@
 						<h1 style="text-align: center; z-index: 1; font-family: yekan; font-weight: bold;">کافه گروه۲</h1>
 						<br>
 						<p style="text-align: center; z-index: 1; font-family: yekan;">تجربه رهایی و فراغتی دلنشین از روزمرگی ها</p>
-						<a class="main_btn" href="#" style="font-family: yekan;">مشاهده منو</a>
+						<a class="main_btn" href="{% url 'menu' %}" style="font-family: yekan;">مشاهده منو</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
