@@ -144,7 +144,7 @@ def get_cart(request):
             total += obj.price * quant
         return items, total
 
-    return None
+    return None, None
 
 
 def checkout_view(request):
