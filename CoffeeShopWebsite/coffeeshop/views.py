@@ -9,7 +9,7 @@ import json
 
 # First version for cookies and sessions without testing them.
 # ----------------------------------------------------------------------------------------------------------------------
-def add_to_cart(request, response, item_pk: int, quantity: int) -> None:
+def add_to_cart(request, response, item_pk: int) -> None:
     """
     sets a cookie to add items to shopping cart.
 
@@ -17,19 +17,22 @@ def add_to_cart(request, response, item_pk: int, quantity: int) -> None:
     value of the cart cookie.
     value = [{menu_item:quantity}, ...]
     """
-    if not request.COOKIES.get("cart"):
+    cart = request.COOKIES.get("cart", None)
+    if not cart:
         value = list()
-        value.append({item_pk: quantity})
-
+        value.append({item_pk: 1})
         str_value = f"{value}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
     else:
-        item_dict = {item_pk: quantity}
-        v = request.COOKIES.get("cart")
-        value = eval(v)
-        value.append(item_dict)
-        str_value = f"{value}"
+        cart = json.loads(cart)
+        for dic in cart:
+            for key, val in dic.items():
+                if key == item_pk:
+                    old_val = val
+        item_dict = {item_pk: old_val+1}
+        cart.append(item_dict)
+        str_value = f"{cart}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
 
