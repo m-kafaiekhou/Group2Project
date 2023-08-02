@@ -92,7 +92,7 @@ class ParentCategory(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="sub_category", default="preview-page0.jpg")
-    parent_dategory_fk = models.ForeignKey(
+    parent_category_fk = models.ForeignKey(
         ParentCategory,
         on_delete=models.CASCADE,
     )
