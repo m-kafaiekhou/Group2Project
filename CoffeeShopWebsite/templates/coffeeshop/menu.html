@@ -22,7 +22,7 @@
       <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     {% endblock %}
     
-   {% block content %}
+    {% block content %}
       
       <!--================Header Menu Area =================-->
 
@@ -59,9 +59,11 @@
             {% if  cat.name == item.category_name.name %}
                   <li>
                     <h4>{{item.name}}
+                      
                       <span>${{item.price}}</span>
                     </h4>
                     <p>{{item.description}}</p>
+                    <a class="btn btn-primary" href="?pk={{ item.id }}">add to cart</a>
                   </li>
                   {% endif %}
                   {% endfor %}
