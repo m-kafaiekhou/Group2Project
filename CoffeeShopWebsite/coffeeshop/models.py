@@ -9,7 +9,7 @@ class Order(models.Model):
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    total_price = models.IntegerField()
     staff_fk = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
@@ -34,7 +34,7 @@ class CafeItem(models.Model):
     description = models.CharField(max_length=150)
     image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 
     sub_category_fk = models.ForeignKey(
