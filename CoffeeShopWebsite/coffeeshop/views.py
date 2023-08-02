@@ -103,7 +103,7 @@ def access_session(request):
 
 
 def home_page(request):
-    top_rated_items = []
+    top_rated_items = CafeItem.top_rated_items()
     return render(request, "coffeeshop/home.html", {"top_rated_items": top_rated_items})
 
 
