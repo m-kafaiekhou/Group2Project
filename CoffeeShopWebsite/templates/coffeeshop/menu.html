@@ -1,3 +1,4 @@
+  {% load static %}
     <!-- <form action="" method="get">
         {{ form }}
         <input type="submit" value="search">
@@ -150,263 +151,25 @@
             </div>
           </div>
           <div class="row menu_inner">
+            {% for cat in  categories %}
             <div class="col-md-12 col-lg-10 col-xl-6">
               <div class="menu_list">
-                <div ><h2>Espresso</h2></div>
+                <div ><h2>{{cat.name}}</h2></div>
                 <ul class="list">
+            {% for item in cafeitem %}
+            {% if  cat.name == item.category_name.name %}
                   <li>
-                    <h4>Espresso
-                      <span>$5.00</span>
+                    <h4>{{item.name}}
+                      <span>${{item.price}}</span>
                     </h4>
-                    <p>solo/doppio</p>
+                    <p>{{item.description}}</p>
                   </li>
-                  <li>
-                    <h4>Americano
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/espresso</p>
-                  </li>
-                  <li>
-                    <h4>Macchiato
-                      <span>$5.00</span>
-                    </h4>
-                    <p>milk foam/espresso</p>
-                  </li>
-                  <li>
-                    <h4>Latte
-                      <span>$5.00</span>
-                    </h4>
-                    <p>milk foam/streamed milk/espresso</p>
-                  </li>
-                  <li>
-                    <h4>Cappuccino
-                      <span>$5.00</span>
-                    </h4>
-                    <p>foam/milk/espresso</p>
-                  </li>
-                  <li>
-                    <h4>Frappe
-                      <span>$5.00</span>
-                    </h4>
-                    <p>stream milk/ice cream/espresso</p>
-                  </li>
-                                <li>
-                    <h4>Cortado
-                      <span>$5.00</span>
-                    </h4>
-                    <p>stream milk/espresso</p>
-                  </li>
-                                <li>
-                    <h4>Mocha
-                      <span>$5.00</span>
-                    </h4>
-                    <p>milk foam/stream milk/hot chocolate/espresso</p>
-                  </li>
-    
-                            <div><h2>Iced Coffee</h2></div>
-                            <li>
-                    <h4>Iced Latte
-                      <span>$5.00</span>
-                    </h4>
-                    <p>milk foam/milk/espresso/coffee syrup/ice</p>
-                  </li>
-                  <li>
-                    <h4>Iced Mocha
-                      <span>$5.00</span>
-                    </h4>
-                    <p>milk/espresso/coffee syrup/chocolate powder/cream/ice</p>
-                  </li>
-                                <div><h2>Milk Shakes</h2></div>
-                            <li>
-                    <h4>Banana Milk Shakes
-                      <span>$5.00</span>
-                    </h4>
-                    <p>banana/milk/chocolate syrup/banana ice cream/ice</p>
-                  </li>
-                  <li>
-                    <h4>Strawberry Milk Shakes
-                      <span>$5.00</span>
-                    </h4>
-                    <p>strawberry/milk/chocolate syrup/strawberry ice cream/ice</p>
-                  </li>
-                                <li>
-                    <h4>Mango Milk Shakes
-                      <span>$5.00</span>
-                    </h4>
-                    <p>mango/milk/chocolate syrup/mango ice cream/ice</p>
-                  </li>
-                                <li>
-                    <h4>Avocado Milk Shakes
-                      <span>$5.00</span>
-                    </h4>
-                    <p>avocado/milk/chocolate syrup/vanilla ice cream/ice</p>
-                  </li>
-                                <div><h2>Juice</h2></div>
-                            <li>
-                    <h4>Orange Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>orange/ice</p>
-                  </li>
-                  <li>
-                    <h4>Peach Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>peach/water/ice</p>
-                  </li>
-                                <li>
-                    <h4>Pineapple Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>pineapple/water/ice</p>
-                  </li>
-                                <li>
-                    <h4>Apple Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>apple/ice</p>
-                  </li>
-                                <li>
-                    <h4>Watermelon Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>watermelon/ice</p>
-                  </li>
-                                <li>
-                    <h4>Pomegranate Juice
-                      <span>$5.00</span>
-                    </h4>
-                    <p>pomegranate/ice</p>
-                  </li>
-                            </ul>
-              </div>
-            </div>
-    
-            <div class="col-md-12 col-lg-10 col-xl-6">
-              <div class="menu_list pr-0">
-                <div><h2>Tea</h2></div>
-                <ul class="list">
-                  <li>
-                    <h4>Black Tea
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/black tea</p>
-                  </li>
-                  <li>
-                    <h4>White Tea
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/white tea</p>
-                  </li>
-                  <li>
-                    <h4>Matcha Tea
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/Matcha powder</p>
-                  </li>
-                  <li>
-                    <h4>Oolong Tea
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/oolong tea</p>
-                  </li>
-                  <li>
-                    <h4>Masala Chai
-                      <span>$5.00</span>
-                    </h4>
-                    <p>hot water/masala powder</p>
-                  </li>
-                                <div><h2>Iced Tea</h2></div>
-                                <li>
-                    <h4>Iced Lemon
-                      <span>$5.00</span>
-                    </h4>
-                    <p>lemon/water/lemon syrup/ice</p>
-                  </li>
-                  <li>
-                    <h4>Iced Raspberry
-                      <span>$5.00</span>
-                    </h4>
-                    <p>raspberry/water/raspberry syrup/ice</p>
-                  </li>
-                  <li>
-                    <h4>Iced Peach
-                      <span>$5.00</span>
-                    </h4>
-                    <p>peach/water/peach syrup/ice</p>
-                  </li>
-                                <div><h2>Smoothies</h2></div>
-                                <li>
-                    <h4>Strawberry & banana Smoothie
-                      <span>$5.00</span>
-                    </h4>
-                    <p>banana/strawberry/milk/vanilla powder/ice</p>
-                  </li>
-                  <li>
-                    <h4>Cherry Smoothie
-                      <span>$5.00</span>
-                    </h4>
-                    <p>cherry/water/cherry syrup/vanilla powder/ice</p>
-                  </li>
-                  <li>
-                    <h4>Tropical Smoothie
-                      <span>$5.00</span>
-                    </h4>
-                    <p>banana/pineapple/coconut milk/mango/juice of lemon/vanilla powder/ice</p>
-                  </li>
-                                <li>
-                    <h4>Peach Smoothie
-                      <span>$5.00</span>
-                    </h4>
-                    <p>peach/water/peach syrup/vanilla powder/ice</p>
-                  </li>
-                                <li>
-                    <h4>Pina colada Smoothie
-                      <span>$5.00</span>
-                    </h4>
-                    <p>pineapple/mango/coconut/milk/vanilla powder/ice</p>
-                  </li>
-                                <div><h2>Waffles</h2></div>
-                                <li>
-                    <h4>Waffle with Banana
-                      <span>$5.00</span>
-                    </h4>
-                    <p>waffle/pieces of banana/chocolate sauce/one scoop of ice cream</p>
-                  </li>
-                                <li>
-                    <h4>Waffle with Strawberry
-                      <span>$5.00</span>
-                    </h4>
-                    <p>waffle/pieces of strawberry/chocolate sauce/one scoop of ice cream</p>
-                  </li>
-                                <li>
-                    <h4>Waffle with Avocado
-                      <span>$5.00</span>
-                    </h4>
-                    <p>waffle/pieces of avocado/chocolate sauce/one scoop of ice cream</p>
-                  </li>
-                  <li>
-                    <h4>Waffle with Honey & nuts
-                      <span>$5.00</span>
-                    </h4>
-                    <p>waffle/chocolate sauce/honey/nuts/one scoop of ice cream</p>
-                  </li>
-                                <div><h2>Cakes</h2></div>
-                                <li>
-                    <h4>Chocolate Cake
-                      <span>$5.00</span>
-                    </h4>
-                    <p>one slice of chocolate cake/cocoa powder/chocolate sauce</p>
-                  </li>
-                                <li>
-                    <h4>Carrot Cake
-                      <span>$5.00</span>
-                    </h4>
-                    <p>one slice of carrot cake/cocoa powder/chocolate sauce</p>
-                  </li>
+                  {% endif %}
+                  {% endfor %}
                 </ul>
               </div>
             </div>
+            {% endfor %}
           </div>
         </div>
       </section>

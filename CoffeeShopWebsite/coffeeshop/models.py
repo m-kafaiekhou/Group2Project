@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Avg
 from staff.models import CustomUserModel
 
 
@@ -10,7 +9,7 @@ class Order(models.Model):
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
-    total_price = models.IntegerField()
+    total_price = models.DecimalField(max_digits=6, decimal_places=2)
     staff_fk = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
@@ -33,9 +32,9 @@ class OrderItem(models.Model):
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to="cafe_item/", default="preview-page0.jpg")
+    image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
 
     sub_category_fk = models.ForeignKey(
@@ -48,12 +47,8 @@ class CafeItem(models.Model):
         rates = [rev.rating for rev in reviews]
         return sum(rates) / len(rates)
 
-    @classmethod
-    def top_rated_items(cls):
-        CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
-            "-item_rate"
-        )[:3]
-
+    def category_name(self):
+        return self.sub_category_fk.parent_dategory_fk
 
 class Review(models.Model):
     review = models.CharField(max_length=300)
@@ -80,12 +75,12 @@ class Review(models.Model):
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
+    image = models.ImageField(upload_to="parent_category", blank=True, null=True)
 
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="sub_category", default="preview-page0.jpg")
+    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
     parent_dategory_fk = models.ForeignKey(
         ParentCategory,
         on_delete=models.CASCADE,
