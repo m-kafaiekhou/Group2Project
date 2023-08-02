@@ -24,11 +24,15 @@ select.form-control {
     border-radius: 22px;
     background-color: #fff;
     color: #606975;
-    font-family: "Maven Pro", Helvetica, Arial, sans-serif;
+    font-family: "yekan";
     font-size: 14px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+.yekan {
+    font-family: yekan;
 }
 
 .shopping-cart,
