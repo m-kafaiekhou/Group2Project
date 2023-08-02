@@ -32,7 +32,7 @@ class OrderItem(models.Model):
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
+    image = models.ImageField(upload_to="cafe_item/", default="preview-page0.jpg")
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
@@ -73,12 +73,12 @@ class Review(models.Model):
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="parent_category", blank=True, null=True)
+    image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
 
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="sub_category", blank=True, null=True)
+    image = models.ImageField(upload_to="sub_category", default="preview-page0.jpg")
     parent_dategory_fk = models.ForeignKey(
         ParentCategory,
         on_delete=models.CASCADE,
