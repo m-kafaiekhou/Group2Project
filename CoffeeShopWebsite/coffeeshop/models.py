@@ -6,10 +6,16 @@ from staff.models import CustomUserModel
 
 
 class Order(models.Model):
+    STATUS_CHOICES = (
+        ('d', 'Draft'),
+        ('c', 'Cancel'),
+        ('a', 'accept'),
+    )
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    total_price = models.DecimalField(max_digits=7, decimal_places=2)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=1)
     staff_fk = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
