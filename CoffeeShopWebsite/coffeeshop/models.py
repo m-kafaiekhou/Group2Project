@@ -61,7 +61,7 @@ class CafeItem(models.Model):
             )[:3]
 
     def category_name(self):
-        return self.sub_category_fk.parent_dategory_fk
+        return self.sub_category_fk.parent_category_fk
 
 
 class Review(models.Model):
