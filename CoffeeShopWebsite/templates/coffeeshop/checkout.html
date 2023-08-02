@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post" action="#">
+    <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
         <div class="container pt-5">
             <div class="row">
