@@ -1,13 +1,14 @@
-function increment() {
-    var input = document.getElementById('quantity');
+
+function increment(input) {
+    var name = input.name;
     var value = parseInt(input.value);
     input.value = value + 1;
 }
 
-function decrement() {
-    var input = document.getElementById('quantity');
+function decrement(input) {
+    var name = input.name;
     var value = parseInt(input.value);
-    if (value > 0) {
+    if (value > 1) {
         input.value = value - 1;
     }
 }
