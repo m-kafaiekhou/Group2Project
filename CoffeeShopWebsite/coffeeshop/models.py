@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from staff.models import CustomUserModel
 
 
@@ -46,6 +47,12 @@ class CafeItem(models.Model):
         reviews = self.review_set
         rates = [rev.rating for rev in reviews]
         return sum(rates) / len(rates)
+
+    @classmethod
+    def top_rated_items(cls):
+        CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
+            "-item_rate"
+        )[:3]
 
 
 class Review(models.Model):
