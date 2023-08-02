@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block head %}
     <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <div class="container pt-5">
-        <div class="row">
+    <form method="post" action="#">
+        {% csrf_token %}
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="bg-light pb-1 rounded-4 h-100" id="accordionPayment">
 
-            <div class="col-lg-9">
-                <div class="bg-light pb-1 rounded-2 " id="accordionPayment">
-
-                    <div class="accordion-item mb-3">
-                        <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
+                        <div class="accordion-item mb-3">
+                            <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
                             <span>
 <svg width="34" height="25" xmlns="http://www.w3.org/2000/svg">
 <g fill-rule="nonzero" fill="#333840">
@@ -22,53 +24,54 @@
 </g>
 </svg>
 </span>
-                        </h2>
-                        <div class="mb-3 mx-2">
-                            <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="09129876543">
-                        </div>
-                        <div class="mb-3 mx-2">
-                            <label class="form-label">Table Number</label>
-                            <select class="form-select" aria-label="Select table number">
-                                <option selected disabled>Select table number</option>
-                                <option value="1">Table 1</option>
-                                <option value="2">Table 2</option>
-                                <option value="3">Table 3</option>
-                                <option value="4">Table 4</option>
-                                <option value="5">Table 5</option>
-                                <option value="6">Table 6</option>
-                                <option value="7">Table 7</option>
-                                <option value="8">Table 8</option>
-                                <option value="9">Table 9</option>
-                                <option value="10">Table 10</option>
-                            </select>
+                            </h2>
+                            <div class="mb-3 mx-2">
+                                <label class="form-label">شماره تماس</label>
+                                <input type="tel" class="form-control" placeholder="09129876543" name="phone_number">
+                            </div>
+                            <div class="mb-3 mx-2">
+                                <label class="form-label">شماره میز</label>
+                                <select class="form-select" aria-label="Select table number" name="table_number">
+                                    <option selected disabled>شماره میز انتخاب کنید</option>
+                                    <option value="1">میز شماره ۱</option>
+                                    <option value="2">میز شماره ۲</option>
+                                    <option value="3">میز شماره ۳</option>
+                                    <option value="4">میز شماره ۴</option>
+                                    <option value="5">میز شماره ۵</option>
+                                    <option value="6">میز شماره ۶</option>
+                                    <option value="7">میز شماره ۷</option>
+                                    <option value="8">میز شماره ۸</option>
+                                    <option value="9">میز شماره ۹</option>
+                                    <option value="10">میز شماره ۱۰</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card position-sticky top-0">
-                    <div class="p-3 bg-light bg-opacity-10">
-                        <h6 class="card-title mb-3">Order Summary</h6>
-                        <div class="d-flex justify-content-between mb-1 small">
-                            <span>Subtotal</span> <span>$214.50</span>
+                <div class="col-lg-3">
+                    <div class="card position-sticky top-0">
+                        <div class="p-3 bg-light bg-opacity-10">
+                            <h6 class="card-title mb-3">خلاصه سفارش</h6>
+                            <div class="d-flex justify-content-between mb-1 small">
+                                <span>مجموع</span> <span>{{ total|intcomma }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1 small">
+                                <span>مالیات</span> <span>0</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1 small">
+                                <span>تخفیف</span> <span class="text-danger">-{{ 39500|intcomma }}</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-4 small">
+                                <span>قابل پرداخت</span> <strong
+                                    class="text-dark">{{ total|add:-39500|intcomma }}</strong>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-2" type="submit">ثبت سفارش</button>
                         </div>
-                        <div class="d-flex justify-content-between mb-1 small">
-                            <span>Shipping</span> <span>$20.00</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-1 small">
-                            <span>Coupon (Code: NEWYEAR)</span> <span class="text-danger">-$10.00</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between mb-4 small">
-                            <span>TOTAL</span> <strong class="text-dark">$224.50</strong>
-                        </div>
-
-                        <button class="btn btn-primary w-100 mt-2">Place order</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 {% endblock %}
