@@ -149,10 +149,25 @@ def get_cart(request):
 
 def checkout_view(request):
     cart, total = get_cart(request)
-    if cart:
-        return render(request, 'coffeeshop/checkout.html', context={'items': cart, 'total': total})
+    if request.method == "POST":
+        phone_number = request.POST.get('phone_number')
+        table_number = request.POST.get('table_number')
+        order = Order.objects.create(phone_number=phone_number,
+                                     table_number=table_number,
+                                     total_price=total, status='d')
+        object_lst = [CafeItem.objects.get(pk=pk) for item in cart for pk in item.keys()]
+        quantity_lst = [q for item in items for q in item.values()]
+        zipped = zip(object_lst, quantity_lst)
+        for item, quant in zipped:
+            OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
+
+        create_session(phone_number=phone_number, order_id=order.id)
+
     else:
-        return redirect('login')
+        if cart:
+            return render(request, 'coffeeshop/checkout.html', context={'items': cart, 'total': total})
+        else:
+            return redirect('login')
 
 
 def menu(request):
