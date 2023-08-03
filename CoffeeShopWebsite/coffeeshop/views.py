@@ -9,7 +9,7 @@ import json
 
 # First version for cookies and sessions without testing them.
 # ----------------------------------------------------------------------------------------------------------------------
-def add_to_cart(request, response, item_pk: int, quantity: int) -> None:
+def add_to_cart(request, response, item_pk: int) -> None:
     """
     sets a cookie to add items to shopping cart.
 
@@ -17,19 +17,22 @@ def add_to_cart(request, response, item_pk: int, quantity: int) -> None:
     value of the cart cookie.
     value = [{menu_item:quantity}, ...]
     """
-    if not request.COOKIES.get("cart"):
+    cart = request.COOKIES.get("cart", None)
+    if not cart:
         value = list()
-        value.append({item_pk: quantity})
-
+        value.append({item_pk: 1})
         str_value = f"{value}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
     else:
-        item_dict = {item_pk: quantity}
-        v = request.COOKIES.get("cart")
-        value = eval(v)
-        value.append(item_dict)
-        str_value = f"{value}"
+        cart = json.loads(cart)
+        for dic in cart:
+            for key, val in dic.items():
+                if key == item_pk:
+                    old_val = val
+        item_dict = {item_pk: old_val+1}
+        cart.append(item_dict)
+        str_value = f"{cart}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
 
@@ -121,7 +124,6 @@ def menu_search(request):
 
 
 def cart_view(request):
-    request.COOKIES['cart'] = '[{"1":2}, {"2":3}]'
     cart, total = get_cart(request)
     if cart:
         return render(request, 'coffeeshop/cart.html', context={'items': cart, 'total': total})
@@ -142,18 +144,41 @@ def get_cart(request):
             total += obj.price * quant
         return items, total
 
-    return None
+    return None, None
 
 
 def checkout_view(request):
     cart, total = get_cart(request)
-    if cart:
-        return render(request, 'coffeeshop/checkout.html', context={'items': cart, 'total': total})
+    if request.method == "POST":
+        phone_number = request.POST.get('phone_number')
+        table_number = request.POST.get('table_number')
+        order = Order.objects.create(phone_number=phone_number,
+                                     table_number=table_number,
+                                     total_price=total, status='d')
+        object_lst = [CafeItem.objects.get(pk=pk) for item in cart for pk in item.keys()]
+        quantity_lst = [q for item in items for q in item.values()]
+        zipped = zip(object_lst, quantity_lst)
+        for item, quant in zipped:
+            OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
+
+        create_session(phone_number=phone_number, order_id=order.id)
+
     else:
-        return redirect('login')
+        if cart:
+            return render(request, 'coffeeshop/checkout.html', context={'items': cart, 'total': total})
+        else:
+            return redirect('login')
 
 
 def menu(request):
+    item_pk = request.GET.get('pk', None)
+    check = None
+    if item_pk:
+        check = 1
     cafeitem = CafeItem.objects.all()
     categories = ParentCategory.objects.all()
-    return render(request, "coffeeshop/menu.html", {'cafeitem':cafeitem, 'categories': categories})
+    response = render(request, "coffeeshop/menu.html", {'cafeitem':cafeitem, 'categories': categories})
+
+    if check:
+        add_to_cart(request, response, item_pk)
+    return response
