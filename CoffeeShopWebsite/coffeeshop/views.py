@@ -123,16 +123,15 @@ def home_page(request):
 
 
 def menu_search(request):
-    cafeitem = CafeItem.objects.all()
-    form = SearchMenu()
     if "search" in request.GET:
-        form = SearchMenu(request.GET)
-        if form.is_valid():
-            cd = form.cleaned_data["search"]
-            cafeitem = cafeitem.filter(
-                Q(name__icontains=cd) | Q(description__icontains=cd)
-            )
-    return render(request, "menu/menu.html", {"cafeitem": cafeitem, "form": form}) #"coffeshop/menu_search.html"
+        cafeitem = CafeItem.objects.all()
+        cd = request.GET.get('search')
+        cafeitem = cafeitem.filter(
+            Q(name__icontains=cd) | Q(description__icontains=cd)
+        )
+        category = {obj.sub_category_fk.parent_category_fk for obj in cafeitem}
+
+        return render(request, "coffeeshop/menu.html", {"cafeitem": cafeitem, "categories": category}) #"coffeshop/menu_search.html"
 
 
 def cart_view(request):
