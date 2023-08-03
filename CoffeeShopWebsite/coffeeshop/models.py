@@ -9,9 +9,9 @@ from staff.models import CustomUserModel
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('d', 'Draft'),
-        ('c', 'Cancel'),
-        ('a', 'accept'),
+        ("d", "Draft"),
+        ("c", "Cancel"),
+        ("a", "accept"),
     )
     _REGEX = r'09(\d{9})$'
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
@@ -28,6 +28,9 @@ class Order(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+
+    def __str__(self) -> str:
+        return self.phone_number
 
 
 class OrderItem(models.Model):
@@ -63,11 +66,14 @@ class CafeItem(models.Model):
     @classmethod
     def top_rated_items(cls):
         return CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
-                "-item_rate"
-            )[:3]
+            "-item_rate"
+        )[:3]
 
     def category_name(self):
         return self.sub_category_fk.parent_category_fk
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Review(models.Model):
@@ -92,10 +98,16 @@ class Review(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self) -> str:
+        return f"{self.review[:15]} ..."
+
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class SubCategory(models.Model):
@@ -105,3 +117,6 @@ class SubCategory(models.Model):
         ParentCategory,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self) -> str:
+        return self.name

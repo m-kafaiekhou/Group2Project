@@ -11,19 +11,16 @@
     </head>  
     <body>
         <style>
-            .body{
+            body{
+                height: 100vh;
                 margin: 0;
             }
         </style>
-        <!-- {% block nav %}
-        {% endblock nav %} -->
         {% include 'navbar.html' %}
         {% include 'header.html' %}
         {% block content %}
 
         {% endblock content %}
-        <!-- {% block footer %}
-        {% endblock footer %} -->
         {% include 'footer.html' %}
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
