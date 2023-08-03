@@ -66,6 +66,9 @@ class CafeItem(models.Model):
     def category_name(self):
         return self.sub_category_fk.parent_category_fk
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Review(models.Model):
     review = models.CharField(max_length=300)
