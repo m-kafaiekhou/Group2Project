@@ -8,9 +8,9 @@ from staff.models import CustomUserModel
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('d', 'Draft'),
-        ('c', 'Cancel'),
-        ('a', 'accept'),
+        ("d", "Draft"),
+        ("c", "Cancel"),
+        ("a", "accept"),
     )
     phone_number = models.CharField
     order_date = models.DateTimeField(auto_now_add=True)
@@ -22,6 +22,9 @@ class Order(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+
+    def __str__(self) -> str:
+        return self.phone_number
 
 
 class OrderItem(models.Model):
@@ -57,8 +60,8 @@ class CafeItem(models.Model):
     @classmethod
     def top_rated_items(cls):
         return CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
-                "-item_rate"
-            )[:3]
+            "-item_rate"
+        )[:3]
 
     def category_name(self):
         return self.sub_category_fk.parent_category_fk
