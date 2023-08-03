@@ -9,7 +9,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
 
     phone_number = models.CharField(
-        'phone number', max_length=16, validators=[phone_validator],
+        'phone number', max_length=14, validators=[phone_validator],
         unique=True, null=False
     )
     last_name = models.CharField(max_length=150, blank=True, null=True)
