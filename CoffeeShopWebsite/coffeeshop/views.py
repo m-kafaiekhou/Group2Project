@@ -176,13 +176,14 @@ def checkout_view(request):
         order = Order.objects.create(phone_number=phone_number,
                                      table_number=table_number,
                                      total_price=total, status='d')
-        object_lst = [CafeItem.objects.get(pk=pk) for item in cart for pk in item.keys()]
-        quantity_lst = [q for item in cart for q in item.values()]
+        object_lst = [obj for obj, _ in cart.items()]
+        quantity_lst = [val for _, val in cart.items()]
         zipped = zip(object_lst, quantity_lst)
         for item, quant in zipped:
             OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
 
-        create_session(phone_number=phone_number, order_id=order.id)
+        create_session(request, phone_number=phone_number, order_id=order.id)
+        return redirect('home')
 
     else:
         if cart:
