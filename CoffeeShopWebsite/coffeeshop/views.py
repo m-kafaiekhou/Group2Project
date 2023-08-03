@@ -20,32 +20,41 @@ def add_to_cart(request, response, item_pk: int) -> None:
     cart = request.COOKIES.get("cart", None)
     if not cart:
         value = list()
-        value.append({item_pk: 1})
-        str_value = f"{value}"
+        value.append({f"{item_pk}": 1})
+        str_value = f'{value}'
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
     else:
-        cart = json.loads(cart)
-        for dic in cart:
-            for key, val in dic.items():
+        cart = eval(cart)
+        old_val = 0
+        # print(cart, "_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_")
+        for i in range(len(cart)):
+            print(i, "_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_")
+            for key, val in cart[i].items():
+                # print(key, val, cart[i], "_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_")
                 if key == item_pk:
                     old_val = val
+                    cart.pop(i)
+            if old_val == val:
+                break
         item_dict = {item_pk: old_val+1}
         cart.append(item_dict)
         str_value = f"{cart}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
+    return response
 
 
-def remove_from_cart(request, response, item_pk: int) -> None:
+def remove_from_cart(request, response, item_pk: int):
     """
     remove an item from the shopping cart, completely.
     """
     if request.COOKIES.get("cart"):
         v = request.COOKIES.get("cart")
         value = eval(v)
-        for dic in value:
-            value.remove(dic[item_pk])
+        for i in range(value):
+            if value[i].key == item_pk:
+                value.pop(i)
         delete_cart(request, response)
 
         str_value = f"{value}"
@@ -53,22 +62,25 @@ def remove_from_cart(request, response, item_pk: int) -> None:
         response.set_cookie("cart", str_value, max_age=max_age)
 
 
-def update_cart(request, response, item_pk: int, quantity: int) -> None:
+def update_cart(request, response, item_pk: int, quantity: int):
     """
     updates the quantity of each item in the shopping cart.
     """
 
     if request.COOKIES.get("cart"):
         v = request.COOKIES.get("cart")
-        value = eval(v)
-        for dic in value:
-            if dic[item_pk]:
-                value.update({item_pk: quantity})
+        cart = eval(v)
+        for i in range(len(cart)):
+            for key, val in cart[i].items():
+                if int(key) == item_pk:
+                    cart.append({f"{item_pk}": quantity})
+                    cart.pop(i)
         delete_cart(request, response)
 
-        str_value = f"{value}"
+        str_value = f"{cart}"
         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
         response.set_cookie("cart", str_value, max_age=max_age)
+        return response
 
 
 def delete_cart(request, response) -> None:
@@ -125,23 +137,32 @@ def menu_search(request):
 
 def cart_view(request):
     cart, total = get_cart(request)
-    if cart:
-        return render(request, 'coffeeshop/cart.html', context={'items': cart, 'total': total})
+    if request.method == "POST":
+        response = redirect('cart')
+        for obj, val in cart.items():
+            print(obj, val, "_*_*_*_*_*_")
+            quantity = int(request.POST.get(f'{obj.id}'))
+            response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
+
+        return response
     else:
-        return redirect('checkout')
+        if cart:
+            return render(request, 'coffeeshop/cart.html', context={'items': cart, 'total': total})
+        else:
+            return redirect('menu')
 
 
 def get_cart(request):
     cart = request.COOKIES.get('cart', None)
     if cart:
-        items = json.loads(cart)
+        items = eval(cart)
         object_lst = [CafeItem.objects.get(pk=pk) for item in items for pk in item.keys()]
         quantity_lst = [q for item in items for q in item.values()]
         items = {}
         total = 0
         for obj, quant in zip(object_lst, quantity_lst):
             items[obj] = quant
-            total += obj.price * quant
+            total += obj.price * int(quant)
         return items, total
 
     return None, None
@@ -155,19 +176,20 @@ def checkout_view(request):
         order = Order.objects.create(phone_number=phone_number,
                                      table_number=table_number,
                                      total_price=total, status='d')
-        object_lst = [CafeItem.objects.get(pk=pk) for item in cart for pk in item.keys()]
-        quantity_lst = [q for item in items for q in item.values()]
+        object_lst = [obj for obj, _ in cart.items()]
+        quantity_lst = [val for _, val in cart.items()]
         zipped = zip(object_lst, quantity_lst)
         for item, quant in zipped:
             OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
 
-        create_session(phone_number=phone_number, order_id=order.id)
+        create_session(request, phone_number=phone_number, order_id=order.id)
+        return redirect('home')
 
     else:
         if cart:
             return render(request, 'coffeeshop/checkout.html', context={'items': cart, 'total': total})
         else:
-            return redirect('login')
+            return redirect('menu')
 
 
 def menu(request):
@@ -177,8 +199,14 @@ def menu(request):
         check = 1
     cafeitem = CafeItem.objects.all()
     categories = ParentCategory.objects.all()
-    response = render(request, "coffeeshop/menu.html", {'cafeitem':cafeitem, 'categories': categories})
+    response = render(request, "coffeeshop/menu.html", {'cafeitem': cafeitem, 'categories': categories})
 
     if check:
-        add_to_cart(request, response, item_pk)
+        response = add_to_cart(request, response, item_pk)
+    return response
+
+
+def delete_cart_view(request):
+    response = redirect('cart')
+    delete_cart(request, response)
     return response
