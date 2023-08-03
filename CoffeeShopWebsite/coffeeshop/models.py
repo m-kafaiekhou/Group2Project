@@ -17,7 +17,7 @@ class Order(models.Model):
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
     phone_number = models.CharField(
         'phone number', max_length=14, validators=[phone_validator],
-        unique=True, null=False
+        null=False
     )
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
