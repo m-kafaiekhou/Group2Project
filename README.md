@@ -70,6 +70,22 @@ It was time to finally bring the site up with some styles in it. So we thought t
 #### Gathering Data for the Website
 We just realized that we have no idea about what we are going to put on our cafe website.< we are programmers not coffee makers >. So the solution was the answer we always get from our teachers: Go search for it yourself (0_0).
 
-And with this last step the first sprint came to an end.
-Our journy for the coffee continues...
+#### Views & Templates (FBVs)
+At first we thought we had to use generic class based view's, Yet as you can guess we were told to use function based views. just imagine the feeling we had...
+So we said ok, chill, lets go with the flow and with a broken heart we did the functions...
+As you can guess the pages were brought up one after the other. Starting with pages, first came the home page, then the menu page, and then the high difficulty ones came... they were called checkout page and cart page. At this point it's hard to belive that we could survive all that :|
 
+FBVs for Pages:
+- home.html
+- menu.html
+- checkout.html
+- cart.html
+
+#### Cookies & Sessions
+A realy hard task in the journey, not many could survive this. But your dear bros were just defeted as expected. now we beg for points from the manager(demon lord)... please have mercy on us!
+cookies were done but it was done blindly without having any view functions written so we had to change them alot.
+it works so dont touch it!
+
+
+And with this last step of the first sprint came to an end.
+Our journy for the coffee continues...
