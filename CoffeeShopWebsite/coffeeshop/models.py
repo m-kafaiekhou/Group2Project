@@ -92,6 +92,9 @@ class Review(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self) -> str:
+        return f"{self.review[:15]} ..."
+
 
 class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
