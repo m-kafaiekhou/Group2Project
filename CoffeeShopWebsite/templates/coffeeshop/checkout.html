@@ -4,6 +4,7 @@
 
 {% block head %}
     <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+    <link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
 {% endblock %}
 
 {% block content %}
@@ -26,23 +27,23 @@
 </span>
                             </h2>
                             <div class="mb-3 mx-2">
-                                <label class="form-label">شماره تماس</label>
+                                <label class="form-label" style="font-family: yekan;">شماره تماس</label>
                                 <input type="tel" class="form-control" placeholder="09129876543" name="phone_number">
                             </div>
                             <div class="mb-3 mx-2">
-                                <label class="form-label">شماره میز</label>
+                                <label class="form-label" style="font-family: yekan;">شماره میز</label>
                                 <select class="form-select" aria-label="Select table number" name="table_number">
                                     <option selected disabled>شماره میز انتخاب کنید</option>
-                                    <option value="1">میز شماره ۱</option>
-                                    <option value="2">میز شماره ۲</option>
-                                    <option value="3">میز شماره ۳</option>
-                                    <option value="4">میز شماره ۴</option>
-                                    <option value="5">میز شماره ۵</option>
-                                    <option value="6">میز شماره ۶</option>
-                                    <option value="7">میز شماره ۷</option>
-                                    <option value="8">میز شماره ۸</option>
-                                    <option value="9">میز شماره ۹</option>
-                                    <option value="10">میز شماره ۱۰</option>
+                                    <option value="1" style="font-family: yekan;">میز شماره ۱</option>
+                                    <option value="2" style="font-family: yekan;">میز شماره ۲</option>
+                                    <option value="3" style="font-family: yekan;">میز شماره ۳</option>
+                                    <option value="4" style="font-family: yekan;">میز شماره ۴</option>
+                                    <option value="5" style="font-family: yekan;">میز شماره ۵</option>
+                                    <option value="6" style="font-family: yekan;">میز شماره ۶</option>
+                                    <option value="7" style="font-family: yekan;">میز شماره ۷</option>
+                                    <option value="8" style="font-family: yekan;">میز شماره ۸</option>
+                                    <option value="9" style="font-family: yekan;">میز شماره ۹</option>
+                                    <option value="10" style="font-family: yekan;">میز شماره ۱۰</option>
                                 </select>
                             </div>
                         </div>
@@ -51,22 +52,22 @@
                 <div class="col-lg-3">
                     <div class="card position-sticky top-0">
                         <div class="p-3 bg-light bg-opacity-10">
-                            <h6 class="card-title mb-3">خلاصه سفارش</h6>
+                            <h6 class="card-title mb-3" style="font-family: yekan;">خلاصه سفارش</h6>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span>مجموع</span> <span>{{ total|intcomma }}</span>
+                                <span style="font-family: yekan;">مجموع</span> <span>{{ total|intcomma }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span>مالیات</span> <span>0</span>
+                                <span style="font-family: yekan;">مالیات</span> <span>0</span>
                             </div>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span>تخفیف</span> <span class="text-danger">-0</span>
+                                <span style="font-family: yekan;">تخفیف</span> <span class="text-danger">-0</span>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between mb-4 small">
-                                <span>قابل پرداخت</span> <strong
+                                <span style="font-family: yekan;">قابل پرداخت</span> <strong
                                     class="text-dark">{{ total|intcomma }}</strong>
                             </div>
-                            <button class="btn btn-primary w-100 mt-2" type="submit">ثبت سفارش</button>
+                            <button class="btn btn-primary w-100 mt-2" type="submit" style="font-family: yekan;">ثبت سفارش</button>
                         </div>
                     </div>
                 </div>
