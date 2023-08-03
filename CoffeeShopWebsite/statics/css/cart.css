@@ -17,7 +17,6 @@ select.form-control {
 .form-control {
     padding: 0 18px 3px;
     border: 1px solid #dbe2e8;
-    border-radius: 22px;
     background-color: #fff;
     color: #606975;
     font-family: "yekan";
