@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Avg
+from django.core.validators import RegexValidator
 from staff.models import CustomUserModel
 
 
@@ -12,7 +13,12 @@ class Order(models.Model):
         ('c', 'Cancel'),
         ('a', 'accept'),
     )
-    phone_number = models.CharField
+    _REGEX = r'09(\d{9})$'
+    phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
+    phone_number = models.CharField(
+        'phone number', max_length=14, validators=[phone_validator],
+        unique=True, null=False
+    )
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
     total_price = models.IntegerField()
