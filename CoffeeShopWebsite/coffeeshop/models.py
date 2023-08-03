@@ -100,6 +100,9 @@ class ParentCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
