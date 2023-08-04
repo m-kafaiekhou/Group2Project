@@ -2,28 +2,31 @@ from django.db import models
 from django.db.models import Avg
 from django.core.validators import RegexValidator
 from staff.models import CustomUserModel
-
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
 
-class Order(models.Model):
-    STATUS_CHOICES = (
-        ("d", "Draft"),
-        ("c", "Cancel"),
-        ("a", "accept"),
-    )
-    _REGEX = r'09(\d{9})$'
+def regex_validation():
+    _REGEX = r"09(\d{9})$"
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
+
+
+class Order(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = "D", _("Draft")
+        CANCEL = "C", _("Cancel")
+        ACCEPT = "A", _("Accept")
+
+    status = models.CharField(choices=Status.choices, max_length=1)
+
+    regex = regex_validation()
     phone_number = models.CharField(
-        'phone number', max_length=14, validators=[phone_validator],
-        null=False
+        "phone number", max_length=14, validators=[regex], null=False
     )
     order_date = models.DateTimeField(auto_now_add=True)
     table_number = models.IntegerField(default=None)
-    total_price = models.IntegerField()
-    status = models.CharField(choices=STATUS_CHOICES, max_length=1)
-    staff_fk = models.ForeignKey(
+    staff = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
         null=True,
