@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 def regex_validation():
     _REGEX = r"09(\d{9})$"
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
+    return phone_validator
 
 
 class Order(models.Model):
