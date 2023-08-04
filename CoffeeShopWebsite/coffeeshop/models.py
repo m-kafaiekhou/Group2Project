@@ -57,8 +57,9 @@ class CafeItem(models.Model):
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 
-    sub_category_fk = models.ForeignKey(
-        "SubCategory", on_delete=models.SET_NULL, null=True
+    sub_category = models.ForeignKey(
+        "SubCategory",
+        on_delete=models.PROTECT,
     )
 
     @property
