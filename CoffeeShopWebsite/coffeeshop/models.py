@@ -52,12 +52,12 @@ class OrderItem(models.Model):
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to="cafe_item/", default="preview-page0.jpg")
+    image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
 
-    sub_category = models.ForeignKey(
+    category = models.ForeignKey(
         "SubCategory",
         on_delete=models.PROTECT,
     )
@@ -101,21 +101,14 @@ class Review(models.Model):
         return f"{self.review[:15]} ..."
 
 
-class ParentCategory(models.Model):
-    name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="parent_category", default="preview-page0.jpg")
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class SubCategory(models.Model):
-    name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="sub_category", default="preview-page0.jpg")
-    parent_category_fk = models.ForeignKey(
-        ParentCategory,
-        on_delete=models.CASCADE,
+class Category(models.Model):
+    sub_category = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
     )
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="category", default="preview-page0.jpg")
 
     def __str__(self) -> str:
         return self.name
