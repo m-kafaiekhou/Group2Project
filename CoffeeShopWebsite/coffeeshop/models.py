@@ -37,7 +37,6 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    quantity = models.IntegerField()
     order_fk = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
@@ -46,6 +45,8 @@ class OrderItem(models.Model):
         "CafeItem",
         on_delete=models.CASCADE,
     )
+    quantity = models.IntegerField()
+    price = models.IntegerField()
 
 
 class CafeItem(models.Model):
