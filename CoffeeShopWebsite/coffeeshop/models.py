@@ -82,22 +82,16 @@ class CafeItem(models.Model):
 
 
 class Review(models.Model):
+    class Rating(models.IntegerChoices):
+        VERY_LOW = 1
+        LOW = 2
+        MIDDLE = 3
+        HIGH = 4
+        VERY_HIGH = 5
+
+    rating = models.IntegerField(choices=Rating.choices, default=Rating.HIGH)
+
     review = models.CharField(max_length=300)
-
-    VERY_LOW = 1
-    LOW = 2
-    MIDDLE = 3
-    HIGH = 4
-    VERY_HIGH = 5
-    RATING_COICES = (
-        (VERY_LOW, 1),
-        (LOW, 2),
-        (MIDDLE, 3),
-        (HIGH, 4),
-        (VERY_HIGH, 5),
-    )
-    rating = models.IntegerField(choices=RATING_COICES, default=HIGH)
-
     cafeitem_fk = models.ForeignKey(
         CafeItem,
         on_delete=models.CASCADE,
