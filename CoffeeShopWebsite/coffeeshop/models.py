@@ -109,7 +109,7 @@ class Category(models.Model):
         null=True,
     )
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="category", default="preview-page0.jpg")
+    image = models.ImageField(upload_to="category", blank=True, null=True)
 
     def __str__(self) -> str:
         return self.name
