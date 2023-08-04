@@ -25,7 +25,7 @@ class Order(models.Model):
     phone_number = models.CharField(
         "phone number", max_length=14, validators=[regex], null=False
     )
-    order_date = models.DateTimeField(auto_now_add=True)
+    order_date = models.DateTimeField(auto_now_add=True)  # core app
     table_number = models.IntegerField(default=None)
     staff = models.ForeignKey(
         CustomUserModel,
