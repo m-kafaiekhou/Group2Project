@@ -59,7 +59,7 @@ class CafeItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     category = models.ForeignKey(
-        "SubCategory",
+        "Category",
         on_delete=models.PROTECT,
     )
 
@@ -76,7 +76,7 @@ class CafeItem(models.Model):
         )[:3]
 
     def category_name(self):
-        return self.sub_category_fk.parent_category_fk
+        return self.category.sub_category
 
     def __str__(self) -> str:
         return self.name
