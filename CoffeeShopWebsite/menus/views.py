@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import CafeItem, Order, OrderItem, Review, Category
+from .models import CafeItem, Category
+from core.utils import add_to_cart
 
 # Create your views here.
 
