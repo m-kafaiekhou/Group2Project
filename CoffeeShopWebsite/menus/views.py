@@ -19,8 +19,6 @@ def menu_search(request):
         )  # "coffeshop/menu_search.html"
 
 
-
-
 def menu(request):
     item_pk = request.GET.get("pk", None)
     check = None
