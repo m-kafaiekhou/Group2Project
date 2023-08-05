@@ -17,7 +17,7 @@ def cart_view(request):
     else:
         if cart:
             return render(
-                request, "coffeeshop/cart.html", context={"items": cart, "total": total}
+                request, "orders/cart.html", context={"items": cart, "total": total}
             )
         else:
             return redirect("menu")
