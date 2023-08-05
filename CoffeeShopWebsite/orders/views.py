@@ -1,9 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CafeItem, Order, OrderItem, Review, Category
 
-# First version for cookies and sessions without testing them.
-# ----------------------------------------------------------------------------------------------------------------------
-
 
 def cart_view(request):
     cart, total = get_cart(request)
