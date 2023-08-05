@@ -76,7 +76,7 @@ class CafeItem(models.Model):
         )[:3]
 
     def category_name(self):
-        return self.category.sub_category
+        return self.category.parent_category
 
     def __str__(self) -> str:
         return self.name
@@ -103,7 +103,7 @@ class Review(models.Model):
 
 
 class Category(models.Model):
-    sub_category = models.ForeignKey(
+    parent_category = models.ForeignKey(
         "self",
         on_delete=models.SET_NULL,
         null=True,
