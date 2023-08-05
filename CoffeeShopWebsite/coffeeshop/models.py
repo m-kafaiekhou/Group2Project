@@ -1,5 +1,6 @@
 from django.db import models
 from menus.models import CafeItem
+
 # Create your models here.
 
 
