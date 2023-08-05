@@ -63,7 +63,7 @@ def checkout_view(request):
         if cart:
             return render(
                 request,
-                "coffeeshop/checkout.html",
+                "orders/checkout.html",
                 context={"items": cart, "total": total},
             )
         else:
