@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import CafeItem, Order, OrderItem, Review, Category
+
 
 
 def add_to_cart(request, response, item_pk: int) -> None:
