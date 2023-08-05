@@ -15,7 +15,7 @@ class Review(models.Model):
     rating = models.IntegerField(choices=Rating.choices, default=Rating.HIGH)
 
     review = models.CharField(max_length=300)
-    cafeitem_fk = models.ForeignKey(
+    cafeitem = models.ForeignKey(
         CafeItem,
         on_delete=models.CASCADE,
     )
