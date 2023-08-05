@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 
-
 def add_to_cart(request, response, item_pk: int) -> None:
     """
     sets a cookie to add items to shopping cart.
