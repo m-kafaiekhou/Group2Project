@@ -35,5 +35,3 @@ def menu(request):
     if check:
         response = add_to_cart(request, response, item_pk)
     return response
-
-
