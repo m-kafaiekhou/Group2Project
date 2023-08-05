@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-
+from core.utils import update_cart,
 
 
 def cart_view(request):
