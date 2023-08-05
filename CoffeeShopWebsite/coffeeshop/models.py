@@ -1,8 +1,4 @@
 from django.db import models
-from django.db.models import Avg
-from django.core.validators import RegexValidator
-from staff.models import CustomUserModel
-from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
