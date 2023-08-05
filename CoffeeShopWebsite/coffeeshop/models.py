@@ -7,12 +7,6 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
-
-
-
-
-
-
 class Review(models.Model):
     class Rating(models.IntegerChoices):
         VERY_LOW = 1
