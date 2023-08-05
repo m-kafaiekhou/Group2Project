@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from core.utils import update_cart, create_session, delete_cart
-from orders.models import Order
-from menus.models import OrderItem, CafeItem
+from orders.models import Order, OrderItem
+from menus.models import CafeItem
 
 
 def cart_view(request):
