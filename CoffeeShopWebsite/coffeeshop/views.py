@@ -155,7 +155,7 @@ def get_cart(request):
     cart = request.COOKIES.get('cart', None)
     if cart:
         items = eval(cart)
-        object_lst = [CafeItem.objects.get(pk=pk) for item in items for pk in item.keys()]
+        object_lst = [get_object_or_404(CafeItem, pk=pk) for item in items for pk in item.keys()]
         quantity_lst = [q for item in items for q in item.values()]
         items = {}
         total = 0
