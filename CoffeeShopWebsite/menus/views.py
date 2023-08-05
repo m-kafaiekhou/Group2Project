@@ -29,7 +29,7 @@ def menu(request):
     categories = Category.objects.all()
     response = render(
         request,
-        "coffeeshop/menu.html",
+        "menus/menu.html",
         {"cafeitem": cafeitem, "categories": categories},
     )
 
