@@ -15,7 +15,7 @@ def menu_search(request):
 
         return render(
             request,
-            "coffeeshop/menu.html",
+            "menus/menu.html",
             {"cafeitem": cafeitem, "categories": category},
         )
 
