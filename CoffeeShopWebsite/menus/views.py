@@ -16,7 +16,7 @@ def menu_search(request):
             request,
             "coffeeshop/menu.html",
             {"cafeitem": cafeitem, "categories": category},
-        )  # "coffeshop/menu_search.html"
+        )
 
 
 def menu(request):
