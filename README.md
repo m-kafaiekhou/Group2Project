@@ -22,7 +22,7 @@ With all said and done we now start the story of our progress in the project >>>
 #### ERD(Entity Relationship Diagram)
 Everything starts with a good planning, in our case: we programmers need to draw the ERD for our project so we could configure the base build of our database which alows us to build upon it. you can see our team effort below. first step, so chill...
 
-<img width="100%" src="ERD(v5).png">
+<img width="100%" src="ERD(v11).png">
 
 
 #### Template 

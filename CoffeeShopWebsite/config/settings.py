@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # my apps
+    # project apps
     "staff",
     "coffeeshop",
-    # third party apps
-    'django.contrib.humanize',
+    "core",
+    "orders",
+    "menus",
+    # Third party apps
+    "django.contrib.humanize",
 ]
 
 MIDDLEWARE = [
@@ -79,14 +82,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'm.kafaiekhou',
-        'PASSWORD': 'VUG74XItSxiw',
-        'HOST': 'ep-round-dream-23233303.eu-central-1.aws.neon.tech',
-        'PORT': '5432',
-      }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "neondb",
+        "USER": "m.kafaiekhou",
+        "PASSWORD": "VUG74XItSxiw",
+        "HOST": "ep-round-dream-23233303.eu-central-1.aws.neon.tech",
+        "PORT": "5432",
+    }
 }
 
 
