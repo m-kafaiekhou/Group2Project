@@ -41,7 +41,7 @@ class OrderItem(models.Model):
         Order,
         on_delete=models.CASCADE,
     )
-    cafeitem_fk = models.ForeignKey(
+    cafeitem = models.ForeignKey(
         "CafeItem",
         on_delete=models.CASCADE,
     )
