@@ -42,7 +42,7 @@ class OrderItem(models.Model):
         on_delete=models.CASCADE,
     )
     cafeitem = models.ForeignKey(
-        "CafeItem",
+        "menus.CafeItem",
         on_delete=models.CASCADE,
     )
     quantity = models.IntegerField()
