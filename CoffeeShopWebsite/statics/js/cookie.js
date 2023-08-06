@@ -1,6 +1,8 @@
 
 function getCart() {
-
+    const cartCookie = document.cookie.replace(/((?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    const cart = JSON.parse(cartCookie);
+    return cart;
 }
 
 function setCart() {
