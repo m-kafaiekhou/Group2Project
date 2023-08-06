@@ -19,9 +19,10 @@ function setCart(item, quantity) {
 }
 
 function increment(input) {
-    var name = input.name;
-    var value = parseInt(input.value);
+    const name = input.name;
+    const value = parseInt(input.value);
     input.value = value + 1;
+
 }
 
 function decrement(input) {
