@@ -17,6 +17,16 @@ class CartView(View):
 
         return redirect("menu")
 
+    def post(self, request, *args, **kwargs):
+        cart, total = get_cart(request)
+        response = redirect("cart")
+        for obj, val in cart.items():
+            print(obj, val, "_*_*_*_*_*_")
+            quantity = int(request.POST.get(f"{obj.id}"))
+            response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
+
+        return response
+
 # def cart_view(request):
 #     cart, total = get_cart(request)
 #     if request.method == "POST":
