@@ -16,7 +16,7 @@ function getCart() {
 function setCart(item, quantity) {
     let cart = getCart()
     cart[item] = +quantity;
-    const cartJSON = JSON.stringify(cart)
+    const cartJSON = JSON.stringify(cart);
     document.cookie = `cart=${cartJSON}; expires=${getDateString(7)}; path=/`;
 }
 
