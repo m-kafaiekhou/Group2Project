@@ -20,7 +20,6 @@ function setCart(item, quantity) {
 
 function increment(input) {
     var name = input.name;
-    const item_quant = name.split(':')  // note
     var value = parseInt(input.value);
     input.value = value + 1;
 }
