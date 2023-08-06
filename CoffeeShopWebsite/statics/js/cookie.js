@@ -26,10 +26,11 @@ function increment(input) {
 }
 
 function decrement(input) {
-    const name = input.name;
+    const item = input.name;
     const value = parseInt(input.value);
     if (value > 1) {
         input.value = value - 1;
+        setCart(item, input.value);
     }
 }
 
