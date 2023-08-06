@@ -37,5 +37,3 @@ function decrement(input) {
         alert("value can't be less than 1")
     }
 }
-
-
