@@ -1,4 +1,10 @@
 
+function getCookie() {
+
+}
+
+
+
 function increment(input) {
     var name = input.name;
     var value = parseInt(input.value);
@@ -12,3 +18,5 @@ function decrement(input) {
         input.value = value - 1;
     }
 }
+
+
