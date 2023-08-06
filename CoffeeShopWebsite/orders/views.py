@@ -21,7 +21,6 @@ class CartView(View):
         cart, total = get_cart(request)
         response = redirect("cart")
         for obj, val in cart.items():
-            print(obj, val, "_*_*_*_*_*_")
             quantity = int(request.POST.get(f"{obj.id}"))
             response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
 
