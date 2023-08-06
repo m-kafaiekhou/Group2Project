@@ -3,7 +3,9 @@ function getCookie() {
 
 }
 
+function setCookie() {
 
+}
 
 function increment(input) {
     var name = input.name;
