@@ -26,8 +26,8 @@ function increment(input) {
 }
 
 function decrement(input) {
-    var name = input.name;
-    var value = parseInt(input.value);
+    const name = input.name;
+    const value = parseInt(input.value);
     if (value > 1) {
         input.value = value - 1;
     }
