@@ -1,9 +1,9 @@
 
-function getCookie() {
+function getCart() {
 
 }
 
-function setCookie() {
+function setCart() {
 
 }
 
