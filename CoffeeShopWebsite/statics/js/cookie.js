@@ -22,7 +22,7 @@ function increment(input) {
     const item = input.name;
     const value = parseInt(input.value);
     input.value = value + 1;
-    setCart(item, input.value)
+    setCart(item, input.value);
 }
 
 function decrement(input) {
