@@ -5,5 +5,5 @@ from django.views import View
 
 
 class HomePage(View) :
-    def get(request) :
-        return render(request, "coffeeshop/home.html", {"top_rated_items": None})
+    def get(self, request):
+        return render(request, "coffeeshop/home.html")
