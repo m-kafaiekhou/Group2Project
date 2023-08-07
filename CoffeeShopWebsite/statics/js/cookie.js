@@ -28,6 +28,7 @@ function increment(input) {
     const value = parseInt(input.value);
     input.value = value + 1;
     setCart(item, input.value);
+    window.location.reload();
 }
 
 function decrement(input) {
