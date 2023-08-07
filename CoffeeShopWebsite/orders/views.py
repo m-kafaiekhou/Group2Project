@@ -36,7 +36,14 @@ def get_cart(request):
 
 class CheckoutView(View):
     def get(self, request, *args, **kwargs):
-        pass
+        if cart:
+            return render(
+                request,
+                "orders/checkout.html",
+                context={"items": cart, "total": total},
+            )
+        else:
+            return redirect("menu")
 
 # def checkout_view(request):
 #     cart, total = get_cart(request)
