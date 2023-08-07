@@ -6,9 +6,12 @@ function getDateString(daysForward=0) {
 }
 
 function getCart() {
-    const cartCookie = document.cookie.replace(
+    let cartCookie = document.cookie.replace(
         /((?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|^.*$/, "$1"
     );
+    if (cartCookie == "") {
+        cartCookie = JSON.stringify({});
+    }
     const cart = JSON.parse(cartCookie);
     return cart;
 }
