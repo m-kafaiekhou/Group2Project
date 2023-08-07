@@ -37,6 +37,7 @@ function decrement(input) {
     if (value > 1) {
         input.value = value - 1;
         setCart(item, input.value);
+        window.location.reload();
     } else {
         alert("value can't be less than 1");
     }
