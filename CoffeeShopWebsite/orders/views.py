@@ -36,6 +36,7 @@ def get_cart(request):
 
 class CheckoutView(View):
     def get(self, request, *args, **kwargs):
+        cart, total = get_cart(request)
         if cart:
             return render(
                 request,
@@ -46,6 +47,7 @@ class CheckoutView(View):
             return redirect("menu")
 
     def post(self, request, *args, **kwargs):
+        cart, total = get_cart(request)
         phone_number = request.POST.get("phone_number")
         table_number = request.POST.get("table_number")
         order = Order.objects.create(
