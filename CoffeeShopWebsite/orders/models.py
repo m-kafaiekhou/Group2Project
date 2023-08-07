@@ -50,3 +50,4 @@ class OrderItem(models.Model):
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
+        return self
