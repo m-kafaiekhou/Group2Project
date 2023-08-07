@@ -17,5 +17,5 @@ class CustomUserLoginForm(forms.Form):
 
     phone_number = forms.CharField(max_length=14, validators=[phone_validator])
 
-    def clean_phone_number(self):
-        phone_number = self.cleaned_data["phone_number"]
+    # def clean_phone_number(self):
+    #     phone_number = self.cleaned_data["phone_number"]
