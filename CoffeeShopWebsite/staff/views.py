@@ -5,3 +5,7 @@ from django.views import View
 #
 # class CustomLoginView(LoginView):
 #     form_class = CustomAuthenticationForm
+
+
+class CustomUserLoginView(View):
+    pass
