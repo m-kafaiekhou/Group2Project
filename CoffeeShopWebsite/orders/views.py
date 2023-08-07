@@ -63,11 +63,9 @@ class CheckoutView(View):
             total_price=self.total,
             status="d",
         )
-        object_lst = [obj for obj, _ in self.cart.items()]
-        quantity_lst = [val for _, val in self.cart.items()]
-        zipped = zip(object_lst, quantity_lst)
-        for item, quant in zipped:
-            OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
+
+        for item, quant in self.cart.items():
+            OrderItem.objects.create(order=order, cafeitem_id=item, quantity=quant)
 
         create_session(request, phone_number=phone_number, order_id=order.id)
         return redirect(self.success_redirect_url)
