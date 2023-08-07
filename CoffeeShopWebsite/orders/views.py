@@ -64,10 +64,12 @@ class CheckoutView(View):
             status="d",
         )
 
-        for item, quant in self.cart.items():
-            OrderItem.objects.create(order=order, cafeitem_id=item, quantity=quant)
+        order_items = [
+            OrderItem(order=order, cafeitem_id=item, quantity=quant)
+            for item, quant in self.cart.items()
+        ]
 
-        create_session(request, phone_number=phone_number, order_id=order.id)
+        OrderItem.objects.bulk_create(order_items)
         return redirect(self.success_redirect_url)
 
 
