@@ -59,7 +59,7 @@
             {% for item in cafeitem %}
             {% if  cat.name == item.category_name.name %}
                   <li>
-                    <h4><a>{{item.name}}</a>
+                    <h4><a href="{% url 'menu_detail' item.name %}">{{item.name}}</a>
                       
                       <span>${{item.price}}</span>
                     </h4>
