@@ -10,4 +10,8 @@ from .forms import CustomUserLoginForm
 
 
 class CustomUserLoginView(View):
-    pass
+    form_class = CustomUserLoginForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, "staff/login.html", {"form": form})
