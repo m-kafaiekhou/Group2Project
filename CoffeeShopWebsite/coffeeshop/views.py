@@ -4,6 +4,6 @@ from django.views import View
 # Create your views here.
 
 
-class HomePage(View):
+class HomePage(View) :
     def get(self, request):
-        return render(request, "coffeeshop/home.html", {"top_rated_items": None})
+        return render(request, "coffeeshop/home.html")

@@ -38,3 +38,7 @@ class Menu(View) :
         if check:
             response = add_to_cart(request, response, item_pk)
         return response
+class MenuDetail(View):
+    def get(self, request, cafeitem_name):
+        cafeitem = CafeItem.objects.get(name=cafeitem_name)
+        return render(request, 'menu/detail.html,', {'cafeitem':cafeitem})
