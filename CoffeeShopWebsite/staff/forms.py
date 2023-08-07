@@ -12,3 +12,6 @@ from django import forms
 
 class CustomUserLoginForm(forms.Form):
     phone_number = forms.CharField(max_length=14)
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
