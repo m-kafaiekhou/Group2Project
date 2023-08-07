@@ -22,8 +22,8 @@ def get_cart(request):
     cart = request.COOKIES.get("cart", None)
     if cart:
         items = eval(cart)
-        object_lst = [get_object_or_404(CafeItem, pk=pk) for item in items for pk in item.keys()]
-        quantity_lst = [q for item in items for q in item.values()]
+        object_lst = [get_object_or_404(CafeItem, pk=int(pk)) for pk, _ in items.items()]
+        quantity_lst = [quant for _, quant in items.items()]
         items = {}
         total = 0
         for obj, quant in zip(object_lst, quantity_lst):
