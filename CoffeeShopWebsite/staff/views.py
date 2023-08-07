@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from .forms import CustomUserLoginForm
+from .forms import CustomUserLoginForm, VerifyCodeForm
 from .models import CustomUserModel
 from core.utils import send_otp_code
 import random
