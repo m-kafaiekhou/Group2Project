@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.views import View
 from .forms import CustomUserLoginForm
+import random
 
 #
 # class CustomLoginView(LoginView):
@@ -15,3 +16,8 @@ class CustomUserLoginView(View):
     def get(self, request):
         form = self.form_class
         return render(request, "staff/login.html", {"form": form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            code = random.randint(1000, 9999)
