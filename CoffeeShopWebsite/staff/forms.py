@@ -12,6 +12,8 @@ from django.core.validators import RegexValidator
 
 
 class CustomUserLoginForm(forms.Form):
+    _REGEX = r"09(\d{9})$"
+
     phone_number = forms.CharField(max_length=14)
 
     def clean_phone_number(self):
