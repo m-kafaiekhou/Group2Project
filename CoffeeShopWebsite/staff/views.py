@@ -1,6 +1,6 @@
 # from django.contrib.auth.views import LoginView
 # from .forms import CustomAuthenticationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from .forms import CustomUserLoginForm
