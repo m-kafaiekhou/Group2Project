@@ -48,3 +48,5 @@ class CustomUserLoginVerifyView(View):
             input_code = form.cleaned_data["verify_code"]
             if input_code == request.session["otp_code"]:
                 pass
+
+            del request.session["otp_code"]
