@@ -15,7 +15,7 @@ class CustomUserLoginForm(forms.Form):
     _REGEX = r"09(\d{9})$"
     phone_validator = RegexValidator(_REGEX, "The phone number provided is invalid")
 
-    phone_number = forms.CharField(max_length=14)
+    phone_number = forms.CharField(max_length=14, validators=[phone_validator])
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data["phone_number"]
