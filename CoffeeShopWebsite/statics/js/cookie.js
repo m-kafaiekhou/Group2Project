@@ -20,6 +20,8 @@ function setCart(item, quantity) {
     let cart = getCart();
     if (cart[item]) {
         cart[item] += 1;
+    } else {
+        cart[item] = 1
     }
     const cartJSON = JSON.stringify(cart);
     document.cookie = `cart=${cartJSON}; expires=${getDateString(7)}; path=/`;
