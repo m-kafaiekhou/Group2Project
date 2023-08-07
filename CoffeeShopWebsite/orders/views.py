@@ -7,6 +7,7 @@ from django.views import View
 
 class CartView(View):
     template_name = "orders/cart.html"
+    fail_redirect_url = 'menu'
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
@@ -15,7 +16,7 @@ class CartView(View):
                 request, self.template_name, context={"items": cart, "total": total}
             )
 
-        return redirect("menu")
+        return redirect(self.fail_redirect_url)
 
 
 def get_cart(request):
@@ -36,6 +37,8 @@ def get_cart(request):
 
 class CheckoutView(View):
     template_name = "orders/checkout.html"
+    success_redirect_url = 'home'
+    fail_redirect_url = 'menu'
 
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
@@ -49,7 +52,7 @@ class CheckoutView(View):
                 context={"items": self.cart, "total": self.total},
             )
         else:
-            return redirect("menu")
+            return redirect(self.fail_redirect_url)
 
     def post(self, request, *args, **kwargs):
         phone_number = request.POST.get("phone_number")
@@ -67,7 +70,7 @@ class CheckoutView(View):
             OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
 
         create_session(request, phone_number=phone_number, order_id=order.id)
-        return redirect("home")
+        return redirect(self.success_redirect_url)
 
 
 def delete_cart_view(request):
