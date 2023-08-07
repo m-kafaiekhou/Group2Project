@@ -24,45 +24,23 @@
 {% endblock %}
 
 {% block content %}
-     <section class="menu_area white">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="main_title position-relative">
-                <h1 style="font-family: yekan;">آیتم های محبوب</h1>
-                <hr>
-                <div class="round-planet planet">
-                  <div class="round-planet planet2">
-                    <div class="shape shape1"></div>
-                    <div class="shape shape2"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row menu_inner">
-            {% for cat in  categories %}
-            <div class="col-md-12 col-lg-10 col-xl-6">
-              <div class="menu_list">
-                <div ><h2>{{cat.name}}</h2></div>
-                <ul class="list">
-            {% for item in cafeitem %}
-            {% if  cat.name == item.category_name.name %}
-                  <li>
-                    <h4>{{item.name}}
-
-                      <span>${{item.price}}</span>
-                    </h4>
-                    <p>{{item.description}}</p>
-                    <a class="btn btn-primary" href="?pk={{ item.id }}" style="font-family: yekan; background-color: rgb(220, 53, 69); border: 1px solid rgb(220, 53, 69);">افزدون به سبد</a>
-                  </li>
-                  {% endif %}
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </section>
+     <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+      <script src="{% static 'js/popper.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/stellar.js' %}"></script>
+      <script src="{% static 'js/jquery.lightbox.js' %}"></script>
+      <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
+      <script src="{% static 'vendors/isotope/imagesloaded.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendors/isotope/isotope-min.js' %}"></script>
+      <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+      <script src="{% static 'vendors/counter-up/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'vendors/counter-up/jquery.counterup.js' %}"></script>
+      <script src="{% static 'js/mail-script.js' %}"></script>
+      <script src="{% static 'vendors/popup/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'vendors/swiper/js/swiper.min.js' %}"></script>
+      <script src="{% static 'vendors/scroll/jquery.mCustomScrollbar.js' %}"></script>
+      <script src="{% static 'js/theme.js' %}"></script>
 {% endblock %}
