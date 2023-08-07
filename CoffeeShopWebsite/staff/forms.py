@@ -8,3 +8,7 @@ from django import forms
 #
 #     class Meta:
 #         fields = ['phone_number', 'password']
+
+
+class CustomUserLoginForm(forms.Form):
+    pass
