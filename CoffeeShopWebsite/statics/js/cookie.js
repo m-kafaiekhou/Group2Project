@@ -34,7 +34,7 @@ function increment(input) {
 }
 
 function decrement(input) {
-    if (value > 1) {
+    if (input.value > 1) {
         input.value -= 1;
         setCart(input.name);
         window.location.reload();
