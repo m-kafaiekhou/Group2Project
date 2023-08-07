@@ -10,20 +10,45 @@
     <body>
         <style>
             @media (min-width: 1200px) {
-            .responsive-font-example {
-                font-size: 80px;
+                h1 {
+                    font-size: 60px;
+                }
+                .img{
+                    height: 70vh;
+                }
             }
+            @media (max-width: 1199.99px) {
+                h1 {
+                    font-size: 30px;
+                }
+                .img{
+                    height: 50vh;
+                }
             }
-            @media (max-width: 1199.98px) {
-            .responsive-font-example {
-                font-size: 30px;
+            @media (min-width: 600px) {
+                h1 {
+                    font-size: 25px;
+                }
+                .img{
+                    height: 40vh;
+                }
             }
+            @media (max-width: 350px) {
+                h1 {
+                    font-size: 20px;
+                }
+                h4 {
+                    font-size: 15px;
+                }
+                .img{
+                    height: 30vh;
+                }
             }
         </style>
         <div class="container p-0">
             <div class="row d-flex justify-content-center">
                 <div class="col-sm-6 col-8 d-flex justify-content-center">
-                    <img src="../media/404.jpg" alt="404" style="height: 70vh;">
+                    <img class="img" src="../media/404.jpg" alt="404">
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
@@ -35,7 +60,7 @@
             </div>
             <div class="row d-flex justify-content-center">
                 <div class="col-sm-6 col-8 d-flex justify-content-center" align="center">
-                    <h4 class="text-secondary pt-4 text-center" style="font-family: yekan;">
+                    <h4 class="text-secondary text-center" style="font-family: yekan;">
                         احتمالا صفحه مورد نظر شما حذف یا تغییر نام داده شده است.
                     </h4>
                 </div>
