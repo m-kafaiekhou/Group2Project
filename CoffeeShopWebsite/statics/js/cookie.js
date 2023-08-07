@@ -7,7 +7,7 @@ function getDateString(daysForward=0) {
 
 function getCart() {
     let cartCookie = document.cookie.replace(
-        /((?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|^.*$/, "$1"
+        /(?:(?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|^.*$/, "$1"
     );
     if (cartCookie == "") {
         cartCookie = JSON.stringify({});
