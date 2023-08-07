@@ -41,3 +41,10 @@ class CustomUserLoginVerifyView(View):
     def get(self, request):
         form = self.form_class
         return render(request, "staff/verify.html", {"form": form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            input_code = form.cleaned_data["verify_code"]
+            if input_code == request.session["otp_code"]:
+                pass
