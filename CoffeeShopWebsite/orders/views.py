@@ -18,25 +18,6 @@ class CartView(View):
         return redirect("menu")
 
 
-# def cart_view(request):
-#     cart, total = get_cart(request)
-#     if request.method == "POST":
-#         response = redirect("cart")
-#         for obj, val in cart.items():
-#             print(obj, val, "_*_*_*_*_*_")
-#             quantity = int(request.POST.get(f"{obj.id}"))
-#             response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
-#
-#         return response
-#     else:
-#         if cart:
-#             return render(
-#                 request, "orders/cart.html", context={"items": cart, "total": total}
-#             )
-#         else:
-#             return redirect("menu")
-
-
 def get_cart(request):
     cart = request.COOKIES.get("cart", None)
     if cart:
