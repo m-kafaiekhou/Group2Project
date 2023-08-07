@@ -16,7 +16,7 @@ function getCart() {
     return cart;
 }
 
-function setCart(item, quantity) {
+function setCart(item) {
     let cart = getCart();
     if (cart[item]) {
         cart[item] += 1;
