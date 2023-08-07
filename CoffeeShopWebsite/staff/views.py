@@ -26,3 +26,4 @@ class CustomUserLoginView(View):
             if CustomUserModel.objects.filter(phone_number=phone_number).exists():
                 code = random.randint(1000, 9999)
                 send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
+                request.session["otp_code"] = {phone_number: code}
