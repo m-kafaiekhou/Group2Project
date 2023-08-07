@@ -1,26 +1,26 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
 from core.utils import update_cart, create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
 
-
-def cart_view(request):
-    cart, total = get_cart(request)
-    if request.method == "POST":
-        response = redirect("cart")
-        for obj, val in cart.items():
-            print(obj, val, "_*_*_*_*_*_")
-            quantity = int(request.POST.get(f"{obj.id}"))
-            response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
-
-        return response
-    else:
-        if cart:
-            return render(
-                request, "orders/cart.html", context={"items": cart, "total": total}
-            )
+class CartView(View) :
+    def post(request) :
+        cart, total = get_cart(request)
+        if request.method == "POST":
+            response = redirect("cart")
+            for obj, val in cart.items():
+                print(obj, val, "_*_*_*_*_*_")
+                quantity = int(request.POST.get(f"{obj.id}"))
+                response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
+            return response
         else:
-            return redirect("menu")
+            if cart:
+                return render(
+                    request, "orders/cart.html", context={"items": cart, "total": total}
+                )
+            else:
+                return redirect("menu")
 
 
 def get_cart(request):
