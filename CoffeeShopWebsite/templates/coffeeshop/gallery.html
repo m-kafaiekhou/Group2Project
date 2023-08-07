@@ -1,0 +1,227 @@
+{% load static %}
+<!doctype html>
+<html lang="fa">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
+	<title style="font-family: yekan;">کافه گروه۲</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/linericon/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
+	<link rel="stylesheet"
+		href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/animate-css/animate.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/popup/magnific-popup.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/swiper/css/swiper.min.css' %}">
+	<link rel="stylesheet" href="{% static 'vendors/scroll/jquery.mCustomScrollbar.css' %}">
+	<!-- main css -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+
+<body>
+
+	<!--================Header Menu Area =================-->
+	<header class="header_area">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="{% url 'home' %}">
+						<img class="logo-1 logo_size" src="{% static 'img/Tehran_Coffee_logo.png' %}" alt="">
+						<img class="logo-2 logo_size" src="{% static 'img/Tehran_Coffee_logo2.png' %}" alt="">
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul dir="rtl" class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'home' %}">خانه</a></li>
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'menu' %}">منو</a></li>
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'cart' %}">سبد خرید</a></li>
+                            <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="#">درباره ما</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<!--================Header Menu Area =================-->
+
+	<!--================ Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h1 style="font-family: yekan;">گالری</h1>
+					<div dir="rtl" class="col">
+                        <a class="m-2" href="{% url 'home' %}">خانه</a>
+                        <a href="#">-></a>
+						<a class="m-2" href="{% url 'gallery' %}">گالری</a>
+					</div>
+				</div>
+			</div>
+			<div class="shape shape1"></div>
+			<div class="shape shape2"></div>
+			<div class="shape shape3"></div>
+			<div class="shape shape4"></div>
+			<div class="shape shape5"></div>
+			<div class="shape shape6"></div>
+			<div class="shape shape7"></div>
+		</div>
+	</section>
+	<!--================End Banner Area =================-->
+
+	<!--================ Gallery Area =================-->
+	<section class="gallery_area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="main_title position-relative">
+						<h1>foodbar galleries</h1>
+						<hr>
+						<div class="round-planet planet">
+							<div class="round-planet planet2">
+								<div class="shape shape1"></div>
+								<div class="shape shape2"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" id="lightgallery">
+				<div class="col-lg-7 all-image" data-src="img/gallery/g1.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g1.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-5 all-image" data-src="img/gallery/g2.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g2.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 all-image" data-src="img/gallery/g3.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g3.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 all-image" data-src="img/gallery/g4.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g4.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 all-image" data-src="img/gallery/g5.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g5.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-5 all-image" data-src="img/gallery/g6.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g6.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-7 all-image" data-src="img/gallery/g7.jpg">
+					<div class="single-gallery">
+						<div class="overlay"></div>
+						<img class="img-fluid w-100" src="img/gallery/g7.jpg" alt="">
+						<div class="content">
+							<i class="lnr lnr-picture"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Gallery Area =================-->
+
+	<!--================ start footer Area  =================-->
+	<footer class="footer-area p_120" style="height: 10rem;">
+		<div class="col d-flex container align-items-center">
+			<div class="col footer-bottom d-flex justify-content-between align-items-center" style="padding-top: 0px;">
+				<div class="row-lg-4 row-md-4 footer-social" style="padding-right: 20rem;">
+					<a href="#" class="m-2">
+						<i class="fa fa-facebook"></i>
+					</a>
+					<a href="#" class="m-2">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a href="https://github.com/m-kafaiekhou/Group2Project.git" class="m-2">
+						<i class="fa fa-github"></i>
+					</a>
+				</div>
+				<div>
+					<p class="row-lg-8 row-md-8 footer-text m-0" style="font-family: yekan;">
+						.کلیه حقوق مادی و معنوی این سایت متعلق به کافه گروه۲ می باشد
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--================ End footer Area  =================-->
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/stellar.js' %}"></script>
+	<script src="{% static 'js/jquery.lightbox.js' %}"></script>
+	<script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
+	<script src="{% static 'vendors/isotope/imagesloaded.pkgd.min.js' %}"></script>
+	<script src="{% static 'vendors/isotope/isotope-min.js' %}"></script>
+	<script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'vendors/counter-up/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'vendors/counter-up/jquery.counterup.js' %}"></script>
+	<script src="{% static 'js/mail-script.js' %}"></script>
+	<script src="{% static 'vendors/popup/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'vendors/swiper/js/swiper.min.js' %}"></script>
+	<script src="{% static 'vendors/scroll/jquery.mCustomScrollbar.js' %}"></script>
+	<script src="{% static 'js/theme.js' %}"></script>
+
+
+</body></html>
