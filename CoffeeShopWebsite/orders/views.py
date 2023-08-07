@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from core.utils import update_cart, create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
@@ -23,8 +23,13 @@ def get_cart(request):
     cart = request.COOKIES.get("cart", None)
     if cart:
         items = eval(cart)
-        object_lst = [get_object_or_404(CafeItem, pk=int(pk)) for pk, _ in items.items()]
-        quantity_lst = [quant for _, quant in items.items()]
+        pk_lst = []
+        quantity_lst = []
+        for pk, quant in items.items():
+            pk_lst.append(pk)
+            quantity_lst.append(quant)
+        object_lst = get_list_or_404(CafeItem, id__in=pk_lst)
+
         items = {}
         total = 0
         for obj, quant in zip(object_lst, quantity_lst):
