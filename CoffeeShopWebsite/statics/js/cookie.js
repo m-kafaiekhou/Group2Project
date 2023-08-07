@@ -36,10 +36,9 @@ function increment(input) {
 
 function decrement(input) {
     const item = input.name;
-    const value = parseInt(input.value);
     if (value > 1) {
-        input.value = value - 1;
-        setCart(item, input.value);
+        input.value -= 1;
+        setCart(item);
         window.location.reload();
     } else {
         alert("value can't be less than 1");
