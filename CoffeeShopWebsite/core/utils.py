@@ -105,3 +105,7 @@ def access_session(request):
     else:
         context = {}
         return render(request, "", context)
+
+
+def send_otp_code(phone_number, code):
+    pass
