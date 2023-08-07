@@ -46,21 +46,19 @@ class CheckoutView(View):
     success_redirect_url = 'home'
     fail_redirect_url = 'menu'
 
-    def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
-        self.cart, self.total = get_cart(request=self.request)
-
     def get(self, request, *args, **kwargs):
-        if self.cart:
+        cart, total = get_cart(request)
+        if cart:
             return render(
                 request,
                 self.template_name,
-                context={"items": self.cart, "total": self.total},
+                context={"items": cart, "total": total},
             )
         else:
             return redirect(self.fail_redirect_url)
 
     def post(self, request, *args, **kwargs):
+        self.cart, self.total = get_cart(request=self.request)
         phone_number = request.POST.get("phone_number")
         table_number = request.POST.get("table_number")
         order = Order.objects.create(
