@@ -58,19 +58,19 @@ class CheckoutView(View):
             return redirect(self.fail_redirect_url)
 
     def post(self, request, *args, **kwargs):
-        self.cart, self.total = get_cart(request=self.request)
+        cart, total = get_cart(request)
         phone_number = request.POST.get("phone_number")
         table_number = request.POST.get("table_number")
         order = Order.objects.create(
             phone_number=phone_number,
             table_number=table_number,
-            total_price=self.total,
+            total_price=total,
             status="d",
         )
 
         order_items = [
             OrderItem(order=order, cafeitem_id=item, quantity=quant)
-            for item, quant in self.cart.items()
+            for item, quant in cart.items()
         ]
 
         OrderItem.objects.bulk_create(order_items)
