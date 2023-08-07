@@ -28,3 +28,6 @@ class CustomUserLoginView(View):
                 code = random.randint(1000, 9999)
                 send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
                 request.session["otp_code"] = {phone_number: code}
+                messages.success(
+                    request, "کد تایید به شماره موبایل شما ارسال می شود", "success"
+                )
