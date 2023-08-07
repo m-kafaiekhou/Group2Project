@@ -64,13 +64,13 @@ class CheckoutView(View):
         order = Order.objects.create(
             phone_number=phone_number,
             table_number=table_number,
-            total_price=total,
             status="d",
         )
 
         order_items = [
-            OrderItem(order=order, cafeitem_id=item, quantity=quant)
+            OrderItem(order=order, cafeitem=item, quantity=quant).set_price()
             for item, quant in cart.items()
+            if item is not None
         ]
 
         OrderItem.objects.bulk_create(order_items)
