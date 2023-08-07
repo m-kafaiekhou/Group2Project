@@ -22,3 +22,4 @@ class CustomUserLoginView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             code = random.randint(1000, 9999)
+            send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
