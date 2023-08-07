@@ -29,9 +29,8 @@ function setCart(item) {
 
 function increment(input) {
     const item = input.name;
-    const value = parseInt(input.value);
-    input.value = value + 1;
-    setCart(item, input.value);
+    input.value += 1;
+    setCart(item);
     window.location.reload();
 }
 
