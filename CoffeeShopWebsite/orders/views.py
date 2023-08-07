@@ -61,6 +61,7 @@ class CheckoutView(View):
         cart, total = get_cart(request)
         phone_number = request.POST.get("phone_number")
         table_number = request.POST.get("table_number")
+
         order = Order.objects.create(
             phone_number=phone_number,
             table_number=table_number,
