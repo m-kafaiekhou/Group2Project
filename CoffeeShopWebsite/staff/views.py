@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.views import View
 from .forms import CustomUserLoginForm
+from .models import CustomUserModel
 from core.utils import send_otp_code
 import random
 
@@ -20,6 +21,8 @@ class CustomUserLoginView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        phone_number = form.cleaned_data["phone_number"]
         if form.is_valid():
-            code = random.randint(1000, 9999)
-            send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
+            if CustomUserModel.objects.filter(phone_number=phone_number).exists():
+                code = random.randint(1000, 9999)
+                send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
