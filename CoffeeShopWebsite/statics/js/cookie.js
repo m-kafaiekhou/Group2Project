@@ -16,10 +16,10 @@ function getCart() {
     return cart;
 }
 
-function setCart(item) {
+function setCart(item, op) {
     let cart = getCart();
     if (cart[item]) {
-        cart[item] += 1;
+        cart[item] += op;
     } else {
         cart[item] = 1
     }
@@ -29,14 +29,14 @@ function setCart(item) {
 
 function increment(input) {
     input.value += 1;
-    setCart(input.name);
+    setCart(input.name, +1);
     window.location.reload();
 }
 
 function decrement(input) {
     if (input.value > 1) {
         input.value -= 1;
-        setCart(input.name);
+        setCart(input.name, -1);
         window.location.reload();
     } else {
         alert("value can't be less than 1");
