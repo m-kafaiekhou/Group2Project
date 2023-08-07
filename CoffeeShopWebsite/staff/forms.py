@@ -19,3 +19,7 @@ class CustomUserLoginForm(forms.Form):
 
     # def clean_phone_number(self):
     #     phone_number = self.cleaned_data["phone_number"]
+
+
+class VerifyCodeForm(forms.Form):
+    verify_code = forms.IntegerField()
