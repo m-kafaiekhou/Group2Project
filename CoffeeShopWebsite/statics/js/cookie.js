@@ -20,14 +20,14 @@ function setCart(item, quantity) {
     document.cookie = `cart=${cartJSON}; expires=${getDateString(7)}; path=/`;
 }
 
-function incrementInput(input) {
+function increment(input) {
     const item = input.name;
     const value = parseInt(input.value);
     input.value = value + 1;
     setCart(item, input.value);
 }
 
-function decrementInput(input) {
+function decrement(input) {
     const item = input.name;
     const value = parseInt(input.value);
     if (value > 1) {
