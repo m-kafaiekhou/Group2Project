@@ -28,7 +28,7 @@ function setCart(item, op) {
 }
 
 function increment(input) {
-    input.value += 1;
+    input.value = Number(input.value) + 1;
     setCart(input.name, +1);
     window.location.reload();
 }
