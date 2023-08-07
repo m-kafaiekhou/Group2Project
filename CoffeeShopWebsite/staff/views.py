@@ -36,4 +36,8 @@ class CustomUserLoginView(View):
 
 
 class CustomUserLoginVerifyView(View):
-    pass
+    form_class = VerifyCodeForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, "staff/verify.html", {"form": form})
