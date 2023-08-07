@@ -47,3 +47,6 @@ class OrderItem(models.Model):
     )
     quantity = models.IntegerField()
     price = models.IntegerField()
+
+    def set_price(self):
+        self.price = self.cafeitem.price * self.quantity
