@@ -38,3 +38,6 @@ class Menu(View) :
         if check:
             response = add_to_cart(request, response, item_pk)
         return response
+class MenuDetail(View):
+    def get(self, request, cafeitem_name):
+        cafeitme = CafeItem.objects.get(name=cafeitem_name)
