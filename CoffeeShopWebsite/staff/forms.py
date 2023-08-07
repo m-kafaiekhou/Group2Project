@@ -11,4 +11,4 @@ from django import forms
 
 
 class CustomUserLoginForm(forms.Form):
-    pass
+    phone_number = forms.CharField(max_length=14)
