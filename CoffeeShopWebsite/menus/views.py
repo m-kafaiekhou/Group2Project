@@ -21,21 +21,20 @@ class MenuSearch(View):
         )
 
 
+class Menu(View) :
+    def get(self, request, *args, **kwargs) :
+        item_pk = request.GET.get("pk", None)
+        check = None
+        if item_pk:
+            check = 1
+        cafeitem = CafeItem.objects.all()
+        categories = Category.objects.all()
+        response = render(
+            request,
+            "menus/menu.html",
+            {"cafeitem": cafeitem, "categories": categories},
+        )
 
-
-def menu(request):
-    item_pk = request.GET.get("pk", None)
-    check = None
-    if item_pk:
-        check = 1
-    cafeitem = CafeItem.objects.all()
-    categories = Category.objects.all()
-    response = render(
-        request,
-        "menus/menu.html",
-        {"cafeitem": cafeitem, "categories": categories},
-    )
-
-    if check:
-        response = add_to_cart(request, response, item_pk)
-    return response
+        if check:
+            response = add_to_cart(request, response, item_pk)
+        return response
