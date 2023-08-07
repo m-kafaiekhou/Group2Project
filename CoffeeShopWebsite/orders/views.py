@@ -25,6 +25,7 @@ def get_cart(request):
         items = eval(cart)
         pk_lst = []
         quantity_lst = []
+
         for pk, quant in items.items():
             pk_lst.append(pk)
             quantity_lst.append(quant)
