@@ -71,8 +71,9 @@ class CheckoutView(View) :
                 return redirect("menu")
 
 
-def delete_cart_view(request):
-    response = redirect("cart")
-    delete_cart(request, response)
-    return response
-    
+class DeleteCartView(View) :
+    def get(request) :
+        response = redirect("cart")
+        delete_cart(request, response)
+        return response
+
