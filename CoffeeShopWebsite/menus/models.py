@@ -9,6 +9,7 @@ class Category(models.Model):
         "self",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="category", blank=True, null=True)
