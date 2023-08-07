@@ -35,29 +35,33 @@ def get_cart(request):
 
 
 class CheckoutView(View):
+    template_name = "orders/checkout.html"
+
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+        self.cart, self.total = get_cart(request=self.request)
+
     def get(self, request, *args, **kwargs):
-        cart, total = get_cart(request)
-        if cart:
+        if self.cart:
             return render(
                 request,
-                "orders/checkout.html",
-                context={"items": cart, "total": total},
+                self.template_name,
+                context={"items": self.cart, "total": self.total},
             )
         else:
             return redirect("menu")
 
     def post(self, request, *args, **kwargs):
-        cart, total = get_cart(request)
         phone_number = request.POST.get("phone_number")
         table_number = request.POST.get("table_number")
         order = Order.objects.create(
             phone_number=phone_number,
             table_number=table_number,
-            total_price=total,
+            total_price=self.total,
             status="d",
         )
-        object_lst = [obj for obj, _ in cart.items()]
-        quantity_lst = [val for _, val in cart.items()]
+        object_lst = [obj for obj, _ in self.cart.items()]
+        quantity_lst = [val for _, val in self.cart.items()]
         zipped = zip(object_lst, quantity_lst)
         for item, quant in zipped:
             OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
