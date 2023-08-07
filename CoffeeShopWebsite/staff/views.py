@@ -33,3 +33,7 @@ class CustomUserLoginView(View):
                 )
                 return redirect("verify_code")
         return redirect("login")
+
+
+class CustomUserLoginVerifyView(View):
+    pass
