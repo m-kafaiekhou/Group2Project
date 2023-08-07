@@ -28,17 +28,15 @@ function setCart(item) {
 }
 
 function increment(input) {
-    const item = input.name;
     input.value += 1;
-    setCart(item);
+    setCart(input.name);
     window.location.reload();
 }
 
 function decrement(input) {
-    const item = input.name;
     if (value > 1) {
         input.value -= 1;
-        setCart(item);
+        setCart(input.name);
         window.location.reload();
     } else {
         alert("value can't be less than 1");
