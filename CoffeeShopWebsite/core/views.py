@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from .utils import send_otp_code
-import random
+import random, datetime
 
 
 def error_404_view(request, exception):
@@ -24,6 +24,7 @@ class PhoneNumberEntryView(View):
             phone_number = form.cleaned_data["phone_number"]
             random_code = random.randint(1000, 9999)
             send_otp_code(phone_number=phone_number, code=random_code)
+            request.session.set_expiry(60)
             request.session["otp_code"] = random_code
             messages.success(
                 request, "کد تایید به شماره موبایل شما ارسال شد", "success"
@@ -44,11 +45,11 @@ class VerificationCodeEntryView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             input_code = form.cleaned_data["verification_code"]
-            if input_code == request.session["otp_code"]:
+            sent_code = request.session.get("otp_code")
+            if sent_code and input_code == sent_code:
                 del request.session["otp_code"]
                 return redirect("home")
-
             else:
                 messages.error(request, "کد تایید نامعتبر است.", "danger")
-                return redirect("code_entry")
+                return redirect("phone_entry")
         return render(request, "core/code_entry.html", {"form": form})
