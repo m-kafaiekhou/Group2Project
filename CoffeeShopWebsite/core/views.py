@@ -34,21 +34,21 @@ class PhoneNumberEntryView(View):
 
 
 class VerificationCodeEntryView(View):
-    form_class = VerifyCodeForm
+    form_class = VerificationCodeEntryForm
 
     def get(self, request):
         form = self.form_class
-        return render(request, "staff/verify.html", {"form": form})
+        return render(request, "code_entry.html", {"form": form})
 
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            input_code = form.cleaned_data["verify_code"]
+            input_code = form.cleaned_data["verification_code"]
             if input_code == request.session["otp_code"]:
-                pass
-
                 del request.session["otp_code"]
+                return True
 
             else:
                 messages.error(request, "کد تایید نامعتبر است.", "danger")
-                return redirect("verify_code")
+                return redirect("code_entry")
+        return render(request, "code_entry.html", {"form": form})
