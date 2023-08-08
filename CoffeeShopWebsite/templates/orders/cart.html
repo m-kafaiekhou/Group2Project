@@ -51,7 +51,7 @@
                             <td class="text-center text-lg text-medium">
                                 {% widthratio item.price 1 quant as tot %}{{ tot|intcomma }}</td>
                             <td class="text-center"><a class="remove-from-cart" data-toggle="tooltip" title=""
-                                                       data-original-title="Remove item" onclick="remove({{ item.id }})"><i class="fa fa-trash"></i></a>
+                                                       data-original-title="Remove item" onclick="remove({{ item.id }}); return false;"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
