@@ -86,8 +86,3 @@ class DeleteCartView(View):
         response = redirect(self.success_redirect_url)
         delete_cart(request, response)
         return response
-
-def delete_cart_view(request):
-    response = redirect("cart")
-    delete_cart(request, response)
-    return response
