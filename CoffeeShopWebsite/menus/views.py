@@ -40,6 +40,6 @@ class Menu(View):
 
 
 class MenuDetail(View):
-    def get(self, request, cafeitem_name):
-        cafeitem = CafeItem.objects.get(name=cafeitem_name)
-        return render(request, 'menu/detail.html,', {'cafeitem': cafeitem})
+    def get(self, request, cafeitme_name):
+        cafeitem = CafeItem.objects.get(name=cafeitme_name)
+        return render(request, 'menus/detail.html', {'cafeitem': cafeitem})
