@@ -45,8 +45,9 @@ function decrement(input) {
 
 function remove(item) {
     let cart = getCart();
-    if (cart.hasOwnProperty(item)) {
-        cart.remove(item);
+    const pk = String(item);
+    if (cart.hasOwnProperty(pk)) {
+        cart.remove(pk);
         window.location.reload();
     }
 }
