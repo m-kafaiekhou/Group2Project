@@ -11,11 +11,11 @@ def error_404_view(request, exception):
 
 
 class PhoneNumberEntryView(View):
-    form_class = CustomUserLoginForm
+    form_class = PhoneNumberEntryForm
 
     def get(self, request):
         form = self.form_class
-        return render(request, "staff/login.html", {"form": form})
+        return render(request, "phone_entry.html", {"form": form})
 
     def post(self, request):
         form = self.form_class(request.POST)
