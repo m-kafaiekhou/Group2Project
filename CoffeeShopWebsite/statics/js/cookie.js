@@ -47,7 +47,7 @@ function remove(item) {
     let cart = getCart();
     const pk = String(item);
     if (cart.hasOwnProperty(pk)) {
-        cart.remove(pk);
+        delete cart[pk];
         window.location.reload();
     }
 }
