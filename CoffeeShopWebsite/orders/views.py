@@ -79,6 +79,14 @@ class CheckoutView(View):
         return redirect(self.success_redirect_url)
 
 
+class DeleteCartView(View):
+    success_redirect_url = 'home'
+
+    def get(self, request, *args, **kwargs):
+        response = redirect(self.success_redirect_url)
+        delete_cart(request, response)
+        return response
+
 def delete_cart_view(request):
     response = redirect("cart")
     delete_cart(request, response)
