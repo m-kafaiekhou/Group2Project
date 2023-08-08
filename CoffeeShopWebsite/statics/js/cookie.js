@@ -42,3 +42,11 @@ function decrement(input) {
         alert("value can't be less than 1");
     }
 }
+
+function remove(item) {
+    let cart = getCart();
+    if (cart.hasOwnProperty(item)) {
+        cart.remove(item);
+        window.location.reload();
+    }
+}
