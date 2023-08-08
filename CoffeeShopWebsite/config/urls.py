@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("coffeeshop.urls")),
     path("", include("orders.urls")),
     path("", include("menus.urls")),
+    path("", include("core.urls")),
     path("staff/", include("django.contrib.auth.urls")),
 ]
 
