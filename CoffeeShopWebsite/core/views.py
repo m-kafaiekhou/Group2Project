@@ -45,11 +45,11 @@ class VerificationCodeEntryView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             input_code = form.cleaned_data["verification_code"]
-            if input_code == request.session["otp_code"]:
+            sent_code = request.session.get("otp_code")
+            if sent_code and input_code == sent_code:
                 del request.session["otp_code"]
                 return redirect("home")
-
             else:
                 messages.error(request, "کد تایید نامعتبر است.", "danger")
-                return redirect("code_entry")
+                return redirect("phone_entry")
         return render(request, "core/code_entry.html", {"form": form})
