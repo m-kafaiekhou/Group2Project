@@ -43,7 +43,7 @@ def get_cart(request):
 
 class CheckoutView(View):
     template_name = "orders/checkout.html"
-    success_redirect_url = 'home'
+    success_redirect_url = 'delete_cart'
     fail_redirect_url = 'menu'
 
     def get(self, request, *args, **kwargs):
@@ -75,6 +75,7 @@ class CheckoutView(View):
         ]
 
         OrderItem.objects.bulk_create(order_items)
+
         return redirect(self.success_redirect_url)
 
 
