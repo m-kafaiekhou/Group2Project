@@ -16,7 +16,7 @@ class PhoneNumberEntryView(View):
 
     def get(self, request):
         form = self.form_class
-        return render(request, "phone_entry.html", {"form": form})
+        return render(request, "core/phone_entry.html", {"form": form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -30,7 +30,7 @@ class PhoneNumberEntryView(View):
             )
             return redirect("code_entry")
 
-        return render(request, "phone_entry.html", {"form": form})
+        return render(request, "core/phone_entry.html", {"form": form})
 
 
 class VerificationCodeEntryView(View):
@@ -38,7 +38,7 @@ class VerificationCodeEntryView(View):
 
     def get(self, request):
         form = self.form_class
-        return render(request, "code_entry.html", {"form": form})
+        return render(request, "core/code_entry.html", {"form": form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -51,4 +51,4 @@ class VerificationCodeEntryView(View):
             else:
                 messages.error(request, "کد تایید نامعتبر است.", "danger")
                 return redirect("code_entry")
-        return render(request, "code_entry.html", {"form": form})
+        return render(request, "core/code_entry.html", {"form": form})
