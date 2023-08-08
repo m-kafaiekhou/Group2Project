@@ -108,4 +108,7 @@ def access_session(request):
 
 
 def send_otp_code(phone_number, code):
-    pass
+    print("*" * 120)
+    print("Verification Code:")
+    print(f"{phone_number}: {code}")
+    print("*" * 120)
