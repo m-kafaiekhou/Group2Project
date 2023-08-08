@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
-from core.utils import update_cart, create_session, delete_cart
+from core.utils import create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
 from django.views import View
