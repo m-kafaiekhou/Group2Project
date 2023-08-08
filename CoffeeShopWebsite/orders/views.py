@@ -1,79 +1,88 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from core.utils import update_cart, create_session, delete_cart
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
+from core.utils import create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
+from django.views import View
 
-class CartView(View) :
-    def post(request) :
+
+class CartView(View):
+    template_name = "orders/cart.html"
+    fail_redirect_url = 'menu'
+
+    def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
-        if request.method == "POST":
-            response = redirect("cart")
-            for obj, val in cart.items():
-                print(obj, val, "_*_*_*_*_*_")
-                quantity = int(request.POST.get(f"{obj.id}"))
-                response = update_cart(request, response, quantity=quantity, item_pk=obj.id)
-            return response
-        else:
-            if cart:
-                return render(
-                    request, "orders/cart.html", context={"items": cart, "total": total}
-                )
-            else:
-                return redirect("menu")
-
-
-class GetCart(View) :
-    def get(request) :
-        cart = request.COOKIES.get("cart", None)
         if cart:
-            items = eval(cart)
-            object_lst = [get_object_or_404(CafeItem, pk=pk) for item in items for pk in item.keys()]
-            quantity_lst = [q for item in items for q in item.values()]
-            items = {}
-            total = 0
-            for obj, quant in zip(object_lst, quantity_lst):
-                items[obj] = quant
-                total += obj.price * int(quant)
-            return items, total
-        return None, None
-
-
-class CheckoutView(View) :
-    def post(request) :
-        cart, total = GetCart(request)
-        if request.method == "POST":
-            phone_number = request.POST.get("phone_number")
-            table_number = request.POST.get("table_number")
-            order = Order.objects.create(
-                phone_number=phone_number,
-                table_number=table_number,
-                total_price=total,
-                status="d",
+            return render(
+                request, self.template_name, context={"items": cart, "total": total}
             )
-            object_lst = [obj for obj, _ in cart.items()]
-            quantity_lst = [val for _, val in cart.items()]
-            zipped = zip(object_lst, quantity_lst)
-            for item, quant in zipped:
-                OrderItem.objects.create(order_fk=order, cafeitem_fk=item, quantity=quant)
 
-            create_session(request, phone_number=phone_number, order_id=order.id)
-            return redirect("home")
+        return redirect(self.fail_redirect_url)
 
+
+def get_cart(request):
+    cart = request.COOKIES.get("cart", None)
+    if cart:
+        items = eval(cart)
+        pk_lst = []
+        quantity_lst = []
+
+        for pk, quant in items.items():
+            pk_lst.append(pk)
+            quantity_lst.append(quant)
+        object_lst = get_list_or_404(CafeItem, id__in=pk_lst)
+
+        items = {}
+        total = 0
+        for obj, quant in zip(object_lst, quantity_lst):
+            items[obj] = quant
+            total += obj.price * int(quant)
+        return items, total
+
+    return None, None
+
+
+class CheckoutView(View):
+    template_name = "orders/checkout.html"
+    success_redirect_url = 'delete_cart'
+    fail_redirect_url = 'menu'
+
+    def get(self, request, *args, **kwargs):
+        cart, total = get_cart(request)
+        if cart:
+            return render(
+                request,
+                self.template_name,
+                context={"items": cart, "total": total},
+            )
         else:
-            if cart:
-                return render(
-                    request,
-                    "orders/checkout.html",
-                    context={"items": cart, "total": total},
-                )
-            else:
-                return redirect("menu")
+            return redirect(self.fail_redirect_url)
+
+    def post(self, request, *args, **kwargs):
+        cart, total = get_cart(request)
+        phone_number = request.POST.get("phone_number")
+        table_number = request.POST.get("table_number")
+
+        order = Order.objects.create(
+            phone_number=phone_number,
+            table_number=table_number,
+            status="d",
+        )
+
+        order_items = [
+            OrderItem(order=order, cafeitem=item, quantity=quant).set_price()
+            for item, quant in cart.items()
+            if item is not None
+        ]
+
+        OrderItem.objects.bulk_create(order_items)
+
+        return redirect(self.success_redirect_url)
 
 
-class DeleteCartView(View) :
-    def get(request) :
-        response = redirect("cart")
+class DeleteCartView(View):
+    success_redirect_url = 'home'
+
+    def get(self, request, *args, **kwargs):
+        response = redirect(self.success_redirect_url)
         delete_cart(request, response)
         return response
-
