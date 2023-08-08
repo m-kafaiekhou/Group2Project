@@ -10,7 +10,7 @@ def error_404_view(request, exception):
     return render(request, "404.html")
 
 
-class CustomUserLoginView(View):
+class PhoneNumberEntryView(View):
     form_class = CustomUserLoginForm
 
     def get(self, request):
@@ -34,7 +34,7 @@ class CustomUserLoginView(View):
         return redirect("login")
 
 
-class CustomUserLoginVerifyView(View):
+class VerificationCodeEntryView(View):
     form_class = VerifyCodeForm
 
     def get(self, request):
