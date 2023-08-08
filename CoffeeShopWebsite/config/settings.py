@@ -147,5 +147,5 @@ AUTHENTICATION_BACKENDS = [
 
 LOGIN_REDIRECT_URL = "/admin/"
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+# DEBUG = False
+# ALLOWED_HOSTS = ["*"]
