@@ -31,8 +31,8 @@ class CustomUserLoginView(View):
                 messages.success(
                     request, "کد تایید به شماره موبایل شما ارسال می شود", "success"
                 )
-                print("#" * 100)
-                print(request.session["otp_code"])
+                # print("#" * 100)
+                # print(request.session["otp_code"])
                 return redirect("verify_code")
         return redirect("login")
 
