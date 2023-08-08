@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from .utils import send_otp_code
-import random
+import random, datetime
 
 
 def error_404_view(request, exception):
