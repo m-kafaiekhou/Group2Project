@@ -55,25 +55,25 @@ def remove_from_cart(request, response, item_pk: int):
         response.set_cookie("cart", str_value, max_age=max_age)
 
 
-def update_cart(request, response, item_pk: int, quantity: int):
-    """
-    updates the quantity of each item in the shopping cart.
-    """
-
-    if request.COOKIES.get("cart"):
-        v = request.COOKIES.get("cart")
-        cart = eval(v)
-        for i in range(len(cart)):
-            for key, val in cart[i].items():
-                if int(key) == item_pk:
-                    cart.append({f"{item_pk}": quantity})
-                    cart.pop(i)
-        delete_cart(request, response)
-
-        str_value = f"{cart}"
-        max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
-        response.set_cookie("cart", str_value, max_age=max_age)
-        return response
+# def update_cart(request, response, item_pk: int, quantity: int):
+#     """
+#     updates the quantity of each item in the shopping cart.
+#     """
+#
+#     if request.COOKIES.get("cart"):
+#         v = request.COOKIES.get("cart")
+#         cart = eval(v)
+#         for i in range(len(cart)):
+#             for key, val in cart[i].items():
+#                 if int(key) == item_pk:
+#                     cart.append({f"{item_pk}": quantity})
+#                     cart.pop(i)
+#         delete_cart(request, response)
+#
+#         str_value = f"{cart}"
+#         max_age = 604800  # 7 * 24 * 60 * 60 (7 days)
+#         response.set_cookie("cart", str_value, max_age=max_age)
+#         return response
 
 
 def delete_cart(request, response) -> None:
