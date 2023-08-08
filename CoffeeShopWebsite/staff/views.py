@@ -27,10 +27,12 @@ class CustomUserLoginView(View):
             if CustomUserModel.objects.filter(phone_number=phone_number).exists():
                 code = random.randint(1000, 9999)
                 send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
-                request.session["otp_code"] = {phone_number: code}
+                request.session["otp_code"] = code
                 messages.success(
                     request, "کد تایید به شماره موبایل شما ارسال می شود", "success"
                 )
+                print("#" * 100)
+                print(request.session["otp_code"])
                 return redirect("verify_code")
         return redirect("login")
 
@@ -49,4 +51,8 @@ class CustomUserLoginVerifyView(View):
             if input_code == request.session["otp_code"]:
                 pass
 
-            del request.session["otp_code"]
+                del request.session["otp_code"]
+
+            else:
+                messages.error(request, "کد تایید نامعتبر است.", "danger")
+                return redirect("verify_code")
