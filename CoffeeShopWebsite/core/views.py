@@ -20,19 +20,17 @@ class PhoneNumberEntryView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
-        phone_number = form.cleaned_data["phone_number"]
         if form.is_valid():
-            if CustomUserModel.objects.filter(phone_number=phone_number).exists():
-                code = random.randint(1000, 9999)
-                send_otp_code(phone_number=form.cleaned_data["phone_number"], code=code)
-                request.session["otp_code"] = code
-                messages.success(
-                    request, "کد تایید به شماره موبایل شما ارسال می شود", "success"
-                )
-                # print("#" * 100)
-                # print(request.session["otp_code"])
-                return redirect("verify_code")
-        return redirect("login")
+            phone_number = form.cleaned_data["phone_number"]
+            random_code = random.randint(1000, 9999)
+            send_otp_code(phone_number=phone_number, code=random_code)
+            request.session["otp_code"] = random_code
+            messages.success(
+                request, "کد تایید به شماره موبایل شما ارسال شد", "success"
+            )
+            return redirect("code_entry")
+
+        return render(request, "phone_entry.html", {"form": form})
 
 
 class VerificationCodeEntryView(View):
