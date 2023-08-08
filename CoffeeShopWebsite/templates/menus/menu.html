@@ -57,7 +57,7 @@
                 <div ><h2>{{cat.name}}</h2></div>
                 <ul class="list">
             {% for item in cafeitem %}
-            {% if  cat.name == item.category_name.name %}
+            {% if  cat.name == item.category.name %}
                   <li>
                     <h4><a href="{% url 'menu_detail' item.name %}">{{item.name}}</a>
                       
