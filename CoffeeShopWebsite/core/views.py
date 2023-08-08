@@ -46,7 +46,7 @@ class VerificationCodeEntryView(View):
             input_code = form.cleaned_data["verification_code"]
             if input_code == request.session["otp_code"]:
                 del request.session["otp_code"]
-                return True
+                return redirect("home")
 
             else:
                 messages.error(request, "کد تایید نامعتبر است.", "danger")
