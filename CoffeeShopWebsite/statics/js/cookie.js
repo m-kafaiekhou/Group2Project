@@ -6,7 +6,7 @@ function getDateString(daysForward=0) {
 }
 
 function deleteCookie(cookieName="cart") {
-  document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
 }
 
 function getCart() {
@@ -53,10 +53,11 @@ function remove(item) {
     if (cart.hasOwnProperty(pk)) {
         delete cart[pk];
         if (Object.keys(cart).length === 0) {
-          deleteCookie()
+            deleteCookie()
+        } else {
+            const cartJSON = JSON.stringify(cart);
+            document.cookie = `cart=${cartJSON}; expires=${getDateString(7)}; path=/`;
         }
-        const cartJSON = JSON.stringify(cart);
-        document.cookie = `cart=${cartJSON}; expires=${getDateString(7)}; path=/`;
         window.location.reload();
     }
 }
