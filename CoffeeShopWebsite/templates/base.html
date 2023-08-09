@@ -54,14 +54,16 @@
             </div>
         </section>
         <br>
+        <form action="{% url 'menu_search' %}" method="get">
         <div dir="rtl" style="padding-right: 5rem;">
         <div class="input-group" style="width: 25rem;">
-            <input dir="rtl" type="text" class="form-control"  placeholder="جستجو در منو">
+            <input dir="rtl" type="text" class="form-control"  placeholder="جستجو در منو" name="search">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
+                <button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
             </span>
         </div>
         </div>
+        </form>
         <!--================ End Banner Area =================-->
 
         <!--================ Content Area =================-->
