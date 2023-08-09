@@ -44,7 +44,15 @@ class ItemDetailView(View):
         return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
-        pass
+        item = get_object_or_404(self.model_class, pk=kwargs['pk'])
+        form = self.form_class(request.POST, instance=item)
+
+        if form.is_valid():
+            form.save()
+
+        redirect('item_detail', kwargs['pk'])
+
+
 
 
 class CategoryDetailView(View):
