@@ -117,3 +117,9 @@ class OrderDetailView(View):
 class OrderListView(View):
     template_name = "staff/order_list.html"
     model_class = Order
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
