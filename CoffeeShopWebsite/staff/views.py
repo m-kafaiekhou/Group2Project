@@ -19,7 +19,8 @@ class ItemListView(LoginRequiredMixin, View):
 
 
 class CategoryListView(View):
-    pass
+    template_name = "staff/category_list.html"
+    model_class = Category
 
 
 class ItemDetailView(View):
