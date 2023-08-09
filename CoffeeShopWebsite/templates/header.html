@@ -1,21 +1,32 @@
 {% block content %}
 <!doctype html>
 <html dir="rtl" lang="fa">
-  	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	  </head>
-    <body>
-      <style>
-        body, html {height: 100vh;}
-        .bg {
-          background-image: url("../statics/img/coffeebeans.jpg");
-          height: 100vh;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-        }
-      </style>
-    </body>
+  <header class="header_area">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="{% url 'home' %}">
+						<img class="logo-1 logo_size" src="{% static 'img/Tehran_Coffee_logo.png' %}" alt="">
+						<img class="logo-2 logo_size" src="{% static 'img/Tehran_Coffee_logo2.png' %}" alt="">
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul dir="rtl" class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'home' %}">خانه</a></li>
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'menu' %}">منو</a></li>
+							<li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'cart' %}">سبد خرید</a></li>
+                            <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="#">درباره ما</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
 </html>
   {% endblock %}
