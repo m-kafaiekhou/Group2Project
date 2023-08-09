@@ -116,10 +116,13 @@ class OrderDetailView(View):
     form_class = forms.OrderUpdateForm
 
     def get(self, request, *args, **kwargs):
-        pass
+        item = get_object_or_404(self.model_class, pk=kwargs["pk"])
+        initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
+        form = self.form_class(initial=initial_data)
+        return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
-       pass
+        pass
 
 
 class OrderListView(View):
