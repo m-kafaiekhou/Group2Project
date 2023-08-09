@@ -110,6 +110,10 @@ class AddCategoryView(View):
         return redirect('add_category')
 
 
+class OrderDetailView(View):
+    pass
+
+
 class OrderListView(View):
     template_name = "staff/order_list.html"
     model_class = Order
