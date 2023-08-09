@@ -13,6 +13,7 @@
 	<!--================End Banner Area =================-->
 
 	<!--================ Gallery Area =================-->
+	{% block content %}
 	<section class="gallery_area">
 		<div class="container">
 			<div class="row">
@@ -33,33 +34,8 @@
 				</div>
 			</div>
 	</section>
-
+	{% endblock content %}
 	<!--================ End Gallery Area =================-->
-
-	<!--================ start footer Area  =================-->
-	<footer dir="rtl" class="footer-area p_120 d-flex">
-		<div class="col d-flex container align-items-center">
-			<div class="col footer-bottom d-flex justify-content-between align-items-center" style="padding-top: 0px;">
-				<div>
-					<p class="row-lg-8 row-md-8 footer-text m-0 yekan font20">
-						کلیه حقوق مادی و معنوی این سایت متعلق به کافه گروه۲ می باشد
-					</p>
-				</div>
-				<div class="row-lg-2 row-md-2 footer-social">
-					<a href="#" class="m-1">
-						<i class="fa fa-facebook"></i>
-					</a>
-					<a href="#" class="m-1">
-						<i class="fa fa-twitter"></i>
-					</a>
-					<a href="https://github.com/m-kafaiekhou/Group2Project.git" class="m-1">
-						<i class="fa fa-github"></i>
-					</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--================ End footer Area  =================-->
 
     <script src="{% static 'js/script.js' %}"></script>
 	<!-- Optional JavaScript -->
