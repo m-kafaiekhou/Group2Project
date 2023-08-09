@@ -58,6 +58,12 @@ class CategoryDetailView(View):
     model_class = Category
     form_class = forms.AddCategoryForm
 
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 class AddItemView(View):
     pass
