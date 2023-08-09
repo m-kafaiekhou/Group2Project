@@ -18,3 +18,10 @@ class CategoryDetailView(View):
     pass
 
 
+class AddItemView(View):
+    pass
+
+
+class AddCategoryView(View):
+    pass
+
