@@ -1,6 +1,8 @@
 from django.views import View
 from django.shortcuts import render
 
+from menus.models import CafeItem, Category
+
 
 class ItemListView(View):
     pass
