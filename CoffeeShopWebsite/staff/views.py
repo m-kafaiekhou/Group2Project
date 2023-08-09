@@ -22,6 +22,12 @@ class CategoryListView(View):
     template_name = "staff/category_list.html"
     model_class = Category
 
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 class ItemDetailView(View):
     pass
