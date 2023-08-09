@@ -23,7 +23,7 @@ Search
                 <div class="col-md-12 col-lg-10 col-xl-6">
                     <div class="menu_list">
                         <ul class="list">
-                            {% for item in cafeitem %}
+                            {% for item in searched_items %}
                                 <li>
                                     <h4><a href="{% url 'menu_detail' item.name %}">{{ item.name }}</a>
 
