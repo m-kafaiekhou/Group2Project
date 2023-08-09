@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import DynamicImages, DynamicTexts
+from .models import DynamicImages, DynamicTexts, DynamicNumbers
 
 class SearchMenu(forms.Form):
     search = forms.CharField()
@@ -17,3 +17,8 @@ class DynamicTextForm(ModelForm):
         model = DynamicTexts
         fields = "__all__"
 
+
+class DynamicNumberForm(ModelForm):
+    class Meta:
+        model = DynamicNumbers
+        fields = "__all__"
