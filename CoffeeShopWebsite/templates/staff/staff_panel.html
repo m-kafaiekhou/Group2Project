@@ -12,47 +12,47 @@
 	<div class="container">
         <div class="row justify-content-center">
             <div class="col-3">
-                <h1>سفارش ها</h1>
+                <h1 style="font-family: yekan;">سفارش ها</h1>
                 {% for order in orders %}
                 <div class="order-preview">
                     <a href="{% url 'order_details' order.id%}">
                         <h2 class="order-id">{{order.id}}</h2>
                         <h3 class="order-subtitle">{{order.items}}</h3>
                     </a>
-                    <p class="order-meta">
+                    <p class="order-meta" style="font-family: yekan;">
                         زمان ثبت سفارش:
                         {{order.order_date}}
                     </p>
                 </div>
                 {% endfor%}
                 <div>
-                    <button class="btn btn-primary mt-5" type="submit" value="submit">افزودن</button>
+                    <button class="btn btn-primary mt-5" type="submit" value="submit" style="font-family: yekan;">افزودن</button>
                 </div>
             </div>
             <div class="col-3">
-                <h1>دسته بندی ها</h1>
+                <h1 style="font-family: yekan;">دسته بندی ها</h1>
                 {% for category in categories %}
                 <div class="category-preview">
                     <a href="{% url 'category_details' category.id%}">
-                        <h2 class="category-name">{{category.name}}</h2>
+                        <h2 class="category-name" style="font-family: yekan;">{{category.name}}</h2>
                     </a>
                 </div>
                 {% endfor%}
                 <div>
-                    <button class="btn btn-primary mt-5" type="submit" value="submit">افزودن</button>
+                    <button class="btn btn-primary mt-5" type="submit" value="submit" style="font-family: yekan;">افزودن</button>
                 </div>
             </div>
             <div class="col-3">
-                <h1>آیتم ها</h1>
+                <h1 style="font-family: yekan;">آیتم ها</h1>
                 {% for item in items %}
                 <div class="item-preview">
                     <a href="{% url 'item_details' item.id%}">
-                        <h2 class="item-name">{{item.name}}</h2>
+                        <h2 class="item-name" style="font-family: yekan;">{{item.name}}</h2>
                     </a>
                 </div>
                 {% endfor%}
                 <div>
-                    <button class="btn btn-primary mt-5" type="submit" value="submit">افزودن</button>
+                    <button class="btn btn-primary mt-5" type="submit" value="submit" style="font-family: yekan;">افزودن</button>
                 </div>
             </div>
         </div>
