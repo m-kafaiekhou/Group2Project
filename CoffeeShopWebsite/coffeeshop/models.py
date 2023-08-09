@@ -1,6 +1,5 @@
 from django.db import models
 from menus.models import CafeItem
-from django.core.validators import RegexValidator
 from phone_field import PhoneField
 from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
