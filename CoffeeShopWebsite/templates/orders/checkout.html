@@ -2,11 +2,21 @@
 {% load static %}
 {% load humanize %}
 
-{% block head %}
-    <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
-    <link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
+{% block title %}
+Menu
 {% endblock %}
 
+{% block head %}
+<link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+<link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
+{% endblock %}
+
+
+<!--================ Banner Area =================-->
+{% block bannername %}ثبت سفارش{% endblock %}
+<!--================End Banner Area =================-->
+
+<!--================ Checkout Area =================-->
 {% block content %}
     <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
@@ -74,5 +84,9 @@
             </div>
         </div>
     </form>
+    {% block script %}
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    {% endblock %}
+    
 {% endblock %}
+<!--================ End Checkout Area =================-->
