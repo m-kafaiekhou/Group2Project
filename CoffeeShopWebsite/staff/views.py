@@ -109,5 +109,6 @@ class AddCategoryView(View):
 
         return redirect('add_category')
 
+
 class OrderListView(View):
     pass
