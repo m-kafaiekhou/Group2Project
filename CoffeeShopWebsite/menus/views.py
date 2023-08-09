@@ -11,14 +11,13 @@ class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
             cd = request.GET.get("search")
-            cafeitem = cafeitem.filter(
+            searched_items = CafeItem.objects.filter(
                 Q(name__icontains=cd) | Q(description__icontains=cd)
             )
-            category = {obj.sub_category_fk.parent_category_fk for obj in cafeitem}
         return render(
             request,
             "menus/menu.html",
-            {"cafeitem": cafeitem, "categories": category},
+            {"searched_items": searched_items},
         )
 
 
