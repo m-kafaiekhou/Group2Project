@@ -1,4 +1,4 @@
 from django.urls import path
-ftom . import views
+from . import views
 
 urlpatterns = []
