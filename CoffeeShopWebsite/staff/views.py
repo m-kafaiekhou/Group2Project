@@ -23,7 +23,8 @@ class CategoryListView(View):
     model_class = Category
 
     def get(self, request, *args, **kwargs):
-        pass
+        categories = self.model_class.objects.all()
+        return render(request, self.template_name, context={'categories': categories})
 
     def post(self, request, *args, **kwargs):
         pass
