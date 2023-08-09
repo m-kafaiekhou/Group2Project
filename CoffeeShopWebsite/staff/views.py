@@ -53,8 +53,6 @@ class ItemDetailView(View):
         redirect('item_detail', kwargs['pk'])
 
 
-
-
 class CategoryDetailView(View):
     pass
 
