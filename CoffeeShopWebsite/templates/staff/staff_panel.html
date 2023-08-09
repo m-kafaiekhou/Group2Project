@@ -28,6 +28,13 @@
             </div>
             <div class="col-3">
                 <h1>دسته بندی ها</h1>
+                {% for category in categories %}
+                <div class="category-preview">
+                    <a href="{% url 'category_details' category.id%}">
+                        <h2 class="category-name">{{category.name}}</h2>
+                    </a>
+                </div>
+                {% endfor%}
             </div>
             <div class="col-3">
                 <h1>آیتم ها</h1>
