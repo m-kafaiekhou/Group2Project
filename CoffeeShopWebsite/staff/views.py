@@ -34,6 +34,12 @@ class ItemDetailView(View):
     template_name = "staff/item_detail.html"
     model_class = CafeItem
 
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 class CategoryDetailView(View):
     pass
