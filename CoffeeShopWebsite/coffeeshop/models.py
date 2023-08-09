@@ -36,3 +36,8 @@ class DynamicTexts(models.Model):
     text = models.TextField()
     email = models.EmailField()
 
+
+class DynamicNumbers(models.Model):
+    phone = PhoneField(null=True, blank=True, help_text="Phone numbers used on webpage")
+    cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
+
