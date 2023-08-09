@@ -31,7 +31,8 @@ class CategoryListView(View):
 
 
 class ItemDetailView(View):
-    pass
+    template_name = "staff/item_detail.html"
+    model_class = CafeItem
 
 
 class CategoryDetailView(View):
