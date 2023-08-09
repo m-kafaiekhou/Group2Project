@@ -2,12 +2,13 @@
 {% load static %}
 {% load humanize %}
 
-{% block head %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    {#    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">#}
-    <link href="{% static 'css/cart.css' %}" rel="stylesheet">
-    <link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css'/>
+{% block title %}
+Menu
 {% endblock %}
+
+ <!--================ Banner Area =================-->
+ {% block bannername %}سبد خرید{% endblock %}
+ <!--================End Banner Area =================-->
 
 {% block content %}
     <form method="post" action="{% url 'cart' %}">
@@ -45,7 +46,7 @@
                                        style="-webkit-appearance: none; -moz-appearance: textfield; width: 50px; height: 38px">
                                 <button class="btn btn-secondary" onclick="decrement(this.previousElementSibling); return false;">-
                                 </button>
-{#                                <input value="{{ item.id }}" name="{{ item.id }}" style="display: none">#}
+                            {#<input value="{{ item.id }}" name="{{ item.id }}" style="display: none">#}
                             </td>
                             <td class="text-center text-lg text-medium">{{ item.price|intcomma }}</td>
                             <td class="text-center text-lg text-medium">
