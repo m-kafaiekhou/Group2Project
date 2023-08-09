@@ -102,8 +102,12 @@ class AddCategoryView(View):
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request, *args, **kwargs):
-        pass
+        form = self.form_class(request.POST)
 
+        if form.is_valid():
+            form.save()
+
+        return redirect('add_category')
 
 class OrderListView(View):
     pass
