@@ -80,7 +80,8 @@ class AddItemView(View):
     form_class = forms.AddItemForm
 
     def get(self, request, *args, **kwargs):
-        pass
+        form = self.form_class()
+        return render(request, self.template_name, context={'form': form})
 
     def post(self, request, *args, **kwargs):
         pass
