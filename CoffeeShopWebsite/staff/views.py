@@ -111,7 +111,9 @@ class AddCategoryView(View):
 
 
 class OrderDetailView(View):
-    pass
+    template_name = "staff/order_detail.html"
+    model_class = Order
+    form_class = forms.OrderUpdateForm
 
 
 class OrderListView(View):
