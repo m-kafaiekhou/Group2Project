@@ -38,6 +38,14 @@
             </div>
             <div class="col-3">
                 <h1>آیتم ها</h1>
+                {% for item in items %}
+                <div class="item-preview">
+                    <a href="{% url 'item_details' item.id%}">
+                        <h2 class="item-name">{{item.name}}</h2>
+                    </a>
+                </div>
+                {% endfor%}
+
             </div>
         </div>
     </div>
