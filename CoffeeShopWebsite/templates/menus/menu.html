@@ -1,56 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Menu</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/linericon/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css">
-    <link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/animate-css/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/popup/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/swiper/css/swiper.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/scroll/jquery.mCustomScrollbar.css' %}">
-    <!-- main css -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-    <link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css'/>
+{% block title %}
+Menu
 {% endblock %}
 
-{% block content %}
-
-    <!--================Header Menu Area =================-->
-
-    <!--================Header Menu Area =================-->
 
     <!--================ Banner Area =================-->
-
-    <!--================End Banner Area =================-->
+	{% block bannername %}منو{% endblock %}
+	<!--================End Banner Area =================-->
 
     <!--================ Menu Area =================-->
+    {% block content %}
     <section class="menu_area white">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="main_title position-relative">
-                        <h1 style="font-family: yekan;">آیتم های محبوب</h1>
-                        <hr>
-                        <div class="round-planet planet">
-                            <div class="round-planet planet2">
-                                <div class="shape shape1"></div>
-                                <div class="shape shape2"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <h1 class="yekan" style="text-align: center;">منو نوشیدنی ها</h1>
             </div>
-            <div class="row menu_inner">
+            <br>
+            <br>
+            <div dir="rtl" class="row menu_inner">
                 {% for cat in  categories %}
                     <div class="col-md-12 col-lg-10 col-xl-6">
                         <div class="menu_list">
@@ -79,39 +48,9 @@
             </div>
         </div>
     </section>
+
+{% endblock %}
     <!--================End Menu Area =================-->
 
-    <!--================Book Table Area =================-->
 
-    <!--================End Book Table Area =================-->
-
-    <!--================ start footer Area  =================-->
-
-    <!--================ End footer Area  =================-->
-
-
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/stellar.js' %}"></script>
-    <script src="{% static 'js/jquery.lightbox.js' %}"></script>
-    <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
-    <script src="{% static 'vendors/isotope/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendors/isotope/isotope-min.js' %}"></script>
-    <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-    <script src="{% static 'vendors/counter-up/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'vendors/counter-up/jquery.counterup.js' %}"></script>
-    <script src="{% static 'js/mail-script.js' %}"></script>
-    <script src="{% static 'vendors/popup/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'vendors/swiper/js/swiper.min.js' %}"></script>
-    <script src="{% static 'vendors/scroll/jquery.mCustomScrollbar.js' %}"></script>
-    <script src="{% static 'js/theme.js' %}"></script>
-    <script src="{% static 'js/cookie.js' %}"></script>
-{% endblock %}
 
