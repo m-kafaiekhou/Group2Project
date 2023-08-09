@@ -32,7 +32,7 @@ class CategoryListView(LoginRequiredMixin, View):
         pass
 
 
-class ItemDetailView(View):
+class ItemDetailView(LoginRequiredMixin, View):
     template_name = "staff/item_detail.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
