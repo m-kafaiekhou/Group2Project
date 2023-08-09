@@ -119,7 +119,8 @@ class OrderListView(View):
     model_class = Order
 
     def get(self, request, *args, **kwargs):
-        pass
+        orders = self.model_class.objects.all().order_by('-status')
+        return render(request, self.template_name, context={'orders': orders})
 
     def post(self, request, *args, **kwargs):
         pass
