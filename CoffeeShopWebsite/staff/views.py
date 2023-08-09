@@ -115,6 +115,12 @@ class OrderDetailView(View):
     model_class = Order
     form_class = forms.OrderUpdateForm
 
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+       pass
+
 
 class OrderListView(View):
     template_name = "staff/order_list.html"
