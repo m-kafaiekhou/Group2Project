@@ -10,4 +10,11 @@ class CategoryListView(View):
     pass
 
 
+class ItemDetailView(View):
+    pass
+
+
+class CategoryDetailView(View):
+    pass
+
 
