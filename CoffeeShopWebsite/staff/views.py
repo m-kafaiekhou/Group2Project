@@ -11,7 +11,8 @@ class ItemListView(LoginRequiredMixin, View):
     model_class = CafeItem
 
     def get(self, request, *args, **kwargs):
-        pass
+        items = self.model_class.objects.all()
+        return render(request, self.template_name, context={'items': items})
 
     def post(self, request, *args, **kwargs):
         pass
