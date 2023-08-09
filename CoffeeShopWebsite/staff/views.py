@@ -1,7 +1,4 @@
-# from django.contrib.auth.views import LoginView
-# from .forms import CustomAuthenticationForm
+from django.views import View
+from django.shortcuts import render
 
 
-#
-# class CustomLoginView(LoginView):
-#     form_class = CustomAuthenticationForm
