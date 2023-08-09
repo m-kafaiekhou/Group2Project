@@ -25,3 +25,6 @@ class AddItemView(View):
 class AddCategoryView(View):
     pass
 
+
+class OrderListView(View):
+    pass
