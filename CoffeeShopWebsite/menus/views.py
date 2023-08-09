@@ -16,7 +16,7 @@ class MenuSearch(View):
             )
         return render(
             request,
-            "menus/menu.html",
+            "menus/search_result.html",
             {"searched_items": searched_items},
         )
 
