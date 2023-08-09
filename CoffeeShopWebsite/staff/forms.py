@@ -1,5 +1,6 @@
 from django import forms
 from menus.models import CafeItem, Category
+from orders.models import Order
 
 
 class AddItemForm(forms.ModelForm):
@@ -15,4 +16,6 @@ class AddCategoryForm(forms.ModelForm):
 
 
 class OrderUpdateForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = Order
+        fields = "__all__"
