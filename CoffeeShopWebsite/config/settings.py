@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "dashboard",
     # Third party apps
     "django.contrib.humanize",
+    "phone_field",
 ]
 
 MIDDLEWARE = [
