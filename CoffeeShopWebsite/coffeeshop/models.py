@@ -1,6 +1,8 @@
 from django.db import models
 from menus.models import CafeItem
-
+from django.core.validators import RegexValidator
+from phone_field import PhoneField
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 
@@ -22,3 +24,11 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f"{self.review[:15]} ..."
+
+
+# Coffee Shop Website DynamicInterface Models
+class DynamicImages(models.Model):
+    logo = models.ImageField(upload_to="icons/", blank=True, null=True)
+    background = models.ImageField(upload_to="background/", blank=True, null=True)
+    gallery = models.ImageField(upload_to="gallery/", blank=True, null=True)
+
