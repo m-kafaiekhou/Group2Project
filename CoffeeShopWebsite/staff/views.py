@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from menus.models import CafeItem, Category
 from orders.models import Order
+from . import forms
 
 
 class ItemListView(LoginRequiredMixin, View):
@@ -33,9 +34,12 @@ class CategoryListView(View):
 class ItemDetailView(View):
     template_name = "staff/item_detail.html"
     model_class = CafeItem
+    form_class = forms.AddItemForm
 
     def get(self, request, *args, **kwargs):
-        pass
+        item = get_object_or_404(self.model_class, pk=kwargs["pk"])
+        form = self.form_class()
+        return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
         pass
