@@ -14,5 +14,5 @@ class AddCategoryForm(forms.ModelForm):
         fields = "__all__"
 
 
-class OrderStatusForm(forms.ModelForm):
+class OrderUpdateForm(forms.ModelForm):
     pass
