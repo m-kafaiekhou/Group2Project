@@ -54,7 +54,9 @@ class ItemDetailView(View):
 
 
 class CategoryDetailView(View):
-    pass
+    template_name = "staff/category_detail.html"
+    model_class = Category
+    form_class = forms.AddCategoryForm
 
 
 class AddItemView(View):
