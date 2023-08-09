@@ -6,12 +6,14 @@ from .models import CafeItem, Category
 
 # Create your views here.
 
+
 class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
-            cafeitem = CafeItem.objects.all()
             cd = request.GET.get("search")
-            cafeitem = cafeitem.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
+            cafeitem = cafeitem.filter(
+                Q(name__icontains=cd) | Q(description__icontains=cd)
+            )
             category = {obj.sub_category_fk.parent_category_fk for obj in cafeitem}
         return render(
             request,
@@ -42,4 +44,4 @@ class Menu(View):
 class MenuDetail(View):
     def get(self, request, cafeitme_name):
         cafeitem = CafeItem.objects.get(name=cafeitme_name)
-        return render(request, 'menus/detail.html', {'cafeitem': cafeitem})
+        return render(request, "menus/detail.html", {"cafeitem": cafeitem})
