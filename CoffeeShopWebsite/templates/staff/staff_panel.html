@@ -9,21 +9,5 @@
 {% endblock %}
 
 {% block content %}
-	<form method="post" action="{% url 'staff_panel' %}">
-        {% csrf_token %}
-        <div class="container pb-3 mb-1 pt-5">
-            <div class="table-responsive orderstable">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="yekan">شماره سفارش</th>
-                            <th class="text-center yekan">جزئیات سفارش</th>
-                            <th class="text-center yekan">وضعیت</th>
-                            <th class="text-center yekan"><a class="btn btn-sm btn-outline-danger" href="">حذف سفارش</a></th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </form>
+	<div class="container"></div>
 {% endblock %}
