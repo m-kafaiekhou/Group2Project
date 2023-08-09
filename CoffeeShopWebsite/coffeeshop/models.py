@@ -32,3 +32,7 @@ class DynamicImages(models.Model):
     background = models.ImageField(upload_to="background/", blank=True, null=True)
     gallery = models.ImageField(upload_to="gallery/", blank=True, null=True)
 
+class DynamicTexts(models.Model):
+    text = models.TextField()
+    email = models.EmailField()
+
