@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+
+    <!--================ Banner Area =================-->
+	{% block bannername %}منو{% endblock %}
+	<!--================End Banner Area =================-->
+
+    <!--================ Menu Area =================-->
+    {% block content %}
+    <section class="menu_area white">
+        <div class="container">
+            <div>
+                <h1 class="yekan" style="text-align: center;">منو نوشیدنی ها</h1>
+            </div>
+            <br>
+            <br>
+            <div dir="rtl" class="row menu_inner">
+                {% for cat in  categories %}
+                    <div class="col-md-12 col-lg-10 col-xl-6">
+                        <div class="menu_list">
+                            <div><h2>{{ cat.name }}</h2></div>
+                            <ul class="list">
+                                {% for item in cafeitem %}
+                                    {% if  cat.name == item.category.name %}
+                                        <li>
+                                            <h4><a href="{% url 'menu_detail' item.name %}">{{ item.name }}</a>
+
+                                                <span>{{ item.price }} تومان</span>
+                                            </h4>
+                                            <p>{{ item.description }}</p>
+                                            <button class="btn btn-primary" name="{{ item.id }}" value="0"
+                                                    href="?pk={{ item.id }}"
+                                                    style="font-family: yekan; background-color: rgb(220, 53, 69); border: 1px solid rgb(220, 53, 69);"
+                                                    onclick="increment(this)">افزدون به سبد
+                                            </button>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+    <!--================End Menu Area =================-->
+
+
+
