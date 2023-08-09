@@ -33,11 +33,11 @@
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item pull-right"><div class="text-right">دسته بندی: {{cafeitem.category.name}}</div></li>
-    <li class="list-group-item">قیمت: {{cafeitem.price}}</li>
+      <li class="list-group-item"><div class="text-right">قیمت: {{cafeitem.price}}</div></li>
       {% if cafeitem.is_available %}
-    <li class="list-group-item">The Item Is Available.</li>
+    <li class="list-group-item"><div class="text-right">آیتم موردنظر موجود است.</div></li>
       {% else %}
-      <li class="list-group-item">Sorry, The Item Is Not Available Now.</li>
+      <li class="list-group-item"><div class="text-right">متاسفانه آیتم موردنظر موجود نیست.</div></li>
       {% endif %}
   </ul>
 </div>
