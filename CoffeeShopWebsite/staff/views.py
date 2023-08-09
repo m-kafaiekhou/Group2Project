@@ -53,7 +53,7 @@ class ItemDetailView(LoginRequiredMixin, View):
         redirect('item_detail', kwargs['pk'])
 
 
-class CategoryDetailView(View):
+class CategoryDetailView(LoginRequiredMixin, View):
     template_name = "staff/category_detail.html"
     model_class = Category
     form_class = forms.AddCategoryForm
@@ -74,7 +74,7 @@ class CategoryDetailView(View):
         redirect('category_detail', kwargs['pk'])
 
 
-class AddItemView(View):
+class AddItemView(LoginRequiredMixin, View):
     template_name = "staff/item_add.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
@@ -92,7 +92,7 @@ class AddItemView(View):
         return redirect('add_item')
 
 
-class AddCategoryView(View):
+class AddCategoryView(LoginRequiredMixin, View):
     template_name = "staff/category_add.html"
     model_class = Category
     form_class = forms.AddCategoryForm
@@ -110,7 +110,7 @@ class AddCategoryView(View):
         return redirect('add_category')
 
 
-class OrderDetailView(View):
+class OrderDetailView(LoginRequiredMixin, View):
     template_name = "staff/order_detail.html"
     model_class = Order
     form_class = forms.OrderUpdateForm
@@ -131,7 +131,7 @@ class OrderDetailView(View):
         redirect('order_list')
 
 
-class OrderListView(View):
+class OrderListView(LoginRequiredMixin, View):
     template_name = "staff/order_list.html"
     model_class = Order
 
