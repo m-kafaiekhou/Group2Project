@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "core",
     "orders",
     "menus",
+    "dashboard",
     # Third party apps
     "django.contrib.humanize",
 ]
