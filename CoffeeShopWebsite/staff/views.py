@@ -79,6 +79,12 @@ class AddItemView(View):
     model_class = CafeItem
     form_class = forms.AddItemForm
 
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 class AddCategoryView(View):
     pass
