@@ -26,18 +26,18 @@
 {% block content %}
 
 <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="#" alt="{{cafeitem.name}} photo.">
+  <img class="card-img-top" src="cafeitem.image.url" alt="{{cafeitem.name}} photo.">
   <div class="card-body">
-    <h5 class="card-title">{{cafeitem.name}}</h5>
-    <p class="card-text">{{cafeitem.description}}</p>
+      <h5 class="card-title"><div class="text-right">{{cafeitem.name}}</div></h5>
+      <p class="card-text"><div class="text-right">{{cafeitem.description}}</div></p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">CATEGORY: {{cafeitem.category.name}}</li>
-    <li class="list-group-item">PRICE: {{cafeitem.price}}</li>
+    <li class="list-group-item pull-right"><div class="text-right">دسته بندی: {{cafeitem.category.name}}</div></li>
+      <li class="list-group-item"><div class="text-right">قیمت: {{cafeitem.price}}</div></li>
       {% if cafeitem.is_available %}
-    <li class="list-group-item">The Item Is Available.</li>
+    <li class="list-group-item"><div class="text-right">آیتم موردنظر موجود است.</div></li>
       {% else %}
-      <li class="list-group-item">Sorry, The Item Is Not Available Now.</li>
+      <li class="list-group-item"><div class="text-right">متاسفانه آیتم موردنظر موجود نیست.</div></li>
       {% endif %}
   </ul>
 </div>

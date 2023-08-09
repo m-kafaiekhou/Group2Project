@@ -61,7 +61,7 @@
                                         <li>
                                             <h4><a href="{% url 'menu_detail' item.name %}">{{ item.name }}</a>
 
-                                                <span>${{ item.price }}</span>
+                                                <span>{{ item.price }} تومان</span>
                                             </h4>
                                             <p>{{ item.description }}</p>
                                             <button class="btn btn-primary" name="{{ item.id }}" value="0"
