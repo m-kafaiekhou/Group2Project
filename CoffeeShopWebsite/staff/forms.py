@@ -1,6 +1,8 @@
 from django import forms
+from menus.models import CafeItem
 
 
 class AddItemForm(forms.ModelForm):
-    pass
-
+    class Meta:
+        model = CafeItem
+        fields = "__all__"
