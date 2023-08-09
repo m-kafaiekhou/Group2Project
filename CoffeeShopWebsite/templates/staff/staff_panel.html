@@ -13,6 +13,18 @@
         <div class="row justify-content-center">
             <div class="col-3">
                 <h1>سفارش ها</h1>
+                {% for order in orders %}
+                <div class="order-preview">
+                    <a href="{% url 'order_details' order.id%}">
+                        <h2 class="order-id">{{order.id}}</h2>
+                        <h3 class="order-subtitle">{{order.items}}</h3>
+                    </a>
+                    <p class="order-meta">
+                        زمان ثبت سفارش:
+                        {{order.order_date}}
+                    </p>
+                </div>
+                {% endfor%}
             </div>
             <div class="col-3">
                 <h1>دسته بندی ها</h1>
