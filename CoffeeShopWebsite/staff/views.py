@@ -6,7 +6,8 @@ from orders.models import Order
 
 
 class ItemListView(View):
-    pass
+    template_name = "staff/item_list.html"
+    model_class = CafeItem
 
 
 class CategoryListView(View):
