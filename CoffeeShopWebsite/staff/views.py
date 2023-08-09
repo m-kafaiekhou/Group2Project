@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render
 
 from menus.models import CafeItem, Category
+from orders.models import Order
 
 
 class ItemListView(View):
