@@ -7,34 +7,18 @@ Gallery
 <body>
 
 	<!--================ Banner Area =================-->
-	{% block banner %}
-	<a class="m-2" style="color: rgb(121, 119, 119); font-family: yekan;" href="{% url 'home' %}">خانه</a>
-	<a href="#" style="color: rgb(121, 119, 119);">-></a>
-	<a class="m-2" style="color: rgb(121, 119, 119); font-family: yekan;" href="{% url 'gallery' %}">گالری</a>
-	{% endblock %}
+	{% block bannername %}گالری{% endblock %}
 	<!--================End Banner Area =================-->
 
 	<!--================ Gallery Area =================-->
 	{% block content %}
 	<section class="gallery_area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main_title position-relative">
-						<h1 class="yekan">گالری نوشیدنی ها</h1>
-						<hr>
-						<div class="round-planet planet">
-							<div class="round-planet planet2">
-								<div class="shape shape1"></div>
-								<div class="shape shape2"></div>
-							</div>
-						</div>
-					</div>
-                   <div>
-                    <!-- Gallery pics iteration and styling goes here -->
-                   </div>
-				</div>
+		<div class="container" >
+			<h1 class="yekan" style="text-align: center;">گالری نوشیدنی ها</h1>
+			<div>
+			<!-- Gallery pics iteration and styling goes here -->
 			</div>
+		</div>
 	</section>
 	{% endblock content %}
 	<!--================ End Gallery Area =================-->
