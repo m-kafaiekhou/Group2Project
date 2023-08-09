@@ -1,11 +1,12 @@
 from django.views import View
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from menus.models import CafeItem, Category
 from orders.models import Order
 
 
-class ItemListView(View):
+class ItemListView(LoginRequiredMixin, View):
     template_name = "staff/item_list.html"
     model_class = CafeItem
 
