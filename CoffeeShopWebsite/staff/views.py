@@ -75,7 +75,9 @@ class CategoryDetailView(View):
 
 
 class AddItemView(View):
-    pass
+    template_name = "staff/item_add.html"
+    model_class = CafeItem
+    form_class = forms.AddItemForm
 
 
 class AddCategoryView(View):
