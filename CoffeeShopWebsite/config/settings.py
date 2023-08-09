@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # Third party apps
     "django.contrib.humanize",
     "phone_field",
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
