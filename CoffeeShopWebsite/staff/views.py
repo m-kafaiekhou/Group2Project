@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.models import model_to_dict
 
 from menus.models import CafeItem, Category
 from orders.models import Order
@@ -38,7 +39,8 @@ class ItemDetailView(View):
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
-        form = self.form_class()
+        initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
+        form = self.form_class(initial=initial_data)
         return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
