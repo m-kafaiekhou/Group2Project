@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "phone_field",
     "phonenumber_field",
+    "crispy_forms",
+    "crispy_bootstrap5"
 ]
 
 MIDDLEWARE = [
@@ -152,3 +154,7 @@ LOGIN_REDIRECT_URL = "/admin/"
 
 # DEBUG = False
 ALLOWED_HOSTS = ["*"]
+
+# crispy form
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
