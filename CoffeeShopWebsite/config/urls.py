@@ -22,8 +22,12 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("staff.urls")),
-    path("staff/", include('django.contrib.auth.urls')),
     path("", include("coffeeshop.urls")),
+    path("", include("orders.urls")),
+    path("", include("menus.urls")),
+    path("", include("core.urls")),
+    path("dashboard/", include("dashboard.urls")),
+    path("staff/", include("staff.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
