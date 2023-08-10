@@ -65,7 +65,7 @@ class CheckoutView(View):
         order = Order.objects.create(
             phone_number=phone_number,
             table_number=table_number,
-            status="d",
+            status="D",
         )
 
         order_items = [

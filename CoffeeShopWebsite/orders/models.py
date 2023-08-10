@@ -35,6 +35,9 @@ class Order(models.Model):
     def __str__(self) -> str:
         return self.phone_number
 
+    def get_order_items(self):
+        return self.orderitem_set.all()
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(

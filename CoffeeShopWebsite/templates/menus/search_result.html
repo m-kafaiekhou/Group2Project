@@ -2,35 +2,36 @@
 {% load static %}
 
 {% block title %}
-Search
+    Search
 {% endblock %}
 
 
-    <!--================ Banner Area =================-->
-	{% block bannername %}جستجو{% endblock %}
-	<!--================End Banner Area =================-->
+<!--================ Banner Area =================-->
+{% block bannername %}جستجو{% endblock %}
+<!--================End Banner Area =================-->
 
-    <!--================ Menu Area =================-->
-    {% block content %}
+<!--================ Menu Area =================-->
+{% block content %}
     <section class="menu_area white">
         <div class="container">
             <div>
                 <h1 class="yekan" style="text-align: center;">نتیجه جستجو</h1>
             </div>
             <br>
-            <br>    
+            <br>
             <div dir="rtl" class="row menu_inner">
-                <div class="col-md-12 col-lg-10 col-xl-6">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
                     <div class="menu_list">
                         <ul class="list">
                             {% for item in searched_items %}
                                 <li>
-                                    <h4><a href="{% url 'menu_detail' item.name %}">{{ item.name }}</a>
-
-                                        <span>{{ item.price }} تومان</span>
-                                    </h4>
-                                    <p>{{ item.description }}</p>
-                                    <button class="btn btn-primary" name="{{ item.id }}" value="0"
+                                    <div class="col d-flex inline-content">
+                                        <h4 class="yekan"><a href="#" style="text-decoration: none;"><<{{ item.name }}>></a></h4>
+                                        <pre><p> _________  </p></pre>
+                                        <h5 class="yekan">{{ item.price }} تومان</h5>
+                                    </div>
+                                    <p class="yekan">{{ item.description }}</p>
+                                    <button class="btn btn-primary mt-2" name="{{ item.id }}" value="0"
                                             href="?pk={{ item.id }}"
                                             style="font-family: yekan; background-color: rgb(220, 53, 69); border: 1px solid rgb(220, 53, 69);"
                                             onclick="increment(this)">افزدون به سبد
@@ -45,7 +46,7 @@ Search
     </section>
 
 {% endblock %}
-    <!--================End Menu Area =================-->
+<!--================End Menu Area =================-->
 
 
 
