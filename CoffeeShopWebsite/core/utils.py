@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from orders.models import Order
+import random
 
 
 def delete_cart(request, response) -> None:
@@ -38,6 +40,17 @@ def send_otp_code(phone_number, code):
     print("Verification Code:")
     print(f"{phone_number}: {code}")
     print("*" * 120)
+
+
+def set_otp(request, phone_number):
+    random_code = random.randint(1000, 9999)
+    send_otp_code(phone_number=phone_number, code=random_code)
+    request.session["phone_number"] = phone_number
+    request.session["otp_code"] = random_code
+    messages.success(
+        request, "کد تایید به شماره موبایل شما ارسال شد", "success"
+    )
+    return redirect("code_entry")
 
 
 # def add_to_cart(request, response, item_pk: int) -> None:

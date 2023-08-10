@@ -1,21 +1,10 @@
 from django import forms
-from menus.models import CafeItem, Category
-from orders.models import Order
+from .models import CustomUserModel
 
 
-class AddItemForm(forms.ModelForm):
-    class Meta:
-        model = CafeItem
-        fields = "__all__"
-
-
-class AddCategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = "__all__"
-
-
-class OrderUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = "__all__"
+class CustomAuthenticationForm(forms.Form):
+    phone_number = forms.CharField(max_length=14)
+    password = forms.CharField(max_length=128)
+    # class Meta:
+    #     model = CustomUserModel
+    #     fields = ('phone_number', 'password', )

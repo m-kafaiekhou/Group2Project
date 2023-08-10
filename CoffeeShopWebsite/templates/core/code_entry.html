@@ -1,13 +1,45 @@
+{#{% extends 'base.html' %}#}
+{#{% load crispy_forms_tags %}#}
+{##}
+{#{% block title %}#}
+{##}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <div class="container">#}
+{#        <form action="" method="post" class="col d-flex inline-content">#}
+{#            <div class="row w-100 align-items-center">#}
+{#                {% csrf_token %}#}
+{#                <div class="col-8">#}
+{#                    {{ form|crispy }}#}
+{#                </div>#}
+{#                <div class="col-3">#}
+{#                    <button class="btn btn-success m-" type="submit" value="submit">تایید</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#{% endblock %}#}
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-
+    otp
+{% endblock %}
+{% block bannername %}
+    کد احراز هویت
 {% endblock %}
 
 {% block content %}
-	<form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="submit">
-    </form>
+    <div class="d-flex justify-content-center mt-5" dir="ltr">
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
+            <form method="post">
+                {% csrf_token %}
+                <h1 class="text-center">OTP</h1>
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success mt-3 w-100">تایید</button>
+            </form>
+        </div>
+
+    </div>
 {% endblock %}
