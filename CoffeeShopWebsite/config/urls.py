@@ -27,7 +27,7 @@ urlpatterns = [
     path("", include("menus.urls")),
     path("", include("core.urls")),
     path("", include("dashboard.urls")),
-    path("staff/", include("django.contrib.auth.urls")),
+    path("staff/", include("staff.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
