@@ -8,7 +8,7 @@ import random, datetime
 
 
 def error_404_view(request, exception):
-    return render(request, "404.html")
+    return render(request, "404.html", status=404)
 
 
 class PhoneNumberEntryView(View):
