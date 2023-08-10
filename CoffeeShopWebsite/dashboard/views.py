@@ -128,7 +128,7 @@ class OrderDetailView(LoginRequiredMixin, View):
         if form.is_valid():
             form.save()
 
-        redirect('order_list')
+        return redirect('order_list')
 
 
 class OrderListView(LoginRequiredMixin, View):
