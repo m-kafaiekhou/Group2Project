@@ -16,33 +16,7 @@
         {% include 'messages.html' %}
 
         <!--================ Banner Area =================-->
-        <section class="banner_area">
-            <div class="banner_inner d-flex align-items-center">
-                <div class="container">
-                    <div class="banner_content text-center">
-                        <h1 style="font-family: yekan; font-weight: bold;">{% block bannername %}{% endblock %}</h1>
-                    </div>
-                </div>
-                <div class="shape shape1"></div>
-                <div class="shape shape2"></div>
-                <div class="shape shape3"></div>
-                <div class="shape shape4"></div>
-                <div class="shape shape5"></div>
-                <div class="shape shape6"></div>
-                <div class="shape shape7"></div>
-            </div>
-        </section>
-        <br>
-        <form action="{% url 'menu_search' %}" method="get">
-        <div dir="rtl" style="padding-right: 5rem;">
-        <div class="input-group" style="width: 25rem;">
-            <input dir="rtl" type="text" class="form-control"  placeholder="جستجو در منو" name="search">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
-            </span>
-        </div>
-        </div>
-        </form>
+        
         <!--================ End Banner Area =================-->
 
         <!--================ Content Area =================-->
