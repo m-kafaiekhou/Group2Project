@@ -9,4 +9,5 @@ urlpatterns = [
     path('item-details/', ItemDetailView.as_view(), name="item_details"),
     path('category-list/', CategoryListView.as_view(), name="category_list"),
     path('item-list/', ItemListView.as_view(), name="item_list"),
+    path('order-list/', OrderListView.as_view(), name="order_list"),
 ]
