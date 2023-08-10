@@ -3321,12 +3321,12 @@ h6 {
           font-size: 16px; } }
       .menu_inner .menu_list .list li h4:after {
         margin-right: 15px;
-        content: '---------------------------';
+        content: '';
         float: right;
         color: #777777; }
         @media (max-width: 1024px) {
           .menu_inner .menu_list .list li h4:after {
-            content: '---------------------------------------------------'; } }
+            content: ''; } }
         @media (max-width: 992px) {
           .menu_inner .menu_list .list li h4:after {
             content: '';
