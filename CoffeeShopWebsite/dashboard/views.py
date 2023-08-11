@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from menus.models import CafeItem, Category
 from orders.models import Order
 from . import forms
-import django_filters
+from .filters import ItemFilterSet
 
 
 class ItemListView(LoginRequiredMixin, View):
