@@ -10,48 +10,44 @@
 <!--================ End Header Area =================-->
 
 <!--================ Menu Area =================-->
+
 {% block content %}
-    <section class="menu_area white">
-        <div class="container">
-            <div>
-                <h1 class="yekan" style="text-align: center;">Cafe Menu</h1>
-            </div>
-            <br>
-            <br>
-            <div dir="rtl" class="row menu_inner">
-                {% for cat in  categories %}
-                    <div class="col-md-12 col-lg-10 col-xl-6">
-                        <div class="menu_list">
-                            <div><h2>{{ cat.name }}</h2></div>
-                            <ul class="list">
-                                {% for item in cafeitem %}
-                                    {% if  cat.name == item.category.name %}
-                                        <li>
-                                            <div class="col d-flex inline-content">
-                                            <h4><a href="#" style="text-decoration: none;"><<{{ item.name }}>></a></h4>
-                                            <pre><p> _________  </p></pre>
-                                            <h5>{{ item.price }} تومان</h5>
-                                            </div>
-                                            <p>{{ item.description }}</p>
-                                            <button class="btn btn-primary" name="{{ item.id }}" value="0"
-                                                    href="?pk={{ item.id }}"
-                                                    style="font-family: yekan; background-color: rgb(220, 53, 69); border: 1px solid rgb(220, 53, 69);"
-                                                    onclick="increment(this)">افزدون به سبد
-                                            </button>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                            <br>
-                            <br>
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="section-title">
+            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Menu & Pricing</h4>
+            <h1 class="display-4">Competitive Pricing</h1>
+        </div>
+        <div class="row">
+            {% for cat in  categories %}
+            <div class="col-lg-6 px-5">
+                <h1 class="mb-5">{{ cat.name }}</h1>
+                <div><hr></div>
+                {% for item in cafeitem %}
+                    {% if  cat.name == item.category.name %}
+                <div class="row align-items-center mb-5">
+                    <div class="col-4 col-sm-3">
+                        <img class="rounded-circle mb-3 mb-sm-0" style="width: 7rem; height: 7rem;" src="{{ item.image.url }}" alt="">
+                        <h5 class="menu-price">T{{ item.price }}</h5>
+                    </div>
+                    <div class="col-8 col-sm-9">
+                        <h4>{{ item.name }}</h4>
+                        <p class="m-0">{{ item.description }}</p>
+                        <div class="d-flex justify-content-end mx-5">
+                            <button class="btn btn-dark text-white justify" name="{{ item.id }}" value="0"
+                                    href="?pk={{ item.id }}"
+                                    onclick="increment(this)">Add to Cart
+                            </button>
                         </div>
                     </div>
+                </div>
+                    {% endif %}
                 {% endfor %}
             </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</div>
 {% endblock %}
+
 <!--================End Menu Area =================-->
-
-
-
