@@ -5,4 +5,4 @@ import django_filters
 class ItemFilterSet(django_filters.FilterSet):
     class Meta:
         model = CafeItem
-        fields = ['category', 'is_available']
+        fields = ['name', 'category', 'is_available']
