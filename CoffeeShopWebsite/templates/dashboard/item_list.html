@@ -94,8 +94,8 @@
                     <div class="candidate-list">
                         {% for item in items %}
                             <div class="candidate-list-box card mt-4">
-                            <div class="p-4 card-body">
-                                <div class="align-items-center row">
+                            <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
+                                <div class="align-items-center row" style="width: 100%">
                                     <div class="col-auto">
                                         <div class="candidate-list-images">
                                             <a href="{{ item.image.url }}"><img src="{{ item.image.url }}"
@@ -103,33 +103,30 @@
                                                                                 class="avatar-md img-thumbnail rounded-circle"/></a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-6">
                                         <div class="candidate-list-content mt-3 mt-lg-0">
                                             <h5 class="fs-19 mb-0">
                                                 <a class="primary-link" href="#">{{ item.name }}</a><span
                                                     class="badge bg-success ms-1"><i
                                                     class="mdi mdi-star align-middle"></i>4.8</span>
                                             </h5>
-                                            <p class="text-muted mb-2">Project Manager</p>
+                                            <p class="text-muted mb-2">{{ item.description }}</p>
                                             <ul class="list-inline mb-0 text-muted">
-                                                <li class="list-inline-item"><i class="mdi mdi-map-marker"></i> Oakridge
-                                                    Lane Richardson
-                                                </li>
-                                                <li class="list-inline-item"><i class="mdi mdi-wallet"></i> $650 / hours
+                                                <li class="list-inline-item"><i
+                                                        class="mdi mdi-map-marker"></i>{{ item.date_added }}
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-2">
                                         <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                            <span class="badge bg-soft-secondary fs-14 mt-1">Leader</span><span
-                                                class="badge bg-soft-secondary fs-14 mt-1">Manager</span><span
-                                                class="badge bg-soft-secondary fs-14 mt-1">Developer</span>
+                                            <span class="badge bg-soft-secondary fs-14 mt-1">{{ item.category }}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="favorite-icon">
-                                    <a href="#"><i class="mdi mdi-heart fs-18"></i></a>
+                                <div class="price">
+                                    <li class="list-inline-item"><i class="mdi mdi-wallet"></i> ${{ item.price }}
+                                    </li>
                                 </div>
                             </div>
                         {% endfor %}
