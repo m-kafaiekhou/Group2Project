@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator
 
 from menus.models import CafeItem, Category
 from orders.models import Order
@@ -17,11 +18,15 @@ class ItemListView(LoginRequiredMixin, View):
         data = request.GET.copy()
         items = self.model_class.objects.all()
         filter_set = ItemFilterSet(data, items)
+        paginator = Paginator(filter_set.qs, 2)
+        page_number = request.GET.get("page", 1)
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'items': filter_set.qs,
+            'page_obj': page_obj,
             'filter_set': filter_set,
         }
-        print([i for i in filter_set.form])
+
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
