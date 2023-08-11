@@ -17,6 +17,7 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
 
 
 class CafeItem(models.Model):
@@ -32,6 +33,9 @@ class CafeItem(models.Model):
         "Category",
         on_delete=models.PROTECT,
     )
+    
+    def get_absolute_url(self) :
+        return reverse("cafeitem_detail", kwargs={"slug": self.slug})
 
     @property
     def item_rate(self):
