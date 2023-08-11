@@ -30,6 +30,6 @@ class VerificationCodeEntryView(View):
                 return redirect("home")
             else:
                 del request.session["otp_code"]
-                messages.error(request, "کد تایید نامعتبر است.", "danger")
+                messages.error(request, "The otp code is wrong!", "danger")
                 return redirect("phone_entry")
         return render(request, "core/code_entry.html", {"form": form})
