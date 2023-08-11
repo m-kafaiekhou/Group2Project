@@ -1,5 +1,6 @@
 {% extends 'dashboard/_base.html' %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block content %}
     <section class="section mt-5">
@@ -17,39 +18,31 @@
                                                                                     class="form-control filler-job-input-box form-control"/>
                                     </div>
                                 </div>
-{#                                <div class="col-lg-3">#}
-{#                                    <div class="filler-job-form">#}
-{#                                        <i class="uil uil-location-point"></i>#}
-{#                                        <select class="form-select selectForm__inner" data-trigger="true"#}
-{#                                                name="choices-single-location" id="choices-single-location"#}
-{#                                                aria-label="Default select example">#}
-{#                                            <option value="AF">Cold Drinks</option>#}
-{#                                            <option value="AX">Coffee</option>#}
-{#                                            <option value="AL">Shakes</option>#}
-{##}
-{#                                        </select>#}
-{#                                    </div>#}
-{#                                </div>#}
+                                {#                                <div class="col-lg-3">#}
+                                {#                                    <div class="filler-job-form">#}
+                                {#                                        <i class="uil uil-location-point"></i>#}
+                                {#                                        <select class="form-select selectForm__inner" data-trigger="true"#}
+                                {#                                                name="choices-single-location" id="choices-single-location"#}
+                                {#                                                aria-label="Default select example">#}
+                                {#                                            <option value="AF">Cold Drinks</option>#}
+                                {#                                            <option value="AX">Coffee</option>#}
+                                {#                                            <option value="AL">Shakes</option>#}
+                                {##}
+                                {#                                        </select>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                <form method="get">
+                                    {% for field in filter_set.form %}
+                                        <div class="col-lg-3 d-inline-block">
+                                            <div class="filler-job-form">
+                                                {{ field|attr:"class:form-control" }}
+                                            </div>
+                                        </div>
 
-                                <div class="col-lg-3 d-inline-block">
-                                    <div class="filler-job-form">
-                                        <form method="get">
-                                            {{ filter_set.form }}
-                                        </form>
-                                    </div>
-                                </div>
+                                    {% endfor %}
+{#                                    <button type="submit" class="btn btn-primary">filter test</button>#}
 
-{#                                <div class="col-lg-3">#}
-{#                                    <div class="filler-job-form">#}
-{#                                        <i class="uil uil-clipboard-notes"></i>#}
-{#                                        <select class="form-select selectForm__inner" data-trigger="true"#}
-{#                                                name="choices-single-categories" id="choices-single-categories"#}
-{#                                                aria-label="Default select example">#}
-{#                                            <option value="4">Is available</option>#}
-{#                                            <option value="1">Is not available</option>#}
-{#                                        </select>#}
-{#                                    </div>#}
-{#                                </div>#}
+
                                 <div class="col-lg-3">
                                     <div>
                                         <a class="btn btn-primary" href="#"><i class="uil uil-filter"></i> Filter</a> <a
@@ -57,6 +50,7 @@
                                         Advance</a>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </form>
                     </div>
