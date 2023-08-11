@@ -23,7 +23,7 @@
                                     <div class="col-lg-3">
                                         <div class="selection-widget">
                                             <select class="form-select" data-trigger="true"
-                                                    name="choices-single-filter-orderby"
+                                                    name="orderby"
                                                     id="choices-single-filter-orderby"
                                                     aria-label="Default select example">
                                                 <option value="df">Default</option>
@@ -87,13 +87,13 @@
                 {% endfor %}
                 </div>
             </div>
-            <div class="h-100 d-flex justify-content-center">
-                <div class="row ">
+            <div class="d-flex justify-content-center">
+                <div class="row mt-5">
                     <nav aria-label="Page navigation" class="paginator-bottom-center">
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=1&ad={{ ad }}&order={{ order }}"
+                                    <a class="page-link" href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
@@ -107,7 +107,7 @@
                                     </li>
                                 {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
                                     <li class="page-item"><a class="page-link"
-                                                             href="?page={{ n }}&ad={{ ad }}&order={{ order }}">{{ n }}</a>
+                                                             href="?page={{ n }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}">{{ n }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -115,7 +115,7 @@
                             {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page={{ page_obj.paginator.num_pages }}&ad={{ ad }}&order={{ order }}"
+                                       href="?page={{ page_obj.paginator.num_pages }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">end</span>
