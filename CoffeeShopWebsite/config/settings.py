@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     "phone_field",
     "phonenumber_field",
     "crispy_forms",
-    "crispy_bootstrap5"
+    "crispy_bootstrap5",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [

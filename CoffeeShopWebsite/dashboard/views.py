@@ -2,17 +2,12 @@ from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator
 
 from menus.models import CafeItem, Category
 from orders.models import Order
 from . import forms
-import django_filters
-
-
-class ItemFilterSet(django_filters.FilterSet):
-    class Meta:
-        model = CafeItem
-        fields = ['category', 'is_available']
+from .filters import ItemFilterSet
 
 
 class ItemListView(LoginRequiredMixin, View):
@@ -23,13 +18,29 @@ class ItemListView(LoginRequiredMixin, View):
         data = request.GET.copy()
         items = self.model_class.objects.all()
         filter_set = ItemFilterSet(data, items)
+
+        order_by = data.get('orderby', 'df')
+        if order_by == 'df':
+            query_set = filter_set.qs.order_by('name')
+        elif order_by == 'mo':
+            query_set = filter_set.qs.order_by('-price')
+        elif order_by == 'le':
+            query_set = filter_set.qs.order_by('price')
+        else:
+            query_set = filter_set.qs
+        paginator = Paginator(query_set, 2)
+        page_number = request.GET.get("page", 1)
+        page_obj = paginator.get_page(page_number)
+
         context = {
-            'items': filter_set.qs,
+            'page_obj': page_obj,
             'filter_set': filter_set,
+            'name': data.get('name', ''),
+            'category': data.get('category', ''),
+            'is_available': data.get('is_available', ''),
+            'orderby': order_by,
         }
-        print(filter_set)
-        print(filter_set.form)
-        print(type(filter_set))
+
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
@@ -148,12 +159,37 @@ class OrderDetailView(LoginRequiredMixin, View):
 
 
 class OrderListView(LoginRequiredMixin, View):
-    template_name = "staff/order_list.html"
+    template_name = "dashboard/order_list.html"
     model_class = Order
 
     def get(self, request, *args, **kwargs):
-        orders = self.model_class.objects.all().order_by('-status')
-        return render(request, self.template_name, context={'orders': orders})
+        data = request.GET.copy()
+        items = self.model_class.objects.all()
+        filter_set = ItemFilterSet(data, items)
+
+        order_by = data.get('orderby', 'df')
+        # if order_by == 'df':
+        #     query_set = filter_set.qs.order_by('name')
+        # elif order_by == 'mo':
+        #     query_set = filter_set.qs.order_by('-price')
+        # elif order_by == 'le':
+        #     query_set = filter_set.qs.order_by('price')
+        # else:
+        query_set = filter_set.qs
+        paginator = Paginator(query_set, 2)
+        page_number = request.GET.get("page", 1)
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+            'filter_set': filter_set,
+            'name': data.get('name', ''),
+            'category': data.get('category', ''),
+            'is_available': data.get('is_available', ''),
+            'orderby': order_by,
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         pass
