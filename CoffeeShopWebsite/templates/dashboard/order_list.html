@@ -1,81 +1,132 @@
-{% load static %}
-<html lang="fa" dir="rtl">
-<head>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/item_list.css' %}">
-</head>
-<body>
-<div class="event-schedule-area-two bg-color pad100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade active show" id="home" role="tabpanel">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th class="text-center" scope="col">شماره سفارش</th>
-                                    <th scope="col">وضعیت سفارش</th>
-                                    <th scope="col">تاریخ و ساعت</th>
-                                    <th scope="col">شماره میز</th>
-                                    <th class="text-center" scope="col"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for order in orders %}
-                                    <tr class="inner-box">
-                                        <th scope="row">
-                                            <div class="event-date">
-                                                <p>{{ order.id }}</p>
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <div class="">
-                                                <p>{{ order.get_status_display }}</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="event-wrap">
-                                                <div class="time">
-                                                    <span>{{ order.order_date }}</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="r-no">
-                                                <span>{{ order.table_number }}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="primary-btn">
-                                                <a class="btn btn-primary" href="{% url 'order_details' order.id %}">جزئیات</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+{% extends 'dashboard/_base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
+{% block content %}
+    <section class="section mt-5">
+        <div class="container">
+            <div class="justify-content-center row">
+                <div class="col-lg-12">
+                    <div class="candidate-list-widgets mb-4">
+                        <form action="#" class="">
+                            <div class="g-2 row">
+
+                                <form method="get">
+                                    {% for field in filter_set.form %}
+                                        <div class="col-lg-2 d-inline-block">
+                                            <div class="filler-job-form">
+                                                {{ field|attr:"class:form-control" }}
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                    <div class="col-lg-3">
+                                        <div class="selection-widget">
+                                            <select class="form-select" data-trigger="true"
+                                                    name="orderby"
+                                                    id="choices-single-filter-orderby"
+                                                    aria-label="Default select example">
+                                                <option value="df">Default</option>
+                                                <option value="mo">Most Expensive</option>
+                                                <option value="le">Least Expensive</option>
+                                                <option value="rd">Random</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary" href="#"><i
+                                                    class="uil uil-filter"></i> Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <!-- /col end-->
+            <div class="candidate-list">
+                {% for item in page_obj %}
+                    <div class="candidate-list-box card mt-4">
+                    <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
+                        <div class="align-items-center row" style="width: 100%">
+                            <div class="col-auto">
+                                <div class="candidate-list-images">
+                                    <a href="#"><img src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
+                                                                        alt=""
+                                                                        class="avatar-md img-thumbnail rounded-circle"/></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="candidate-list-content mt-3 mt-lg-0">
+                                    <h5 class="fs-19 mb-0">
+                                        <a class="primary-link" href="#">{{ item.name }}</a><span
+                                            class="badge bg-success ms-1"><i
+                                            class="mdi mdi-star align-middle"></i>4.8</span>
+                                    </h5>
+                                    <p class="text-muted mb-2">{{ item.description }}</p>
+                                    <ul class="list-inline mb-0 text-muted">
+                                        <li class="list-inline-item"><i
+                                                class="mdi mdi-map-marker"></i>{{ item.date_added }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                    <span class="badge bg-soft-secondary fs-14 mt-1">{{ item.category }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <li class="list-inline-item"><i class="mdi mdi-wallet"></i> ${{ item.price }}
+                            </li>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row mt-5">
+                    <nav aria-label="Page navigation" class="paginator-bottom-center">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">begin</span>
+                                    </a>
+                                </li>   {% endif %}
+
+                            {% for n in page_obj.paginator.page_range %}
+                                {% if page_obj.number == n %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
+                                    </li>
+                                {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ n }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}">{{ n }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?page={{ page_obj.paginator.num_pages }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">end</span>
+                                    </a>
+                                </li>
+                            {% endif %}   </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-        <!-- /row end-->
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
 
-</body>
-</html>
+    </section>
 
-
+{% endblock %}
