@@ -15,7 +15,8 @@
 	<link rel="stylesheet" href="{% static 'vendors/linericon/style.css' %}">
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 	<link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
-	<link rel="stylesheet" href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css' %}">
+	<link rel="stylesheet"
+		href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css' %}">
 	<link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}">
 	<link rel="stylesheet" href="{% static 'vendors/animate-css/animate.css' %}">
 	<link rel="stylesheet" href="{% static 'vendors/popup/magnific-popup.css' %}">
@@ -23,29 +24,33 @@
 	<link rel="stylesheet" href="{% static 'vendors/scroll/jquery.mCustomScrollbar.css' %}">
 	<!-- main css -->
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style2.css' %}">
 	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-	
+
 </head>
 
 <body>
 
-	<!--================Offcanvus Menu Area =================-->
+	<!--================ Offcanvus Menu Area =================-->
 	<div class="side_menu">
-		<ul class="list menu_right">
+		<a class="logo" href="#">
+			<img src="{% static 'img/Tehran_Coffee_logo.png' %}" class="logo_size" alt="logo">
+		</a>
+		<ul class="list menu_right" style="margin-top: 50px;">
 			<li>
-				<a href="{% url 'home' %}" style="font-family: yekan;">خانه</a>
+				<a href="{% url 'home' %}" style="font-family: yekan; font-size: 20px;">خانه</a>
 			</li>
 			<li>
-				<a href="{% url 'cart' %}" style="font-family: yekan;">سبد خرید</a>
+				<a href="{% url 'cart' %}" style="font-family: yekan; font-size: 20px;">سبد خرید</a>
 			</li>
 			<li>
-				<a href="{% url 'menu' %}" style="font-family: yekan;">منو</a>
+				<a href="{% url 'menu' %}" style="font-family: yekan; font-size: 20px;">منو</a>
 			</li>
 			<li>
-				<a href="#" style="font-family: yekan;">گالری</a>
+				<a href="{% url 'gallery' %}" style="font-family: yekan; font-size: 20px;">گالری</a>
 			</li>
 			<li>
-				<a href="#" style="font-family: yekan;">ارتباط با ما</a>
+				<a href="#" style="font-family: yekan; font-size: 20px;">ارتباط با ما</a>
 			</li>
 		</ul>
 		<ul class="list social">
@@ -60,25 +65,26 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
-					<i class="fa fa-dribbble"></i>
+				<a href="https://github.com/m-kafaiekhou/Group2Project.git">
+					<i class="fa fa-github"></i>
 				</a>
 			</li>
 		</ul>
 	</div>
-	<!--================End Offcanvus Menu Area =================-->
+	<!--================ End Offcanvus Menu Area =================-->
 
-	<!--================Header Menu Area =================-->
+	<!--================ Header Menu Area =================-->
 	<header class="header_area home_menu">
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<a class="navbar-brand logo_h" href="#">
-						<img src="" alt="">
+						<img class="logo-2 logo_size" src="{% static 'img/Tehran_Coffee_logo2.png' %}" alt="">
 					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-					 aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -87,19 +93,23 @@
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
 							<li class="nav-item active">
-								<a class="nav-link" href="{% url 'home' %}" style="text-align: center; font-family: yekan;">خانه</a>
+								<a class="nav-link" href="{% url 'home' %}"
+									style="font-family: yekan; text-align: center;">خانه</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'cart' %}" style="text-align: center; font-family: yekan;">سبد خرید</a>
+								<a class="nav-link" href="{% url 'cart' %}"
+									style="font-family: yekan; text-align: center;">سبد خرید</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'menu' %}" style="text-align: center; font-family: yekan;">منو</a>
+								<a class="nav-link" href="{% url 'menu' %}"
+									style="font-family: yekan; text-align: center;">منو</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" style="text-align: center; font-family: yekan;">گالری</a>
+								<a class="nav-link" href="#" style="font-family: yekan; text-align: center;">گالری</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#" style="text-align: center; font-family: yekan;">ارتباط با ما</a>
+								<a class="nav-link" href="#" style="font-family: yekan; text-align: center;">ارتباط با
+									ما</a>
 							</li>
 						</ul>
 					</div>
@@ -126,11 +136,13 @@
 		<div class="container-fluid pl-0">
 			<div class="row justify-content-center align-items-center full_height">
 				<div class="col-lg-6 p-0 d-flex justify-content-center">
-					<div class="banner_left d-flex justify-content-center flex-column">
-						<h1 style="text-align: center; z-index: 1; font-family: yekan; font-weight: bold;">کافه گروه۲</h1>
+					<div class="banner_left d-flex justify-content-center flex-column" dir="rtl">
+						<h1 class="yekan" style="text-align: center; z-index: 1; font-weight: bold;">کافه گروه۲
+						</h1>
 						<br>
-						<p style="text-align: center; z-index: 1; font-family: yekan;">تجربه رهایی و فراغتی دلنشین از روزمرگی ها</p>
-						<a class="main_btn" href="{% url 'menu' %}" style="font-family: yekan;">مشاهده منو</a>
+						<p class="yekan" style="text-align: center; z-index: 1;">تجربه رهایی و فراغتی دلنشین از
+							روزمرگی ها</p>
+						<a class="main_btn yekan" href="{% url 'menu' %}">مشاهده منو</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -151,17 +163,17 @@
 				</div>
 			</div>
 		</div>
-		<img class="face-img img-fluid" src="{% static 'img/banner/home-banner.png' %}" alt="">
+		<img class="face-img img-fluid" src="{% static 'img/banner/coffee/coffee-cup.png' %}" alt="">
 	</section>
 	<!--================ End banner section =================-->
-
+	
 	<!--================ Top Dish Area =================-->
 	<section class="top_dish_area">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main_title position-relative">
-						<h1 style="font-family: yekan;">آیتم های محبوب</h1>
+						<h1 class="yekan">آیتم های محبوب</h1>
 						<hr>
 						<div class="round-planet planet">
 							<div class="round-planet planet2">
@@ -188,48 +200,52 @@
 	</section>
 	<!--================ End Top Dish Area =================-->
 
-	<!--================ Menu Area =================-->
-
-	<!--================End Menu Area =================-->
-
-	<!--================ Gallery Area =================-->
-
-	<!--================ End Gallery Area =================-->
-
-	<!--================Member Area =================-->
-
-	<!--================End Member Area =================-->
-
-	<!--================Book Table Area =================-->
-
-	<!--================End Book Table Area =================-->
-
-	<!--================ start footer Area  =================-->
-	<footer class="footer-area p_120">
+	<!--================ Story Area =================-->
+	<section class="about_story_area section_gap" dir="rtl">
 		<div class="container">
-			<div class="row footer-bottom d-flex justify-content-between align-items-center">
-				<p class="col-lg-8 col-md-8 footer-text m-0" style="font-family: yekan;">
-					کلیه حقوق مادی و معنوی این سایت متعلق به کافه گروه۲ می باشد
-				</p>
-				<div class="col-lg-4 col-md-4 footer-social">
-					<a href="#">
+		<div class="row story_inner">
+		<div class="col-lg-6">
+		<div class="story_text">
+		<h2 class="yekan">کافه گروه 2</h2>
+		<hr>
+		<p dir="rtl" class="yekan">به کافی شاپ زیبای ما خوش آمدید، جایی که ما بهترین قهوه و نوشیدنی های کافه ای در جهان را سرو می کنیم. ما برای قهوه خود از بهترین دانه های قهوه ارائه شده توسط بهترین کشاورزان قهوه در سراسر جهان استفاده می کنیم. خانم‌ها و آقایان با قهوه‌ی مخصوص ما از روزی زیبا و بانشاط لذت ببرید. لازم به ذکر است که ما برای جلب رضایت مشتری تلاش می کنیم و کارکنان ما آموزش دیده اند تا بهترین قهوه را با بهترین رفتار به شما ارائه دهند.</p>
+		<a dir="rtl" class="main_btn" href="{% url 'gallery' %}" style="font-family: yekan;">گالری نوشیدنی ها</a>
+		</div>
+		</div>
+		<div class="col-lg-6">
+		<div class="story_img">
+		<img class="img-fluid" src="{% static 'img/banner/home-banner.png' %}" alt="">
+		</div>
+		</div>
+		</div>
+		</div>
+		</section>
+	<!--================ End Story Area =================-->
+
+	<!--================ start footer Area =================-->
+	<footer dir="rtl" class="footer-area p_120 d-flex">
+		<div class="col d-flex container align-items-center">
+			<div class="col footer-bottom d-flex justify-content-between align-items-center" style="padding-top: 0px;">
+				<div>
+					<p class="row-lg-8 row-md-8 footer-text m-0 yekan font20">
+						کلیه حقوق مادی و معنوی این سایت متعلق به کافه گروه۲ می باشد
+					</p>
+				</div>
+				<div class="row-lg-2 row-md-2 footer-social">
+					<a href="#" class="m-1">
 						<i class="fa fa-facebook"></i>
 					</a>
-					<a href="#">
+					<a href="#" class="m-1">
 						<i class="fa fa-twitter"></i>
 					</a>
-					<a href="#">
-						<i class="fa fa-dribbble"></i>
+					<a href="https://github.com/m-kafaiekhou/Group2Project.git" class="m-1">
+						<i class="fa fa-github"></i>
 					</a>
 				</div>
 			</div>
 		</div>
 	</footer>
 	<!--================ End footer Area  =================-->
-
-
-
-
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

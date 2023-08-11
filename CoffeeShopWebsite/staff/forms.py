@@ -1,9 +1,10 @@
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-# from django import forms
-#
-#
-# class CustomAuthenticationForm(AuthenticationForm):
-#     phone_number = forms.CharField(widget=forms.TextInput)
-#
-#     class Meta:
-#         fields = ['phone_number', 'password']
+from django import forms
+from .models import CustomUserModel
+
+
+class CustomAuthenticationForm(forms.Form):
+    phone_number = forms.CharField(max_length=14)
+    password = forms.CharField(max_length=128)
+    # class Meta:
+    #     model = CustomUserModel
+    #     fields = ('phone_number', 'password', )

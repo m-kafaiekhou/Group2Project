@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Gallery
+{% endblock %}
+
+<body>
+
+	<!--================ Banner Area =================-->
+	{% block bannername %}گالری{% endblock %}
+	<!--================End Banner Area =================-->
+
+	<!--================ Gallery Area =================-->
+	{% block content %}
+	<section class="gallery_area">
+		<div class="container" >
+			<h1 class="yekan" style="text-align: center;">گالری نوشیدنی ها</h1>
+			<div>
+			<!-- Gallery pics iteration and styling goes here -->
+			</div>
+		</div>
+	</section>
+	{% endblock content %}
+	<!--================ End Gallery Area =================-->
+
+</body>
+</html>

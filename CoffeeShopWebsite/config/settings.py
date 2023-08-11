@@ -37,11 +37,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # my apps
+    # project apps
     "staff",
     "coffeeshop",
-    # third party apps
-    'django.contrib.humanize',
+    "core",
+    "orders",
+    "menus",
+    "dashboard",
+    # Third party apps
+    "django.contrib.humanize",
+    "phone_field",
+    "phonenumber_field",
+    "crispy_forms",
+    "crispy_bootstrap5"
 ]
 
 MIDDLEWARE = [
@@ -79,14 +87,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'm.kafaiekhou',
-        'PASSWORD': 'VUG74XItSxiw',
-        'HOST': 'ep-round-dream-23233303.eu-central-1.aws.neon.tech',
-        'PORT': '5432',
-      }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "neondb",
+        "USER": "m.kafaiekhou",
+        "PASSWORD": "VUG74XItSxiw",
+        "HOST": "ep-round-dream-23233303.eu-central-1.aws.neon.tech",
+        "PORT": "5432",
+    }
 }
 
 
@@ -143,3 +151,10 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = "/admin/"
+
+# DEBUG = False
+ALLOWED_HOSTS = ["*"]
+
+# crispy form
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
