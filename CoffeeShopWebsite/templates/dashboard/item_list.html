@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="candidate-list">
-                {% for item in items %}
+                {% for item in page_obj %}
                     <div class="candidate-list-box card mt-4">
                     <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
                         <div class="align-items-center row" style="width: 100%">
@@ -87,13 +87,14 @@
                 {% endfor %}
                 </div>
             </div>
-            <div class="row">
-                <div class="mt-4 pt-2 col-lg-12">
+            <div class="h-100 d-flex justify-content-center">
+                <div class="row ">
                     <nav aria-label="Page navigation" class="paginator-bottom-center">
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=1" aria-label="Previous">
+                                    <a class="page-link" href="?page=1&ad={{ ad }}&order={{ order }}"
+                                       aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
                                     </a>
@@ -105,13 +106,16 @@
                                         <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
                                     </li>
                                 {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
-                                    <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ n }}&ad={{ ad }}&order={{ order }}">{{ n }}</a>
+                                    </li>
                                 {% endif %}
                             {% endfor %}
 
                             {% if page_obj.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+                                    <a class="page-link"
+                                       href="?page={{ page_obj.paginator.num_pages }}&ad={{ ad }}&order={{ order }}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">end</span>
@@ -119,7 +123,6 @@
                                 </li>
                             {% endif %}   </ul>
                     </nav>
-
                 </div>
             </div>
         </div>
