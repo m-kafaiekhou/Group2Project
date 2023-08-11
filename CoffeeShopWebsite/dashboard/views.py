@@ -27,9 +27,7 @@ class ItemListView(LoginRequiredMixin, View):
             'items': filter_set.qs,
             'filter_set': filter_set,
         }
-        print(filter_set)
-        print(filter_set.form)
-        print(type(filter_set))
+        print([i for i in filter_set.form])
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
