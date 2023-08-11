@@ -6,15 +6,31 @@ from django.forms.models import model_to_dict
 from menus.models import CafeItem, Category
 from orders.models import Order
 from . import forms
+import django_filters
+
+
+class ItemFilterSet(django_filters.FilterSet):
+    class Meta:
+        model = CafeItem
+        fields = ['category', 'is_available']
 
 
 class ItemListView(LoginRequiredMixin, View):
-    template_name = "staff/item_list.html"
+    template_name = "dashboard/item_list.html"
     model_class = CafeItem
 
     def get(self, request, *args, **kwargs):
+        data = request.GET.copy()
         items = self.model_class.objects.all()
-        return render(request, self.template_name, context={'items': items})
+        filter_set = ItemFilterSet(data, items)
+        context = {
+            'items': filter_set.qs,
+            'filter_set': filter_set,
+        }
+        print(filter_set)
+        print(filter_set.form)
+        print(type(filter_set))
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         pass
