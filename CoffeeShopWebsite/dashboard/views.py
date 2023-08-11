@@ -9,7 +9,7 @@ from . import forms
 
 
 class ItemListView(LoginRequiredMixin, View):
-    template_name = "staff/item_list.html"
+    template_name = "dashboard/item_list.html"
     model_class = CafeItem
 
     def get(self, request, *args, **kwargs):
