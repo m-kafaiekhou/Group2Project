@@ -9,12 +9,6 @@ from . import forms
 import django_filters
 
 
-class ItemFilterSet(django_filters.FilterSet):
-    class Meta:
-        model = CafeItem
-        fields = ['category', 'is_available']
-
-
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
