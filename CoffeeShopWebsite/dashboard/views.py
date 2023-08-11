@@ -18,13 +18,27 @@ class ItemListView(LoginRequiredMixin, View):
         data = request.GET.copy()
         items = self.model_class.objects.all()
         filter_set = ItemFilterSet(data, items)
-        paginator = Paginator(filter_set.qs, 2)
+
+        order_by = data.get('orderby', 'df')
+        if order_by == 'df':
+            query_set = filter_set.qs.order_by('name')
+        elif order_by == 'mo':
+            query_set = filter_set.qs.order_by('-price')
+        elif order_by == 'le':
+            query_set = filter_set.qs.order_by('price')
+        else:
+            query_set = filter_set.qs
+        paginator = Paginator(query_set, 2)
         page_number = request.GET.get("page", 1)
         page_obj = paginator.get_page(page_number)
 
         context = {
             'page_obj': page_obj,
             'filter_set': filter_set,
+            'name': data.get('name', ''),
+            'category': data.get('category', ''),
+            'is_available': data.get('is_available', ''),
+            'orderby': order_by,
         }
 
         return render(request, self.template_name, context=context)
