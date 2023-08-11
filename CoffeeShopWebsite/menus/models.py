@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Avg
+from django.urls import reverse
 
 # Create your models here.
 
@@ -25,6 +26,7 @@ class CafeItem(models.Model):
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField()
 
     category = models.ForeignKey(
         "Category",
