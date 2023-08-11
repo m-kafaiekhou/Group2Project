@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.views import View
+from django.http import JsonResponse
 from .models import CafeItem, Category
 
 
@@ -44,3 +45,13 @@ class MenuDetail(View):
     def get(self, request, cafeitme_name):
         cafeitem = CafeItem.objects.get(name=cafeitme_name)
         return render(request, "menus/detail.html", {"cafeitem": cafeitem})
+
+class autocomplete(View) :
+    def get(request) :
+        if 'term' in request.GET:
+            Qs = CafeItem.objects.filter(name__icontains=request.Get.get('term'))
+            names = list()
+            for i in Qs:
+                names.append(i.name)
+            return JsonResponse(names, safe = False)
+        return render(request, "menu.html")

@@ -1,16 +1,4 @@
-<!-- IN MENU'S URLS.PY: 
-......import path
-......import views
-
-urlpattern=[
-    path('', views.autocomplete, name='autocomplete'),
-]
-*******************************************************
-IN MENU'S VIEWS.PY:
-......import render
-......import jsonresponse
-from models...import cafeitem
-
+<!-- 
 def autocomplete(request):
     if 'term' in request.GET:
         Qs = cafeitem.objects.filter(name__icontains=request.Get.get('term'))
