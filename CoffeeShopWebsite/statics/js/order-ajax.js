@@ -6,7 +6,7 @@ $('.status-button').on('click', function() {
   const csrftoken = getCookie('csrftoken')
 
   $.ajaxSetup({
-    header: {
+    headers: {
       'X-CSRFToken': csrftoken
     }
   });
