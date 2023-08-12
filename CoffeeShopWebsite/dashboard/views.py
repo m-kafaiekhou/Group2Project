@@ -183,9 +183,9 @@ class OrderListView(LoginRequiredMixin, View):
         context = {
             'page_obj': page_obj,
             'filter_set': filter_set,
-            'name': data.get('name', ''),
-            'category': data.get('category', ''),
-            'is_available': data.get('is_available', ''),
+            'phone_number': data.get('phone_number', ''),
+            'order_date': data.get('order_date', ''),
+            'status': data.get('status', ''),
             'orderby': order_by,
         }
 
