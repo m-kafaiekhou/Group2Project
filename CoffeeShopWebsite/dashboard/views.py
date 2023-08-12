@@ -195,10 +195,13 @@ class OrderListView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         pk = request.POST.get('itemId', None)
         status = kwargs['stat']
-
         try:
             order = self.model_class.objects.get(pk=pk)
             order.status = status
             order.save()
-        except:
-            print("Exception occurred")
+            return JsonResponse({'message': 'Order status updated successfully'})
+        except self.model_class.DoesNotExist:
+            return JsonResponse({'error': 'Order not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
