@@ -192,4 +192,6 @@ class OrderListView(LoginRequiredMixin, View):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        order = self.model_class.objects.get(pk=kwargs['pk'])
+        status = kwargs['stat']
+
