@@ -170,13 +170,14 @@ class OrderListView(LoginRequiredMixin, View):
         order_by = data.get('orderby', 'df')
 
         if order_by == 'df':
-            query_set = filter_set.qs.order_by('name')
+            query_set = filter_set.qs.order_by('order_date')
         elif order_by == 'mo':
-            query_set = filter_set.qs.order_by('-price')
+            query_set = filter_set.qs.order_by('-orderitem__price')
         elif order_by == 'le':
-            query_set = filter_set.qs.order_by('price')
+            pass
+            # query_set = filter_set.qs.order_by('order_get_total_price')
         else:
-            query_ set = filter_set.qs
+            query_set = filter_set.qs
 
         paginator = Paginator(query_set, 2)
         page_number = request.GET.get("page", 1)
