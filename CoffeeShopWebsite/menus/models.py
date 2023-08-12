@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
@@ -27,7 +28,7 @@ class CafeItem(models.Model):
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField()
+    slug = models.SlugField(null=False, unique=True)
 
     category = models.ForeignKey(
         "Category",
@@ -36,6 +37,11 @@ class CafeItem(models.Model):
     
     def get_absolute_url(self) :
         return reverse("cafeitem_detail", kwargs={"slug": self.slug})
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
 
     @property
     def item_rate(self):

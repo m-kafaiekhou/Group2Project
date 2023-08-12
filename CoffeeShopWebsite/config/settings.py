@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_filters",
     "widget_tweaks",
 ]
 
@@ -140,7 +141,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [BASE_DIR / "statics"]
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
