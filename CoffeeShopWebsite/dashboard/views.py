@@ -193,7 +193,6 @@ class OrderListView(LoginRequiredMixin, View):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        print("****************")
         pk = request.POST.get('itemId', None)
         status = kwargs['stat']
         try:
