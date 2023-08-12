@@ -38,9 +38,9 @@ class CafeItem(models.Model):
     def get_absolute_url(self) :
         return reverse("cafeitem_detail", kwargs={"slug": self.slug})
     
-    def save(self, *args, **kwargs):  # new
+    def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
     @property
