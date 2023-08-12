@@ -79,8 +79,16 @@
                             </div>
                         </div>
                         <div class="btn-contain">
-                            <div class="contain-item"><a class="btn btn-success">Accept</a></div>
-                            <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                            {% if item.status == 'D' %}
+                                <div class="contain-item"><a class="btn btn-success">Accept</a></div>
+                                <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                            {% elif item.status == 'A' %}
+                                <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
+                                <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                            {% elif item.status == 'C' %}
+                                <div class="contain-item"><a class="btn btn-success">Accept</a></div>
+                                <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
+                            {% endif %}
                         </div>
                         <div class="price p-lg-2">
                             <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i> ${{ item.get_total_price }}
