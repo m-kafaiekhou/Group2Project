@@ -172,9 +172,9 @@ class OrderListView(LoginRequiredMixin, View):
         if order_by == 'df':
             query_set = filter_set.qs.order_by('order_date')
         elif order_by == 'mo':
-            query_set = filter_set.qs.order_by('-orderitem__price')
-        elif order_by == 'le':
             query_set = filter_set.qs.order_by('orderitem__price')
+        elif order_by == 'le':
+            query_set = filter_set.qs.order_by('-orderitem__price')
 
         paginator = Paginator(query_set, 2)
         page_number = request.GET.get("page", 1)
