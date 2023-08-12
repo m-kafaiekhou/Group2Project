@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
-
+from django.template.defaultfilters import slugify
 # Create your models here.
 
 
@@ -27,7 +27,7 @@ class CafeItem(models.Model):
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(null=False, unique=True)
+    
 
     category = models.ForeignKey(
         "Category",
@@ -51,6 +51,9 @@ class CafeItem(models.Model):
 
     def category_name(self):
         return self.category.parent_category
+    
+    def slug(self):
+        return slugify(self.name)
 
     def __str__(self) -> str:
         return self.name
