@@ -47,60 +47,62 @@
                 </div>
             </div>
             <div class="candidate-list">
-                {% for item in page_obj %}
-                    <div class="candidate-list-box card mt-4">
-                    <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
-                        <div class="align-items-center row" style="width: 100%">
-                            <div class="col-auto">
-                                <div class="candidate-list-images">
-                                    <a href="#"><img
-                                            src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
-                                            alt=""
-                                            class="avatar-md img-thumbnail rounded-circle"/></a>
+
+                <div class="candidate-list-box card mt-4">
+                    {% for item in page_obj %}
+                        <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
+                            <div class="align-items-center row" style="width: 100%">
+                                <div class="col-auto">
+                                    <div class="candidate-list-images">
+                                        <a href="#"><img
+                                                src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
+                                                alt=""
+                                                class="avatar-md img-thumbnail rounded-circle"/></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="candidate-list-content mt-3 mt-lg-0">
+                                        <h5 class="fs-19 mb-0">
+                                            <a class="primary-link" href="#">{{ item.get_status_display }}</a>
+                                        </h5>
+                                        <p class="text-muted mb-2">{{ item.phone_number }}</p>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><i
+                                                    class="mdi mdi-map-marker"></i>{{ item.order_date }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                        <span class="badge bg-soft-secondary fs-14 mt-1">Table number: {{ item.table_number }}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="candidate-list-content mt-3 mt-lg-0">
-                                    <h5 class="fs-19 mb-0">
-                                        <a class="primary-link" href="#">{{ item.get_status_display }}</a>
-                                    </h5>
-                                    <p class="text-muted mb-2">{{ item.phone_number }}</p>
-                                    <ul class="list-inline mb-0 text-muted">
-                                        <li class="list-inline-item"><i
-                                                class="mdi mdi-map-marker"></i>{{ item.order_date }}
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="btn-contain">
+                                {% if item.status == 'D' %}
+                                    <div class="contain-item"><a class="btn btn-success">Accept</a></div>
+                                    <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                                {% elif item.status == 'A' %}
+                                    <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
+                                    <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                                {% elif item.status == 'C' %}
+                                    <div class="contain-item"><a class="btn btn-success">Accept</a></div>
+                                    <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
+                                {% endif %}
                             </div>
-                            <div class="col-lg-2">
-                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                    <span class="badge bg-soft-secondary fs-14 mt-1">Table number: {{ item.table_number }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btn-contain">
-                            {% if item.status == 'D' %}
-                                <div class="contain-item"><a class="btn btn-success">Accept</a></div>
-                                <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
-                            {% elif item.status == 'A' %}
-                                <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
-                                <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
-                            {% elif item.status == 'C' %}
-                                <div class="contain-item"><a class="btn btn-success">Accept</a></div>
-                                <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
-                            {% endif %}
-                        </div>
-                        <div class="price p-lg-2">
-                            <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i> ${{ item.get_total_price }}
-                            </li>
-                            <li class="list-inline-item my-2">
+                            <div class="price p-lg-2">
+                                <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i>
+                                    ${{ item.get_total_price }}
+                                </li>
+                                <li class="list-inline-item my-2">
                         <span
                                 class="badge bg-success"><i
                                 class="mdi mdi-star"></i>4.8</span>
-                            </li>
+                                </li>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="d-flex justify-content-center">
