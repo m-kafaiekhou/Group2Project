@@ -19,6 +19,9 @@
         </div>
         <div class="row d-flex justify-content-center"">
             <div><hr></div>
+            {% if searched_items == None %}
+                <h6 class="display-4">Please enter Some Thing to search!</h6>
+            {% else %}
             {% for item in searched_items %}
                 {% if forloop.counter|divisibleby:2 %}
                 <div class="col-lg-6">
@@ -60,8 +63,9 @@
                 </div>
                 {% endif %}
             {% empty %}
-                <h3>Sorry no results found!</h3>
+                <h6 class="display-4">Sorry no results found!</h6>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
