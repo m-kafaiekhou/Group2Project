@@ -17,10 +17,10 @@
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Search Result</h4>
             <h1 class="display-4">What we Found for you:</h1>
         </div>
-        <div class="row d-flex justify-content-center"">
+        <div class="row d-flex">
             <div><hr></div>
             {% if searched_items == None %}
-                <h6 class="display-4" style="position: relative; text-align: center;">Please enter Some Thing to search!</h6>
+                <h6 class="display-4 col-lg-12" style="position: relative; text-align: center;">Please enter Some Thing to search!</h6>
             {% else %}
             {% for item in searched_items %}
                 {% if forloop.counter|divisibleby:2 %}
@@ -63,7 +63,7 @@
                 </div>
                 {% endif %}
             {% empty %}
-                <h6 class="display-4" style="position: relative; text-align: center;">Sorry no results found!</h6>
+                <h6 class="display-4 col-lg-12" style="position: relative; text-align: center;">Sorry no results found!</h6>
             {% endfor %}
             {% endif %}
         </div>
