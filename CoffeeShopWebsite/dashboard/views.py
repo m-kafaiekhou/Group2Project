@@ -139,7 +139,7 @@ class AddCategoryView(LoginRequiredMixin, View):
 
 
 class OrderDetailView(LoginRequiredMixin, View):
-    template_name = "staff/order_detail.html"
+    template_name = "dashboard/order_detail.html"
     model_class = Order
     form_class = forms.OrderUpdateForm
 
