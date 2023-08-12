@@ -87,7 +87,7 @@
                             </div>
                             <div class="btn-contain">
                                 {% if item.status == 'D' %}
-                                    <div class="contain-item"><a href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
+                                    <div class="contain-item"><a class="status-button" data-status="A" data-item-id="{{ item.id }}" href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
                                     <div class="contain-item"><a href="#"><i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i></a></div>
                                 {% elif item.status == 'A' %}
                                     <div class="contain-item"><a href="#"><i class='fas fa-clock' style='font-size:48px;color:yellow'></i></a></div>
