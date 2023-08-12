@@ -174,10 +174,7 @@ class OrderListView(LoginRequiredMixin, View):
         elif order_by == 'mo':
             query_set = filter_set.qs.order_by('-orderitem__price')
         elif order_by == 'le':
-            pass
-            # query_set = filter_set.qs.order_by('order_get_total_price')
-        else:
-            query_set = filter_set.qs
+            query_set = filter_set.qs.order_by('orderitem__price')
 
         paginator = Paginator(query_set, 2)
         page_number = request.GET.get("page", 1)
