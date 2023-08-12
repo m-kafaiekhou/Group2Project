@@ -53,10 +53,13 @@
                             <div class="align-items-center row" style="width: 100%">
                                 <div class="col-auto">
                                     <div class="candidate-list-images">
-                                        <a href="#"><img
-                                                src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
-                                                alt=""
-                                                class="avatar-md img-thumbnail rounded-circle"/></a>
+                                        {% if item.status == 'D' %}
+                                            <div class="status waiting fade"></div>
+                                        {% elif item.status == 'A' %}
+                                            <div class="status complete fade"></div>
+                                        {% elif item.status == 'C' %}
+                                            <div class="status lost fade"></div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -111,7 +114,7 @@
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                       href="?page=1&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
@@ -125,7 +128,7 @@
                                     </li>
                                 {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
                                     <li class="page-item"><a class="page-link"
-                                                             href="?page={{ n }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}">{{ n }}</a>
+                                                             href="?page={{ n }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}">{{ n }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -133,7 +136,7 @@
                             {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page={{ page_obj.paginator.num_pages }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                       href="?page={{ page_obj.paginator.num_pages }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">end</span>
