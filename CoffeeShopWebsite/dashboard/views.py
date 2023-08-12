@@ -194,4 +194,9 @@ class OrderListView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         order = self.model_class.objects.get(pk=kwargs['pk'])
         status = kwargs['stat']
+        try:
+            order.status = status
+            order.save()
+        except:
+            pass
 
