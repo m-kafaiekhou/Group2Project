@@ -4,7 +4,7 @@ $('.status-button').on('click', function() {
   let status = $(this).data('status');
 
   $.ajax({
-    url: `/order-list/${status}/`,
+    url: `/dashboard/order-list/${status}/`,
     type: 'POST',
     data: { itemId: itemId },
     success: function(response) {
