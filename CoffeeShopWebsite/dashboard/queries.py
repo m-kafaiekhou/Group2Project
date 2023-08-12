@@ -79,3 +79,17 @@ def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     limit %s;
     '''
     return Order.objects.raw(sql, [start_date, end_date, num])
+
+def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_item):
+    sql = '''
+    select menus_cafeitem.name, sum(orders_orderitem.quantity)
+    from orders_order inner join orders_orderitem
+    on orders_order.id = orders_orderitem.order_id 
+    inner join menus_cafeitem
+    on menus_cafeitem.id = orders_orderitem.cafeitem_id
+    where orders_order.order_date > %s and orders_order.order_date < %s
+    group by menus_cafeitem.name
+    having menus_cafeitem.name = %s
+    order by sum(orders_orderitem.quantity) desc ;
+    '''
+    return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
