@@ -53,17 +53,16 @@
                         <div class="align-items-center row" style="width: 100%">
                             <div class="col-auto">
                                 <div class="candidate-list-images">
-                                    <a href="#"><img src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
-                                                                        alt=""
-                                                                        class="avatar-md img-thumbnail rounded-circle"/></a>
+                                    <a href="#"><img
+                                            src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
+                                            alt=""
+                                            class="avatar-md img-thumbnail rounded-circle"/></a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="candidate-list-content mt-3 mt-lg-0">
                                     <h5 class="fs-19 mb-0">
-                                        <a class="primary-link" href="#">{{ item.get_status_display }}</a><span
-                                            class="badge bg-success ms-1"><i
-                                            class="mdi mdi-star align-middle"></i>4.8</span>
+                                        <a class="primary-link" href="#">{{ item.get_status_display }}</a>
                                     </h5>
                                     <p class="text-muted mb-2">{{ item.phone_number }}</p>
                                     <ul class="list-inline mb-0 text-muted">
@@ -75,12 +74,17 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                    <span class="badge bg-soft-secondary fs-14 mt-1">{{ item.table_number }}</span>
+                                    <span class="badge bg-soft-secondary fs-14 mt-1">Table number: {{ item.table_number }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="price">
-                            <li class="list-inline-item"><i class="mdi mdi-wallet"></i> ${{ item.get_total_price }}
+                            <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i> ${{ item.get_total_price }}
+                            </li>
+                            <li class="list-inline-item my-2">
+                        <span
+                                class="badge bg-success"><i
+                                class="mdi mdi-star"></i>4.8</span>
                             </li>
                         </div>
                     </div>
@@ -93,7 +97,8 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                    <a class="page-link"
+                                       href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
