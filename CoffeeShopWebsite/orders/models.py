@@ -42,7 +42,7 @@ class Order(models.Model):
         items = self.get_order_items()
         total = 0
         for item in items:
-            total += item.quantity * item.price
+            total += item.price
 
         return total
 
@@ -61,4 +61,4 @@ class OrderItem(models.Model):
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
-        return self
+        self.save()
