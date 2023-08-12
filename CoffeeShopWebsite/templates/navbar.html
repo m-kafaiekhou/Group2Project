@@ -1,30 +1,28 @@
-{% load static %}
-<header class="header_area">
-    <div class="main_menu">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="{% url 'home' %}">
-                <img class="logo-1 logo_size" src="{% static 'img/Tehran_Coffee_logo.png' %}" alt="">
-                <img class="logo-2 logo_size" src="{% static 'img/Tehran_Coffee_logo2.png' %}" alt="">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </button>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                <ul dir="rtl" class="nav navbar-nav menu_nav ml-auto">
-                    <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'home' %}">خانه</a></li>
-                    <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'menu' %}">منو</a></li>
-                    <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'cart' %}">سبد خرید</a></li>
-                    <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="{% url 'gallery' %}">گالری</a></li>
-                    <li class="nav-item m-4"><a class="nav-link" style="font-family: yekan; font-size: 20px;" href="#">درباره ما</a></li>
-                </ul>
+<!-- Navbar Start -->
+<div class="container-fluid p-0 nav-bar">
+    <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
+        <a href="{% url 'home' %}" class="navbar-brand px-lg-4 m-0">
+            <h1 class="m-0 display-4 text-uppercase text-white">TEHRAN</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav ml-auto p-4">
+                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'menu' %}" class="nav-item nav-link">Menu</a>
+                <a href="{% url 'cart' %}" class="nav-item nav-link">Cart</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu text-capitalize">
+                        <a href="{% url 'gallery' %}" class="dropdown-item">Gallery</a>
+                        <a href="#" class="dropdown-item">Testimonial</a>
+                    </div>
                 </div>
+                <a href="#" class="nav-item nav-link">About</a>
+                <a href="#" class="nav-item nav-link">Contact</a>
             </div>
-        </nav>
-    </div>
-</header>
-  
+        </div>
+    </nav>
+</div>
+<!-- Navbar End -->
