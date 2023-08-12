@@ -93,3 +93,32 @@ def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_
     order by sum(orders_orderitem.quantity) desc ;
     '''
     return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
+
+def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time(start_date, end_date):
+    sql = '''
+        select sum(orders_orderitem.price)
+        from orders_order inner join orders_orderitem
+        on orders_order.id = orders_orderitem.order_id 
+        where orders_order.order_date > %s and orders_order.order_date < %s
+        '''
+    return OrderItem.objects.raw(sql, [start_date, end_date])
+
+def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time_by_a_customer(start_date, end_date, phone_number):
+    sql = '''
+        select sum(orders_orderitem.price)
+        from orders_order inner join orders_orderitem
+        on orders_order.id = orders_orderitem.order_id 
+        where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s
+        '''
+    return OrderItem.objects.raw(sql, [start_date, end_date, phone_number])
+
+def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, phone_number):
+    sql = '''
+        select menus_cafeitem.name
+        from menus_cafeitem inner join orders_orderitem
+        on menus_cafeitem.id = orders_orderitem.cafeitem_id
+        inner join orders_order
+        on orders_order.id = orders_orderitem.order_id
+        where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s;
+        '''
+    return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
