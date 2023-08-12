@@ -27,7 +27,7 @@ class CafeItem(models.Model):
     is_available = models.BooleanField()
     price = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=False, unique=True)
 
     category = models.ForeignKey(
         "Category",

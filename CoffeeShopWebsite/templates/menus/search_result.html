@@ -44,6 +44,14 @@
             </div>
         </div>
     </section>
+    <input type="text" id="tags">
+    <script>
+        $(function () {
+        $("#tags").autocomplete({
+            source: "{% url 'autocomplete' %}"
+        });
+    } );    
+    </script>
 
 {% endblock %}
 <!--================End Menu Area =================-->

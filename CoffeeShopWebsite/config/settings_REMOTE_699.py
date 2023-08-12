@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
-    "django_filters",
     "widget_tweaks",
 ]
 
