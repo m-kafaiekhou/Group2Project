@@ -17,28 +17,51 @@
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Search Result</h4>
             <h1 class="display-4">What we Found for you:</h1>
         </div>
-        <div class="row d-flex">
+        <div class="row d-flex justify-content-center"">
             <div><hr></div>
-            <div class="col-lg-6">
-                {% for item in searched_items %}
-                <div class="row align-items-center mb-5">
-                    <div class="col-4 col-sm-3">
-                        <img class="rounded-circle mb-3 mb-sm-0" style="width: 7rem; height: 7rem;" src="{{ item.image.url }}" alt="">
-                        <h5 class="menu-price">T{{ item.price }}</h5>
-                    </div>
-                    <div class="col-8 col-sm-9">
-                        <h4>{{ item.name }}</h4>
-                        <p class="m-0">{{ item.description }}</p>
-                        <div class="d-flex justify-content-end mx-3">
-                            <button class="btn btn-primary justify" name="{{ item.id }}" value="0"
-                                    href="?pk={{ item.id }}"
-                                    onclick="increment(this)">Add to Cart
-                            </button>
+            {% for item in searched_items %}
+                {% if forloop.counter|divisibleby:2 %}
+                <div class="col-lg-6">
+                    <div class="row align-items-center mb-5">
+                        <div class="col-4 col-sm-3">
+                            <img class="rounded-circle mb-3 mb-sm-0" style="width: 7rem; height: 7rem;" src="{{ item.image.url }}" alt="">
+                            <h5 class="menu-price">T{{ item.price }}</h5>
+                        </div>
+                        <div class="col-8 col-sm-9">
+                            <h4>{{ item.name }}</h4>
+                            <p class="m-0">{{ item.description }}</p>
+                            <div class="d-flex justify-content-end mx-3">
+                                <button class="btn btn-primary justify" name="{{ item.id }}" value="0"
+                                        href="?pk={{ item.id }}"
+                                        onclick="increment(this)">Add to Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+                {% else %}
+                <div class="col-lg-6">
+                    <div class="row align-items-center mb-5">
+                        <div class="col-4 col-sm-3">
+                            <img class="rounded-circle mb-3 mb-sm-0" style="width: 7rem; height: 7rem;" src="{{ item.image.url }}" alt="">
+                            <h5 class="menu-price">T{{ item.price }}</h5>
+                        </div>
+                        <div class="col-8 col-sm-9">
+                            <h4>{{ item.name }}</h4>
+                            <p class="m-0">{{ item.description }}</p>
+                            <div class="d-flex justify-content-end mx-3">
+                                <button class="btn btn-primary justify" name="{{ item.id }}" value="0"
+                                        href="?pk={{ item.id }}"
+                                        onclick="increment(this)">Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <h3>Sorry no results found for you'r search!</h3>
+            {% endfor %}
         </div>
     </div>
 </div>
