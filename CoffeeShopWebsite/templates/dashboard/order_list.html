@@ -2,6 +2,10 @@
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
 {% block content %}
     <section class="section mt-5">
         <div class="container">
@@ -54,11 +58,11 @@
                                 <div class="col-auto">
                                     <div class="candidate-list-images">
                                         {% if item.status == 'D' %}
-                                            <div class="status waiting fade"></div>
+                                            <i class='fas fa-clock' style='font-size:48px;color:yellow'></i>
                                         {% elif item.status == 'A' %}
-                                            <div class="status complete fade"></div>
+                                            <i class='fas fa-check-circle' style='font-size:48px;color:green'></i>
                                         {% elif item.status == 'C' %}
-                                            <div class="status lost fade"></div>
+                                            <i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -83,14 +87,14 @@
                             </div>
                             <div class="btn-contain">
                                 {% if item.status == 'D' %}
-                                    <div class="contain-item"><a class="btn btn-success">Accept</a></div>
-                                    <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i></a></div>
                                 {% elif item.status == 'A' %}
-                                    <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
-                                    <div class="contain-item"><a class="btn btn-danger">Cancel</a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-clock' style='font-size:48px;color:yellow'></i></a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i></a></div>
                                 {% elif item.status == 'C' %}
-                                    <div class="contain-item"><a class="btn btn-success">Accept</a></div>
-                                    <div class="contain-item"><a class="btn btn-warning">Draft</a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
+                                    <div class="contain-item"><a href="#"><i class='fas fa-clock' style='font-size:48px;color:yellow'></i></a></div>
                                 {% endif %}
                             </div>
                             <div class="price p-lg-2">
