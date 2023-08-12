@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 from menus.models import CafeItem, Category
 from orders.models import Order
@@ -192,12 +193,16 @@ class OrderListView(LoginRequiredMixin, View):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        pk = request.POST.get('pk', None)
+        print("****************")
+        pk = request.POST.get('itemId', None)
         status = kwargs['stat']
         try:
             order = self.model_class.objects.get(pk=pk)
             order.status = status
             order.save()
-        except:
-            pass
+            return JsonResponse({'message': 'Order status updated successfully'})
+        except self.model_class.DoesNotExist:
+            return JsonResponse({'error': 'Order not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
