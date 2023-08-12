@@ -46,16 +46,27 @@
                 </div>
             </div>
         </div>
-        <form class="form-inline d-flex justify-content-end mb-4 mx-5" action="{% url 'menu_search' %}" method="get">
-            <div class="input-group">
-                <input type="text" class="form-control p-4" placeholder="Enter you'r Search" name="search" style="height: 50px;">
-                <div class="input-group-append">
-                    <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
-                </div>
-            </div>
-        </form>
         <!--================ End Header End ================-->
         
+        <!--================ Search End ================-->
+        <div class="container-fluid py-5">
+            <div class="container">
+                <div class="section-title">
+                    <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Search</h4>
+                    <h1 class="display-4">Search for Drinks</h1>
+                </div>
+                <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menu_search' %}" method="get">
+                    <div class="input-group" style="height: 3rem; width: 100%;">
+                        <input type="text" class="form-control p-4" placeholder="Enter you'r Search" name="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--================ Search End ================-->
+
         <!--================ Content Area =================-->
         {% block content %}
         {% endblock content %}
