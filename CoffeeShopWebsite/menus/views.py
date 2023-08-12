@@ -11,9 +11,12 @@ class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
             cd = request.GET.get("search")
-            searched_items = CafeItem.objects.filter(
-                Q(name__icontains=cd) | Q(description__icontains=cd)
-            )
+            if cd != "":
+                searched_items = CafeItem.objects.filter(
+                    Q(name__icontains=cd) | Q(description__icontains=cd)
+                )
+            else: 
+                return render(request, "menus/search_result.html", {"searched_items": None})
         return render(
             request,
             "menus/search_result.html",
