@@ -17,13 +17,13 @@ $('.status-button').on('click', function() {
     data: { itemId: itemId },
     success: function(response) {
 
-      console.log('Item deleted successfully');
+      console.log('Item updated successfully');
 
       window.location.reload();
     },
     error: function(xhr, status, error) {
 
-      console.error('Error deleting item:', error);
+      console.error('Error updating item:', error);
     }
   });
 });
