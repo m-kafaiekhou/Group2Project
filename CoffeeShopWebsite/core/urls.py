@@ -10,3 +10,4 @@ urlpatterns = [
 ]
 
 # handler404 = "pages.views.error_404_view"
+admin.site.index_title = 'Group2 CoffeeShop'
