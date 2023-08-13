@@ -179,8 +179,12 @@ def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, pho
         on orders_order.id = orders_orderitem.order_id
         where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s;
         '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
+    cafe_items = CafeItem.objects.filter(
+        orderitem__order__order_date__gt='2023-01-23',
+        orderitem__order__order_date__lt='2023-08-12',
+        orderitem__order__phone_number='0913'
+    ).values('name')
+    return cafe_items
 
-
-print(most_selled_cafe_items_in_a_peroid_of_time('2023-01-23 00:00:00','2023-08-12',2))
 
