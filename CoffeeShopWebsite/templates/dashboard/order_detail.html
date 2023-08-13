@@ -38,16 +38,13 @@
                                                     class="img-fluid"></a>
                                         </div>
                                         <div class="flex-lg-grow-1 ms-3 position-relative">
-                                            <h6 class="small mb-0"><a href="#" class="text-reset">Wireless
-                                                Headphones
-                                                with
-                                                Noise Cancellation Tru Bass Bluetooth HiFi</a></h6>
-                                            <span class="small">Color: Black</span>
+                                            <h6 class="small mb-0"><a href="#" class="text-reset">{{ item.cafeitem.name }}</a></h6>
+                                            <span class="small">{{ item.cafeitem.description }}</span>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">1</td>
-                                <td class="text-end">79 T</td>
+                                <td class="text-center">{{ item.quantity }}</td>
+                                <td class="text-end">{{ item.price }} T</td>
                             </tr>
                         {% endfor %}
                         <tr>
