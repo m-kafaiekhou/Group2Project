@@ -38,6 +38,14 @@ class Order(models.Model):
     def get_order_items(self):
         return self.orderitem_set.all()
 
+    def get_total_price(self):
+        items = self.get_order_items()
+        total = 0
+        for item in items:
+            total += item.price
+
+        return total
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
@@ -53,4 +61,4 @@ class OrderItem(models.Model):
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
-        return self
+        self.save()

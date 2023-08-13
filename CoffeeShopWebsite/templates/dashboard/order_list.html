@@ -2,6 +2,12 @@
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+          integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+
 {% block content %}
     <section class="section mt-5">
         <div class="container">
@@ -29,7 +35,6 @@
                                                 <option value="df">Default</option>
                                                 <option value="mo">Most Expensive</option>
                                                 <option value="le">Least Expensive</option>
-                                                <option value="rd">Random</option>
                                             </select>
                                         </div>
                                     </div>
@@ -47,44 +52,73 @@
                 </div>
             </div>
             <div class="candidate-list">
-                {% for item in page_obj %}
-                    <div class="candidate-list-box card mt-4">
-                    <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
-                        <div class="align-items-center row" style="width: 100%">
-                            <div class="col-auto">
-                                <div class="candidate-list-images">
-                                    <a href="#"><img src="http://127.0.0.1:8000/media/cafe_item/pranav-kumar-jain-NyHDsR7zEgY-unsplash.jpg"
-                                                                        alt=""
-                                                                        class="avatar-md img-thumbnail rounded-circle"/></a>
+
+                <div class="candidate-list-box card mt-4">
+                    {% for item in page_obj %}
+                        <div class="p-4 card-body d-flex align-items-center justify-content-between pe-5">
+                            <div class="align-items-center row" style="width: 100%">
+                                <div class="col-auto">
+                                    <div class="candidate-list-images">
+                                        {% if item.status == 'D' %}
+                                            <i class='fas fa-clock' style='font-size:48px;color:yellow'></i>
+                                        {% elif item.status == 'A' %}
+                                            <i class='fas fa-check-circle' style='font-size:48px;color:green'></i>
+                                        {% elif item.status == 'C' %}
+                                            <i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="candidate-list-content mt-3 mt-lg-0">
+                                        <h5 class="fs-19 mb-0">
+                                            <a class="primary-link" href="#">{{ item.get_status_display }}</a>
+                                        </h5>
+                                        <p class="text-muted mb-2">{{ item.phone_number }}</p>
+                                        <ul class="list-inline mb-0 text-muted">
+                                            <li class="list-inline-item"><i
+                                                    class="mdi mdi-map-marker"></i>{{ item.order_date }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                        <span class="badge bg-soft-secondary fs-14 mt-1">Table number: {{ item.table_number }}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="candidate-list-content mt-3 mt-lg-0">
-                                    <h5 class="fs-19 mb-0">
-                                        <a class="primary-link" href="#">{{ item.name }}</a><span
-                                            class="badge bg-success ms-1"><i
-                                            class="mdi mdi-star align-middle"></i>4.8</span>
-                                    </h5>
-                                    <p class="text-muted mb-2">{{ item.description }}</p>
-                                    <ul class="list-inline mb-0 text-muted">
-                                        <li class="list-inline-item"><i
-                                                class="mdi mdi-map-marker"></i>{{ item.date_added }}
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="btn-contain">
+                                {% if item.status == 'D' %}
+                                    <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
+                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
+                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
+                                {% elif item.status == 'A' %}
+                                    <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
+                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
+                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
+                                {% elif item.status == 'C' %}
+                                    <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
+                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
+                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
+                                {% endif %}
+                                <div class="contain-item"><a class="btn btn-warning edit-button"
+                                                             href="{% url 'order_details' item.id %}">Edit</a></div>
                             </div>
-                            <div class="col-lg-2">
-                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                    <span class="badge bg-soft-secondary fs-14 mt-1">{{ item.category }}</span>
-                                </div>
+                            <div class="price p-lg-2 align">
+                                <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i>
+                                    ${{ item.get_total_price }}
+                                </li>
+                                <li class="list-inline-item my-2">
+                        <span
+                                class="badge bg-success"><i
+                                class="mdi mdi-star"></i>4.8</span>
+                                </li>
                             </div>
                         </div>
-                        <div class="price">
-                            <li class="list-inline-item"><i class="mdi mdi-wallet"></i> ${{ item.price }}
-                            </li>
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="d-flex justify-content-center">
@@ -93,7 +127,8 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                    <a class="page-link"
+                                       href="?page=1&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
@@ -107,7 +142,7 @@
                                     </li>
                                 {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
                                     <li class="page-item"><a class="page-link"
-                                                             href="?page={{ n }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}">{{ n }}</a>
+                                                             href="?page={{ n }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}">{{ n }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -115,7 +150,7 @@
                             {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page={{ page_obj.paginator.num_pages }}&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                       href="?page={{ page_obj.paginator.num_pages }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">end</span>
@@ -126,7 +161,5 @@
                 </div>
             </div>
         </div>
-
     </section>
-
 {% endblock %}
