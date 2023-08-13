@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 
 from menus.models import CafeItem, Category
-from orders.models import Order
+from orders.models import Order, OrderItem
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet
 
@@ -151,6 +151,14 @@ class OrderDetailView(LoginRequiredMixin, View):
         return render(request, self.template_name, context={'order': item, 'form': form, 'cafeitems': cafeitems})
 
     def post(self, request, *args, **kwargs):
+        if "quantity" in request.POST:
+            quantity = request.POST.get('quantity')
+            item = request.POST.get('item')
+            order = get_object_or_404(Order, pk=kwargs['pk'])
+
+            if item.isdigit() and quantity.isdigit():
+                OrderItem.objects.create()
+
         item = get_object_or_404(self.model_class, pk=kwargs['pk'])
         form = self.form_class(request.POST, instance=item)
 
