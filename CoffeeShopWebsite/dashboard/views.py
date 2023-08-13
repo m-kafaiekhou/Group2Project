@@ -147,7 +147,8 @@ class OrderDetailView(LoginRequiredMixin, View):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
         form = self.form_class(initial=initial_data)
-        return render(request, self.template_name, context={'order': item, 'form': form})
+        cafeitems = CafeItem.objects.all()
+        return render(request, self.template_name, context={'order': item, 'form': form, 'cafeitems': cafeitems})
 
     def post(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs['pk'])
