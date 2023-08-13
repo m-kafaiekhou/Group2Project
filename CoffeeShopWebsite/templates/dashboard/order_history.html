@@ -27,4 +27,25 @@
                         <th class="text-center yekan">Total Price</th>
                     </tr>
                     </thead>
-                    
+                    <tbody>
+                        {% for order in orders %}
+                            {% if order.phone_number ==  %}
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <h4><a href="#">{{ order.table_number }}</a></h4>
+                                            {#<span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>#}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div>
+                                        <h4><a href="#">{{ order.items }}</a></h4>
+                                    </div>
+                                </td>
+                                <td class="text-center text-lg text-medium">{{ item.order_date }}</td>
+                                <td class="text-center text-lg text-medium">
+                                    {% order.widthratio item.price 1 quant as tot %}{{ tot|intcomma }}</td>
+                            </tr>
+                        {% endfor %}
