@@ -43,12 +43,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">
-                                    <form action="{% url 'order_item_update' order.id %}" method="post">
+                                <td class="justify-content-center">
+                                    <form class="d-flex" action="{% url 'order_item_update' order.id %}" method="post">
                                         {% csrf_token %}
-                                    <input class="form-control" style="width: 6rem" type="number" value="{{ item.quantity }}">
-                                        <input style="display: none" value="{{ item.id }}">
-                                        <button type="submit" class="btn btn-success">&#10004;</button>
+                                    <input class="form-control" name="quantity" style="width: 6rem" type="number" value="{{ item.quantity }}">
+                                        <input name="orderitem" value="{{ item.pk }}">
+                                        <button type="submit" class="btn btn-success ms-2">&#10004;</button>
                                     </form>
                                 </td>
                                 <td class="text-end">{{ item.price }} T</td>
