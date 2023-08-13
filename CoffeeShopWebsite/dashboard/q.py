@@ -113,11 +113,11 @@ def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     '''
     #return Order.objects.raw(sql, [start_date, end_date, num])
     queryset = Order.objects.filter(
-        order_date__gt='2023-01-23',
-        order_date__lt='2023-08-12'
+        order_date__gt=start_date,
+        order_date__lt=end_date
     ).annotate(
         total_price=Sum('orderitem__price')
-    ).order_by('-total_price')[:3]
+    ).order_by('-total_price')[:num]
 
     return [(order.phone_number, order.total_price) for order in queryset]
 
@@ -134,7 +134,15 @@ def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_
     having menus_cafeitem.name = %s
     order by sum(orders_orderitem.quantity) desc ;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date,
+        name=cafe_item
+    ).annotate(total_quantity=Sum('orderitem__quantity')).order_by('-total_quantity')
+
+    return [(item.name, item.total_quantity) for item in queryset]
+
 
 def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time(start_date, end_date):
     sql = '''
@@ -143,7 +151,11 @@ def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time(start_date, e
         on orders_order.id = orders_orderitem.order_id 
         where orders_order.order_date > %s and orders_order.order_date < %s
         '''
-    return OrderItem.objects.raw(sql, [start_date, end_date])
+    #return OrderItem.objects.raw(sql, [start_date, end_date])
+    total_price = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date) \
+        .annotate(total_price=Sum('orderitem__price')).values('total_price')
+    return total_price
+
 
 def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time_by_a_customer(start_date, end_date, phone_number):
     sql = '''
