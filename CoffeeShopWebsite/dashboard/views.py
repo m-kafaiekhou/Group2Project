@@ -155,7 +155,9 @@ class OrderDetailView(LoginRequiredMixin, View):
         form = self.form_class(request.POST, instance=item)
 
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.staff = request.user
+            item.save()
 
         return redirect('order_list')
 
@@ -199,6 +201,7 @@ class OrderListView(LoginRequiredMixin, View):
         try:
             order = self.model_class.objects.get(pk=pk)
             order.status = status
+            order.staff = request.user
             order.save()
             return JsonResponse({'message': 'Order status updated successfully'})
         except self.model_class.DoesNotExist:
