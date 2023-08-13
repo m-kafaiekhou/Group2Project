@@ -180,6 +180,7 @@ class OrderItemUpdateView(View):
         order_item = get_object_or_404(OrderItem, pk=int(order_item_id))
 
         order_item.quantity = int(quantity)
+        print(order_item.quantity)
         order_item.save()
 
         return redirect('order_details', order_id)
