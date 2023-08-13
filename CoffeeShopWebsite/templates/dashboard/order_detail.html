@@ -46,22 +46,24 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>1</td>
+                                <td class="text-center">1</td>
                                 <td class="text-end">79 T</td>
                             </tr>
                         {% endfor %}
                         <tr>
                             <td>
-                                <input type="text" name="example" list="exampleList" class="select form-select mb-3">
+                                <input type="text" name="example" list="exampleList" class="select form-select mb-3" placeholder="Choose item to add">
                                 <datalist id="exampleList">
                                     <option value="A">
                                     <option value="B">
                                 </datalist>
                             </td>
-{#                            <td>#}
-{#                                <label for="exampleList" class="text-primary font-weight-bolder" style="font-size: large">Add#}
-{#                                    Item To Order</label>#}
-{#                            </td>#}
+                            <td class="justify-content-center">
+                                <div><input type="number" min="1" max="10" class="form-control" placeholder="Quantity"></div>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-primary" type="submit">Add</button>
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot>
