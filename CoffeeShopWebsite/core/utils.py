@@ -46,6 +46,16 @@ def send_otp_code(phone_number, code):
     print(f"{phone_number}: {code}")
     print("*" * 120)
 
+    username = env("OTP_USERNAME")
+    password = env("OTP_PASSWORD")
+    api = Api(username, password)
+    sms = api.sms()
+    to = phone_number
+    _from = "50004001018172"
+    text = f"کد تایید شما: {code}"
+    response = sms.send(to, _from, text)
+    print(response)
+
 
 def set_otp(request, phone_number):
     random_code = random.randint(1000, 9999)
