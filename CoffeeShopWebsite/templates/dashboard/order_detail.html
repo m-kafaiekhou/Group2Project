@@ -50,6 +50,16 @@
                                 <td class="text-end">79 T</td>
                             </tr>
                         {% endfor %}
+                        <tr>
+                            <td>
+                        <label for="exampleList" class="text-primary">Add Item To Order</label>
+                            <input type="text" name="example" list="exampleList" class="select form-select mb-3">
+                            <datalist id="exampleList">
+                                <option value="A">
+                                <option value="B">
+                            </datalist>
+                            </td>
+                        </tr>
                         </tbody>
                         <tfoot>
                         <tr>
@@ -82,7 +92,7 @@
                         <form method="POST">
                             {% csrf_token %}
                             <label for="exampleList" class="text-primary">Add Item To Order</label>
-                            <input type="text" name="example" list="exampleList" class="select form-select mx-2">
+                            <input type="text" name="example" list="exampleList" class="select form-select mb-3">
                             <datalist id="exampleList">
                                 <option value="A">
                                 <option value="B">
