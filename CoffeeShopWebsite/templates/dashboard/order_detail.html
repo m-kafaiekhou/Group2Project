@@ -51,22 +51,24 @@
                             </tr>
                         {% endfor %}
                         <tr>
-                         <form method="post">
-                            <td>
-                                <input type="text" name="example" list="exampleList" class="select form-select mb-3" placeholder="Choose item to add">
-                                <datalist id="exampleList">
-                                    {% for item in cafeitems %}
-                                        <option id="{{ item.id }}" value="{{ item.name }}">
-                                    {% endfor %}
-                                </datalist>
-                            </td>
-                            <td class="justify-content-center">
-                                <div><input type="number" min="1" max="10" class="form-control" placeholder="Quantity"></div>
-                            </td>
-                            <td class="text-center" style="width: min-content">
-                                <button class="btn btn-primary" type="submit">Update</button>
-                            </td>
-                        <form method="post"></form>
+                            <form method="post">
+                                <td>
+                                    <input type="text" name="example" list="exampleList" class="select form-select mb-3"
+                                           placeholder="Choose item to add">
+                                    <datalist id="exampleList">
+                                        {% for item in cafeitems %}
+                                            <option id="{{ item.id }}" value="{{ item.name }}">
+                                        {% endfor %}
+                                    </datalist>
+                                </td>
+                                <td class="justify-content-center">
+                                    <div><input type="number" min="1" max="10" class="form-control"
+                                                placeholder="Quantity"></div>
+                                </td>
+                                <td class="text-center" style="width: min-content">
+                                    <button class="btn btn-primary" type="submit">Update</button>
+                                </td>
+                                <form method="post"></form>
                         </tr>
                         </tbody>
                         <tfoot>
