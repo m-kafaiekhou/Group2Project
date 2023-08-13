@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from orders.models import Order
+from melipayamak import Api
 import random
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 def delete_cart(request, response) -> None:
@@ -47,9 +52,7 @@ def set_otp(request, phone_number):
     send_otp_code(phone_number=phone_number, code=random_code)
     request.session["phone_number"] = phone_number
     request.session["otp_code"] = random_code
-    messages.success(
-        request, "کد تایید به شماره موبایل شما ارسال شد", "success"
-    )
+    messages.success(request, "کد تایید به شماره موبایل شما ارسال شد", "success")
     return redirect("code_entry")
 
 
