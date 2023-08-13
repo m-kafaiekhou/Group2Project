@@ -40,7 +40,6 @@
                                             src="{{ item.image.url }}" alt="Product" style="width: 5rem; height: 5rem;"></a>
                                     <div class="product-info">
                                         <h4 class="product-title"><a href="#">{{ item.name }}</a></h4>
-                                        {#<span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>#}
                                     </div>
                                 </div>
                             </td>
@@ -52,7 +51,6 @@
                                        style="-webkit-appearance: none; -moz-appearance: textfield; width: 50px; height: 38px">
                                 <button class="btn btn-secondary" onclick="decrement(this.previousElementSibling); return false;">-
                                 </button>
-                            {#<input value="{{ item.id }}" name="{{ item.id }}" style="display: none">#}
                             </td>
                             <td class="text-center text-lg text-medium">{{ item.price|intcomma }}</td>
                             <td class="text-center text-lg text-medium">
