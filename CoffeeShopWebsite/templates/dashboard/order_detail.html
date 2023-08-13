@@ -52,6 +52,7 @@
                         {% endfor %}
                         <tr>
                             <form method="post">
+                            {% csrf_token %}
                                 <td>
                                     <input type="text" name="item" list="exampleList" class="select form-select mb-3"
                                            placeholder="Choose item to add">
