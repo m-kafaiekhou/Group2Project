@@ -164,7 +164,11 @@ def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time_by_a_customer
         on orders_order.id = orders_orderitem.order_id 
         where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s
         '''
-    return OrderItem.objects.raw(sql, [start_date, end_date, phone_number])
+    #return OrderItem.objects.raw(sql, [start_date, end_date, phone_number])
+    total_price = OrderItem.objects.filter(order__order_date__gt=start_date,
+                                           order__order_date__lt=end_date,
+                                           order__phone_number=phone_number).aggregate(Sum('price'))
+    return total_price
 
 def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, phone_number):
     sql = '''
