@@ -3,6 +3,7 @@ from menus.models import *
 from orders.models import *
 from staff.models import *
 from datetime import datetime, timedelta
+from django.db.models import Sum,Avg
 
 def most_selled_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -16,7 +17,14 @@ def most_selled_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.quantity) desc
     limit %s;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    # return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date
+    ).annotate(
+        total_quantity=Sum('orderitem__quantity')
+    ).order_by('-total_quantity')[:num+1]
+    return queryset
 
 def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -32,7 +40,15 @@ def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     order by avg(coffeeshop_review.rating) desc
     limit %s;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, num])
+
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date
+    ).annotate(
+        avg_rating=Avg('coffeeshop_review__rating')
+    ).order_by('-avg_rating')[:num+1]
+    return queryset
 
 def most_popular_categories_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -122,3 +138,7 @@ def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, pho
         where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s;
         '''
     return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
+
+
+print(most_selled_cafe_items_in_a_peroid_of_time('2023-01-23 00:00:00','2023-08-12',2))
+
