@@ -18,4 +18,7 @@ class AddCategoryForm(forms.ModelForm):
 class OrderUpdateForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = ('staff',)
+        fields = "__all__"
+        widgets = {
+            'staff': forms.widgets.HiddenInput(),
+        }
