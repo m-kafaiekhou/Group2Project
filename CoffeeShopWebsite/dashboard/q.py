@@ -3,6 +3,7 @@ from menus.models import *
 from orders.models import *
 from staff.models import *
 from datetime import datetime, timedelta
+from django.db.models import Sum,Avg
 
 def most_selled_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -16,7 +17,14 @@ def most_selled_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.quantity) desc
     limit %s;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    # return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date
+    ).values('orderitem__cafeitem__name').annotate(
+        total_quantity=Sum('orderitem__quantity')
+    ).order_by('-total_quantity')[:num]
+    return queryset
 
 def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -32,7 +40,15 @@ def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     order by avg(coffeeshop_review.rating) desc
     limit %s;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, num])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, num])
+
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date
+    ).values('orderitem__cafeitem__name').annotate(
+        avg_rating=Avg('coffeeshop_review__rating')
+    ).order_by('-avg_rating')[:num]
+    return queryset
 
 def most_popular_categories_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -50,7 +66,13 @@ def most_popular_categories_in_a_peroid_of_time(start_date, end_date, num):
     order by avg(coffeeshop_review.rating) desc
     limit %s;
     '''
-    return Category.objects.raw(sql, [start_date, end_date, num])
+    #return Category.objects.raw(sql, [start_date, end_date, num])
+    queryset = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date) \
+                   .select_related('orderitem__cafeitem__review', 'orderitem__cafeitem__category') \
+                   .values('orderitem__cafeitem__category__name') \
+                   .annotate(avg_rating=Avg('orderitem__cafeitem__review__rating')) \
+                   .order_by('-avg_rating')[:num]
+    return queryset
 
 def most_selled_categories_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -66,7 +88,18 @@ def most_selled_categories_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.quantity) desc
     limit %s;
     '''
-    return Category.objects.raw(sql, [start_date, end_date, num])
+    #return Category.objects.raw(sql, [start_date, end_date, num])
+    queryset = Category.objects.filter(
+        cafeitem__orderitem__order__order_date__gt=start_date,
+        cafeitem__orderitem__order__order_date__lt=end_date
+    ).annotate(
+        total_quantity=Sum('cafeitem__orderitem__quantity')
+    ).values(
+        'name', 'total_quantity'
+    ).order_by(
+        '-total_quantity'
+    )[:num]
+    return queryset
 
 def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
@@ -78,7 +111,16 @@ def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.price) desc
     limit %s;
     '''
-    return Order.objects.raw(sql, [start_date, end_date, num])
+    #return Order.objects.raw(sql, [start_date, end_date, num])
+    queryset = Order.objects.filter(
+        order_date__gt=start_date,
+        order_date__lt=end_date
+    ).annotate(
+        total_price=Sum('orderitem__price')
+    ).order_by('-total_price')[:num]
+
+    return [(order.phone_number, order.total_price) for order in queryset]
+
 
 def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_item):
     sql = '''
@@ -92,7 +134,15 @@ def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_
     having menus_cafeitem.name = %s
     order by sum(orders_orderitem.quantity) desc ;
     '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, cafe_item])
+    queryset = CafeItem.objects.filter(
+        orderitem__order__order_date__gt=start_date,
+        orderitem__order__order_date__lt=end_date,
+        name=cafe_item
+    ).annotate(total_quantity=Sum('orderitem__quantity')).order_by('-total_quantity')
+
+    return [(item.name, item.total_quantity) for item in queryset]
+
 
 def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time(start_date, end_date):
     sql = '''
@@ -101,7 +151,11 @@ def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time(start_date, e
         on orders_order.id = orders_orderitem.order_id 
         where orders_order.order_date > %s and orders_order.order_date < %s
         '''
-    return OrderItem.objects.raw(sql, [start_date, end_date])
+    #return OrderItem.objects.raw(sql, [start_date, end_date])
+    total_price = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date) \
+        .annotate(total_price=Sum('orderitem__price')).values('total_price')
+    return total_price
+
 
 def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time_by_a_customer(start_date, end_date, phone_number):
     sql = '''
@@ -110,7 +164,11 @@ def amount_of_sold_coffeshop_items_total_price_in_a_period_of_time_by_a_customer
         on orders_order.id = orders_orderitem.order_id 
         where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s
         '''
-    return OrderItem.objects.raw(sql, [start_date, end_date, phone_number])
+    #return OrderItem.objects.raw(sql, [start_date, end_date, phone_number])
+    total_price = OrderItem.objects.filter(order__order_date__gt=start_date,
+                                           order__order_date__lt=end_date,
+                                           order__phone_number=phone_number).aggregate(Sum('price'))
+    return total_price
 
 def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, phone_number):
     sql = '''
@@ -121,4 +179,12 @@ def soled_cafe_items_to_a_customer_in_a_period_of_time(start_date, end_date, pho
         on orders_order.id = orders_orderitem.order_id
         where orders_order.order_date > %s and orders_order.order_date < %s and orders_order.phone_number = %s;
         '''
-    return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
+    #return CafeItem.objects.raw(sql, [start_date, end_date, phone_number])
+    cafe_items = CafeItem.objects.filter(
+        orderitem__order__order_date__gt='2023-01-23',
+        orderitem__order__order_date__lt='2023-08-12',
+        orderitem__order__phone_number='0913'
+    ).values('name')
+    return cafe_items
+
+

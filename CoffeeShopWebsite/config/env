@@ -1,0 +1,5 @@
+DATABASE_NAME=neondb
+DATABASE_USER=m.kafaiekhou
+DATABASE_PASSWORD=VUG74XItSxiw
+DATABASE_HOST=ep-round-dream-23233303.eu-central-1.aws.neon.tech
+DATABASE_PORT=5432
