@@ -1,17 +1,14 @@
 {% extends 'dashboard/_base.html' %}
 {% load crispy_forms_tags %}
 {% load humanize %}
+
 {% block head %}
     <style>
-    body{
-    background:#eee;
-}
         .card {
             box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
         }
 
         .card {
-            position: relative;
             display: flex;
             flex-direction: column;
             min-width: 0;
@@ -36,7 +33,7 @@
 
 {% block content %}
     <!-- Main content -->
-    <div class="row container">
+    <div class="row container-fluid">
         <div class="col-lg-12">
             <!-- Details -->
             <div class="card mb-4">
