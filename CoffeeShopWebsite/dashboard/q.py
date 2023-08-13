@@ -88,7 +88,18 @@ def most_selled_categories_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.quantity) desc
     limit %s;
     '''
-    return Category.objects.raw(sql, [start_date, end_date, num])
+    #return Category.objects.raw(sql, [start_date, end_date, num])
+    queryset = Category.objects.filter(
+        cafeitem__orderitem__order__order_date__gt=start_date,
+        cafeitem__orderitem__order__order_date__lt=end_date
+    ).annotate(
+        total_quantity=Sum('cafeitem__orderitem__quantity')
+    ).values(
+        'name', 'total_quantity'
+    ).order_by(
+        '-total_quantity'
+    )[:num]
+    return queryset
 
 def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
