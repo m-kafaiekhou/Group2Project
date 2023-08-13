@@ -154,11 +154,11 @@ class OrderDetailView(LoginRequiredMixin, View):
         if "quantity" in request.POST:
             quantity = request.POST.get('quantity')
             item = request.POST.get('item')
-            item = get_object_or_404(CafeItem, pk=item)
             order = get_object_or_404(Order, pk=kwargs['pk'])
 
             if item.isdigit() and quantity.isdigit():
-                OrderItem.objects.create(order=order, cafeitem=item, quantity=quantity)
+                item = get_object_or_404(CafeItem, pk=item)
+                OrderItem.objects.create(order=order, cafeitem=item, quantity=int(quantity))
 
         else:
             item = get_object_or_404(self.model_class, pk=kwargs['pk'])
