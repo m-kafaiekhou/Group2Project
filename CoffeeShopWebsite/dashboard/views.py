@@ -194,3 +194,10 @@ class OrderListView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         pass
+
+
+class DashboardView(View):
+    template_view = "dashboard/dashboard.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_view)
