@@ -111,7 +111,16 @@ def best_customers_in_a_peroid_of_time(start_date, end_date, num):
     order by sum(orders_orderitem.price) desc
     limit %s;
     '''
-    return Order.objects.raw(sql, [start_date, end_date, num])
+    #return Order.objects.raw(sql, [start_date, end_date, num])
+    queryset = Order.objects.filter(
+        order_date__gt='2023-01-23',
+        order_date__lt='2023-08-12'
+    ).annotate(
+        total_price=Sum('orderitem__price')
+    ).order_by('-total_price')[:3]
+
+    return [(order.phone_number, order.total_price) for order in queryset]
+
 
 def number_of_a_selled_cafe_item_in_a_peroid_of_time(start_date, end_date, cafe_item):
     sql = '''
