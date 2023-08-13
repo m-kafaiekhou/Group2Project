@@ -3,7 +3,9 @@
 {% load widget_tweaks %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+          integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 {% endblock %}
 
 {% block content %}
@@ -87,18 +89,25 @@
                             </div>
                             <div class="btn-contain">
                                 {% if item.status == 'D' %}
-                                    <div class="contain-item"><a class="status-button" data-status="A" data-item-id="{{ item.id }}" href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
-                                    <div class="contain-item"><a class="status-button" data-status="C" data-item-id="{{ item.id }}" href="#"><i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i></a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
+                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
+                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
                                 {% elif item.status == 'A' %}
-                                    <div class="contain-item"><a class="status-button" data-status="D" data-item-id="{{ item.id }}" href="#"><i class='fas fa-clock' style='font-size:48px;color:yellow'></i></a></div>
-                                    <div class="contain-item"><a class="status-button" data-status="C" data-item-id="{{ item.id }}" href="#"><i class='fas fa-exclamation-circle' style='font-size:48px;color:red'></i></a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
+                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
+                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
                                 {% elif item.status == 'C' %}
-                                    <div class="contain-item"><a class="status-button" data-status="A" data-item-id="{{ item.id }}" href="#"><i class='fas fa-check-circle' style='font-size:48px;color:green'></i></a></div>
-                                    <div class="contain-item"><a class="status-button" data-status="D" data-item-id="{{ item.id }}" href="#"><i class='fas fa-clock' style='font-size:48px;color:yellow'></i></a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
+                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                    <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
+                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
                                 {% endif %}
-                                <div class="contain-item"><a href="{% url 'order_details' item.id %}"><i class='far fa-edit' style='font-size:48px;color:blue'></i></a></div>
+                                <div class="contain-item"><a class="btn btn-warning edit-button"
+                                                             href="{% url 'order_details' item.id %}">Edit</a></div>
                             </div>
-                            <div class="price p-lg-2">
+                            <div class="price p-lg-2 align" style="width: 70px;">
                                 <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i>
                                     ${{ item.get_total_price }}
                                 </li>
