@@ -160,15 +160,16 @@ class OrderDetailView(LoginRequiredMixin, View):
             if item.isdigit() and quantity.isdigit():
                 OrderItem.objects.create(order=order, cafeitem=item, quantity=quantity)
 
-        item = get_object_or_404(self.model_class, pk=kwargs['pk'])
-        form = self.form_class(request.POST, instance=item)
+        else:
+            item = get_object_or_404(self.model_class, pk=kwargs['pk'])
+            form = self.form_class(request.POST, instance=item)
 
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.staff = request.user
-            item.save()
+            if form.is_valid():
+                item = form.save(commit=False)
+                item.staff = request.user
+                item.save()
 
-        return redirect('order_list')
+        return redirect('order_details', kwargs["pk"])
 
 
 class OrderListView(LoginRequiredMixin, View):
