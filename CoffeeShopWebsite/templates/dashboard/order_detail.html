@@ -15,15 +15,15 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="mb-3 d-flex justify-content-between">
-                        <div>
-                            <span class="me-3">Order Date: {{ order.order_date }}</span>
+                        <div class="row position-relative">
+                            <span class="me-3">Date: {{ order.order_date }}</span>
                             <span class="me-3">Order Number: {{ order.id }}</span>
                             <span class="me-3">Phone Number: {{ order.phone_number }}</span>
 
                         </div>
-                        <div class="d-flex">
+                        <div class="d-flex align-items-center">
                             <span class="badge rounded-pill bg-info"
-                                  style="font-size: large">Table #{{ order.table_number }}</span>
+                                  style="font-size: large;">Table #{{ order.table_number }}</span>
                         </div>
                     </div>
                     <table class="table table-borderless">
@@ -37,7 +37,7 @@
                                                     src="{{ item.cafeitem.image.url }}" alt="" width="35"
                                                     class="img-fluid"></a>
                                         </div>
-                                        <div class="flex-lg-grow-1 ms-3">
+                                        <div class="flex-lg-grow-1 ms-3 position-relative">
                                             <h6 class="small mb-0"><a href="#" class="text-reset">Wireless
                                                 Headphones
                                                 with
@@ -61,8 +61,8 @@
                             <td class="justify-content-center">
                                 <div><input type="number" min="1" max="10" class="form-control" placeholder="Quantity"></div>
                             </td>
-                            <td class="text-center">
-                                <button class="btn btn-primary" type="submit">Add</button>
+                            <td class="text-center" style="width: min-content">
+                                <button class="btn btn-primary" type="submit">Update</button>
                             </td>
                         </tr>
                         </tbody>
