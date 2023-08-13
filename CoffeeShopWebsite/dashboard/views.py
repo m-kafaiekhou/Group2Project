@@ -173,9 +173,11 @@ class OrderDetailView(LoginRequiredMixin, View):
 class OrderItemUpdateView(View):
     def post(self, request, *args, **kwargs):
         order_id = kwargs['pk']
+        print(order_id)
         order_item_id = request.POST.get('orderitem')
+        print(order_item_id)
         quantity = request.POST.get('quantity')
-        order_item = get_object_or_404(OrderItem, pk=order_item_id)
+        order_item = get_object_or_404(OrderItem, pk=int(order_item_id))
 
         order_item.quantity = int(quantity)
         order_item.save()
