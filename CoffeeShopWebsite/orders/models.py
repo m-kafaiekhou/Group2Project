@@ -30,6 +30,7 @@ class Order(models.Model):
         CustomUserModel,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True
     )
 
     def __str__(self) -> str:
