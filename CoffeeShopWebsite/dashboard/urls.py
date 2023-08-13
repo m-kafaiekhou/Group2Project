@@ -11,4 +11,5 @@ urlpatterns = [
     path('item-list/', ItemListView.as_view(), name="item_list"),
     path('order-list/', OrderListView.as_view(), name="order_list"),
     path('order-list/<str:stat>/', OrderListView.as_view(), name="order_status"),
+    path('dashboard/', DashboardView.as_view(), name="dashboard"),
 ]
