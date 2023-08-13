@@ -102,3 +102,13 @@ tr {
         margin: 0px;
     }
 }
+
+
+.status-button, .edit-button {
+    width: 76px;
+    height: 38px;
+}
+
+.price {
+    width: 4.5rem;
+}
