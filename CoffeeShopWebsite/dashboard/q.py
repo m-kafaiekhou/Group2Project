@@ -21,9 +21,9 @@ def most_selled_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     queryset = CafeItem.objects.filter(
         orderitem__order__order_date__gt=start_date,
         orderitem__order__order_date__lt=end_date
-    ).annotate(
+    ).values('orderitem__cafeitem__name').annotate(
         total_quantity=Sum('orderitem__quantity')
-    ).order_by('-total_quantity')[:num+1]
+    ).order_by('-total_quantity')[:num]
     return queryset
 
 def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
@@ -45,9 +45,9 @@ def most_popular_cafe_items_in_a_peroid_of_time(start_date, end_date, num):
     queryset = CafeItem.objects.filter(
         orderitem__order__order_date__gt=start_date,
         orderitem__order__order_date__lt=end_date
-    ).annotate(
+    ).values('orderitem__cafeitem__name').annotate(
         avg_rating=Avg('coffeeshop_review__rating')
-    ).order_by('-avg_rating')[:num+1]
+    ).order_by('-avg_rating')[:num]
     return queryset
 
 def most_popular_categories_in_a_peroid_of_time(start_date, end_date, num):
@@ -66,7 +66,13 @@ def most_popular_categories_in_a_peroid_of_time(start_date, end_date, num):
     order by avg(coffeeshop_review.rating) desc
     limit %s;
     '''
-    return Category.objects.raw(sql, [start_date, end_date, num])
+    #return Category.objects.raw(sql, [start_date, end_date, num])
+    queryset = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date) \
+                   .select_related('orderitem__cafeitem__review', 'orderitem__cafeitem__category') \
+                   .values('orderitem__cafeitem__category__name') \
+                   .annotate(avg_rating=Avg('orderitem__cafeitem__review__rating')) \
+                   .order_by('-avg_rating')[:num]
+    return queryset
 
 def most_selled_categories_in_a_peroid_of_time(start_date, end_date, num):
     sql = '''
