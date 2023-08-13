@@ -170,6 +170,19 @@ class OrderDetailView(LoginRequiredMixin, View):
         return redirect('order_details', kwargs["pk"])
 
 
+class OrderItemUpdateView(View):
+    def post(self, request, *args, **kwargs):
+        order_id = kwargs['pk']
+        order_item_id = request.POST.get('orderitem')
+        quantity = request.POST.get('quantity')
+        order_item = get_object_or_404(OrderItem, pk=order_item_id)
+
+        order_item.quantity = int(quantity)
+        order_item.save()
+
+        return redirect('order_details', order_id)
+
+
 class OrderListView(LoginRequiredMixin, View):
     template_name = "dashboard/order_list.html"
     model_class = Order
