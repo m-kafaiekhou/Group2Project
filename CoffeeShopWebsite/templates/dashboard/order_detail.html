@@ -51,11 +51,13 @@
                             </tr>
                         {% endfor %}
                         <tr>
+                         <form method="post">
                             <td>
                                 <input type="text" name="example" list="exampleList" class="select form-select mb-3" placeholder="Choose item to add">
                                 <datalist id="exampleList">
-                                    <option value="A">
-                                    <option value="B">
+                                    {% for item in cafeitems %}
+                                        <option id="{{ item.id }}" value="{{ item.name }}">
+                                    {% endfor %}
                                 </datalist>
                             </td>
                             <td class="justify-content-center">
@@ -64,6 +66,7 @@
                             <td class="text-center" style="width: min-content">
                                 <button class="btn btn-primary" type="submit">Update</button>
                             </td>
+                        <form method="post"></form>
                         </tr>
                         </tbody>
                         <tfoot>
