@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
 from . import views
+from .admin import main_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', main_site.urls),
     # path("", include("pages.urls")),
     # path("phone/", views.PhoneNumberEntryView.as_view(), name="phone_entry"),
     path("code/", views.VerificationCodeEntryView.as_view(), name="code_entry"),
