@@ -12,10 +12,10 @@ class LoginUserView(View):
     template_name = "registration/login.html"
     form1 = PhoneNumberForm
     form2 = OtpForm
+    context = {"form1": form1, "form2": form2}
 
     def get(self, request, *args, **kwargs):
-        context = {"form1": self.form1, "form2": self.form2}
-        return render(request, self.template_name, context=context)
+        return render(request, self.template_name, context=self.context)
 
     def post(self, request, *args, **kwargs):
         if "form1_submit" in request.POST:
@@ -23,6 +23,7 @@ class LoginUserView(View):
             if phone_form.is_valid():
                 phone_number = phone_form.cleaned_data["phone_number"]
                 set_otp(request, phone_number)
+            return render(request, self.template_name, context=self.context)
 
         if "form2_submit" in request.POST:
             otp_form = self.form2(request.POST)
@@ -35,6 +36,7 @@ class LoginUserView(View):
                     login(request, user)
                     messages.success(request, "You logged in successfully!", "success")
                     return redirect("home")
+            return render(request, self.template_name, context=self.context)
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
