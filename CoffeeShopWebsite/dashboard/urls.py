@@ -17,5 +17,6 @@ urlpatterns = [
 
 # Chart view urls
 urlpatterns += [
-    path()
+    path("chart/year-filter-options/", year_filter_options, name="year-filter-options"),
+    path("chart/sales/<int:year>/", yearly_sales_chart, name="year-sales"),
 ]
