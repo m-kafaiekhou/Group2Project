@@ -22,13 +22,12 @@ from core.admin import main_site
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("staff.urls")),
     path("", include("coffeeshop.urls")),
     path("", include("orders.urls")),
     path("", include("menus.urls")),
     path("", include("core.urls")),
     path("dashboard/", include("dashboard.urls")),
-    path("staff/", include("staff.urls")),
+    path("staff/", include("staff.urls", namespace="staff")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
