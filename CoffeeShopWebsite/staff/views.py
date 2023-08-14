@@ -27,6 +27,9 @@ class LoginUserView(View):
             otp_form = self.form2(request.POST)
             if otp_form.is_valid():
                 otp_code = otp_form.cleaned_data["registration_code"]
+                user = CustomUserBackend.authenticate(
+                    phone_number=phone_number, otp_code=otp_code
+                )
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
