@@ -251,7 +251,7 @@ def yearly_sales_chart(request, year):
 
 def monthly_sales_chart(request, month):
     orders = OrderItem.objects.filter(order__order_date__month=month)
-    grouped_orders = orders.annotate(price=F("price")).annotate(day=ExtractDay("order__order_date"))\
+    grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date"))\
         .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
     
     sale_dict = month_dict()
@@ -272,7 +272,7 @@ def monthly_sales_chart(request, month):
 
 def daily_sales_chart(request, day):
     orders = OrderItem.objects.filter(order__order_date__day=day)
-    grouped_orders = orders.annotate(price=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
         .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
     
     sale_dict = day_dict()
