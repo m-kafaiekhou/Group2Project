@@ -52,11 +52,12 @@ class ItemListView(LoginRequiredMixin, View):
 class CategoryListView(LoginRequiredMixin, View):
     template_name = "dashboard/category_list.html"
     model_class = Category
+    filter_class = CategoryFilterSet
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
         items = self.model_class.objects.all()
-        filter_set = CategoryFilterSet(data, items)
+        filter_set = self.filter_class(data, items)
 
         order_by = data.get('orderby', 'df')
         if order_by == 'df':
