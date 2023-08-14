@@ -41,9 +41,9 @@ class VerificationCodeEntryView(View):
                     messages.error(
                         request, "The otp code has expired, try again.", "danger"
                     )
-                    return redirect("phone_entry")
+                    return redirect("login")
             else:
                 del request.session["otp"]
                 messages.error(request, "The otp code is wrong, try again.", "danger")
-                return redirect("phone_entry")
+                return redirect("login")
         return render(request, "core/code_entry.html", {"form": form})
