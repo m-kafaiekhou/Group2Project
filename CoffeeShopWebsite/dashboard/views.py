@@ -62,9 +62,9 @@ class CategoryListView(LoginRequiredMixin, View):
         if order_by == 'df':
             query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
         elif order_by == 'mo':
-            query_set = filter_set.qs.order_by('-price')
+            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
         elif order_by == 'le':
-            query_set = filter_set.qs.order_by('price')
+            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('sale_count')
         else:
             query_set = filter_set.qs
         paginator = Paginator(query_set, 2)
