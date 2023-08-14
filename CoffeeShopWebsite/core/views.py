@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.conf import settings
 from django.contrib import messages
-from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from django.contrib.auth import login
+from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from staff.models import CustomUserModel
 
 
