@@ -218,5 +218,8 @@ def filter_options(request):
 
 
 def yearly_sales_chart(request, year):
-    orders = Order.objects.filter(order_date__year=year)
-    grouped_orders = orders.annotate(price=F("order"))
+    orders = OrderItem.objects.filter(order__order_date__year=year)
+    grouped_orders = orders.annotate(price=F("price")).annotate(month=ExtractMonth("order__order_date"))\
+        .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
+    
+    
