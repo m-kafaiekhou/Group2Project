@@ -22,7 +22,7 @@ from core.admin import main_site
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("coffeeshop.urls")),
+    path("", include("coffeeshop.urls", namespace="coffeeshop")),
     path("", include("orders.urls")),
     path("", include("menus.urls")),
     path("", include("core.urls")),
