@@ -4,11 +4,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.db.models import Count
 
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
 from . import forms
-from .filters import ItemFilterSet, OrderFilterSet
+from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
 
 class ItemListView(LoginRequiredMixin, View):
@@ -53,8 +54,31 @@ class CategoryListView(LoginRequiredMixin, View):
     model_class = Category
 
     def get(self, request, *args, **kwargs):
-        categories = self.model_class.objects.all()
-        return render(request, self.template_name, context={'categories': categories})
+        data = request.GET.copy()
+        items = self.model_class.objects.all()
+        filter_set = CategoryFilterSet(data, items)
+
+        order_by = data.get('orderby', 'df')
+        if order_by == 'df':
+            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
+        elif order_by == 'mo':
+            query_set = filter_set.qs.order_by('-price')
+        elif order_by == 'le':
+            query_set = filter_set.qs.order_by('price')
+        else:
+            query_set = filter_set.qs
+        paginator = Paginator(query_set, 2)
+        page_number = request.GET.get("page", 1)
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+            'filter_set': filter_set,
+            'name': data.get('name', ''),
+            'orderby': order_by,
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         pass
