@@ -32,3 +32,6 @@ class CustomUserBackend(ModelBackend):
             username = kwargs.get(self.UserModel.USERNAME_FIELD)
         if username is None or otp_code is None:
             return
+        try:
+            user = self.UserModel._default_manager.get_by_natural_key(username)
+
