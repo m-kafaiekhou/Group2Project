@@ -11,8 +11,10 @@ class LoginUserView(View):
     template_name = "registration/login.html"
 
     def get(self, request, *args, **kwargs):
-        form = CustomAuthenticationForm()
-        return render(request, self.template_name, context={"form": form})
+        form1 = PhoneNumberForm
+        form2 = OtpForm
+        context = {"form1": form1, "form2": form2}
+        return render(request, self.template_name, context=context)
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
