@@ -227,6 +227,15 @@ def month_filter_options(request):
     })
 
 
+def day_filter_options(request):
+    grouped_orders = Order.objects.annotate(hour=ExtractHour("order_date")).values("hour").order_by("-hour").distinct()
+    options = [order["hour"] for order in grouped_orders]
+
+    return JsonResponse({
+        "options":options,
+    })
+
+
 def yearly_sales_chart(request, year):
     orders = OrderItem.objects.filter(order__order_date__year=year)
     grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date"))\
