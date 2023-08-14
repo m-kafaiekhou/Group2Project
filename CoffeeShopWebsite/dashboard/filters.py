@@ -49,3 +49,15 @@ class OrderFilterSet(django_filters.FilterSet):
     class Meta:
         model = Order
         fields = ['phone_number', 'order_date', 'status']
+
+
+class CategoryFilterSet(django_filters.FilterSet):
+    name = django_filters.CharFilter(
+        field_name='name',
+        lookup_expr='icontains',
+        widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
+    )
+
+    class Meta:
+        model = CafeItem
+        fields = ['name', ]
