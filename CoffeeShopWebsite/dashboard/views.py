@@ -237,9 +237,9 @@ def day_filter_options(request):
     })
 
 
-def yearly_sales_chart(request, year):
-    this_year = 
-    orders = OrderItem.objects.filter(order__order_date__year=year)
+def yearly_sales_chart(request):
+    this_year = datetime.now().year
+    orders = OrderItem.objects.filter(order__order_date__year=this_year)
     grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date"))\
         .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
     
@@ -249,7 +249,7 @@ def yearly_sales_chart(request, year):
         sale_dict[months[group["month"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Sales in {year}",
+        "title": f"Sales in {this_year}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -260,18 +260,20 @@ def yearly_sales_chart(request, year):
     })
 
 
-def monthly_sales_chart(request, day):
-    orders = OrderItem.objects.filter(order__order_date__day=day)
+def monthly_sales_chart(request):
+    month = datetime.now().month
+    month_name = datetime.now().strftime("%B")
+    orders = OrderItem.objects.filter(order__order_date__month=month)
     grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date"))\
         .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
     
     sale_dict = month_dict()
 
     for group in grouped_orders:
-        sale_dict[month[group["day"]-1]] = round(group["total"], 2)
+        sale_dict[day[group["day"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Sales in {day}",
+        "title": f"Sales in {month_name}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -281,8 +283,9 @@ def monthly_sales_chart(request, day):
         }
     })
 
-def daily_sales_chart(request, hour):
-    orders = OrderItem.objects.filter(order__order_date__hour=hour)
+def daily_sales_chart(request):
+    today = datetime.now().day
+    orders = OrderItem.objects.filter(order__order_date__day=today)
     grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
         .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
     
@@ -292,7 +295,7 @@ def daily_sales_chart(request, hour):
         sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Sales in {hour}",
+        "title": f"Sales in Today",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
