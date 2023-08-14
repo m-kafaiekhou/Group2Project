@@ -49,7 +49,7 @@ class ItemListView(LoginRequiredMixin, View):
 
 
 class CategoryListView(LoginRequiredMixin, View):
-    template_name = "staff/category_list.html"
+    template_name = "dashboard/category_list.html"
     model_class = Category
 
     def get(self, request, *args, **kwargs):
