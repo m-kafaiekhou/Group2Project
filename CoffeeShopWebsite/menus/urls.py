@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-
+app_name = "menus"
 urlpatterns = [
     path("auto/", views.autocomplete.as_view(), name="autocomplete"),
     path("", views.Menu.as_view(), name="menu"),
