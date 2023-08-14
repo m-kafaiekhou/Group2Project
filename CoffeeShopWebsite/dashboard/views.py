@@ -269,3 +269,24 @@ def monthly_sales_chart(request, month):
             }]
         }
     })
+
+def daily_sales_chart(request, day):
+    orders = OrderItem.objects.filter(order__order_date__day=day)
+    grouped_orders = orders.annotate(price=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
+    
+    sale_dict = day_dict()
+
+    for group in grouped_orders:
+        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in {day}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
