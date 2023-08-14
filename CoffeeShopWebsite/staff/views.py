@@ -36,6 +36,9 @@ class LoginUserView(View):
                     login(request, user)
                     messages.success(request, "You logged in successfully!", "success")
                     return redirect("home")
+                messages.error(
+                    request, "Phone number or registration code is wrong!", "warning"
+                )
             return render(request, self.template_name, context=self.context)
 
     # def post(self, request, *args, **kwargs):
