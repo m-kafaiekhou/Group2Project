@@ -23,5 +23,5 @@ urlpatterns += [
     path("chart/day-filter-options/", day_filter_options, name="day-filter-options"),
     path("chart/sales/this-year/", yearly_sales_chart, name="this-year-sales"),
     path("chart/sales/this-month/", monthly_sales_chart, name="month-sales"),
-    path("chart/sales/this-day", daily_sales_chart, name="day-sales"),
+    path("chart/sales/this-day/", daily_sales_chart, name="day-sales"),
 ]
