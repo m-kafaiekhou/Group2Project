@@ -6,10 +6,13 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 
 from menus.models import CafeItem, Category
-from orders.models import Order
+from orders.models import Order, OrderItem
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet
-
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
+from django.db.models import Count, F, Sum, Avg
+from .chart_utils import year_dict, months, month_dict, month, day_dict, day
+from datetime import datetime
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
@@ -194,3 +197,110 @@ class OrderListView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         pass
+
+
+class DashboardView(View):
+    template_view = "dashboard/dashboard.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_view)
+
+
+
+
+# ********************************* Chart Area ********************************* #
+
+def year_filter_options(request):
+    grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
+    options = [order["year"] for order in grouped_orders]
+
+    return JsonResponse({
+        "options":options,
+    })
+
+
+def month_filter_options(request):
+    grouped_orders = Order.objects.annotate(day=ExtractMonth("order_date")).values("day").order_by("-day").distinct()
+    options = [order["day"] for order in grouped_orders]
+
+    return JsonResponse({
+        "options":options,
+    })
+
+
+def day_filter_options(request):
+    grouped_orders = Order.objects.annotate(hour=ExtractHour("order_date")).values("hour").order_by("-hour").distinct()
+    options = [order["hour"] for order in grouped_orders]
+
+    return JsonResponse({
+        "options":options,
+    })
+
+
+def yearly_sales_chart(request):
+    this_year = datetime.now().year
+    orders = OrderItem.objects.filter(order__order_date__year=this_year)
+    grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date"))\
+        .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
+    
+    sale_dict = year_dict()
+
+    for group in grouped_orders:
+        sale_dict[months[group["month"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in {this_year}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def monthly_sales_chart(request):
+    month = datetime.now().month
+    month_name = datetime.now().strftime("%B")
+    orders = OrderItem.objects.filter(order__order_date__month=month)
+    grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date"))\
+        .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
+    
+    sale_dict = month_dict()
+
+    for group in grouped_orders:
+        sale_dict[day[group["day"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in {month_name}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+def daily_sales_chart(request):
+    today = datetime.now().day
+    orders = OrderItem.objects.filter(order__order_date__day=today)
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
+    
+    sale_dict = day_dict()
+
+    for group in grouped_orders:
+        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in Today",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
