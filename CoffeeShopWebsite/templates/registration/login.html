@@ -16,6 +16,7 @@
                 {{ form1|crispy }}
                 <button type="submit" name="form1_submit" class="btn btn-success mt-3 w-100">send code</button>
             </form>
+            <br/>
             <form method="post">
                 {% csrf_token %}
                 {{ form2|crispy }}
