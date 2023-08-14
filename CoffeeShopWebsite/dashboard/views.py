@@ -232,7 +232,8 @@ class OrderListView(LoginRequiredMixin, View):
             return JsonResponse({'error': 'Order not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-        
-class DashboardView(View) :
+
+
+class DashboardView(View):
     pass
 
