@@ -87,6 +87,7 @@ class DeleteCartView(View):
 class OrderHistoryView(View) :
     template_name = 'order_history.html'
     model_class = Order
+    form_class = None
     def get(self, request, *args, **kwargs) :
         last_order_id = request.session.get('last_order_id')
         
