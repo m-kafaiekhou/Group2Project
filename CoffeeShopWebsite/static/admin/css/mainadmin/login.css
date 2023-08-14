@@ -1,11 +1,12 @@
 /* LOGIN FORM */
 
 .login {
-    background: var(--darkened-bg);
+    background: rgb(70, 49, 4);
     height: auto;
 }
 
 .login #header {
+    background-color: rgb(218, 159, 91);
     height: auto;
     padding: 15px 16px;
     justify-content: center;
@@ -17,7 +18,8 @@
 }
 
 .login #header h1 a {
-    color: var(--header-link-color);
+    color: rgb(70, 49, 4);
+    font-weight: 700;
 }
 
 .login #content {
