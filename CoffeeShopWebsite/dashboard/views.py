@@ -4,21 +4,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.db.models import Count
 
+# Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
 from . import forms
-from .filters import ItemFilterSet, OrderFilterSet
+from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
+    filter_class = ItemFilterSet
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
         items = self.model_class.objects.all()
-        filter_set = ItemFilterSet(data, items)
+        filter_set = self.filter_class(data, items)
 
         order_by = data.get('orderby', 'df')
         if order_by == 'df':
@@ -49,12 +52,37 @@ class ItemListView(LoginRequiredMixin, View):
 
 
 class CategoryListView(LoginRequiredMixin, View):
-    template_name = "staff/category_list.html"
+    template_name = "dashboard/category_list.html"
     model_class = Category
+    filter_class = CategoryFilterSet
 
     def get(self, request, *args, **kwargs):
-        categories = self.model_class.objects.all()
-        return render(request, self.template_name, context={'categories': categories})
+        data = request.GET.copy()
+        items = self.model_class.objects.all()
+        filter_set = self.filter_class(data, items)
+
+        order_by = data.get('orderby', 'df')
+        if order_by == 'df':
+            query_set = filter_set.qs.order_by('name')
+        elif order_by == 'mo':
+            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
+        elif order_by == 'le':
+            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('sale_count')
+        else:
+            query_set = filter_set.qs
+
+        paginator = Paginator(query_set, 2)
+        page_number = request.GET.get("page", 1)
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+            'filter_set': filter_set,
+            'name': data.get('name', ''),
+            'orderby': order_by,
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         pass
@@ -69,6 +97,7 @@ class ItemDetailView(LoginRequiredMixin, View):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
         form = self.form_class(initial=initial_data)
+
         return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -148,7 +177,14 @@ class OrderDetailView(LoginRequiredMixin, View):
         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
         form = self.form_class(initial=initial_data)
         cafeitems = CafeItem.objects.all()
-        return render(request, self.template_name, context={'order': item, 'form': form, 'cafeitems': cafeitems})
+
+        context = {
+            'order': item,
+            'form': form,
+            'cafeitems': cafeitems
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         if "quantity" in request.POST:
@@ -173,14 +209,11 @@ class OrderDetailView(LoginRequiredMixin, View):
 class OrderItemUpdateView(View):
     def post(self, request, *args, **kwargs):
         order_id = kwargs['pk']
-        print(order_id)
         order_item_id = request.POST.get('orderitem')
-        print(order_item_id)
         quantity = request.POST.get('quantity')
         order_item = get_object_or_404(OrderItem, pk=int(order_item_id))
 
         order_item.quantity = int(quantity)
-        print(order_item.quantity)
         order_item.save()
 
         return redirect('order_details', order_id)
@@ -189,11 +222,12 @@ class OrderItemUpdateView(View):
 class OrderListView(LoginRequiredMixin, View):
     template_name = "dashboard/order_list.html"
     model_class = Order
+    filter_class = OrderFilterSet
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
         items = self.model_class.objects.all()
-        filter_set = OrderFilterSet(data, items)
+        filter_set = self.filter_class(data, items)
 
         order_by = data.get('orderby', 'df')
 
@@ -228,12 +262,13 @@ class OrderListView(LoginRequiredMixin, View):
             order.staff = request.user
             order.save()
             return JsonResponse({'message': 'Order status updated successfully'})
+
         except self.model_class.DoesNotExist:
             return JsonResponse({'error': 'Order not found'}, status=404)
+
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 
 
 class DashboardView(View):
     pass
-
