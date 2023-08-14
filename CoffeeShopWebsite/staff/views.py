@@ -26,7 +26,7 @@ class LoginUserView(View):
         if "form2_submit" in request.POST:
             otp_form = self.form2(request.POST)
             if otp_form.is_valid():
-                pass
+                otp_code = otp_form.cleaned_data["registration_code"]
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
