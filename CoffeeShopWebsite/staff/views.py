@@ -33,6 +33,8 @@ class LoginUserView(View):
                 )
                 if user:
                     login(request, user)
+                    messages.success(request, "You logged in successfully!", "success")
+                    return redirect("home")
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
