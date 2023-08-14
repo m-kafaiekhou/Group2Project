@@ -83,3 +83,17 @@ class DeleteCartView(View):
         response = redirect(self.success_redirect_url)
         delete_cart(request, response)
         return response
+
+class OrderHistoryView(View) :
+    template_name = 'order_history.html'
+    model_class = Order
+    def get(self, request, *args, **kwargs) :
+        last_order_id = request.session.get('last_order_id')
+        if last_order_id :
+            if self.model_class.objects.get(id = last_order_id).status == 'A' :
+                self.model_class.objects.filter(phone_number = request.session.get('phone_number'))
+                
+
+
+    def post(self,request, *args, **kwargs) :
+        pass
