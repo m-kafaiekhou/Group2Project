@@ -207,10 +207,11 @@ class DashboardView(View):
 
 # ********************************* Chart Area ********************************* #
 
-def get_filter_options(request):
+def filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
     years = [order["year"] for order in grouped_orders]
 
     return JsonResponse({
         "years":years,
     })
+
