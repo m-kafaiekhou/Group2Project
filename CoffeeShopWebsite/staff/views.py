@@ -20,7 +20,7 @@ class LoginUserView(View):
         if "form1_submit" in request.POST:
             phone_form = self.from1(request.POST)
             if phone_form.is_valid():
-                pass
+                phone_number = phone_form.cleaned_data["phone_number"]
 
         if "form2_submit" in request.POST:
             otp_form = self.form2(request.POST)
