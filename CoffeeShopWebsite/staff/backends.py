@@ -34,4 +34,24 @@ class CustomUserBackend(ModelBackend):
             return
         try:
             user = self.UserModel._default_manager.get_by_natural_key(username)
-
+            otp_session = request.session.get("otp")
+            sent_code = otp_session.get("code")
+            str_expire_time = otp_session.get("str_expire_time")
+            expire_time = datetime.datetime.strptime(
+                str_expire_time, "%Y-%m-%d %H:%M:%S"
+            )
+            if sent_code and otp_code == sent_code:
+                if datetime.datetime.now() < expire_time:
+                    user = get_object_or_404(
+                        CustomUserModel, phone_number=request.session["phone_number"]
+                    )
+                    del request.session["otp"]
+                    return user
+                else:
+                    messages.error(
+                        request, "The otp code has expired, try again.", "danger"
+                    )
+                    return None
+        except self.UserModel.DoesNotExist:
+            del request.session["otp"]
+            return None
