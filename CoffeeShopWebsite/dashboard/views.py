@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Count
 
+# Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
 from . import forms
@@ -96,6 +97,7 @@ class ItemDetailView(LoginRequiredMixin, View):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
         form = self.form_class(initial=initial_data)
+
         return render(request, self.template_name, context={'item': item, 'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -175,6 +177,7 @@ class OrderDetailView(LoginRequiredMixin, View):
         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
         form = self.form_class(initial=initial_data)
         cafeitems = CafeItem.objects.all()
+
         return render(request, self.template_name, context={'order': item, 'form': form, 'cafeitems': cafeitems})
 
     def post(self, request, *args, **kwargs):
@@ -253,8 +256,10 @@ class OrderListView(LoginRequiredMixin, View):
             order.staff = request.user
             order.save()
             return JsonResponse({'message': 'Order status updated successfully'})
+
         except self.model_class.DoesNotExist:
             return JsonResponse({'error': 'Order not found'}, status=404)
+
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 
