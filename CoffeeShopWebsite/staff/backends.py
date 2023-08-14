@@ -3,6 +3,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.http.request import HttpRequest
 from .models import CustomUserModel
+import datetime
 
 
 class CustomUserBackend(ModelBackend):
