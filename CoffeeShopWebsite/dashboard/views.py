@@ -15,11 +15,12 @@ from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
+    filter_class = ItemFilterSet
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
         items = self.model_class.objects.all()
-        filter_set = ItemFilterSet(data, items)
+        filter_set = self.filter_class(data, items)
 
         order_by = data.get('orderby', 'df')
         if order_by == 'df':
@@ -215,11 +216,12 @@ class OrderItemUpdateView(View):
 class OrderListView(LoginRequiredMixin, View):
     template_name = "dashboard/order_list.html"
     model_class = Order
+    filter_class = OrderFilterSet
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
         items = self.model_class.objects.all()
-        filter_set = OrderFilterSet(data, items)
+        filter_set = self.filter_class(data, items)
 
         order_by = data.get('orderby', 'df')
 
