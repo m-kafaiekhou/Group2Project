@@ -3,6 +3,7 @@ from core.utils import create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
 from django.views import View
+from .forms import OrderHistoryForm
 
 
 class CartView(View):
@@ -87,21 +88,24 @@ class DeleteCartView(View):
 class OrderHistoryView(View) :
     template_name = 'order_history.html'
     model_class = Order
-    form_class = None
+    form_class = OrderHistoryForm
     def get(self, request, *args, **kwargs) :
         last_order_id = request.session.get('last_order_id')
-        
+        form = self.form_class()
+        orders = []
+
         if last_order_id :
             
             last_order = request.session.get('last_order_id')
             
             if last_order.status == 'A' :
                 orders = self.model_class.objects.filter(phone_number = request.session.get('phone_number'))
+                form = None
             
             else :
                 orders = last_order
         
-        return render(request, self.template_name, context= {"orders" : orders})
+        return render(request, self.template_name, context= {"orders" : orders, "form" : form})
 
 
     def post(self,request, *args, **kwargs) :
