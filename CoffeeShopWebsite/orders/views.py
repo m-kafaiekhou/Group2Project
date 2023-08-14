@@ -11,6 +11,8 @@ class CartView(View):
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
         context = {"items": cart, "total": total}
+        if not cart:
+            context["show_modal"] = True
         return render(request, self.template_name, context=context)
 
 
