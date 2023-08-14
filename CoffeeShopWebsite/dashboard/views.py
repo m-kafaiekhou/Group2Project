@@ -11,7 +11,7 @@ from . import forms
 from .filters import ItemFilterSet, OrderFilterSet
 from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
 from django.db.models import Count, F, Sum, Avg
-from .chart_utils import year_dict, months
+from .chart_utils import year_dict, months, month_dict, month, day_dict, day
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
