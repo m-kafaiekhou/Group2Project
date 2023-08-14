@@ -41,7 +41,7 @@ class CustomUserBackend(ModelBackend):
             expire_time = datetime.datetime.strptime(
                 str_expire_time, "%Y-%m-%d %H:%M:%S"
             )
-            if sent_code and otp_code == sent_code:
+            if sent_code and otp_code == str(sent_code):
                 if datetime.datetime.now() < expire_time:
                     user = get_object_or_404(
                         CustomUserModel, phone_number=request.session["phone_number"]
