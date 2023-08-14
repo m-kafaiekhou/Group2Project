@@ -13,3 +13,9 @@ urlpatterns = [
     path('order-list/<str:stat>/', OrderListView.as_view(), name="order_status"),
     path('dashboard/', DashboardView.as_view(), name="dashboard"),
 ]
+
+
+# Chart view urls
+urlpatterns += [
+    path()
+]
