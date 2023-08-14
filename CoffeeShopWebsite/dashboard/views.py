@@ -4,12 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
+
 from menus.models import CafeItem, Category
-from orders.models import Order
+from orders.models import Order, OrderItem
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet
-
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
+from django.db.models import Count, F, Sum, Avg
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
@@ -215,3 +216,7 @@ def filter_options(request):
         "years":years,
     })
 
+
+def yearly_sales_chart(request, year):
+    orders = Order.objects.filter(order_date__year=year)
+    grouped_orders = orders.annotate(price=F("order"))
