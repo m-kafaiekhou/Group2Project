@@ -24,7 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("coffeeshop.urls", namespace="coffeeshop")),
     path("", include("orders.urls", namespace="orders")),
-    path("", include("menus.urls")),
+    path("menu/", include("menus.urls", namespace="menus")),
     path("", include("core.urls")),
     path("dashboard/", include("dashboard.urls")),
     path("staff/", include("staff.urls", namespace="staff")),
