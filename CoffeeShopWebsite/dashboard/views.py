@@ -60,7 +60,7 @@ class CategoryListView(LoginRequiredMixin, View):
 
         order_by = data.get('orderby', 'df')
         if order_by == 'df':
-            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
+            query_set = filter_set.qs.order_by('name')
         elif order_by == 'mo':
             query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
         elif order_by == 'le':
