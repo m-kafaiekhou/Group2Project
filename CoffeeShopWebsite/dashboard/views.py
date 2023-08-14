@@ -178,7 +178,13 @@ class OrderDetailView(LoginRequiredMixin, View):
         form = self.form_class(initial=initial_data)
         cafeitems = CafeItem.objects.all()
 
-        return render(request, self.template_name, context={'order': item, 'form': form, 'cafeitems': cafeitems})
+        context = {
+            'order': item,
+            'form': form,
+            'cafeitems': cafeitems
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         if "quantity" in request.POST:
