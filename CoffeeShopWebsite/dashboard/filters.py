@@ -11,6 +11,17 @@ class ItemFilterSet(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
     )
 
+    category = django_filters.CharFilter(
+        field_name='category__name',  # Assuming 'name' is the field in the related model
+        lookup_expr='icontains',
+        widget=forms.TextInput(attrs={'placeholder': 'Enter category'})
+    )
+
+    is_available = django_filters.BooleanFilter(
+        field_name='is_available',
+        widget=forms.NullBooleanSelect(attrs={'placeholder': 'Select availability'})
+    )
+
     class Meta:
         model = CafeItem
         fields = ['name', 'category', 'is_available']
