@@ -18,7 +18,7 @@ class LoginUserView(View):
 
     def post(self, request, *args, **kwargs):
         if "form1_submit" in request.POST:
-            phone_form = self.from1(request.POST):
+            phone_form = self.from1(request.POST)
             if phone_form.is_valid():
                 pass
 
