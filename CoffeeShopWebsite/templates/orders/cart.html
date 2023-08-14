@@ -17,6 +17,24 @@
 
 <!--================ Cart Area =================-->
 {% block content %}
+
+    {% if show_modal %}
+        <div class="modal" id="cart_modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="text-center" style="padding-top: 3%; font-size:large;">Your cart is empty!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" style="text-align: center;" data-bs-dismiss="modal"><a href="{% url 'menu' %}">Back to menu</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
     <form method="post" action="{% url 'cart' %}">
         {% csrf_token %}
         <div class="container padding-bottom-3x mb-1 pt-5">
@@ -79,5 +97,6 @@
     {% endblock %}
 {% block script %}
 <script src="{% static '/cookie.js' %}"></script>
+<script>$("#cart_modal").modal("show")</script>
 {% endblock %}
  <!--================ End Cart Area =================-->
