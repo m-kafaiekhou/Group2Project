@@ -35,7 +35,7 @@ class LoginUserView(View):
                     self, request, phone_number=phone_number, otp_code=otp_code
                 )
                 if user:
-                    login(request, user)
+                    login(request, user, backend='staff.backends.CustomUserBackend')
                     messages.success(request, "You logged in successfully!", "success")
                     return redirect("home")
                 messages.error(
