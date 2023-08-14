@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import login
 
 from .forms import PhoneNumberForm, OtpForm
 from staff.backends import CustomUserBackend
@@ -30,6 +31,8 @@ class LoginUserView(View):
                 user = CustomUserBackend.authenticate(
                     phone_number=phone_number, otp_code=otp_code
                 )
+                if user:
+                    login(request, user)
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
