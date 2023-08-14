@@ -62,8 +62,9 @@ def set_otp(request, phone_number):
     random_code = random.randint(1000, 9999)
     send_otp_code(phone_number=phone_number, code=random_code)
     expire_time = datetime.datetime.now() + datetime.timedelta(minutes=2)
+    str_expire_time = expire_time.strftime("%Y-%m-%d %H:%M:%S")
     request.session["phone_number"] = phone_number
-    request.session["otp"] = {"code": random_code, "expire_time": expire_time}
+    request.session["otp"] = {"code": random_code, "str_expire_time": str_expire_time}
     messages.success(request, "کد تایید به شماره موبایل شما ارسال شد", "success")
     return redirect("code_entry")
 
