@@ -20,7 +20,7 @@ urlpatterns += [
     path("chart/year-filter-options/", year_filter_options, name="year-filter-options"),
     path("chart/month-filter-options/", month_filter_options, name="month-filter-options"),
     path("chart/day-filter-options/", day_filter_options, name="day-filter-options"),
-    path("chart/sales/year/<int:year>/", yearly_sales_chart, name="year-sales"),
-    path("chart/sales/month/<int:month>/", monthly_sales_chart, name="month-sales"),
-    path("chart/sales/day/<int:day>/", daily_sales_chart, name="day-sales"),
+    path("chart/sales/this-year/", yearly_sales_chart, name="this-year-sales"),
+    path("chart/sales/this-month/", monthly_sales_chart, name="month-sales"),
+    path("chart/sales/this-day", daily_sales_chart, name="day-sales"),
 ]
