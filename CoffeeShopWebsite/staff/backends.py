@@ -30,11 +30,11 @@ class CustomUserBackend(ModelBackend):
         username = phone_number
 
         if username is None:
-            username = kwargs.get(self.UserModel.USERNAME_FIELD)
+            username = kwargs.get(CustomUserModel.USERNAME_FIELD)
         if username is None or otp_code is None:
             return
         try:
-            user = self.UserModel._default_manager.get_by_natural_key(username)
+            user = CustomUserModel._default_manager.get_by_natural_key(username)
             otp_session = request.session.get("otp")
             sent_code = otp_session.get("code")
             str_expire_time = otp_session.get("str_expire_time")
@@ -53,6 +53,6 @@ class CustomUserBackend(ModelBackend):
                         request, "The otp code has expired, try again.", "danger"
                     )
                     return None
-        except self.UserModel.DoesNotExist:
+        except CustomUserModel.DoesNotExist:
             del request.session["otp"]
             return None
