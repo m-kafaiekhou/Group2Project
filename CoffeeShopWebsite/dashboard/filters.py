@@ -1,4 +1,4 @@
-from menus.models import CafeItem
+from menus.models import CafeItem, Category
 from orders.models import Order
 import django_filters
 from django import forms
@@ -9,6 +9,13 @@ class ItemFilterSet(django_filters.FilterSet):
         field_name='name',
         lookup_expr='icontains',
         widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
+    )
+
+    category = django_filters.CharFilter(
+        field_name='category__name',
+        choices=Category.name,
+        empty_label='Select Category',
+        widget=forms.Select(attrs={'placeholder': 'Enter category'})
     )
 
     class Meta:
