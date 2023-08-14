@@ -9,8 +9,6 @@ import datetime
 
 
 class CustomUserBackend(ModelBackend):
-    UserModel = CustomUserModel
-
     # def authenticate(self, request, phone_number=None, password=None, **kwargs):
     #     username = phone_number
 
