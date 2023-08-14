@@ -6,7 +6,7 @@ Welcome to our humble coffee shop where we serve the finest coffee and cafe drin
 ## 🔥 Programming Team 🔥
 ### Group 2 >>>
 ### Scrum Master: Alireza Arvin
-### Team Leader: Mahdi yar kafaie khou
+### Team Leader: Mahdiyar kafaie khou
 ### Developer: Zahra Mahjour
 ### Developer: Sevda Hayati
 ### Developer: Mohammad Ali Soltan Hosseini
