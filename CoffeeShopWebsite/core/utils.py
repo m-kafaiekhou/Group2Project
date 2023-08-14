@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from orders.models import Order
+from melipayamak import Api
 import random
+import environ
+import datetime
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 def delete_cart(request, response) -> None:
@@ -41,16 +47,25 @@ def send_otp_code(phone_number, code):
     print(f"{phone_number}: {code}")
     print("*" * 120)
 
+    username = env("OTP_USERNAME")
+    password = env("OTP_PASSWORD")
+    api = Api(username, password)
+    sms = api.sms()
+    to = phone_number
+    _from = "50004001018172"
+    text = f"کد تایید شما: {code}"
+    response = sms.send(to, _from, text)
+    print(response)
+
 
 def set_otp(request, phone_number):
     random_code = random.randint(1000, 9999)
     send_otp_code(phone_number=phone_number, code=random_code)
+    expire_time = datetime.datetime.now() + datetime.timedelta(minutes=2)
+    str_expire_time = expire_time.strftime("%Y-%m-%d %H:%M:%S")
     request.session["phone_number"] = phone_number
-    request.session["otp_code"] = random_code
-    messages.success(
-        request, "کد تایید به شماره موبایل شما ارسال شد", "success"
-    )
-    return redirect("code_entry")
+    request.session["otp"] = {"code": random_code, "str_expire_time": str_expire_time}
+    messages.success(request, "کد تایید به شماره موبایل شما ارسال شد", "success")
 
 
 # def add_to_cart(request, response, item_pk: int) -> None:
