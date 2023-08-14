@@ -15,7 +15,8 @@
                 {% csrf_token %}
                 <h1 class="text-center">Enter</h1>
                 {{ form|crispy }}
-                <button type="submit" class="btn btn-success mt-3 w-100">ورود</button>
+                <button type="submit" name="send_code_submit" class="btn btn-success mt-3 w-100">send code</button>
+                <button type="submit" name="login_submit" class="btn btn-success mt-3 w-100">login</button>
             </form>
         </div>
     </div>
