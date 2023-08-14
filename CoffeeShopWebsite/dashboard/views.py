@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
 from menus.models import CafeItem, Category
 from orders.models import Order
 from . import forms
@@ -201,3 +201,7 @@ class DashboardView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_view)
+
+
+
+
