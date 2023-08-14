@@ -513,7 +513,6 @@ demo = {
       },
       options: gradientBarChartConfiguration
     });
-
   },
 
   initGoogleMaps: function() {
