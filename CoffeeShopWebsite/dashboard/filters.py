@@ -18,6 +18,11 @@ class ItemFilterSet(django_filters.FilterSet):
         widget=forms.Select(attrs={'placeholder': 'Enter category'})
     )
 
+    is_available = django_filters.BooleanFilter(
+        field_name='is_available',
+        widget=forms.NullBooleanSelect(attrs={'placeholder': 'Select availability'})
+    )
+
     class Meta:
         model = CafeItem
         fields = ['name', 'category', 'is_available']
