@@ -17,7 +17,10 @@ class LoginUserView(View):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        if "form1_submit" in request.POST:
+            phone_form = self.from1(request.POST):
+            if phone_form.is_valid():
+                pass
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
