@@ -10,6 +10,8 @@ for model in models :
     except admin.sites.AlreadyRegistered :
         pass
 
+# admin.site.unregister(django.contrib.sessions.models.Session)
+
 class MainAdminArea(admin.AdminSite) :
     site_header = 'Main Admin Area'
 
