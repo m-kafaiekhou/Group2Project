@@ -11,9 +11,9 @@ class ItemFilterSet(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
     )
 
-    category = django_filters.CharFilter(
+    category = django_filters.ChoiceFilter(
         field_name='category__name',
-        choices=Category.name,
+        choices=Category.objects.values_list('name', 'name'),
         empty_label='Select Category',
         widget=forms.Select(attrs={'placeholder': 'Enter category'})
     )
