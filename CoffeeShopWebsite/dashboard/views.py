@@ -209,13 +209,17 @@ class DashboardView(View):
 
 # ********************************* Chart Area ********************************* #
 
-def filter_options(request):
+def year_filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
     years = [order["year"] for order in grouped_orders]
 
     return JsonResponse({
         "years":years,
     })
+
+
+def month_filter_options(request):
+    grouped_orders = Order.objects.annotate(year=Ex("order_date")).values("year").order_by("-year").distinct()
 
 
 def yearly_sales_chart(request, year):
@@ -240,3 +244,4 @@ def yearly_sales_chart(request, year):
     })
 
 
+def monthly_sales_chart(request, month):
