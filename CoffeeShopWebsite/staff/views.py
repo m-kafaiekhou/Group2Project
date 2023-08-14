@@ -19,7 +19,7 @@ class LoginUserView(View):
 
     def post(self, request, *args, **kwargs):
         if "form1_submit" in request.POST:
-            phone_form = self.from1(request.POST)
+            phone_form = self.form1(request.POST)
             if phone_form.is_valid():
                 phone_number = phone_form.cleaned_data["phone_number"]
                 set_otp(request, phone_number)
