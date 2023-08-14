@@ -7,16 +7,13 @@ from django.views import View
 
 class CartView(View):
     template_name = "orders/cart.html"
-    fail_redirect_url = 'menu'
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
-        if cart:
-            return render(
-                request, self.template_name, context={"items": cart, "total": total}
-            )
-
-        return redirect(self.fail_redirect_url)
+        context = {"items": cart, "total": total}
+        if not cart:
+            context["show_modal"] = True
+        return render(request, self.template_name, context=context)
 
 
 def get_cart(request):
@@ -43,8 +40,8 @@ def get_cart(request):
 
 class CheckoutView(View):
     template_name = "orders/checkout.html"
-    success_redirect_url = 'delete_cart'
-    fail_redirect_url = 'menu'
+    success_redirect_url = "delete_cart"
+    fail_redirect_url = "menu"
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
@@ -80,7 +77,7 @@ class CheckoutView(View):
 
 
 class DeleteCartView(View):
-    success_redirect_url = 'home'
+    success_redirect_url = "home"
 
     def get(self, request, *args, **kwargs):
         response = redirect(self.success_redirect_url)

@@ -9,8 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 from pathlib import Path
+import environ
+import os
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +37,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -91,11 +96,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "neondb",
-        "USER": "m.kafaiekhou",
-        "PASSWORD": "VUG74XItSxiw",
-        "HOST": "ep-round-dream-23233303.eu-central-1.aws.neon.tech",
-        "PORT": "5432",
+        "NAME": env("DATABASE_NAME"),
+        "USER": env("DATABASE_USER"),
+        "PASSWORD": env("DATABASE_PASSWORD"),
+        "HOST": env("DATABASE_HOST"),
+        "PORT": env("DATABASE_PORT"),
     }
 }
 
@@ -124,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Tehran"
 
 USE_I18N = True
 
@@ -135,7 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "statics"]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -159,4 +164,4 @@ ALLOWED_HOSTS = ["*"]
 
 # crispy form
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = "bootstrap5"

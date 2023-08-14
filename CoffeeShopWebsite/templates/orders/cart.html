@@ -17,6 +17,24 @@
 
 <!--================ Cart Area =================-->
 {% block content %}
+
+    {% if show_modal %}
+        <div class="modal" id="cart_modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="text-center" style="padding-top: 3%; font-size:large;">Your cart is empty!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" style="text-align: center;" data-bs-dismiss="modal"><a href="{% url 'menu' %}">Back to menu</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
     <form method="post" action="{% url 'cart' %}">
         {% csrf_token %}
         <div class="container padding-bottom-3x mb-1 pt-5">
@@ -40,7 +58,6 @@
                                             src="{{ item.image.url }}" alt="Product" style="width: 5rem; height: 5rem;"></a>
                                     <div class="product-info">
                                         <h4 class="product-title"><a href="#">{{ item.name }}</a></h4>
-                                        {#<span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>#}
                                     </div>
                                 </div>
                             </td>
@@ -52,7 +69,6 @@
                                        style="-webkit-appearance: none; -moz-appearance: textfield; width: 50px; height: 38px">
                                 <button class="btn btn-secondary" onclick="decrement(this.previousElementSibling); return false;">-
                                 </button>
-                            {#<input value="{{ item.id }}" name="{{ item.id }}" style="display: none">#}
                             </td>
                             <td class="text-center text-lg text-medium">{{ item.price|intcomma }}</td>
                             <td class="text-center text-lg text-medium">
@@ -81,5 +97,6 @@
     {% endblock %}
 {% block script %}
 <script src="{% static '/cookie.js' %}"></script>
+<script>$("#cart_modal").modal("show")</script>
 {% endblock %}
  <!--================ End Cart Area =================-->
