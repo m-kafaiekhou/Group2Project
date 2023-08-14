@@ -22,6 +22,11 @@ class LoginUserView(View):
             if phone_form.is_valid():
                 pass
 
+        if "form2_submit" in request.POST:
+            otp_form = self.form2(request.POST)
+            if otp_form.is_valid():
+                pass
+
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
     #     form = CustomAuthenticationForm(request.POST)
