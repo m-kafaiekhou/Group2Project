@@ -11,6 +11,7 @@ from . import forms
 from .filters import ItemFilterSet, OrderFilterSet
 from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
 from django.db.models import Count, F, Sum, Avg
+from .chart_utils import year_dict, months
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
@@ -222,4 +223,20 @@ def yearly_sales_chart(request, year):
     grouped_orders = orders.annotate(price=F("price")).annotate(month=ExtractMonth("order__order_date"))\
         .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
     
-    
+    sale_dict = year_dict()
+
+    for group in grouped_orders:
+        sale_dict[months[group["month"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in {year}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
