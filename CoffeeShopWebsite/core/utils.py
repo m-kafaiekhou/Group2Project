@@ -66,7 +66,6 @@ def set_otp(request, phone_number):
     request.session["phone_number"] = phone_number
     request.session["otp"] = {"code": random_code, "str_expire_time": str_expire_time}
     messages.success(request, "کد تایید به شماره موبایل شما ارسال شد", "success")
-    return redirect("code_entry")
 
 
 # def add_to_cart(request, response, item_pk: int) -> None:
