@@ -12,7 +12,7 @@ from orders.models import Order, OrderItem
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
-from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear, Extract
 from django.db.models import Count, F, Sum, Avg
 from .chart_utils import year_dict, months, month_dict, month, day_dict, day
 from datetime import datetime
@@ -376,6 +376,28 @@ def daily_sales_chart(request):
             "datasets": [{
                 "label": "Amount (T)",
                 "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def all_time_sales(request):
+    orders = OrderItem.objects.all()
+    # grouped_orders = orders.annotate(p=F("price")).annotate(year=ExtractYear("order__order_date"))\
+    #     .values("year").annotate(total=Sum("price")).values("year","total").order_by("year")
+    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    
+    total = 0
+    for order in all_orders:
+        total += order["total"]
+
+    return JsonResponse({
+        "title": "All Time Sales",
+        "data": {
+            "labels": ["total"],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [total],
             }]
         }
     })
