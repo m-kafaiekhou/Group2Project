@@ -6,8 +6,10 @@ django-filter==23.2
 django-phone-field==1.8.1
 django-phonenumber-field==7.1.0
 django-widget-tweaks==1.4.12
+environ==1.0
 phonenumbers==8.13.18
 Pillow==10.0.0
 psycopg2-binary==2.9.6
 sqlparse==0.4.4
 typing_extensions==4.7.1
+tzdata==2023.3
