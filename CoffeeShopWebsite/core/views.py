@@ -25,6 +25,7 @@ class VerificationCodeEntryView(View):
         if form.is_valid():
             input_code = form.cleaned_data["verification_code"]
             sent_code = otp_session.get("code")
+            str_expire_time = otp_session.get("str_expire_time")
             if sent_code and input_code == sent_code:
                 user = get_object_or_404(
                     CustomUserModel, phone_number=request.session["phone_number"]
