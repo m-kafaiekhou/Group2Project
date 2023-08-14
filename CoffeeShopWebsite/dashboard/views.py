@@ -383,8 +383,6 @@ def daily_sales_chart(request):
 
 def all_time_sales(request):
     orders = OrderItem.objects.all()
-    # grouped_orders = orders.annotate(p=F("price")).annotate(year=ExtractYear("order__order_date"))\
-    #     .values("year").annotate(total=Sum("price")).values("year","total").order_by("year")
     all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
     
     total = 0
