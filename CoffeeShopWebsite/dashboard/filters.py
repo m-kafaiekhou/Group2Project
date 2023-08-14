@@ -1,4 +1,4 @@
-from menus.models import CafeItem
+from menus.models import CafeItem, Category
 from orders.models import Order
 import django_filters
 from django import forms
@@ -11,10 +11,11 @@ class ItemFilterSet(django_filters.FilterSet):
         widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
     )
 
-    category = django_filters.CharFilter(
-        field_name='category__name',  # Assuming 'name' is the field in the related model
-        lookup_expr='icontains',
-        widget=forms.TextInput(attrs={'placeholder': 'Enter category'})
+    category = django_filters.ChoiceFilter(
+        field_name='category__name',
+        choices=Category.objects.values_list('name', 'name'),
+        empty_label='Select Category',
+        widget=forms.Select(attrs={'placeholder': 'Enter category'})
     )
 
     is_available = django_filters.BooleanFilter(
@@ -48,3 +49,15 @@ class OrderFilterSet(django_filters.FilterSet):
     class Meta:
         model = Order
         fields = ['phone_number', 'order_date', 'status']
+
+
+class CategoryFilterSet(django_filters.FilterSet):
+    name = django_filters.CharFilter(
+        field_name='name',
+        lookup_expr='icontains',
+        widget=forms.TextInput(attrs={'placeholder': 'Enter name'})
+    )
+
+    class Meta:
+        model = CafeItem
+        fields = ['name', ]
