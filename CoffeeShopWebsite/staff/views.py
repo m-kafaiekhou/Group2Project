@@ -12,10 +12,10 @@ class LoginUserView(View):
     template_name = "registration/login.html"
     form1 = PhoneNumberForm
     form2 = OtpForm
-    context = {"form1": form1, "form2": form2}
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context=self.context)
+        context = {"form1": self.form1, "form2": self.form2}
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         if "form1_submit" in request.POST:
@@ -23,14 +23,16 @@ class LoginUserView(View):
             if phone_form.is_valid():
                 phone_number = phone_form.cleaned_data["phone_number"]
                 set_otp(request, phone_number)
-            return render(request, self.template_name, context=self.context)
+            context = {"form1": phone_form, "form2": self.form2}
+            return render(request, self.template_name, context=context)
 
         if "form2_submit" in request.POST:
             otp_form = self.form2(request.POST)
+            phone_number = request.session.get("phone_number")
             if otp_form.is_valid():
                 otp_code = otp_form.cleaned_data["registration_code"]
                 user = CustomUserBackend.authenticate(
-                    phone_number=phone_number, otp_code=otp_code
+                    self, request, phone_number=phone_number, otp_code=otp_code
                 )
                 if user:
                     login(request, user)
@@ -39,7 +41,8 @@ class LoginUserView(View):
                 messages.error(
                     request, "Phone number or registration code is wrong!", "warning"
                 )
-            return render(request, self.template_name, context=self.context)
+            context = {"form1": phone_form, "form2": otp_form}
+            return render(request, self.template_name, context=context)
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
