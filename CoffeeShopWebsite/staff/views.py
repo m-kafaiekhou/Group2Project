@@ -41,7 +41,7 @@ class LoginUserView(View):
                 messages.error(
                     request, "Phone number or registration code is wrong!", "warning"
                 )
-            context = {"form1": phone_form, "form2": otp_form}
+            context = {"form1": self.form1, "form2": otp_form}
             return render(request, self.template_name, context=context)
 
     # def post(self, request, *args, **kwargs):
