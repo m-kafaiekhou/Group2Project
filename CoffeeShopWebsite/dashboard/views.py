@@ -67,6 +67,7 @@ class CategoryListView(LoginRequiredMixin, View):
             query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('sale_count')
         else:
             query_set = filter_set.qs
+
         paginator = Paginator(query_set, 2)
         page_number = request.GET.get("page", 1)
         page_obj = paginator.get_page(page_number)
@@ -260,4 +261,3 @@ class OrderListView(LoginRequiredMixin, View):
 
 class DashboardView(View):
     pass
-
