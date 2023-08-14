@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from django.contrib.admin import apps
+from core.admin import MainAdminArea
 
 
 class CoreConfig(AppConfig):
