@@ -12,6 +12,7 @@ from .filters import ItemFilterSet, OrderFilterSet
 from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
 from django.db.models import Count, F, Sum, Avg
 from .chart_utils import year_dict, months, month_dict, month, day_dict, day
+from datetime import datetime
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
@@ -219,8 +220,8 @@ def year_filter_options(request):
 
 
 def month_filter_options(request):
-    grouped_orders = Order.objects.annotate(month=ExtractMonth("order_date")).values("month").order_by("-month").distinct()
-    options = [order["month"] for order in grouped_orders]
+    grouped_orders = Order.objects.annotate(day=ExtractMonth("order_date")).values("day").order_by("-day").distinct()
+    options = [order["day"] for order in grouped_orders]
 
     return JsonResponse({
         "options":options,
@@ -237,6 +238,7 @@ def day_filter_options(request):
 
 
 def yearly_sales_chart(request, year):
+    this_year = 
     orders = OrderItem.objects.filter(order__order_date__year=year)
     grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date"))\
         .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
@@ -258,8 +260,8 @@ def yearly_sales_chart(request, year):
     })
 
 
-def monthly_sales_chart(request, month):
-    orders = OrderItem.objects.filter(order__order_date__month=month)
+def monthly_sales_chart(request, day):
+    orders = OrderItem.objects.filter(order__order_date__day=day)
     grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date"))\
         .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
     
@@ -269,7 +271,7 @@ def monthly_sales_chart(request, month):
         sale_dict[month[group["day"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Sales in {month}",
+        "title": f"Sales in {day}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -279,8 +281,8 @@ def monthly_sales_chart(request, month):
         }
     })
 
-def daily_sales_chart(request, day):
-    orders = OrderItem.objects.filter(order__order_date__day=day)
+def daily_sales_chart(request, hour):
+    orders = OrderItem.objects.filter(order__order_date__hour=hour)
     grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
         .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
     
@@ -290,7 +292,7 @@ def daily_sales_chart(request, day):
         sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Sales in {day}",
+        "title": f"Sales in {hour}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
