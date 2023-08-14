@@ -30,14 +30,20 @@ class VerificationCodeEntryView(View):
                 str_expire_time, "%Y-%m-%d %H:%M:%S"
             )
             if sent_code and input_code == sent_code:
-                user = get_object_or_404(
-                    CustomUserModel, phone_number=request.session["phone_number"]
-                )
-                del request.session["otp"]
-                login(request, user)
-                return redirect("home")
+                if datetime.datetime.now() < expire_time:
+                    user = get_object_or_404(
+                        CustomUserModel, phone_number=request.session["phone_number"]
+                    )
+                    del request.session["otp"]
+                    login(request, user)
+                    return redirect("home")
+                else:
+                    messages.error(
+                        request, "The otp code has expired, try again.", "danger"
+                    )
+                    return redirect("phone_entry")
             else:
                 del request.session["otp"]
-                messages.error(request, "The otp code is wrong. Try again!", "danger")
+                messages.error(request, "The otp code is wrong, try again.", "danger")
                 return redirect("phone_entry")
         return render(request, "core/code_entry.html", {"form": form})
