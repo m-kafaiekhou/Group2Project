@@ -250,3 +250,22 @@ def yearly_sales_chart(request, year):
 
 
 def monthly_sales_chart(request, month):
+    orders = OrderItem.objects.filter(order__order_date__month=month)
+    grouped_orders = orders.annotate(price=F("price")).annotate(day=ExtractDay("order__order_date"))\
+        .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
+    
+    sale_dict = month_dict()
+
+    for group in grouped_orders:
+        sale_dict[month[group["day"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Sales in {month}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
