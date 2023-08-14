@@ -53,7 +53,7 @@ def send_otp_code(phone_number, code):
     sms = api.sms()
     to = phone_number
     _from = "50004001018172"
-    text = f"کد تایید شما: {code}"
+    text = f"verification code: {code}\n send 11 to cancell"
     response = sms.send(to, _from, text)
     print(response)
 
