@@ -426,7 +426,7 @@ def top_10_selling_items(request):
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": "All Time Sales",
+        "title": "Top 10 items",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -435,3 +435,6 @@ def top_10_selling_items(request):
             }]
         }
     })
+
+
+def top_10_customers(requests):
