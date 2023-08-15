@@ -26,7 +26,7 @@
 
 <!--================ Checkout Area =================-->
 {% block content %}
-    <form method="post" action="{% url 'checkout' %}">
+    <form method="post" action="{% url 'orders:checkout' %}">
         {% csrf_token %}
         <div class="container pt-5">
             <div class="row">
