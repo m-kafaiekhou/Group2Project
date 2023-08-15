@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.views import View
 from django.http import JsonResponse
 from .models import CafeItem, Category
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
 
@@ -71,10 +71,17 @@ class Menu(ListView):
         return context
 
 
-class MenuDetail(View):
+'''class MenuDetail(View):
     def get(self, request, cafeitme_name):
         cafeitem = CafeItem.objects.get(name=cafeitme_name)
-        return render(request, "menus/detail.html", {"cafeitem": cafeitem})
+        return render(request, "menus/detail.html", {"cafeitem": cafeitem})'''
+
+class MenuDetail(DetailView):
+    model = CafeItem
+    template_name = "menus/detail.html"
+    context_object_name = "cafeitem"
+    slug_field = "name"
+    slug_url_kwarg = "cafeitme_name"
 
 class autocomplete(View) :
     def get(request) :
