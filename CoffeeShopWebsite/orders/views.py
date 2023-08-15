@@ -40,8 +40,8 @@ def get_cart(request):
 
 class CheckoutView(View):
     template_name = "orders/checkout.html"
-    success_redirect_url = "delete_cart"
-    fail_redirect_url = "menu"
+    success_redirect_url = "orders:delete_cart"
+    fail_redirect_url = "menus:menu"
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
@@ -77,7 +77,7 @@ class CheckoutView(View):
 
 
 class DeleteCartView(View):
-    success_redirect_url = "home"
+    success_redirect_url = "coffeeshop:home"
 
     def get(self, request, *args, **kwargs):
         response = redirect(self.success_redirect_url)
