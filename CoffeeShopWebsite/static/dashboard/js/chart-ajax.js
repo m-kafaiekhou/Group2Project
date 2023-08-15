@@ -1,3 +1,109 @@
+// let salesCtx = document.getElementById("salesChart").getContext("2d");
+// let salesChart = new Chart(salesCtx, {
+//     type: "bar",
+//     options: {
+//         responsive: true,
+//         title: {
+//             display: false,
+//             text: ""
+//         }
+//     }
+// });
+// let spendPerCustomerCtx = document.getElementById("spendPerCustomerChart").getContext("2d");
+// let spendPerCustomerChart = new Chart(spendPerCustomerCtx, {
+//     type: "line",
+//     options: {
+//         responsive: true,
+//         title: {
+//             display: false,
+//             text: ""
+//         }
+//     }
+// });
+// let paymentSuccessCtx = document.getElementById("paymentSuccessChart").getContext("2d");
+// let paymentSuccessChart = new Chart(paymentSuccessCtx, {
+//     type: "pie",
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         aspectRatio: 1,
+//         title: {
+//             display: false,
+//             text: ""
+//         },
+//         layout: {
+//             padding: {
+//                 left: 0,
+//                 right: 0,
+//                 top: 0,
+//                 bottom: 25
+//             }
+//         }
+//     }
+// });
+// let paymentMethodCtx = document.getElementById("paymentMethodChart").getContext("2d");
+// let paymentMethodChart = new Chart(paymentMethodCtx, {
+//     type: "pie",
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         aspectRatio: 1,
+//         title: {
+//             display: false,
+//             text: ""
+//         },
+//         layout: {
+//             padding: {
+//                 left: 0,
+//                 right: 0,
+//                 top: 0,
+//                 bottom: 25
+//             }
+//         }
+//     }
+// });
+//
+// // JSON response part
+window.onload = loadAllCharts
+window.onclick = loadAllCharts
+
+function loadChart(chart, endpoint) {
+    console.log(chart)
+    console.log(endpoint)
+    $.ajax({
+        url: endpoint,
+        type: "GET",
+        dataType: "json",
+        success: (jsonResponse) => {
+            // Extract data from the response
+            const title = jsonResponse.title;
+            const labels = jsonResponse.data.labels;
+            const datasets = jsonResponse.data.datasets;
+
+            // Reset the current chart
+            chart.data.datasets = [];
+            chart.data.labels = [];
+
+            // Load new data into the chart
+            chart.options.title = title;
+            chart.options.title.display = true;
+            chart.data.labels = labels;
+            datasets.forEach(dataset => {
+                chart.data.datasets.push(dataset);
+            });
+            chart.update();
+        },
+        error: () => console.log("Failed to fetch chart data from " + endpoint + "!")
+    });
+}
+
+function loadAllCharts(chart1, chart2, chart3, chart4) {
+    loadChart(chart1, `/dashboard/chart/sales/this-year/`);
+    loadChart(chart2, `/dashboard/chart/sales/this-month/`);
+    loadChart(chart3, `/dashboard/chart/sales/this-year/`);
+    loadChart(chart4, `/dashboard/chart/sales/this-month/`);
+}
+
 type = ['primary', 'info', 'success', 'warning', 'danger'];
 
 demo = {
@@ -378,7 +484,7 @@ demo = {
       }]
     };
 
-    var myChart = new Chart(ctx, {
+    var chart1 = new Chart(ctx, {
       type: 'line',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipPurple
@@ -414,7 +520,7 @@ demo = {
       }]
     };
 
-    var myChart = new Chart(ctxGreen, {
+    let chart2 = new Chart(ctxGreen, {
       type: 'line',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipGreen
@@ -458,7 +564,7 @@ demo = {
       },
       options: gradientChartOptionsConfigurationWithTooltipPurple
     };
-    var myChartData = new Chart(ctx, config);
+    let chart3 = new Chart(ctx, config);
     $("#0").click(function() {
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
@@ -491,28 +597,15 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
 
-    var myChart = new Chart(ctx, {
+    let chart4 = new Chart(ctx, {
       type: 'bar',
       responsive: true,
       legend: {
         display: false
       },
-      data: {
-        labels: ['USA', 'GER', 'AUS', 'UK', 'RO', 'BR'],
-        datasets: [{
-          label: "Countries",
-          fill: true,
-          backgroundColor: gradientStroke,
-          hoverBackgroundColor: gradientStroke,
-          borderColor: '#1f8ef1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data: [53, 20, 10, 80, 100, 45],
-        }]
-      },
       options: gradientBarChartConfiguration
-    });
+    })
+      loadAllCharts(chart1, chart2, chart3, chart4)
   },
 
   initGoogleMaps: function() {

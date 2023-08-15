@@ -628,7 +628,8 @@
   <script src="{% static 'dashboard/js/plugins/bootstrap-notify.js' %}"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{% static 'dashboard/js/black-dashboard.min.js' %}"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
-  <script src="{% static 'dashboard/demo/demo.js' %}"></script>
+{#  <script src="{% static 'dashboard/demo/demo.js' %}"></script>#}
+    <script src="{% static 'dashboard/js/chart-ajax.js' %}"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -749,11 +750,7 @@
   </script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
-    window.TrackJS &&
-      TrackJS.install({
-        token: "ee6fab19c5a04ac1a32a645abde4613a",
-        application: "black-dashboard-free"
-      });
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
