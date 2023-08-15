@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block title %}Orders History{% endblock %}
 
@@ -21,7 +22,6 @@
                 <th class="yekan">Order Table</th>
                 <th class="text-center yekan">Details</th>
                 <th class="text-center yekan">Created at</th>
-                <th class="text-center yekan">Total Price</th>
             </tr>
             </thead>
             <tbody>
@@ -41,8 +41,6 @@
                             </div>
                         </td>
                         <td class="text-center text-lg text-medium">{{ item.order_date }}</td>
-                        <td class="text-center text-lg text-medium">
-                            {% order.widthratio item.price 1 quant as tot %}{{ tot|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -64,3 +62,4 @@
         </form>
     </div>
 </div>
+{% endblock %}
