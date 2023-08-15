@@ -405,7 +405,7 @@ def all_time_sales(request):
 def top_10_selling_items(request):
 
     orders = OrderItem.objects.all()
-    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total").order_by("total")
+    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
 
     new_dict = defaultdict(int)
 
@@ -426,7 +426,7 @@ def top_10_selling_items(request):
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": "Top 10 items",
+        "title": "Top 10 Best sellers",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -438,3 +438,5 @@ def top_10_selling_items(request):
 
 
 def top_10_customers(requests):
+    orders = OrderItem.objects.all()
+    all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
