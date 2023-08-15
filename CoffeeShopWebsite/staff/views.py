@@ -1,5 +1,5 @@
 from django.views import View
-from django.shortcuts import render, redirect, reverse_lazy
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import login
 
@@ -7,8 +7,9 @@ from .forms import PhoneNumberForm, OtpForm
 from staff.backends import CustomUserBackend
 from core.utils import set_otp
 from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
 
-'''class LoginUserView(View):
+class LoginUserView(View):
     template_name = "registration/login.html"
     form1 = PhoneNumberForm
     form2 = OtpForm
@@ -42,11 +43,11 @@ from django.views.generic.edit import FormView
                     request, "Phone number or registration code is wrong!", "warning"
                 )
             context = {"form1": self.form1, "form2": otp_form}
-            return render(request, self.template_name, context=context)'''
+            return render(request, self.template_name, context=context)
 
 
 
-class LoginUserView(FormView):
+'''class LoginUserView(FormView):
     template_name = "registration/login.html"
     form_class = PhoneNumberForm
     success_url = reverse_lazy('home')
@@ -60,7 +61,7 @@ class LoginUserView(FormView):
         if "form1_submit" in self.request.POST:
             phone_number = form.cleaned_data["phone_number"]
             set_otp(self.request, phone_number)
-            self.success_url = reverse_lazy('login')
+            self.success_url = '/login/'
         elif "form2_submit" in self.request.POST:
             otp_code = form.cleaned_data["registration_code"]
             phone_number = self.request.session.get("phone_number")
@@ -70,7 +71,7 @@ class LoginUserView(FormView):
                 messages.success(self.request, "You logged in successfully!", "success")
                 return super().form_valid(form)
             messages.error(self.request, "Phone number or registration code is wrong!", "warning")
-        return self.render_to_response(self.get_context_data(form=form))
+        return self.render_to_response(self.get_context_data(form=form))'''
 
     # def post(self, request, *args, **kwargs):
     #     print(request.POST)
