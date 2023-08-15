@@ -5,5 +5,5 @@ from core.admin import main_site
 # Register your models here.
 
 
-main_site.register(Order)
-main_site.register(OrderItem)
+admin.site.register(Order)
+admin.site.register(OrderItem)

@@ -20,5 +20,18 @@ urlpatterns = [
     path("item-list/", ItemListView.as_view(), name="item_list"),
     path("order-list/", OrderListView.as_view(), name="order_list"),
     path("order-list/<str:stat>/", OrderListView.as_view(), name="order_status"),
-    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    path("", DashboardView.as_view(), name="dashboard"),
+]
+
+
+# Chart view urls
+urlpatterns += [
+    path("chart/year-filter-options/", year_filter_options, name="year-filter-options"),
+    path(
+        "chart/month-filter-options/", month_filter_options, name="month-filter-options"
+    ),
+    path("chart/day-filter-options/", day_filter_options, name="day-filter-options"),
+    path("chart/sales/this-year/", yearly_sales_chart, name="this-year-sales"),
+    path("chart/sales/this-month/", monthly_sales_chart, name="month-sales"),
+    path("chart/sales/this-day/", daily_sales_chart, name="day-sales"),
 ]
