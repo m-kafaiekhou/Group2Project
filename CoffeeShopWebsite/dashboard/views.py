@@ -408,16 +408,15 @@ def top_10_selling_items(request):
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
 
     new_dict = defaultdict(int)
-
     for d in all_items:
         new_dict[d["cafeitem__name"]] += int(d["total"])
     
     chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
     sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
 
-    top_items = []
+    top_items = list()
     for d in sorted_chart_items:
-        if len(chart_items) <= 10:
+        if len(sorted_chart_items) <= 10:
             top_items.append(d)
     
     
@@ -426,7 +425,7 @@ def top_10_selling_items(request):
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": "Top 10 Best sellers",
+        "title": "Top 10 Best Sellers",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -440,3 +439,30 @@ def top_10_selling_items(request):
 def top_10_customers(requests):
     orders = OrderItem.objects.all()
     all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_numbers:
+        new_dict[d["order__phone_number"]] += int(d["total"])
+
+    chart_ph_numbers = [{"order__phone_number": number, "total":price} for number, price in new_dict.items()]
+    sorted_ph_numbers = sorted(chart_ph_numbers, key=lambda x: x["total"], reverse=True)
+
+    top_customers = list()
+    for d in sorted_ph_numbers:
+        if len(sorted_ph_numbers) <= 10:
+            top_customers.append(d)
+
+    sale_dict = dict()
+    for d in top_customers:
+        sale_dict[d["order__phone_number"]] = round(d["total"], 2)
+
+    return JsonResponse({
+        "title": "Top 10 Best Customers",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
