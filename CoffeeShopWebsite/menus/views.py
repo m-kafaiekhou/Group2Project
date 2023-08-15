@@ -35,7 +35,7 @@ class MenuSearch(ListView):
             queryset = queryset.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
         return queryset
 
-class Menu(View):
+'''class Menu(View):
     def get(self, request, *args, **kwargs):
         item_pk = request.GET.get("pk", None)
         check = None
@@ -51,7 +51,24 @@ class Menu(View):
 
         if check:
             response = add_to_cart(request, response, item_pk)
-        return response
+        return response'''
+
+class Menu(ListView):
+    model = CafeItem
+    template_name = "menus/menu.html"
+    context_object_name = "cafeitem"
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        item_pk = self.request.GET.get("pk", None)
+        if item_pk:
+            response = add_to_cart(self.request, self.render_to_response(context), item_pk)
+            return response
+        return context
 
 
 class MenuDetail(View):
