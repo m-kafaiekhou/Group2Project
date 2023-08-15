@@ -56,12 +56,16 @@
         <div class=" bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
             <h2 class="text-center">Enter Your Phone Number:</h2>
             <input type="tel" class="w-100" style="height: 2.5rem;">
-            <button type="submit" name="form1_submit" class="btn btn-success mt-3 w-100">send code</button>
+            <button type="submit" name="form1_submit" class="btn btn-success mt-3 w-100" style="background-color: rgb(70, 49, 4); border: none;">
+                send code
+            </button>
             <br/>
             <form method="post">
                 {% csrf_token %}
                 {{ form2|crispy }}
-                <button type="submit" name="form2_submit" class="btn btn-success mt-3 w-100">login</button>
+                <button type="submit" name="form2_submit" class="btn btn-success mt-3 w-100" style="background-color: rgb(70, 49, 4); border: none;">
+                    login
+                </button>
             </form>
         </div>
     </div>
