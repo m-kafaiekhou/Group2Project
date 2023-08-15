@@ -14,53 +14,56 @@
 <!--================End Banner Area =================-->
 <!--================ History Area =================-->
 {% block content %}
-<div class="container padding-bottom-3x mb-1 pt-5">
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th class="yekan">Table No.</th>
-                <th class="text-center yekan">Details</th>
-                <th class="text-center yekan">Created at</th>
-            </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                    <tr>
-                        <td>
-                            <div>
+<div class="row d-flex" style="overflow-x: hidden;">
+
+    <div class="container padding-bottom-3x mb-1 pt-5 col-sm-9 col-lg-6 p-0">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="yekan">Table No.</th>
+                    <th class="text-center yekan">Details</th>
+                    <th class="text-center yekan">Created at</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>
                                 <div>
-                                    <h4><a href="#">{{ order.table_number }}</a></h4>
-                                    {#<span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>#}
+                                    <div>
+                                        <h4><a href="#">{{ order.table_number }}</a></h4>
+                                        {#<span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>#}
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div>
-                                <h4><a href="#">{{ order.items }}</a></h4>
-                            </div>
-                        </td>
-                        <td class="text-center text-lg text-medium">{{ item.order_date }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                            </td>
+                            <td class="text-center">
+                                <div>
+                                    <h4><a href="#">{{ order.items }}</a></h4>
+                                </div>
+                            </td>
+                            <td class="text-center text-lg text-medium">{{ item.order_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
 
 
-<div class="d-flex justify-content-center mt-5" dir="ltr">
-    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
-        <h2 class="text-center">Enter Your Phone Number:</h2>
-        <input type="tel" class="w-100" style="height: 2.5rem;">
-        <button type="submit" name="form1_submit" class="btn btn-success mt-3 w-100">send code</button>
-        <br/>
-        <form method="post">
-            {% csrf_token %}
-            {{ form2|crispy }}
-            <button type="submit" name="form2_submit" class="btn btn-success mt-3 w-100">login</button>
-        </form>
+    <div class="d-flex justify-content-center col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 p-0" dir="ltr">
+        <div class=" bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
+            <h2 class="text-center">Enter Your Phone Number:</h2>
+            <input type="tel" class="w-100" style="height: 2.5rem;">
+            <button type="submit" name="form1_submit" class="btn btn-success mt-3 w-100">send code</button>
+            <br/>
+            <form method="post">
+                {% csrf_token %}
+                {{ form2|crispy }}
+                <button type="submit" name="form2_submit" class="btn btn-success mt-3 w-100">login</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
