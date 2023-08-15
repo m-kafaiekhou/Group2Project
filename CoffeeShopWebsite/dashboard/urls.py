@@ -26,4 +26,5 @@ urlpatterns += [
     path("chart/sales/this-day/", daily_sales_chart, name="day-sales"),
     path("chart/sales/all-time/", all_time_sales, name="all-time-sales"),
     path("chart/sales/top-selling/", top_10_selling_items, name="top-selling"),
+    path("chart/sales/best-customers/", top_10_customers, name="best-customers"),
 ]
