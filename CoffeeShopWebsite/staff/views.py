@@ -35,9 +35,9 @@ class LoginUserView(View):
                     self, request, phone_number=phone_number, otp_code=otp_code
                 )
                 if user:
-                    login(request, user, backend='staff.backends.CustomUserBackend')
+                    login(request, user, backend="staff.backends.CustomUserBackend")
                     messages.success(request, "You logged in successfully!", "success")
-                    return redirect("home")
+                    return redirect("coffeeshop:home")
                 messages.error(
                     request, "Phone number or registration code is wrong!", "warning"
                 )
