@@ -382,6 +382,28 @@ def daily_sales_chart(request):
     })
 
 
+def daily_sales_sum(request):
+    today = datetime.now().day
+    orders = OrderItem.objects.filter(order__order_date__day=today)
+    daily_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    
+    total = 0
+    for order in daily_sales:
+        total += order["total"]
+
+    return JsonResponse({
+        "title": f"Sales in Today",
+        "data": {
+            "labels": ["total"],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [total],
+            }]
+        }
+    })
+
+
+
 def all_time_sales(request):
     orders = OrderItem.objects.all()
     all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
