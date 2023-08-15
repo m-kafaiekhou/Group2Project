@@ -3,12 +3,12 @@ from django.db.models import Q
 from django.views import View
 from django.http import JsonResponse
 from .models import CafeItem, Category
-
+from django.views.generic import ListView
 
 # Create your views here.
 
 
-class MenuSearch(View):
+'''class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
             cd = request.GET.get("search")
@@ -22,8 +22,18 @@ class MenuSearch(View):
             request,
             "menus/search_result.html",
             {"searched_items": searched_items},
-        )
+        )'''
+class MenuSearch(ListView):
+    model = CafeItem
+    template_name = "menus/search_result.html"
+    context_object_name = "searched_items"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        cd = self.request.GET.get("search", "")
+        if cd:
+            queryset = queryset.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
+        return queryset
 
 class Menu(View):
     def get(self, request, *args, **kwargs):
