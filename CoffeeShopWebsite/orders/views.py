@@ -86,7 +86,7 @@ class DeleteCartView(View):
         return response
 
 class OrderHistoryView(View) :
-    template_name = 'order_history.html'
+    template_name = 'orders/order_history.html'
     model_class = Order
     form_class = OrderHistoryForm
     def get(self, request, *args, **kwargs) :
