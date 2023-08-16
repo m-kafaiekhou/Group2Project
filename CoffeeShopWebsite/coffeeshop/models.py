@@ -91,3 +91,6 @@ class Footer(models.Model):
         default="Enter your email to get the latest news",
     )
     newsletter_is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.footer_name
