@@ -50,9 +50,7 @@ class Review(models.Model):
 #     cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
 
-class DynamicNumbers(models.Model):
-    phone = PhoneField(null=True, blank=True, help_text="Phone numbers used on webpage")
-    cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
+# Creat Dynamic Models
 
 
 class Footer(models.Model):
