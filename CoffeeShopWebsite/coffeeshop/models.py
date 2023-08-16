@@ -59,6 +59,11 @@ class Footer(models.Model):
     footer_name = models.CharField(max_length=25, default="main", unique=True)
     footer_is_active = models.BooleanField(default=True)
 
+    contact_us_title = models.CharField(max_length=25, default="GET IN TOUCH")
+    address = models.TextField(default="123 Street, New York, USA")
+    phone_number = PhoneField(default="0211234567")
+    email = models.EmailField(default="info@example.com")
+    contact_us_is_active = models.BooleanField(default=True)
 
 class DynamicFooter(models.Model):
     pass
