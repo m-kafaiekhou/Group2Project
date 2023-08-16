@@ -438,7 +438,7 @@ def top_10_selling_items(request, filter): # year, month, day
 
     top_items = list()
     for d in sorted_chart_items:
-        if len(sorted_chart_items) <= 10:
+        if len(top_items) < 10:
             top_items.append(d)
     
     
@@ -471,7 +471,7 @@ def top_10_customers(requests):
 
     top_customers = list()
     for d in sorted_ph_numbers:
-        if len(sorted_ph_numbers) <= 10:
+        if len(top_customers) < 10:
             top_customers.append(d)
 
     sale_dict = dict()
@@ -517,7 +517,7 @@ def sales_by_category(requests):
     })
 
 
-def sales_by_employee(requests):
+def sales_by_employee(requests): # Table, Not a Chart.
     orders = OrderItem.objects.all()
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
     print(all_staff)
@@ -559,8 +559,37 @@ def peak_business_hour(request):
 
 
 def most_popular_items(request):
-    pass
+    orders = OrderItem.objects.all()
+    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_items:
+        new_dict[d["cafeitem__name"]] += int(d["total"])
+    
+    chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
+    sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
+
+    top_items = list()
+    for d in sorted_chart_items:
+        if len(top_items) < 3:
+            top_items.append(d)
+    
+    
+    sale_dict = dict()
+    for i in top_items:
+        sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
+
+    return JsonResponse({
+        "title": "Top 10 Best Sellers",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
 
 
-def order_status_report(request):
+def order_status_report(request): # Table, Not a Chart.
     pass
