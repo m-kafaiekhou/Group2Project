@@ -63,7 +63,7 @@ class OrderItem(models.Model):
     )
     quantity = models.IntegerField()
     price = models.IntegerField()
-    date_added = models.DateTimeField(default=timezone.localtime(timezone.now()),
+    date_added = models.DateTimeField(default=timezone.now(),
                                       editable=False,
                                       blank=True, )
 
