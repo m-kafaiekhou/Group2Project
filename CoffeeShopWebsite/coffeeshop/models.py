@@ -83,5 +83,11 @@ class Footer(models.Model):
     )
     open_hours_is_active = models.BooleanField(default=True)
 
-class DynamicHomePage(models.Model):
-    pass
+    newsletter_title = models.CharField(max_length=25, default="NEWSLETTER")
+    newsletter_description = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True,
+        default="Enter your email to get the latest news",
+    )
+    newsletter_is_active = models.BooleanField(default=True)
