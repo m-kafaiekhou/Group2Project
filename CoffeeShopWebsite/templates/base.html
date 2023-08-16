@@ -40,7 +40,7 @@
             <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
                 <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">{% block headername %}{% endblock %}</h1>
                 <div class="d-inline-flex mb-lg-5">
-                    <p class="m-0 text-white"><a class="text-white" href="{% url 'home' %}">Home</a></p>
+                    <p class="m-0 text-white"><a class="text-white" href="{% url 'coffeeshop:home' %}">Home</a></p>
                     <p class="m-0 text-white px-2">/</p>
                     <p class="m-0 text-white">{% block nestname %}{% endblock %}</p>
                 </div>
@@ -55,7 +55,7 @@
                     <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Search</h4>
                     <h1 class="display-4">Search for Drinks</h1>
                 </div>
-                <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menu_search' %}" method="get">
+                <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menus:menu_search' %}" method="get">
                     <div class="input-group" style="height: 3rem; width: 100%;">
                         <input type="text" class="form-control p-4" placeholder="Search..." name="search">
                         <div class="input-group-append">
@@ -95,6 +95,9 @@
 
         <!-- Template Javascript -->
         <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- Cookie javascript -->
+        <script src="{% static 'cookie.js' %}"></script>
         
         <!-- Django Tags for Cart & Checkout Scripts -->
         {% block script %}
