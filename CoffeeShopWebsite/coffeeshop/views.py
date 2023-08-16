@@ -11,7 +11,7 @@ class HomePage(View):
 
     def get(self, request, *args, **kwargs):
         # top_rated_items = CafeItem.top_rated_items()
-        return render(request, self.template_name, {"top_rated_items": None})
+        return render(request, self.template_name, context=context)
 
 
 class GalleryPage(View):
