@@ -18,3 +18,5 @@ class FilterCafeitem(admin.ModelAdmin) :
 class FilterCategory(admin.ModelAdmin) :
     list_display = ('name', 'parent_category')
 
+class FilterOrder(admin.ModelAdmin) :
+    list_display = ('phone_number', 'status', 'order_date')
