@@ -20,3 +20,8 @@ class FilterCategory(admin.ModelAdmin) :
 
 class FilterOrder(admin.ModelAdmin) :
     list_display = ('phone_number', 'status', 'order_date')
+    list_filter = ('phone_number', 'status')
+
+class FilterOrderItem(admin.ModelAdmin) :
+    list_display = ('order','cafeitem' , 'quantity', 'price')
+    list_filter = ('order', 'cafeitem')
