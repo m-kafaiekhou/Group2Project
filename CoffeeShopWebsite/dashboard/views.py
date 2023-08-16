@@ -425,8 +425,15 @@ def all_time_sales(request):
 
 
 def top_10_selling_items(request, filter): # year, month, day
-
-    orders = OrderItem.objects.all()
+    if filter == "year":
+        year = datetime.now().year
+        orders = OrderItem.objects.filter(order__order_date__year=year)
+    elif filter == "month":
+        month = datetime.now().month
+        orders = OrderItem.objects.filter(order__order_date__month=month)
+    elif filter == "day":
+        day = datetime.now().day
+        orders = OrderItem.objects.filter(order__order_date__day=day)
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
 
     new_dict = defaultdict(int)
@@ -447,7 +454,7 @@ def top_10_selling_items(request, filter): # year, month, day
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": "Top 10 Best Sellers",
+        "title": f"Top 10 Best Sellers in {filter}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
