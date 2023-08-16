@@ -29,6 +29,7 @@ urlpatterns += [
     path("chart/sales/top-selling/", top_10_selling_items, name="top-selling"),
     path("chart/sales/best-customers/", top_10_customers, name="best-customers"),
     path("chart/sales/category-sale/", sales_by_category, name="category-sale"),
+    path("chart/sales/employee-sales/", sales_by_employee, name="employee-sales"),
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
 ]
