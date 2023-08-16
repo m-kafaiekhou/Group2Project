@@ -124,8 +124,8 @@
 #nav-filter {
     width: 100%;
     box-sizing: border-box;
-    padding: 20px 15px;
-    margin: 10px 0;
+    padding: 8px 5px;
+    margin: 8px 0;
     border: 1px solid var(--border-color);
     background-color: var(--darkened-bg);
     color: var(--body-fg);
