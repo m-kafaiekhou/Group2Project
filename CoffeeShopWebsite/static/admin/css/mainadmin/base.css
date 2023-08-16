@@ -38,7 +38,7 @@ html[data-theme="light"],
     --message-error-bg: #ffefef;
 
     --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
-    --selected-bg: #e4e4e4; /* E.g. selected table cells */
+    --selected-bg: #f5dd5d; /* E.g. selected table cells */
     --selected-row: #ffc;
 
     --button-fg: #fff;
@@ -48,8 +48,8 @@ html[data-theme="light"],
     --default-button-hover-bg: #205067;
     --close-button-bg: #747474;
     --close-button-hover-bg: #333;
-    --delete-button-bg: #ba2121;
-    --delete-button-hover-bg: #a41515;
+    --delete-button-bg: #FF073A;
+    --delete-button-hover-bg: linear-gradient(0deg, #ff073a 0%, #FF073A 100%);
 
     --object-tools-fg: var(--button-fg);
     --object-tools-bg: var(--close-button-bg);
@@ -104,7 +104,7 @@ body {
 /* LINKS */
 
 a:link, a:visited {
-    color: #fff !important; 
+    color: #fff; 
     text-decoration: none;
     transition: color 0.15s, background 0.15s;
 }
@@ -381,6 +381,7 @@ table thead th .text span {
 }
 
 table thead th .text a {
+    color: yellow;
     font-weight: 800;
     font-size: medium;
     display: block;

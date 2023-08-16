@@ -14,14 +14,8 @@ main_site = MainAdminArea(name='MainAdmin')
 class FilterCafeitem(admin.ModelAdmin) :
     list_display = ('name', 'price', 'category', 'is_available')
     list_filter = ('is_available', 'price')
+    
 
 class FilterCategory(admin.ModelAdmin) :
     list_display = ('name', 'parent_category')
 
-class FilterOrder(admin.ModelAdmin) :
-    list_display = ('phone_number', 'status', 'order_date')
-    list_filter = ('phone_number', 'status')
-
-class FilterOrderItem(admin.ModelAdmin) :
-    list_display = ('order','cafeitem' , 'quantity', 'price')
-    list_filter = ('order', 'cafeitem')
