@@ -55,8 +55,9 @@ class DynamicNumbers(models.Model):
     cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
 
-class DynamicNavbar(models.Model):
-    pass
+class Footer(models.Model):
+    footer_name = models.CharField(max_length=25, default="main", unique=True)
+    footer_is_active = models.BooleanField(default=True)
 
 
 class DynamicFooter(models.Model):
