@@ -34,15 +34,20 @@ class Review(models.Model):
 
 
 # Coffee Shop Website DynamicInterface Models
-class DynamicImages(models.Model):
-    logo = models.ImageField(upload_to="icons/", blank=True, null=True)
-    background = models.ImageField(upload_to="background/", blank=True, null=True)
-    gallery = models.ImageField(upload_to="gallery/", blank=True, null=True)
+# class DynamicImages(models.Model):
+#     logo = models.ImageField(upload_to="icons/", blank=True, null=True)
+#     background = models.ImageField(upload_to="background/", blank=True, null=True)
+#     gallery = models.ImageField(upload_to="gallery/", blank=True, null=True)
 
 
-class DynamicTexts(models.Model):
-    text = models.TextField()
-    email = models.EmailField()
+# class DynamicTexts(models.Model):
+#     text = models.TextField()
+#     email = models.EmailField()
+
+
+# class DynamicNumbers(models.Model):
+#     phone = PhoneField(null=True, blank=True, help_text="Phone numbers used on webpage")
+#     cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
 
 class DynamicNumbers(models.Model):
