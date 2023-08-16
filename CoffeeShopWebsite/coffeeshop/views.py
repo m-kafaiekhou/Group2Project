@@ -21,5 +21,5 @@ class GalleryPage(View):
 
     def get(self, request, *args, **kwargs):
         items = CafeItem.objects.all()
-        context = {"items":items}
+        context = {"items": items}
         return render(request, self.template_name, context)
