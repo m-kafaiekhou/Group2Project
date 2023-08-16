@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.db.models import Count
+
 
 # Local Imports
 from menus.models import CafeItem, Category
@@ -506,7 +506,7 @@ def sales_by_category(requests):
         sale_dict[d["cafeitem__category__name"]] = round(d["total"], 2)
 
     return JsonResponse({
-        "title": "Top 10 Best Customers",
+        "title": "Category Sales",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -519,12 +519,13 @@ def sales_by_category(requests):
 
 def sales_by_employee(requests):
     orders = OrderItem.objects.all()
-    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff", "total")
+    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
     print(all_staff)
 
 
+
     return JsonResponse({
-        "title": "Top 10 Best Customers",
+        "title": "Income by Employees",
         "data": {
             "labels": [],
             "datasets": [{
@@ -533,3 +534,33 @@ def sales_by_employee(requests):
             }]
         }
     })
+
+
+def peak_business_hour(request):
+    orders = OrderItem.objects.all()
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
+    
+    sale_dict = day_dict()
+
+    for group in grouped_orders:
+        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Peak Hour Sales",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def most_popular_items(request):
+    pass
+
+
+def order_status_report(request):
+    pass
