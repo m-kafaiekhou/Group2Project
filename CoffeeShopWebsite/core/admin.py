@@ -15,3 +15,6 @@ class FilterCafeitem(admin.ModelAdmin) :
     list_display = ('name', 'price', 'category', 'is_available')
     list_filter = ('is_available', 'price')
 
+class FilterCategory(admin.ModelAdmin) :
+    list_display = ('name', 'parent_category')
+
