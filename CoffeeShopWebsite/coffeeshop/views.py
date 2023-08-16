@@ -11,6 +11,7 @@ class HomePage(View):
 
     def get(self, request, *args, **kwargs):
         # top_rated_items = CafeItem.top_rated_items()
+        footer = Footer.objects.get(footer_name="main")
         return render(request, self.template_name, context=context)
 
 
