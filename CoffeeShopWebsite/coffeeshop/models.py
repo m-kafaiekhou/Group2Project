@@ -3,6 +3,7 @@ from menus.models import CafeItem
 from phone_field import PhoneField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
+
 # Create your models here.
 
 
@@ -22,9 +23,11 @@ class Review(models.Model):
         on_delete=models.CASCADE,
     )
 
-    date_added = models.DateTimeField(default=timezone.now,
-                                      editable=False,
-                                      blank=True, )
+    date_added = models.DateTimeField(
+        default=timezone.now,
+        editable=False,
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return f"{self.review[:15]} ..."
@@ -35,6 +38,7 @@ class DynamicImages(models.Model):
     logo = models.ImageField(upload_to="icons/", blank=True, null=True)
     background = models.ImageField(upload_to="background/", blank=True, null=True)
     gallery = models.ImageField(upload_to="gallery/", blank=True, null=True)
+
 
 class DynamicTexts(models.Model):
     text = models.TextField()
