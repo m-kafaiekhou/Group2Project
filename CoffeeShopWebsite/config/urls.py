@@ -27,7 +27,7 @@ urlpatterns = [
     path("menu/", include("menus.urls", namespace="menus")),
     path("", include("core.urls", namespace="core")),
     path("dashboard/", include("dashboard.urls")),
-    path("staff/", include("staff.urls", namespace="staff")),
+    path("accounts/", include("staff.urls", namespace="staff")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
