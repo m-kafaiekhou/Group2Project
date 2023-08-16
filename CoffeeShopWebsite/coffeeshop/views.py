@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from menus.models import CafeItem
+from .models import Footer
+
 # Create your views here.
 
 
