@@ -515,3 +515,21 @@ def sales_by_category(requests):
             }]
         }
     })
+
+
+def sales_by_employee(requests):
+    orders = OrderItem.objects.all()
+    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff", "total")
+    print(all_staff)
+
+
+    return JsonResponse({
+        "title": "Top 10 Best Customers",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
+            }]
+        }
+    })
