@@ -607,14 +607,14 @@ def most_popular_items(request):
 
 
 def order_status_report(request, day: int, status:str): # Table, not a Chart. status= "D", "C", "A"
-    orders = OrderItem.objects.filter(order__order_date__day=day, order__status=status)
-    grouped_orders = orders.annotate(p=F("order__status")).annotate(day=ExtractDay("order__order_date"))\
-        .values("day").annotate(count=Count("order__status")).values("order__status", "count")
+    orders = Order.objects.filter(order_date__day=day, status=status)
+    grouped_orders = orders.annotate(p=F("status")).annotate(day=ExtractDay("order_date"))\
+        .values("day").annotate(count=Count("status")).values("status", "count")
 
     sale_dict = dict()
 
     for group in grouped_orders:
-        sale_dict[group["order__status"]] = group["count"]
+        sale_dict[group["status"]] = group["count"]
    
     return JsonResponse({
         "title": f"Order Status for Day {day} this Month",
