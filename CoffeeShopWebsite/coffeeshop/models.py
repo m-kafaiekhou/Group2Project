@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 
-class Review(models.Model):
+class Review(models.Model):  # NO Date Added
     class Rating(models.IntegerChoices):
         VERY_LOW = 1
         LOW = 2
