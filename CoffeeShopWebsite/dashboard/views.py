@@ -586,7 +586,7 @@ def most_popular_items(request):
 
     top_items = list()
     for d in sorted_chart_items:
-        if len(top_items) < 3:
+        if len(top_items) < 10:
             top_items.append(d)
     
     
@@ -595,7 +595,7 @@ def most_popular_items(request):
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": "Top 10 Best Sellers",
+        "title": "Most Popular Items(All Time)",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -606,5 +606,23 @@ def most_popular_items(request):
     })
 
 
-def order_status_report(request): # Table, Not a Chart.
-    pass
+def order_status_report(request, day: int, status:str): # Table, not a Chart. status= "D", "C", "A"
+    orders = OrderItem.objects.filter(order__order_date__day=day, order__status=status)
+    grouped_orders = orders.annotate(p=F("order__status")).annotate(day=ExtractDay("order__order_date"))\
+        .values("day").annotate(count=Count("order__status")).values("order__status", "count")
+
+    sale_dict = dict()
+
+    for group in grouped_orders:
+        sale_dict[group["order__status"]] = group["count"]
+   
+    return JsonResponse({
+        "title": f"Order Status for Day {day} this Month",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
