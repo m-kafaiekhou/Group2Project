@@ -34,8 +34,8 @@
         {% endif %}
         {% if footer.newsletter_is_active %}
         <div class="col-lg-3 col-md-6 mb-5">
-            <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Newsletter</h4>
-            <p>Enter your email to get the latest news</p>
+            <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">{{ footer.newsletter_title }}</h4>
+            <p>{{ footer.newsletter_description }}</p>
             <div class="w-100">
                 <div class="input-group">
                     <input type="text" class="form-control border-light" style="padding: 25px;" placeholder="Your Email">
