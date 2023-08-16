@@ -18,6 +18,7 @@ from .chart_utils import year_dict, months, month_dict, month, day_dict, day
 from datetime import datetime
 from collections import defaultdict
 
+
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
@@ -282,8 +283,6 @@ class DashboardView(View):
         return render(request, self.template_view)
 
 
-
-
 # ********************************* Chart Area ********************************* #
 
 def year_filter_options(request):
@@ -359,6 +358,7 @@ def monthly_sales_chart(request):
         }
     })
 
+
 def daily_sales_chart(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
@@ -401,7 +401,6 @@ def daily_sales_sum(request):
             }]
         }
     })
-
 
 
 def all_time_sales(request):
@@ -557,6 +556,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
             }]
         }
     })
+
 
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
