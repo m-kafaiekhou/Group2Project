@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import Review
-
-# Register your models here.
+from .models import Review, Footer
 
 
 admin.site.register(Review)
