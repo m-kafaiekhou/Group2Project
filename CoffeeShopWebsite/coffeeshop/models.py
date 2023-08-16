@@ -54,3 +54,5 @@ class DynamicFooter(models.Model):
     pass
 
 
+class DynamicHomePage(models.Model):
+    pass
