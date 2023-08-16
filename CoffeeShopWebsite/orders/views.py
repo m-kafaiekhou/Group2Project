@@ -4,7 +4,7 @@ from orders.models import Order, OrderItem
 from menus.models import CafeItem
 from django.views import View
 from .forms import OrderHistoryForm
-
+from django.views.generic import TemplateView
 
 class CartView(View):
     template_name = "orders/cart.html"
@@ -15,6 +15,19 @@ class CartView(View):
         if not cart:
             context["show_modal"] = True
         return render(request, self.template_name, context=context)
+
+
+'''class CartView(TemplateView): 
+    template_name = "orders/cart.html" 
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs) 
+        cart, total = get_cart(self.request) 
+        context["items"] = cart 
+        context["total"] = total 
+        if not cart: 
+            context["show_modal"] = True 
+        return context'''
 
 
 def get_cart(request):
