@@ -49,12 +49,15 @@ class LoginUserView(View):
 
 '''class LoginUserView(FormView):
     template_name = "registration/login.html"
-    form_class = PhoneNumberForm
+    form_class1 = PhoneNumberForm
+    form_class2 = OtpForm
     success_url = reverse_lazy('home')
+    #context_form_name = 'form1'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form2"] = OtpForm()
+        context["form1"] = self.get_form(self.form_class1)
+        context["form2"] = self.get_form(self.form_class2)
         return context
 
     def form_valid(self, form):
@@ -63,6 +66,7 @@ class LoginUserView(View):
             set_otp(self.request, phone_number)
             self.success_url = '/login/'
         elif "form2_submit" in self.request.POST:
+            print("hello")
             otp_code = form.cleaned_data["registration_code"]
             phone_number = self.request.session.get("phone_number")
             user = CustomUserBackend.authenticate(self.request, phone_number=phone_number, otp_code=otp_code)

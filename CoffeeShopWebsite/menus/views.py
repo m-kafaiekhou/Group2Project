@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView
 # Create your views here.
 
 
-class MenuSearch(View):
+'''class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
             cd = request.GET.get("search")
@@ -22,9 +22,9 @@ class MenuSearch(View):
             request,
             "menus/search_result.html",
             {"searched_items": searched_items},
-        )
+        )'''
 
-'''class MenuSearch(ListView):
+class MenuSearch(ListView):
     model = CafeItem
     template_name = "menus/search_result.html"
     context_object_name = "searched_items"
@@ -34,9 +34,9 @@ class MenuSearch(View):
         cd = self.request.GET.get("search", "")
         if cd:
             queryset = queryset.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
-        return queryset'''
+        return queryset
 
-class Menu(View):
+'''class Menu(View):
     def get(self, request, *args, **kwargs):
         item_pk = request.GET.get("pk", None)
         check = None
@@ -52,9 +52,9 @@ class Menu(View):
 
         if check:
             response = add_to_cart(request, response, item_pk)
-        return response
+        return response'''
 
-'''class Menu(ListView):
+class Menu(ListView):
     model = CafeItem
     template_name = "menus/menu.html"
     context_object_name = "cafeitem"
@@ -65,24 +65,20 @@ class Menu(View):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
-        item_pk = self.request.GET.get("pk", None)
-        if item_pk:
-            response = add_to_cart(self.request, self.render_to_response(context), item_pk)
-            return response
-        return context'''
+        return context
 
 
-class MenuDetail(View):
+'''class MenuDetail(View):
     def get(self, request, cafeitme_name):
         cafeitem = CafeItem.objects.get(name=cafeitme_name)
-        return render(request, "menus/detail.html", {"cafeitem": cafeitem})
+        return render(request, "menus/detail.html", {"cafeitem": cafeitem})'''
 
-'''class MenuDetail(DetailView):
+class MenuDetail(DetailView):
     model = CafeItem
     template_name = "menus/detail.html"
     context_object_name = "cafeitem"
     slug_field = "name"
-    slug_url_kwarg = "cafeitme_name"'''
+    slug_url_kwarg = "cafeitme_name"
 
 class autocomplete(View) :
     def get(request) :
