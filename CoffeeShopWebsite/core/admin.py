@@ -12,6 +12,6 @@ main_site = MainAdminArea(name='MainAdmin')
 
 
 class FilterCafeitem(admin.ModelAdmin) :
-    list_display = ('name', 'is_available', 'price', 'category')
+    list_display = ('name', 'price', 'category', 'is_available')
     list_filter = ('is_available', 'price')
 
