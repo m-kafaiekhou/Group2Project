@@ -18,7 +18,7 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="category", blank=True, null=True)
 
-    date_added = models.DateTimeField(default=timezone.localtime(timezone.now()),
+    date_added = models.DateTimeField(default=timezone.now(),
                                       editable=False,
                                       blank=True, )
 
