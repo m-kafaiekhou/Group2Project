@@ -72,6 +72,16 @@ class Footer(models.Model):
     instagram_link = models.CharField(max_length=250, default="#")
     follow_us_is_active = models.BooleanField(default=True)
 
+    open_hours_title = models.CharField(max_length=25, default="OPEN HOURS")
+    days1 = models.CharField(max_length=25, default="Monday- Friday")
+    hours1 = models.CharField(max_length=25, default="8:00 AM- 10:00 PM")
+    days2 = models.CharField(
+        max_length=25, default="Saturday- Sunday", null=True, blank=True
+    )
+    hours2 = models.CharField(
+        max_length=25, default="2:00 PM- 10:00 PM", null=True, blank=True
+    )
+    open_hours_is_active = models.BooleanField(default=True)
 
 class DynamicHomePage(models.Model):
     pass
