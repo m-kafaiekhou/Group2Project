@@ -517,24 +517,39 @@ def sales_by_category(requests):
     })
 
 
-def sales_by_employee(requests): # Table, Not a Chart.
+def sales_by_employee(request): # Table, or a bar Chart.
     orders = OrderItem.objects.all()
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
-    print(all_staff)
+    
+    new_list = list()
+    for d in all_staff:
+        new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
+        new_list.append(new_dict)
+    
+    new_dict = defaultdict(int)
+    for d in new_list:
+        new_dict[d["staff_name"]] += int(d["total"])
 
+    staff_list = [{"staff_name": name, "total":price} for name, price in new_dict.items()]
+    sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
+    print(sorted_staff_list)
 
+    sale_dict = dict()
+    for d in sorted_staff_list:
+        sale_dict[d["staff_name"]] = round(d["total"], 2)
 
+    # context = {}
+    # return render(request, "dashboard/dashboard.html", context)
     return JsonResponse({
-        "title": "Income by Employees",
+        "title": "Category Sales",
         "data": {
-            "labels": [],
+            "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
-                "data": [],
+                "data": list(sale_dict.values()),
             }]
         }
     })
-
 
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
