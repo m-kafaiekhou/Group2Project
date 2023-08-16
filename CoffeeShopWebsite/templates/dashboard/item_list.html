@@ -1,4 +1,4 @@
-{% extends 'dashboard/_base.html' %}
+{% extends 'dashboard/base.html' %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% load static %}
@@ -27,7 +27,7 @@
                                     {% endfor %}
                                     <div class="col-lg-3">
                                         <div class="selection-widget">
-                                            <select class="form-select" data-trigger="true"
+                                            <select class="form-select bg-transparent text-light border-default" data-trigger="true"
                                                     name="orderby"
                                                     id="choices-single-filter-orderby"
                                                     aria-label="Default select example">
@@ -66,7 +66,7 @@
                             <div class="col-lg-6">
                                 <div class="candidate-list-content mt-3 mt-lg-0">
                                     <h5 class="fs-19 mb-0">
-                                        <a class="primary-link" href="{% url 'item_details' item.id %}">{{ item.name }}</a><span
+                                        <a class="text-light" href="{% url 'item_details' item.id %}">{{ item.name }}</a><span
                                             class="badge bg-success ms-1"><i
                                             class="mdi mdi-star align-middle"></i>4.8</span>
                                     </h5>
