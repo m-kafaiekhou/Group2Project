@@ -20,6 +20,7 @@
         </div>
         <div class="row d-flex">
             {% for cat in  categories %}
+                {% if cat.parent_category %}
             <div class="col-lg-6">
                 <h1 class="mb-5">{{ cat.name }}</h1>
                 <div><hr></div>
@@ -44,6 +45,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
