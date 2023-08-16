@@ -32,4 +32,5 @@ urlpatterns += [
     path("chart/sales/employee-sales/", sales_by_employee, name="employee-sales"),
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
+    path("chart/sales/status/<int:day><str:status>/", order_status_report, name="status"),
 ]
