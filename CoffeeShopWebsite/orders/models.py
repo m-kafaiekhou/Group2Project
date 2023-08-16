@@ -63,6 +63,9 @@ class OrderItem(models.Model):
     )
     quantity = models.IntegerField()
     price = models.IntegerField()
+    date_added = models.DateTimeField(default=timezone.localtime(timezone.now()),
+                                      editable=False,
+                                      blank=True, )
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
