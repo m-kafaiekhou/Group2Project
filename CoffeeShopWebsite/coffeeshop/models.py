@@ -65,8 +65,12 @@ class Footer(models.Model):
     email = models.EmailField(default="info@example.com")
     contact_us_is_active = models.BooleanField(default=True)
 
-class DynamicFooter(models.Model):
-    pass
+    follow_us_title = models.CharField(max_length=25, default="FOLLOW US")
+    twitter_link = models.CharField(max_length=250, default="#")
+    facebook_link = models.CharField(max_length=250, default="#")
+    linkedin_link = models.CharField(max_length=250, default="#")
+    instagram_link = models.CharField(max_length=250, default="#")
+    follow_us_is_active = models.BooleanField(default=True)
 
 
 class DynamicHomePage(models.Model):
