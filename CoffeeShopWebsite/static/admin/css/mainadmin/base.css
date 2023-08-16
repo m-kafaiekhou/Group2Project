@@ -25,7 +25,7 @@ html[data-theme="light"],
     --breadcrumbs-bg: var(--primary);
 
     --link-fg: #417893;
-    --link-hover-color: #036;
+    --link-hover-color: rgb(14, 43, 72);
     --link-selected-fg: #5b80b2;
 
     --hairline-color: #e8e8e8;
@@ -42,9 +42,9 @@ html[data-theme="light"],
     --selected-row: #ffc;
 
     --button-fg: #fff;
-    --button-bg: var(--primary);
-    --button-hover-bg: #609ab6;
-    --default-button-bg: var(--secondary);
+    --button-bg: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+    --button-hover-bg: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
+    --default-button-bg: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%);
     --default-button-hover-bg: #205067;
     --close-button-bg: #747474;
     --close-button-hover-bg: #333;
@@ -381,6 +381,8 @@ table thead th .text span {
 }
 
 table thead th .text a {
+    font-weight: 800;
+    font-size: medium;
     display: block;
     cursor: pointer;
     padding: 8px 10px;
@@ -703,7 +705,6 @@ div.breadcrumbs {
     background: var(--breadcrumbs-bg);
     padding: 10px 40px;
     border: none;
-    color: var(--breadcrumbs-fg);
     text-align: left;
 }
 
@@ -917,8 +918,8 @@ a.deletelink:focus, a.deletelink:hover {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background: var(--header-bg);
-    color: var(--header-color);
+    /* background: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%); */
+    /* color: linear-gradient(0deg, #0098f0 0%, #00f2c3 100%); */
     overflow: hidden;
 }
 
