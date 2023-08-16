@@ -62,13 +62,14 @@ class OrderItem(models.Model):
         on_delete=models.CASCADE,
     )
     quantity = models.IntegerField()
-    price = models.IntegerField()
+    price = models.IntegerField(blank=True)
     date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
+        return self
 
     def save(self, *args, **kwargs):
         self.set_price()
