@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.db.models import Count
+
 
 # Local Imports
 from menus.models import CafeItem, Category
@@ -12,10 +12,11 @@ from orders.models import Order, OrderItem
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
-from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear, Extract
 from django.db.models import Count, F, Sum, Avg
 from .chart_utils import year_dict, months, month_dict, month, day_dict, day
 from datetime import datetime
+from collections import defaultdict
 
 class ItemListView(LoginRequiredMixin, View):
     template_name = "dashboard/item_list.html"
@@ -371,6 +372,259 @@ def daily_sales_chart(request):
 
     return JsonResponse({
         "title": f"Sales in Today",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def daily_sales_sum(request):
+    today = datetime.now().day
+    orders = OrderItem.objects.filter(order__order_date__day=today)
+    daily_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    
+    total = 0
+    for order in daily_sales:
+        total += order["total"]
+
+    return JsonResponse({
+        "title": f"Sales in Today",
+        "data": {
+            "labels": ["total"],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [total],
+            }]
+        }
+    })
+
+
+
+def all_time_sales(request):
+    orders = OrderItem.objects.all()
+    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    
+    total = 0
+    for order in all_orders:
+        total += order["total"]
+
+    return JsonResponse({
+        "title": "All Time Sales",
+        "data": {
+            "labels": ["total"],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [total],
+            }]
+        }
+    })
+
+
+def top_10_selling_items(request, filter): # year, month, day
+    if filter == "year":
+        year = datetime.now().year
+        orders = OrderItem.objects.filter(order__order_date__year=year)
+    elif filter == "month":
+        month = datetime.now().month
+        orders = OrderItem.objects.filter(order__order_date__month=month)
+    elif filter == "day":
+        day = datetime.now().day
+        orders = OrderItem.objects.filter(order__order_date__day=day)
+    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_items:
+        new_dict[d["cafeitem__name"]] += int(d["total"])
+    
+    chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
+    sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
+
+    top_items = list()
+    for d in sorted_chart_items:
+        if len(top_items) < 10:
+            top_items.append(d)
+    
+    
+    sale_dict = dict()
+    for i in top_items:
+        sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
+
+    return JsonResponse({
+        "title": f"Top 10 Best Sellers in {filter}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def top_10_customers(requests):
+    orders = OrderItem.objects.all()
+    all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_numbers:
+        new_dict[d["order__phone_number"]] += int(d["total"])
+
+    chart_ph_numbers = [{"order__phone_number": number, "total":price} for number, price in new_dict.items()]
+    sorted_ph_numbers = sorted(chart_ph_numbers, key=lambda x: x["total"], reverse=True)
+
+    top_customers = list()
+    for d in sorted_ph_numbers:
+        if len(top_customers) < 10:
+            top_customers.append(d)
+
+    sale_dict = dict()
+    for d in top_customers:
+        sale_dict[d["order__phone_number"]] = round(d["total"], 2)
+
+    return JsonResponse({
+        "title": "Top 10 Best Customers",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def sales_by_category(requests):
+    orders = OrderItem.objects.all()
+    all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_caterories:
+        new_dict[d["cafeitem__category__name"]] += int(d["total"])
+
+    chart_category = [{"cafeitem__category__name": name, "total":price} for name, price in new_dict.items()]
+    sorted_category = sorted(chart_category, key=lambda x: x["total"], reverse=True)
+
+    sale_dict = dict()
+    for d in sorted_category:
+        sale_dict[d["cafeitem__category__name"]] = round(d["total"], 2)
+
+    return JsonResponse({
+        "title": "Category Sales",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def sales_by_employee(request): # Table, or a bar Chart.
+    orders = OrderItem.objects.all()
+    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
+    
+    new_list = list()
+    for d in all_staff:
+        new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
+        new_list.append(new_dict)
+    
+    new_dict = defaultdict(int)
+    for d in new_list:
+        new_dict[d["staff_name"]] += int(d["total"])
+
+    staff_list = [{"staff_name": name, "total":price} for name, price in new_dict.items()]
+    sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
+    print(sorted_staff_list)
+
+    sale_dict = dict()
+    for d in sorted_staff_list:
+        sale_dict[d["staff_name"]] = round(d["total"], 2)
+
+    # context = {}
+    # return render(request, "dashboard/dashboard.html", context)
+    return JsonResponse({
+        "title": "Category Sales",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+def peak_business_hour(request):
+    orders = OrderItem.objects.all()
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
+    
+    sale_dict = day_dict()
+
+    for group in grouped_orders:
+        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+
+    return JsonResponse({
+        "title": f"Peak Hour Sales",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def most_popular_items(request):
+    orders = OrderItem.objects.all()
+    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
+
+    new_dict = defaultdict(int)
+    for d in all_items:
+        new_dict[d["cafeitem__name"]] += int(d["total"])
+    
+    chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
+    sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
+
+    top_items = list()
+    for d in sorted_chart_items:
+        if len(top_items) < 10:
+            top_items.append(d)
+    
+    
+    sale_dict = dict()
+    for i in top_items:
+        sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
+
+    return JsonResponse({
+        "title": "Most Popular Items(All Time)",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def order_status_report(request, day: int, status:str): # Table, not a Chart. status= "D", "C", "A"
+    orders = Order.objects.filter(order_date__day=day, status=status)
+    grouped_orders = orders.annotate(p=F("status")).annotate(day=ExtractDay("order_date"))\
+        .values("day").annotate(count=Count("status")).values("status", "count")
+
+    sale_dict = dict()
+
+    for group in grouped_orders:
+        sale_dict[group["status"]] = group["count"]
+   
+    return JsonResponse({
+        "title": f"Order Status for Day {day} this Month",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{

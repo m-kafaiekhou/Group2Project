@@ -100,7 +100,7 @@
             </div>
             <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menu_search' %}" method="get">
                 <div class="input-group" style="height: 3rem; width: 100%;">
-                    <input type="text" class="form-control p-4" placeholder="Enter you'r Search" name="search">
+                    <input type="text" class="form-control p-4" placeholder="Search..." name="search">
                     <div class="input-group-append">
                         <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
                     </div>
@@ -109,6 +109,20 @@
         </div>
     </div>
     <!--================ Search End ================-->
+
+    <!--================ Logo Start ================-->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Logo Fun</h4>
+                <h1 class="display-4">Our Beloved Logo</h1>
+            </div>
+            <div class="d-flex justify-content-center ">
+                <img style="width: 75%;" src="{% static '/logo.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <!--================ Logo End ================-->
 
     <!--================ About Start ================-->
     <div class="container-fluid py-5">
