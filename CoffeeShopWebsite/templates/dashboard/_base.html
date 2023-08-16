@@ -14,14 +14,14 @@
     {% block head %}
     {% endblock %}
 </head>
-<body>
-<nav class="navbar bg-light fixed-top ">
+<body class="bg-dark">
+<nav class="navbar bg-dark fixed-top ">
 <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+    <button class="navbar-toggler border-light bg-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Staff Panel</a>
+    <a class="navbar-brand text-light" href="#">Staff Panel</a>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ user.first_name|slice:":1"|upper }}.{{ user.last_name }}</h5>
@@ -47,6 +47,9 @@
                         <li><a class="dropdown-item" href="#">Item</a></li>
                         <li><a class="dropdown-item" href="#">Category</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a class="text-danger" href="{% url 'staff:logout' %}">Log out</a>
                 </li>
             </ul>
         </div>

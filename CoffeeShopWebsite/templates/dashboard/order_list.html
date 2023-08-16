@@ -1,4 +1,4 @@
-{% extends 'dashboard/_base.html' %}
+{% extends 'dashboard/base.html' %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% load static %}
@@ -30,7 +30,7 @@
                                     {% endfor %}
                                     <div class="col-lg-3">
                                         <div class="selection-widget">
-                                            <select class="form-select" data-trigger="true"
+                                            <select class="form-select bg-transparent text-light border-default" data-trigger="true"
                                                     name="orderby"
                                                     id="choices-single-filter-orderby"
                                                     aria-label="Default select example">
@@ -73,7 +73,7 @@
                                 <div class="col-lg-6">
                                     <div class="candidate-list-content mt-3 mt-lg-0">
                                         <h5 class="fs-19 mb-0">
-                                            <a class="primary-link" href="#">{{ item.get_status_display }}</a>
+                                            <p class="text-light" href="#">{{ item.get_status_display }}</p>
                                         </h5>
                                         <p class="text-muted mb-2">{{ item.phone_number }}</p>
                                         <ul class="list-inline mb-0 text-muted">
@@ -92,22 +92,22 @@
                             <div class="btn-contain">
                                 {% if item.status == 'D' %}
                                     <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
-                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Accept</a></div>
                                     <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
-                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Cancel</a></div>
                                 {% elif item.status == 'A' %}
                                     <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
-                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Draft</a></div>
                                     <div class="contain-item"><a class="status-button btn btn-danger" data-status="C"
-                                                                 data-item-id="{{ item.id }}" href="#">Cancel</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Cancel</a></div>
                                 {% elif item.status == 'C' %}
                                     <div class="contain-item"><a class="status-button btn btn-success" data-status="A"
-                                                                 data-item-id="{{ item.id }}" href="#">Accept</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Accept</a></div>
                                     <div class="contain-item"><a class="status-button btn btn-warning" data-status="D"
-                                                                 data-item-id="{{ item.id }}" href="#">Draft</a></div>
+                                                                 data-item-id="{{ item.id }}" href="#" style="padding-inline: 0">Draft</a></div>
                                 {% endif %}
                                 <div class="contain-item"><a class="btn btn-warning edit-button"
-                                                             href="{% url 'order_details' item.id %}">Edit</a></div>
+                                                             href="{% url 'order_details' item.id %}" style="padding-inline: 0">Edit</a></div>
                             </div>
                             <div class="price p-lg-2 align">
                                 <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i>

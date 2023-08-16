@@ -82,7 +82,6 @@ class CheckoutView(View):
         order_items = [
             OrderItem(order=order, cafeitem=item, quantity=quant).set_price()
             for item, quant in cart.items()
-            if item is not None
         ]
 
         OrderItem.objects.bulk_create(order_items)
@@ -102,6 +101,7 @@ class OrderHistoryView(View) :
     template_name = 'orders/order_history.html'
     model_class = Order
     form_class = OrderHistoryForm
+
     def get(self, request, *args, **kwargs) :
         last_order_id = request.session.get('last_order_id')
         form = self.form_class()
@@ -119,7 +119,6 @@ class OrderHistoryView(View) :
                 orders = last_order
         
         return render(request, self.template_name, context= {"orders" : orders, "form" : form})
-
 
     def post(self,request, *args, **kwargs) :
         pass

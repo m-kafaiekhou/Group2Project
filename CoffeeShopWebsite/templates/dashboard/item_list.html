@@ -1,4 +1,4 @@
-{% extends 'dashboard/_base.html' %}
+{% extends 'dashboard/base.html' %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% load static %}
@@ -27,7 +27,8 @@
                                     {% endfor %}
                                     <div class="col-lg-3">
                                         <div class="selection-widget">
-                                            <select class="form-select" data-trigger="true"
+                                            <select class="form-select bg-transparent text-light border-default"
+                                                    data-trigger="true"
                                                     name="orderby"
                                                     id="choices-single-filter-orderby"
                                                     aria-label="Default select example">
@@ -58,15 +59,22 @@
                         <div class="align-items-center row" style="width: 100%">
                             <div class="col-auto">
                                 <div class="candidate-list-images">
-                                    <a href="{{ item.image.url }}"><img src="{{ item.image.url }}"
-                                                                        alt=""
-                                                                        class="avatar-md img-thumbnail rounded-circle"/></a>
+                                    {% if item.image %}
+                                        <a href="{{ item.image.url }}"><img src="{{ item.image.url }}"
+                                                                            alt=""
+                                                                            class="avatar-md img-thumbnail rounded-circle"/></a>
+                                    {% else %}
+                                        <a href="#"><img src="{% static 'product-placeholder.webp' %}"
+                                                         alt="Image"
+                                                         class="avatar-md img-thumbnail rounded-circle"/></a>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="candidate-list-content mt-3 mt-lg-0">
                                     <h5 class="fs-19 mb-0">
-                                        <a class="primary-link" href="{% url 'item_details' item.id %}">{{ item.name }}</a><span
+                                        <a class="text-light"
+                                           href="{% url 'item_details' item.id %}">{{ item.name }}</a><span
                                             class="badge bg-success ms-1"><i
                                             class="mdi mdi-star align-middle"></i>4.8</span>
                                     </h5>
@@ -98,7 +106,8 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
+                                    <a class="page-link"
+                                       href="?page=1&name={{ name }}&is_available={{ is_available }}&category={{ category }}&orderby={{ orderby }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
