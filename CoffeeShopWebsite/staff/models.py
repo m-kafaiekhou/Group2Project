@@ -2,6 +2,7 @@ from django.db import models
 from .managers import CustomUserManager
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils import timezone
 
 
 class CustomUserModel(AbstractBaseUser, PermissionsMixin):
@@ -14,7 +15,9 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     )
     last_name = models.CharField(max_length=150, blank=True, null=True)
     first_name = models.CharField(max_length=150, blank=True, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(default=timezone.now,
+                                      editable=False,
+                                      blank=True, )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 

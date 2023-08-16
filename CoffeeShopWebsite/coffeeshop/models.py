@@ -2,6 +2,7 @@ from django.db import models
 from menus.models import CafeItem
 from phone_field import PhoneField
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils import timezone
 # Create your models here.
 
 
@@ -20,6 +21,10 @@ class Review(models.Model):
         CafeItem,
         on_delete=models.CASCADE,
     )
+
+    date_added = models.DateTimeField(default=timezone.now,
+                                      editable=False,
+                                      blank=True, )
 
     def __str__(self) -> str:
         return f"{self.review[:15]} ..."
