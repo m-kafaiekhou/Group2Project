@@ -45,3 +45,8 @@ class DynamicNumbers(models.Model):
     phone = PhoneField(null=True, blank=True, help_text="Phone numbers used on webpage")
     cell_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
+
+class DynamicNavbar(models.Model):
+    pass
+
+
