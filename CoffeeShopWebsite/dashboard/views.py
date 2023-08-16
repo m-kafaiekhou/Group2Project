@@ -492,16 +492,26 @@ def top_10_customers(requests):
 
 def sales_by_category(requests):
     orders = OrderItem.objects.all()
-    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category", "total")
+    all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
 
+    new_dict = defaultdict(int)
+    for d in all_caterories:
+        new_dict[d["cafeitem__category__name"]] += int(d["total"])
+
+    chart_category = [{"cafeitem__category__name": name, "total":price} for name, price in new_dict.items()]
+    sorted_category = sorted(chart_category, key=lambda x: x["total"], reverse=True)
+
+    sale_dict = dict()
+    for d in sorted_category:
+        sale_dict[d["cafeitem__category__name"]] = round(d["total"], 2)
 
     return JsonResponse({
         "title": "Top 10 Best Customers",
         "data": {
-            "labels": [],
+            "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
-                "data": [],
+                "data": list(sale_dict.values()),
             }]
         }
     })
