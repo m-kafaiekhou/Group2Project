@@ -15,7 +15,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     )
     last_name = models.CharField(max_length=150, blank=True, null=True)
     first_name = models.CharField(max_length=150, blank=True, null=True)
-    date_added = models.DateTimeField(default=timezone.now(),
+    date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
     is_staff = models.BooleanField(default=False)

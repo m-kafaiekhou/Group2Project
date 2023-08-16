@@ -22,7 +22,7 @@ class Review(models.Model):
         on_delete=models.CASCADE,
     )
 
-    date_added = models.DateTimeField(default=timezone.now(),
+    date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
 

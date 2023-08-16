@@ -18,7 +18,7 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="category", blank=True, null=True)
 
-    date_added = models.DateTimeField(default=timezone.now(),
+    date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
 
@@ -32,7 +32,7 @@ class CafeItem(models.Model):
     image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
     price = models.IntegerField()
-    date_added = models.DateTimeField(default=timezone.now(),
+    date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
 

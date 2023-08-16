@@ -26,7 +26,7 @@ class Order(models.Model):
     phone_number = models.CharField(
         "phone number", max_length=14, validators=[regex], null=False
     )
-    order_date = models.DateTimeField(default=timezone.now(),
+    order_date = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )  # core app
     table_number = models.IntegerField(default=None)
@@ -63,7 +63,7 @@ class OrderItem(models.Model):
     )
     quantity = models.IntegerField()
     price = models.IntegerField()
-    date_added = models.DateTimeField(default=timezone.now(),
+    date_added = models.DateTimeField(default=timezone.now,
                                       editable=False,
                                       blank=True, )
 
