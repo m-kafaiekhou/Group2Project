@@ -424,7 +424,7 @@ def all_time_sales(request):
     })
 
 
-def top_10_selling_items(request):
+def top_10_selling_items(request, filter): # year, month, day
 
     orders = OrderItem.objects.all()
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
@@ -485,6 +485,23 @@ def top_10_customers(requests):
             "datasets": [{
                 "label": "Amount (T)",
                 "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def sales_by_category(requests):
+    orders = OrderItem.objects.all()
+    all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category", "total")
+
+
+    return JsonResponse({
+        "title": "Top 10 Best Customers",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
             }]
         }
     })
