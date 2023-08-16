@@ -50,3 +50,7 @@ class DynamicNavbar(models.Model):
     pass
 
 
+class DynamicFooter(models.Model):
+    pass
+
+
