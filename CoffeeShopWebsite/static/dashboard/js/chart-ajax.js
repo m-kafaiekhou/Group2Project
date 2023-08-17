@@ -97,13 +97,13 @@ function loadChart(chart, endpoint) {
     });
 }
 
-function loadAllCharts(BigMainChart, BigMainChart2, chartSMLEFTdown, chartSMCenterup, chartSMLeftup, chartSMRightup) {
+function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown,) {
     loadChart(BigMainChart, links["day-sales"]);
     loadChart(BigMainChart2, links["top-day"]);
     loadChart(chartSMLEFTdown, links["sale-cat"]);
-    loadChart(chartSMCenter, links["sale-status-c"]);
+    loadChart(chartSMRightup, links["sale-status-c"]);
     loadChart(chartSMCenterup, links["sale-status-d"]);
-    loadChart(chartSMCenter, links["sale-status-a"]);
+    loadChart(chartSMLeftup, links["sale-status-a"]);
 
 
 }
@@ -472,7 +472,7 @@ demo = {
       }
     };
 
-    var ctx = document.getElementById("chartLinePurple").getContext("2d");
+    var ctx = document.getElementById("chartLinePurple1").getContext("2d");
 
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -501,14 +501,14 @@ demo = {
       }]
     };
 
-    var chartSMLeft = new Chart(ctx, {
+    var chartSMLeftup = new Chart(ctx, {
       type: 'bar',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipPurple
     });
 
 
-    var ctxGreen = document.getElementById("chartLineGreen").getContext("2d");
+    var ctxGreen = document.getElementById("chartLineGreen1").getContext("2d");
 
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -537,7 +537,7 @@ demo = {
       }]
     };
 
-    let chartSMCenterdown = new Chart(ctxGreen, {
+    let chartSMRightup = new Chart(ctxGreen, {
       type: 'line',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipGreen
@@ -629,7 +629,6 @@ demo = {
     };
     let BigMainChart2 = new Chart(ctx2, config2);
     $("#02").click(function() {
-      console.log("***********AHAHAHAHAH")
       loadChart(BigMainChart2, links["top-day"])
       BigMainChart2.update();
     });
@@ -645,7 +644,7 @@ demo = {
     });
 
 
-    var ctx = document.getElementById("CountryChart").getContext("2d");
+    var ctx10 = document.getElementById("CountryChart1").getContext("2d");
 
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -654,7 +653,7 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
 
-    let chartSMCenterup = new Chart(ctx, {
+    let chartSMCenterup = new Chart(ctx10, {
       type: 'bar',
       responsive: true,
       legend: {
@@ -662,7 +661,7 @@ demo = {
       },
       options: gradientBarChartConfiguration
     })
-      loadAllCharts(BigMainChart, BigMainChart2, chartSMLeft, chartSMCenterdown, chartSMCenterup)
+      loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, )
   },
 
 
