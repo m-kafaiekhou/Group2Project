@@ -34,11 +34,11 @@ urlpatterns += [
     path("chart/sales/this-day/", daily_sales_chart, name="day-sales"),
     path("chart/sales/daily-sum/", daily_sales_chart, name="day-sales-sum"),
     path("chart/sales/all-time/", all_time_sales, name="all-time-sales"),
-    path("chart/sales/top-selling/", top_10_selling_items, name="top-selling"),
+    path("chart/sales/top-selling/<str:fil>/", top_10_selling_items, name="top-selling"),
     path("chart/sales/best-customers/", top_10_customers, name="best-customers"),
     path("chart/sales/category-sale/", sales_by_category, name="category-sale"),
     path("chart/sales/employee-sales/", sales_by_employee, name="employee-sales"),
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
-    path("chart/sales/status/<int:day><str:status>/", order_status_report, name="status"),
+    path("chart/sales/status/<str:status>/", order_status_report, name="status"),
 ]

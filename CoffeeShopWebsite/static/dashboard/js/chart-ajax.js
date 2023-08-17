@@ -97,17 +97,28 @@ function loadChart(chart, endpoint) {
     });
 }
 
-function loadAllCharts(BigMainChart, chart2, chart3, chart4) {
+function loadAllCharts(BigMainChart, BigMainChart2, chartSMLEFTdown, chartSMCenterup, chartSMLeftup, chartSMRightup) {
     loadChart(BigMainChart, links["day-sales"]);
-    loadChart(chart2, `/dashboard/chart/sales/this-month/`);
-    loadChart(chart1, `/dashboard/chart/sales/this-day/`);
-    loadChart(chart4, `/dashboard/chart/sales/this-day/`);
+    loadChart(BigMainChart2, links["top-day"]);
+    loadChart(chartSMLEFTdown, links["sale-cat"]);
+    loadChart(chartSMCenter, links["sale-status-c"]);
+    loadChart(chartSMCenterup, links["sale-status-d"]);
+    loadChart(chartSMCenter, links["sale-status-a"]);
+
+
 }
 
 links = {
   'year-sales': `/dashboard/chart/sales/this-year/`,
   'month-sales': `/dashboard/chart/sales/this-month/`,
   'day-sales': `/dashboard/chart/sales/this-day/`,
+  'top-day': `/dashboard/chart/sales/top-selling/day/`,
+  'top-month': `/dashboard/chart/sales/top-selling/month/`,
+  'top-year': `/dashboard/chart/sales/top-selling/year/`,
+  'sale-cat': `/dashboard/chart/sales/category-sale/`,
+  'sale-status-c': `/dashboard/chart/sales/status/C/`,
+  'sale-status-d': `/dashboard/chart/sales/status/D/`,
+  'sale-status-a': `/dashboard/chart/sales/status/A/`
 }
 
 type = ['primary', 'info', 'success', 'warning', 'danger'];
@@ -490,7 +501,7 @@ demo = {
       }]
     };
 
-    var chart1 = new Chart(ctx, {
+    var chartSMLeft = new Chart(ctx, {
       type: 'bar',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipPurple
@@ -526,7 +537,7 @@ demo = {
       }]
     };
 
-    let chart2 = new Chart(ctxGreen, {
+    let chartSMCenterdown = new Chart(ctxGreen, {
       type: 'line',
       data: data,
       options: gradientChartOptionsConfigurationWithTooltipGreen
@@ -585,6 +596,54 @@ demo = {
       BigMainChart.update();
     });
 
+    var ctx2 = document.getElementById("chartBig2").getContext('2d');
+
+    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke2.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke2.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+    var config2 = {
+      type: 'bar',
+      data: {
+        labels: chart_labels,
+        datasets: [{
+          label: "My First dataset",
+          fill: true,
+          backgroundColor: gradientStroke2,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: chart_data,
+        }]
+      },
+      options: gradientChartOptionsConfigurationWithTooltipPurple
+    };
+    let BigMainChart2 = new Chart(ctx2, config2);
+    $("#02").click(function() {
+      console.log("***********AHAHAHAHAH")
+      loadChart(BigMainChart2, links["top-day"])
+      BigMainChart2.update();
+    });
+
+    $("#12").click(function() {
+      loadChart(BigMainChart2, links["top-month"])
+      BigMainChart2.update();
+    });
+
+    $("#22").click(function() {
+      loadChart(BigMainChart2, links["top-year"])
+      BigMainChart2.update();
+    });
+
 
     var ctx = document.getElementById("CountryChart").getContext("2d");
 
@@ -595,7 +654,7 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
 
-    let chart4 = new Chart(ctx, {
+    let chartSMCenterup = new Chart(ctx, {
       type: 'bar',
       responsive: true,
       legend: {
@@ -603,15 +662,7 @@ demo = {
       },
       options: gradientBarChartConfiguration
     })
-      loadAllCharts(BigMainChart, chart2, chart1, chart4)
-
-    let element = document.getElementById('#month-big')
-
-    function activeMonthChart(event){
-      loadChart(BigMainChart, links["month-sales"])
-    }
-
-    element.addEventListener('click', activeMonthChart)
+      loadAllCharts(BigMainChart, BigMainChart2, chartSMLeft, chartSMCenterdown, chartSMCenterup)
   },
 
 
