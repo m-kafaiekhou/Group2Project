@@ -17,6 +17,10 @@ class FilterCafeitem(admin.ModelAdmin) :
     list_display = ('name', 'price', 'category', 'is_available')
     list_filter = ('is_available', )
     list_per_page = 15
+    def make_cafeitems_unavailable(self, modeladmin,request, queryset):
+        queryset.update(is_available=False)
+    make_cafeitems_unavailable.short_description = "Marks elected Cafe Items as unavailable"
+
     
 
 class FilterCategory(admin.ModelAdmin) :
