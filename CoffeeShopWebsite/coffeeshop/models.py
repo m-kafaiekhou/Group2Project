@@ -143,3 +143,9 @@ class HomePage(models.Model):
     menu_special_items_section_description = models.TextField(
         default="The Best Items According to Our Customers"
     )
+
+    testimonial_section_is_active = models.BooleanField(default=True)
+    testimonial_section_title = models.CharField(max_length=25, default="TESTIMONIAL")
+    testimonial_section_description = models.TextField(default="Our Clients Say")
+
+
