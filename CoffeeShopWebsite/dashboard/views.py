@@ -329,6 +329,17 @@ def yearly_sales_chart(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -353,6 +364,17 @@ def monthly_sales_chart(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -376,6 +398,17 @@ def daily_sales_chart(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -423,14 +456,14 @@ def all_time_sales(request):
     })
 
 
-def top_10_selling_items(request, filter): # year, month, day
-    if filter == "year":
+def top_10_selling_items(request, fil): # year, month, day
+    if fil == "year":
         year = datetime.now().year
         orders = OrderItem.objects.filter(order__order_date__year=year)
-    elif filter == "month":
+    elif fil == "month":
         month = datetime.now().month
         orders = OrderItem.objects.filter(order__order_date__month=month)
-    elif filter == "day":
+    elif fil == "day":
         day = datetime.now().day
         orders = OrderItem.objects.filter(order__order_date__day=day)
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
@@ -453,11 +486,22 @@ def top_10_selling_items(request, filter): # year, month, day
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": f"Top 10 Best Sellers in {filter}",
+        "title": f"Top 10 Best Sellers in {fil}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -517,6 +561,17 @@ def sales_by_category(requests):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -552,6 +607,17 @@ def sales_by_employee(request): # Table, or a bar Chart.
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -574,6 +640,17 @@ def peak_business_hour(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -607,24 +684,36 @@ def most_popular_items(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
     })
 
 
-def order_status_report(request, day: int, status:str): # Table, not a Chart. status= "D", "C", "A"
-    orders = Order.objects.filter(order_date__day=day, status=status)
-    grouped_orders = orders.annotate(p=F("status")).annotate(day=ExtractDay("order_date"))\
-        .values("day").annotate(count=Count("status")).values("status", "count")
+def order_status_report(request, status: str):  # Table, not a Chart. status= "D", "C", "A"
+    month = datetime.now().month
+    orders = Order.objects.filter(order_date__month=month, status=status)
+    grouped_orders = orders.annotate(p=F("status")).annotate(day=ExtractDay("order_date")) \
+        .values("day").annotate(count=Count("status")).values("day", "count").order_by("day")
 
-    sale_dict = dict()
+    sale_dict = month_dict()
 
     for group in grouped_orders:
-        sale_dict[group["status"]] = group["count"]
-   
+        sale_dict[day[group["day"]]] = group["count"]
+
     return JsonResponse({
-        "title": f"Order Status for Day {day} this Month",
+        "title": f"Order Status Count",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
