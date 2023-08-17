@@ -97,3 +97,8 @@ class Footer(models.Model):
 class HomePage(models.Model):
     homepage_name = models.CharField(max_length=25, default="main", unique=True)
     webpage_title = models.CharField(max_length=25, default="TEHRAN Coffee Shop")
+
+    search_section_is_active = models.BooleanField(default=True)
+    search_section_title = models.CharField(max_length=25, default="SEARCH")
+    search_section_description = models.TextField(default="Search for Drinks")
+    search_placeholder = models.CharField(max_length=100, default="Search Here")
