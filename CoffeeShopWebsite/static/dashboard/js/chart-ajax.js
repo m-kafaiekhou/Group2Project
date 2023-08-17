@@ -80,7 +80,7 @@ function downloadCSV(chart) {
 // }
 
 
-function loadChart(chart, endpoint) {
+function loadChart(chart, endpoint, dnld) {
     $.ajax({
         url: endpoint,
         type: "GET",
@@ -102,7 +102,7 @@ function loadChart(chart, endpoint) {
 
             chart.update();
 
-            document.getElementById("dnld-big1").addEventListener("click", () => {
+            document.getElementById(dnld).addEventListener("click", () => {
                 downloadCSV(chart)
             });
         },
@@ -111,16 +111,15 @@ function loadChart(chart, endpoint) {
 }
 
 function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown, chartSMCenterdown, chartSMRightdown, BigMainChart3) {
-    loadChart(BigMainChart, links["day-sales"]);
-    loadChart(BigMainChart2, links["top-day"]);
-    loadChart(chartSMLEFTdown, links["sale-cat"]);
-    loadChart(chartSMRightup, links["sale-status-c"]);
-    loadChart(chartSMCenterup, links["sale-status-d"]);
-    loadChart(chartSMLeftup, links["sale-status-a"]);
-    loadChart(chartSMLEFTdown, links["sale-cat"]);
-    loadChart(chartSMCenterdown, links["peak-hour"]);
-    loadChart(chartSMRightdown, links["best-customer"]);
-    loadChart(BigMainChart3, links["popular-items"]);
+    loadChart(BigMainChart, links["day-sales"], "dnld-big1");
+    loadChart(BigMainChart2, links["top-day"], "dnld-big2");
+    loadChart(chartSMCenterup, links["sale-status-d"], "dnld-scu");
+    loadChart(chartSMLeftup, links["sale-status-a"], "dnld-slu");
+    loadChart(chartSMRightup, links["sale-status-c"], "dnld-sru");
+    loadChart(chartSMLEFTdown, links["peak-hour"], "dnld-sld");
+    loadChart(chartSMCenterdown, links["sale-cat"], "dnld-scd");
+    loadChart(chartSMRightdown, links["best-customer"], "dnld-srd");
+    loadChart(BigMainChart3, links["popular-items"], "dnld-big3");
 }
 
 links = {
@@ -677,16 +676,16 @@ demo = {
         };
         let BigMainChart = new Chart(ctx, config);
         $("#0").click(function () {
-            loadChart(BigMainChart, links["day-sales"])
+            loadChart(BigMainChart, links["day-sales"], "dnld-big1")
             BigMainChart.update();
         });
         $("#1").click(function () {
-            loadChart(BigMainChart, links["month-sales"])
+            loadChart(BigMainChart, links["month-sales"], "dnld-big1")
             BigMainChart.update();
         });
 
         $("#2").click(function () {
-            loadChart(BigMainChart, links["year-sales"])
+            loadChart(BigMainChart, links["year-sales"], "dnld-big1")
             BigMainChart.update();
         });
 
@@ -723,17 +722,17 @@ demo = {
         };
         let BigMainChart2 = new Chart(ctx2, config2);
         $("#02").click(function () {
-            loadChart(BigMainChart2, links["top-day"])
+            loadChart(BigMainChart2, links["top-day"], "dnld-big2")
             BigMainChart2.update();
         });
 
         $("#12").click(function () {
-            loadChart(BigMainChart2, links["top-month"])
+            loadChart(BigMainChart2, links["top-month"], "dnld-big2")
             BigMainChart2.update();
         });
 
         $("#22").click(function () {
-            loadChart(BigMainChart2, links["top-year"])
+            loadChart(BigMainChart2, links["top-year"], "dnld-big2")
             BigMainChart2.update();
         });
 
