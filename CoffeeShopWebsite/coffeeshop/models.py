@@ -102,3 +102,26 @@ class HomePage(models.Model):
     search_section_title = models.CharField(max_length=25, default="SEARCH")
     search_section_description = models.TextField(default="Search for Drinks")
     search_placeholder = models.CharField(max_length=100, default="Search Here")
+
+    about_us_section_is_active = models.BooleanField(default=True)
+    about_us_section_title = models.CharField(max_length=25, default="ABOUT US")
+    about_us_section_description = models.TextField(default="Serving Since 2023")
+    about_us_image = models.ImageField(
+        upload_to="home_images", default="home_images/about.png"
+    )
+    left_about_us_title = models.CharField(max_length=25, default="Our Story")
+    left_about_us_description = models.TextField(null=True, blank=True)
+    left_about_us_button_text = models.CharField(max_length=25, default="Learn More")
+    right_about_us_title = models.CharField(max_length=25, default="Our Vision")
+    right_about_us_description = models.TextField(null=True, blank=True)
+    right_about_us_first_option = models.CharField(
+        max_length=50, default="Lorem ipsum dolor sit amet"
+    )
+    right_about_us_second_option = models.CharField(
+        max_length=50, default="Lorem ipsum dolor sit amet"
+    )
+    right_about_us_third_option = models.CharField(
+        max_length=50, default="Lorem ipsum dolor sit amet"
+    )
+    right_about_us_button_text = models.CharField(max_length=25, default="Learn More")
+
