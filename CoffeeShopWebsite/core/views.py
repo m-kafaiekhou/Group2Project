@@ -2,34 +2,67 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.conf import settings
 from django.contrib import messages
-from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from django.contrib.auth import login
+# from .forms import PhoneNumberEntryForm, VerificationCodeEntryForm
 from staff.models import CustomUserModel
+import datetime
+from django.views.generic import TemplateView
 
 
 def error_404_view(request, exception):
-    return render(request, "404.html")
+    return render(request, "404.html", status=404)
 
 
-class VerificationCodeEntryView(View):
-    form_class = VerificationCodeEntryForm
+# this generic class based view is for 404 Error handling. please use this view instead of error_404_view(request, exception)
+# in the main urls.py: we put -> handler404 = NotFoundView.get_rendered_view()
+class NotFoundView(TemplateView):
+    template_name = "errors/404.html"
 
-    def get(self, request):
-        form = self.form_class
-        return render(request, "core/code_entry.html", {"form": form})
+    @classmethod
+    def get_rendered_view(cls):
+        as_view_fn = cls.as_view()
 
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            input_code = form.cleaned_data["verification_code"]
-            sent_code = request.session.get("otp_code")
-            if sent_code and input_code == sent_code:
-                user = get_object_or_404(CustomUserModel, phone_number=request.session['phone_number'])
-                del request.session["otp_code"]
-                login(request, user)
-                return redirect("home")
-            else:
-                del request.session["otp_code"]
-                messages.error(request, "کد تایید نامعتبر است.", "danger")
-                return redirect("phone_entry")
-        return render(request, "core/code_entry.html", {"form": form})
+        def view_fn(request):
+            response = as_view_fn(request)
+            # this is what was missing before
+            response.render()
+            return response
+
+        return view_fn
+
+
+# class VerificationCodeEntryView(View):
+#     form_class = VerificationCodeEntryForm
+
+#     def get(self, request):
+#         form = self.form_class
+#         return render(request, "core/code_entry.html", {"form": form})
+
+#     def post(self, request):
+#         form = self.form_class(request.POST)
+#         otp_session = request.session.get("otp")
+#         if form.is_valid():
+#             input_code = form.cleaned_data["verification_code"]
+#             sent_code = otp_session.get("code")
+#             str_expire_time = otp_session.get("str_expire_time")
+#             expire_time = datetime.datetime.strptime(
+#                 str_expire_time, "%Y-%m-%d %H:%M:%S"
+#             )
+#             if sent_code and input_code == sent_code:
+#                 if datetime.datetime.now() < expire_time:
+#                     user = get_object_or_404(
+#                         CustomUserModel, phone_number=request.session["phone_number"]
+#                     )
+#                     del request.session["otp"]
+#                     login(request, user)
+#                     return redirect("home")
+#                 else:
+#                     messages.error(
+#                         request, "The otp code has expired, try again.", "danger"
+#                     )
+#                     return redirect("login")
+#             else:
+#                 del request.session["otp"]
+#                 messages.error(request, "The otp code is wrong, try again.", "danger")
+#                 return redirect("login")
+#         return render(request, "core/code_entry.html", {"form": form})

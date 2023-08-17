@@ -3,20 +3,34 @@ from core.utils import create_session, delete_cart
 from orders.models import Order, OrderItem
 from menus.models import CafeItem
 from django.views import View
+from .forms import OrderHistoryForm
+from django.views.generic import TemplateView
+from coffeeshop.models import Footer
 
 
 class CartView(View):
     template_name = "orders/cart.html"
-    fail_redirect_url = 'menu'
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
-        if cart:
-            return render(
-                request, self.template_name, context={"items": cart, "total": total}
-            )
+        context = {"items": cart, "total": total}
+        context["footer"] = Footer.objects.get(footer_name="main")
+        if not cart:
+            context["show_modal"] = True
+        return render(request, self.template_name, context=context)
 
-        return redirect(self.fail_redirect_url)
+
+"""class CartView(TemplateView): 
+    template_name = "orders/cart.html" 
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs) 
+        cart, total = get_cart(self.request) 
+        context["items"] = cart 
+        context["total"] = total 
+        if not cart: 
+            context["show_modal"] = True 
+        return context"""
 
 
 def get_cart(request):
@@ -43,8 +57,8 @@ def get_cart(request):
 
 class CheckoutView(View):
     template_name = "orders/checkout.html"
-    success_redirect_url = 'delete_cart'
-    fail_redirect_url = 'menu'
+    success_redirect_url = "orders:delete_cart"
+    fail_redirect_url = "menus:menu"
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
@@ -71,7 +85,6 @@ class CheckoutView(View):
         order_items = [
             OrderItem(order=order, cafeitem=item, quantity=quant).set_price()
             for item, quant in cart.items()
-            if item is not None
         ]
 
         OrderItem.objects.bulk_create(order_items)
@@ -80,9 +93,39 @@ class CheckoutView(View):
 
 
 class DeleteCartView(View):
-    success_redirect_url = 'home'
+    success_redirect_url = "coffeeshop:home"
 
     def get(self, request, *args, **kwargs):
         response = redirect(self.success_redirect_url)
         delete_cart(request, response)
         return response
+
+
+class OrderHistoryView(View):
+    template_name = "orders/order_history.html"
+    model_class = Order
+    form_class = OrderHistoryForm
+
+    def get(self, request, *args, **kwargs):
+        last_order_id = request.session.get("last_order_id")
+        form = self.form_class()
+        orders = []
+
+        if last_order_id:
+            last_order = request.session.get("last_order_id")
+
+            if last_order.status == "A":
+                orders = self.model_class.objects.filter(
+                    phone_number=request.session.get("phone_number")
+                )
+                form = None
+
+            else:
+                orders = last_order
+
+        return render(
+            request, self.template_name, context={"orders": orders, "form": form}
+        )
+
+    def post(self, request, *args, **kwargs):
+        pass

@@ -2,29 +2,36 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %}
-Menu
-{% endblock %}
+{% block title %}Checkout{% endblock %}
 
-{% block head %}
-<link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+{% block style %}
+<link href="{% static '/cart.css' %}" rel="stylesheet">
 <link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
+<style>
+.form-select {
+    border-radius: 0px;
+    border: 1px solid #eeeeee;
+    height: 40px;
+    background: #fff;
+    width: 100%;
+    }
+</style>
 {% endblock %}
 
 
 <!--================ Banner Area =================-->
-{% block bannername %}ثبت سفارش{% endblock %}
+{% block headername %}Checkout{% endblock %}
+{% block nestname %}Payment{% endblock %}
 <!--================End Banner Area =================-->
 
 <!--================ Checkout Area =================-->
 {% block content %}
-    <form method="post" action="{% url 'checkout' %}">
+    <form method="post" action="{% url 'orders:checkout' %}">
         {% csrf_token %}
         <div class="container pt-5">
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="bg-light pb-1 rounded-4 h-100" id="accordionPayment">
-
+                    <div class="card pb-1 rounded-4 h-100 bg-white" id="accordionPayment">
                         <div class="accordion-item mb-3">
                             <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
                             <span>
@@ -37,23 +44,23 @@ Menu
                             </span>
                             </h2>
                             <div class="mb-3 mx-2">
-                                <label class="form-label" style="font-family: yekan;">شماره تماس</label>
+                                <label class="form-label">Phone Number</label>
                                 <input type="tel" class="form-control" placeholder="09129876543" name="phone_number">
                             </div>
                             <div class="mb-3 mx-2">
-                                <label class="form-label" style="font-family: yekan;">شماره میز</label>
+                                <label class="form-label">Table Number</label><br>
                                 <select class="form-select" aria-label="Select table number" name="table_number">
-                                    <option style="font-family: yekan;" selected disabled>شماره میز را انتخاب کنید</option>
-                                    <option value="1" style="font-family: yekan;">میز شماره ۱</option>
-                                    <option value="2" style="font-family: yekan;">میز شماره ۲</option>
-                                    <option value="3" style="font-family: yekan;">میز شماره ۳</option>
-                                    <option value="4" style="font-family: yekan;">میز شماره ۴</option>
-                                    <option value="5" style="font-family: yekan;">میز شماره ۵</option>
-                                    <option value="6" style="font-family: yekan;">میز شماره ۶</option>
-                                    <option value="7" style="font-family: yekan;">میز شماره ۷</option>
-                                    <option value="8" style="font-family: yekan;">میز شماره ۸</option>
-                                    <option value="9" style="font-family: yekan;">میز شماره ۹</option>
-                                    <option value="10" style="font-family: yekan;">میز شماره ۱۰</option>
+                                    <option selected disabled>Please Choose you'r Table Number</option>
+                                    <option value="1">Table 1</option>
+                                    <option value="2">Table 2</option>
+                                    <option value="3">Table 3</option>
+                                    <option value="4">Table 4</option>
+                                    <option value="5">Table 5</option>
+                                    <option value="6">Table 6</option>
+                                    <option value="7">Table 7</option>
+                                    <option value="8">Table 8</option>
+                                    <option value="9">Table 9</option>
+                                    <option value="10">Table 10</option>
                                 </select>
                             </div>
                         </div>
@@ -61,32 +68,31 @@ Menu
                 </div>
                 <div class="col-lg-3">
                     <div class="card position-sticky top-0">
-                        <div class="p-3 bg-light bg-opacity-10">
-                            <h6 class="card-title mb-3" style="font-family: yekan;">خلاصه سفارش</h6>
+                        <div class="p-3 bg-white">
+                            <h6 class="card-title mb-3">Order Summery</h6>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span style="font-family: yekan;">مجموع</span> <span>{{ total|intcomma }}</span>
+                                <span>Total SUM</span> <span>{{ total|intcomma }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span style="font-family: yekan;">مالیات</span> <span>0</span>
+                                <span>Taxe's</span> <span>0</span>
                             </div>
                             <div class="d-flex justify-content-between mb-1 small">
-                                <span style="font-family: yekan;">تخفیف</span> <span class="text-danger">-0</span>
+                                <span>Discount</span> <span class="text-danger">-0</span>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between mb-4 small">
-                                <span style="font-family: yekan;">قابل پرداخت</span> <strong
+                                <span>Payment</span> <strong
                                     class="text-dark">{{ total|intcomma }}</strong>
                             </div>
-                            <button class="btn btn-primary w-100 mt-2" type="submit" style="font-family: yekan;">ثبت سفارش</button>
+                            <button class="btn btn-primary w-100 mt-2" type="submit">Order</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-    {% block script %}
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     {% endblock %}
-    
-{% endblock %}
 <!--================ End Checkout Area =================-->
+
+{% block script %}
+{% endblock %}

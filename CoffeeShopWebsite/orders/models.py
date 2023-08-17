@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import RegexValidator
 from staff.models import CustomUserModel
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -24,12 +26,15 @@ class Order(models.Model):
     phone_number = models.CharField(
         "phone number", max_length=14, validators=[regex], null=False
     )
-    order_date = models.DateTimeField(auto_now_add=True)  # core app
+    order_date = models.DateTimeField(default=timezone.now,
+                                      editable=False,
+                                      blank=True, )  # core app
     table_number = models.IntegerField(default=None)
     staff = models.ForeignKey(
         CustomUserModel,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True
     )
 
     def __str__(self) -> str:
@@ -37,6 +42,14 @@ class Order(models.Model):
 
     def get_order_items(self):
         return self.orderitem_set.all()
+
+    def get_total_price(self):
+        items = self.get_order_items()
+        total = 0
+        for item in items:
+            total += item.price
+
+        return total
 
 
 class OrderItem(models.Model):
@@ -49,8 +62,15 @@ class OrderItem(models.Model):
         on_delete=models.CASCADE,
     )
     quantity = models.IntegerField()
-    price = models.IntegerField()
+    price = models.IntegerField(blank=True)
+    date_added = models.DateTimeField(default=timezone.now,
+                                      editable=False,
+                                      blank=True, )
 
     def set_price(self):
         self.price = self.cafeitem.price * self.quantity
         return self
+
+    def save(self, *args, **kwargs):
+        self.set_price()
+        super().save(*args, **kwargs)

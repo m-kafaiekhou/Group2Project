@@ -6,7 +6,7 @@ Welcome to our humble coffee shop where we serve the finest coffee and cafe drin
 ## 🔥 Programming Team 🔥
 ### Group 2 >>>
 ### Scrum Master: Alireza Arvin
-### Team Leader: Mahdi yar kafaie khou
+### Team Leader: Mahdiyar kafaie khou
 ### Developer: Zahra Mahjour
 ### Developer: Sevda Hayati
 ### Developer: Mohammad Ali Soltan Hosseini
@@ -28,7 +28,7 @@ Everything starts with a good planning, in our case: we programmers need to draw
 #### Template 
 Choosing a good template was a group effort as well, there were so many obstacles but we could overcome them and choose a good template.
 
-<img width="100%" src="Screen1.png">
+<img width="100%" src="Screen1.jpg">
 
 
 But as you just realized we need to customize this template since it is actually a food bar site. the reason why we chose this is It's simplicity and dominant beauty. Chill, this is going to work. (^-^)

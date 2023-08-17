@@ -1,271 +1,308 @@
 {% load static %}
+{% for hp in homepage %}
+    {% if hp.homepage_name == "main" %}
 
-<!doctype html>
-<html lang="fa">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href='http://alimd.github.io/libs/1fonts/1.4/1fonts.css' rel='stylesheet' type='text/css' />
-	<title style="font-family: yekan;">کافه گروه۲</title>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/linericon/style.css' %}">
-	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
-	<link rel="stylesheet"
-		href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.11/css/lightgallery.min.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/animate-css/animate.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/popup/magnific-popup.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/swiper/css/swiper.min.css' %}">
-	<link rel="stylesheet" href="{% static 'vendors/scroll/jquery.mCustomScrollbar.css' %}">
-	<!-- main css -->
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<link rel="stylesheet" href="{% static 'css/style2.css' %}">
-	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <meta charset="utf-8">
+    <title>{{ hp.webpage_title }}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Coffee Shop in Tehran Website" name="keywords">
+    <meta content="Coffee Shop" name="description">
 
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
 </head>
 
 <body>
+    <!--================ Navbar Area =================-->
+    {% include 'navbar.html' %}
+    <!--================ End Navbar Area =================-->
 
-	<!--================ Offcanvus Menu Area =================-->
-	<div class="side_menu">
-		<a class="logo" href="#">
-			<img src="{% static 'img/Tehran_Coffee_logo.png' %}" class="logo_size" alt="logo">
-		</a>
-		<ul class="list menu_right" style="margin-top: 50px;">
-			<li>
-				<a href="{% url 'home' %}" style="font-family: yekan; font-size: 20px;">خانه</a>
-			</li>
-			<li>
-				<a href="{% url 'cart' %}" style="font-family: yekan; font-size: 20px;">سبد خرید</a>
-			</li>
-			<li>
-				<a href="{% url 'menu' %}" style="font-family: yekan; font-size: 20px;">منو</a>
-			</li>
-			<li>
-				<a href="{% url 'gallery' %}" style="font-family: yekan; font-size: 20px;">گالری</a>
-			</li>
-			<li>
-				<a href="#" style="font-family: yekan; font-size: 20px;">ارتباط با ما</a>
-			</li>
-		</ul>
-		<ul class="list social">
-			<li>
-				<a href="#">
-					<i class="fa fa-facebook"></i>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<i class="fa fa-twitter"></i>
-				</a>
-			</li>
-			<li>
-				<a href="https://github.com/m-kafaiekhou/Group2Project.git">
-					<i class="fa fa-github"></i>
-				</a>
-			</li>
-		</ul>
-	</div>
-	<!--================ End Offcanvus Menu Area =================-->
 
-	<!--================ Header Menu Area =================-->
-	<header class="header_area home_menu">
-		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="#">
-						<img class="logo-2 logo_size" src="{% static 'img/Tehran_Coffee_logo2.png' %}" alt="">
-					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item active">
-								<a class="nav-link" href="{% url 'home' %}"
-									style="font-family: yekan; text-align: center;">خانه</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'cart' %}"
-									style="font-family: yekan; text-align: center;">سبد خرید</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'menu' %}"
-									style="font-family: yekan; text-align: center;">منو</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#" style="font-family: yekan; text-align: center;">گالری</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#" style="font-family: yekan; text-align: center;">ارتباط با
-									ما</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</header>
-	<!--================Header Menu Area =================-->
+    <!--================ Carousel Start ================-->
+    <div class="container-fluid p-0 mb-5">
+        <div id="blog-carousel" class="carousel slide overlay-bottom" data-ride="carousel">
+            <div class="carousel-inner">
+            {% for carousel in hp.carousel_items.all %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img class="w-100" src="{{ carousel.image.url }}" alt="">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <h2 class="text-primary font-weight-medium m-0">{{ carousel.first_line_text }}</h2>
+                        <h1 class="display-1 text-white m-0">{{ carousel.second_line_text }}</h1>
+                        <h2 class="text-white m-0">{{ carousel.third_line_text }}</h2>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#blog-carousel" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#blog-carousel" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+    <!--================ Carousel End ================-->
+    
+    <!--================ Search End ================-->
+    {% if hp.search_section_is_active %}
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.search_section_title }}</h4>
+                <h1 class="display-4">{{ hp.search_section_description }}</h1>
+            </div>
+            <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menus:menu_search' %}" method="get">
+                <div class="input-group" style="height: 3rem; width: 100%;">
+                    <input type="text" class="form-control p-4" placeholder="{{ hp.search_placeholder }}" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    <!--================ Search End ================-->
 
-	<!--================Canvus Menu Area =================-->
-	<div class="canvus_menu">
-		<div class="container">
-			<div class="float-right">
-				<div class="toggle_icon">
-					<span></span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--================End Canvus Menu Area =================-->
+    <!--================ Logo Start ================-->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Logo Fun</h4>
+                <h1 class="display-4">Our Beloved Logo</h1>
+            </div>
+            <div class="d-flex justify-content-center ">
+                <img style="width: 75%;" src="{% static '/logo.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <!--================ Logo End ================-->
 
-	<!--================ Start banner section =================-->
-	<section class="home_banner relative">
-		<div class="container-fluid pl-0">
-			<div class="row justify-content-center align-items-center full_height">
-				<div class="col-lg-6 p-0 d-flex justify-content-center">
-					<div class="banner_left d-flex justify-content-center flex-column" dir="rtl">
-						<h1 class="yekan" style="text-align: center; z-index: 1; font-weight: bold;">کافه گروه۲
-						</h1>
-						<br>
-						<p class="yekan" style="text-align: center; z-index: 1;">تجربه رهایی و فراغتی دلنشین از
-							روزمرگی ها</p>
-						<a class="main_btn yekan" href="{% url 'menu' %}">مشاهده منو</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="banner_right d-flex justify-content-center align-items-center">
-						<div class="round-planet planet">
-							<div class="round-planet planet2">
-								<div class="round-planet planet3">
-									<div class="shape shape1"></div>
-									<div class="shape shape2"></div>
-									<div class="shape shape3"></div>
-									<div class="shape shape4"></div>
-									<div class="shape shape5"></div>
-									<div class="shape shape6"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<img class="face-img img-fluid" src="{% static 'img/banner/coffee/coffee-cup.png' %}" alt="">
-	</section>
-	<!--================ End banner section =================-->
-	
-	<!--================ Top Dish Area =================-->
-	<section class="top_dish_area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main_title position-relative">
-						<h1 class="yekan">آیتم های محبوب</h1>
-						<hr>
-						<div class="round-planet planet">
-							<div class="round-planet planet2">
-								<div class="shape shape1"></div>
-								<div class="shape shape2"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				{% for item in top_rated_items %}
-				<div class="single_dish col-lg-4 col-md-6 text-center">
-					<div class="thumb">
-						<img class="img-fluid" src=".../{{ item.image }}" alt="...">
-					</div>
-					<h4>{{ item.name }}</h4>
-					<p>{{ item.description }}</p>
-					<h5 class="price">{{ item.price }}</h5>
-				</div>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
-	<!--================ End Top Dish Area =================-->
+    <!--================ About Start ================-->
+    {% if hp.about_us_section_is_active %}
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.about_us_section_title }}</h4>
+                <h1 class="display-4">{{ hp.about_us_section_description }}</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 py-0 py-lg-5">
+                    <h1 class="mb-3">{{ hp.left_about_us_title }}</h1>
+                    <h5 class="mb-3">{{ hp.left_about_us_description }}</h5>
+                    <a href="" class="btn btn-secondary font-weight-bold py-2 px-4 mt-2">{{ hp.left_about_us_button_text }}</a>
+                </div>
+                <div class="col-lg-4 py-5 py-lg-0" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100" src="{{ hp.about_us_image.url }}" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-4 py-0 py-lg-5">
+                    <h1 class="mb-3">{{ hp.right_about_us_title }}</h1>
+                    <p>{{ hp.right_about_us_description }}</p>
+                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>{{ hp.right_about_us_first_option }}</h5>
+                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>{{ hp.right_about_us_second_option }}</h5>
+                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>{{ hp.right_about_us_third_option }}</h5>
+                    <a href="" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">{{ hp.right_about_us_button_text }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
-	<!--================ Story Area =================-->
-	<section class="about_story_area section_gap" dir="rtl">
-		<div class="container">
-		<div class="row story_inner">
-		<div class="col-lg-6">
-		<div class="story_text">
-		<h2 class="yekan">کافه گروه 2</h2>
-		<hr>
-		<p dir="rtl" class="yekan">به کافی شاپ زیبای ما خوش آمدید، جایی که ما بهترین قهوه و نوشیدنی های کافه ای در جهان را سرو می کنیم. ما برای قهوه خود از بهترین دانه های قهوه ارائه شده توسط بهترین کشاورزان قهوه در سراسر جهان استفاده می کنیم. خانم‌ها و آقایان با قهوه‌ی مخصوص ما از روزی زیبا و بانشاط لذت ببرید. لازم به ذکر است که ما برای جلب رضایت مشتری تلاش می کنیم و کارکنان ما آموزش دیده اند تا بهترین قهوه را با بهترین رفتار به شما ارائه دهند.</p>
-		<a dir="rtl" class="main_btn" href="{% url 'gallery' %}" style="font-family: yekan;">گالری نوشیدنی ها</a>
-		</div>
-		</div>
-		<div class="col-lg-6">
-		<div class="story_img">
-		<img class="img-fluid" src="{% static 'img/banner/home-banner.png' %}" alt="">
-		</div>
-		</div>
-		</div>
-		</div>
-		</section>
-	<!--================ End Story Area =================-->
+    <!--================ About End ================-->
 
-	<!--================ start footer Area =================-->
-	<footer dir="rtl" class="footer-area p_120 d-flex">
-		<div class="col d-flex container align-items-center">
-			<div class="col footer-bottom d-flex justify-content-between align-items-center" style="padding-top: 0px;">
-				<div>
-					<p class="row-lg-8 row-md-8 footer-text m-0 yekan font20">
-						کلیه حقوق مادی و معنوی این سایت متعلق به کافه گروه۲ می باشد
-					</p>
-				</div>
-				<div class="row-lg-2 row-md-2 footer-social">
-					<a href="#" class="m-1">
-						<i class="fa fa-facebook"></i>
-					</a>
-					<a href="#" class="m-1">
-						<i class="fa fa-twitter"></i>
-					</a>
-					<a href="https://github.com/m-kafaiekhou/Group2Project.git" class="m-1">
-						<i class="fa fa-github"></i>
-					</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--================ End footer Area  =================-->
+    <!--================ Service Start ================-->
+    {% if hp.our_services_section_is_active %}
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'js/popper.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/stellar.js' %}"></script>
-	<script src="{% static 'js/jquery.lightbox.js' %}"></script>
-	<script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
-	<script src="{% static 'vendors/isotope/imagesloaded.pkgd.min.js' %}"></script>
-	<script src="{% static 'vendors/isotope/isotope-min.js' %}"></script>
-	<script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-	<script src="{% static 'vendors/counter-up/jquery.waypoints.min.js' %}"></script>
-	<script src="{% static 'vendors/counter-up/jquery.counterup.js' %}"></script>
-	<script src="{% static 'js/mail-script.js' %}"></script>
-	<script src="{% static 'vendors/popup/jquery.magnific-popup.min.js' %}"></script>
-	<script src="{% static 'vendors/swiper/js/swiper.min.js' %}"></script>
-	<script src="{% static 'vendors/scroll/jquery.mCustomScrollbar.js' %}"></script>
-	<script src="{% static 'js/theme.js' %}"></script>
+    <div class="container-fluid pt-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.our_services_section_title }}</h4>
+                <h1 class="display-4">{{ hp.our_services_section_description }}</h1>
+            </div>
+            <div class="row">
+                {% for service in hp.services_list.all %}
+                <div class="col-lg-6 mb-5">
+                    <div class="row align-items-center">
+                        <div class="col-sm-5">
+                            <img class="img-fluid mb-3 mb-sm-0" src="{{ service.image.url }}" alt="">
+                        </div>
+                        <div class="col-sm-7">
+                            <h4><i class="{{ service.icon_class }}"></i>{{ service.service_title }}</h4>
+                            <p class="m-0">{{ service.service_description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--================ Service End ================-->
+
+    <!--================ Offer Start ================-->
+    {% if hp.offer_section_is_active %}
+
+    <div class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
+        <div class="container py-5">
+            <h1 class="display-3 text-primary mt-3">{{ hp.offer_section_title }}</h1>
+            <h1 class="text-white mb-3">{{ hp.offer_section_short_description }}</h1>
+            <h4 class="text-white font-weight-normal mb-4 pb-3">{{ hp.offer_section_long_description }}</h4>
+            <form class="form-inline justify-content-center mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control p-4" placeholder="Your Email" style="height: 60px;">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary font-weight-bold px-4" type="submit">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--================ Offer End ================-->
+
+
+    <!--================ Menu Start ================-->
+    {% if hp.menu_special_items_section_is_active %}
+
+    <div class="container-fluid pt-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.menu_special_items_section_title }}</h4>
+                <h1 class="display-4">{{ hp.menu_special_items_section_description }}</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    {% for item in top_rated_items %}
+                    <div class="row align-items-center mb-5">
+                        <div class="col-4 col-sm-3">
+                            <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ item.image.url }}" alt="">
+                            <h5 class="menu-price">{ item.price }</h5>
+                        </div>
+                        <div class="col-8 col-sm-9">
+                            <h4>{{ item.name }}</h4>
+                            <p class="m-0">{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--================ Menu End ================-->
+
+
+    <!--================ Testimonial Start ================-->
+    {% if hp.testimonial_section_is_active %}
+
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="section-title">
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.testimonial_section_title }}</h4>
+                <h1 class="display-4">{{ hp.testimonial_section_description }}</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel">
+                <div class="testimonial-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img class="img-fluid" src="{% static 'img/testimonial-1.jpg' %}" alt="">
+                        <div class="ml-3">
+                            <h4>Client Name</h4>
+                            <i>Profession</i>
+                        </div>
+                    </div>
+                    <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                </div>
+                <div class="testimonial-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img class="img-fluid" src="{% static 'img/testimonial-2.jpg' %}" alt="">
+                        <div class="ml-3">
+                            <h4>Client Name</h4>
+                            <i>Profession</i>
+                        </div>
+                    </div>
+                    <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                </div>
+                <div class="testimonial-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img class="img-fluid" src="{% static 'img/testimonial-3.jpg' %}" alt="">
+                        <div class="ml-3">
+                            <h4>Client Name</h4>
+                            <i>Profession</i>
+                        </div>
+                    </div>
+                    <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                </div>
+                <div class="testimonial-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img class="img-fluid" src="{% static 'img/testimonial-4.jpg' %}" alt="">
+                        <div class="ml-3">
+                            <h4>Client Name</h4>
+                            <i>Profession</i>
+                        </div>
+                    </div>
+                    <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--================ Testimonial End ================-->
+
+    <!--================ FooterArea =================-->
+    {% include 'footer.html' %}
+    <!--================ End Footer Area =================-->
+
+
+    <!--================ Back to Top ================-->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+    <script src="{% static 'mail/contact.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
+
+    {% endif %}
+{% endfor %}
+
+	
