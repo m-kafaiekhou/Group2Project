@@ -5,6 +5,8 @@ from menus.models import CafeItem
 from django.views import View
 from .forms import OrderHistoryForm
 from django.views.generic import TemplateView
+from coffeeshop.models import Footer
+
 
 class CartView(View):
     template_name = "orders/cart.html"
@@ -17,7 +19,7 @@ class CartView(View):
         return render(request, self.template_name, context=context)
 
 
-'''class CartView(TemplateView): 
+"""class CartView(TemplateView): 
     template_name = "orders/cart.html" 
 
     def get_context_data(self, **kwargs): 
@@ -27,7 +29,7 @@ class CartView(View):
         context["total"] = total 
         if not cart: 
             context["show_modal"] = True 
-        return context'''
+        return context"""
 
 
 def get_cart(request):
@@ -97,28 +99,32 @@ class DeleteCartView(View):
         delete_cart(request, response)
         return response
 
-class OrderHistoryView(View) :
-    template_name = 'orders/order_history.html'
+
+class OrderHistoryView(View):
+    template_name = "orders/order_history.html"
     model_class = Order
     form_class = OrderHistoryForm
 
-    def get(self, request, *args, **kwargs) :
-        last_order_id = request.session.get('last_order_id')
+    def get(self, request, *args, **kwargs):
+        last_order_id = request.session.get("last_order_id")
         form = self.form_class()
         orders = []
 
-        if last_order_id :
-            
-            last_order = request.session.get('last_order_id')
-            
-            if last_order.status == 'A' :
-                orders = self.model_class.objects.filter(phone_number = request.session.get('phone_number'))
-                form = None
-            
-            else :
-                orders = last_order
-        
-        return render(request, self.template_name, context= {"orders" : orders, "form" : form})
+        if last_order_id:
+            last_order = request.session.get("last_order_id")
 
-    def post(self,request, *args, **kwargs) :
+            if last_order.status == "A":
+                orders = self.model_class.objects.filter(
+                    phone_number=request.session.get("phone_number")
+                )
+                form = None
+
+            else:
+                orders = last_order
+
+        return render(
+            request, self.template_name, context={"orders": orders, "form": form}
+        )
+
+    def post(self, request, *args, **kwargs):
         pass
