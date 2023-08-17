@@ -15,9 +15,12 @@ main_site = MainAdminArea(name='MainAdmin')
 
 class FilterCafeitem(admin.ModelAdmin) :
     list_display = ('name', 'price', 'category', 'is_available')
-    list_filter = ('is_available', 'price')
+    list_filter = ('is_available', )
+    list_per_page = 15
     
 
 class FilterCategory(admin.ModelAdmin) :
     list_display = ('name', 'parent_category')
+    list_filter = ('parent_category',)
+    list_per_page = 15
 

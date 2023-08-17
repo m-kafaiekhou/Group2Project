@@ -95,7 +95,7 @@ class CategoryListView(LoginRequiredMixin, View):
 
 
 class ItemDetailView(LoginRequiredMixin, View):
-    template_name = "staff/item_detail.html"
+    template_name = "dashboard/item_detail.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
 
@@ -117,7 +117,7 @@ class ItemDetailView(LoginRequiredMixin, View):
 
 
 class CategoryDetailView(LoginRequiredMixin, View):
-    template_name = "staff/category_detail.html"
+    template_name = "dashboard/category_detail.html"
     model_class = Category
     form_class = forms.AddCategoryForm
 

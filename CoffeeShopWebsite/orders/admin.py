@@ -13,7 +13,7 @@ class FilterOrder(admin.ModelAdmin) :
     list_filter = ('phone_number', 'status')
     inlines = [
         OrderItemInLine
-    ]
+]
 
 
 class FilterOrderItem(admin.ModelAdmin) :
