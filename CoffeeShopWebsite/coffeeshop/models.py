@@ -129,3 +129,9 @@ class HomePage(models.Model):
     our_services_section_title = models.CharField(max_length=25, default="OUR SERVICES")
     our_services_section_description = models.TextField(default="Fresh & Organic Beans")
 
+    offer_section_is_active = models.BooleanField(default=True)
+    offer_section_title = models.CharField(max_length=25, default="50% OFF")
+    offer_section_short_description = models.TextField(default="Sunday Special Offer")
+    offer_section_long_description = models.TextField(
+        default="Only for Sunday from 1st Jan to 30th Jan 2045"
+    )
