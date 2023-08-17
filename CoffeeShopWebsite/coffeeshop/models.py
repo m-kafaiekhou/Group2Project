@@ -164,3 +164,14 @@ class CarouselItem(models.Model):
     )
 
 
+class Service(models.Model):
+    image = models.ImageField(upload_to="home_images", default="#")
+    icon_class = models.CharField(max_length=50, null=True, blank=True)
+    service_title = models.CharField(max_length=100)
+    service_description = models.TextField
+    page = models.ForeignKey(
+        HomePage,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="services_list",
+    )
