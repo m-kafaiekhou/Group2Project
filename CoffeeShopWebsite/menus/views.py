@@ -4,11 +4,13 @@ from django.views import View
 from django.http import JsonResponse
 from .models import CafeItem, Category
 from django.views.generic import ListView, DetailView
+from coffeeshop.models import Footer
+
 
 # Create your views here.
 
 
-'''class MenuSearch(View):
+"""class MenuSearch(View):
     def get(self, request, *args, **kwargs):
         if "search" in request.GET:
             cd = request.GET.get("search")
@@ -22,7 +24,8 @@ from django.views.generic import ListView, DetailView
             request,
             "menus/search_result.html",
             {"searched_items": searched_items},
-        )'''
+        )"""
+
 
 class MenuSearch(ListView):
     model = CafeItem
@@ -33,10 +36,13 @@ class MenuSearch(ListView):
         queryset = super().get_queryset()
         cd = self.request.GET.get("search", "")
         if cd:
-            queryset = queryset.filter(Q(name__icontains=cd) | Q(description__icontains=cd))
+            queryset = queryset.filter(
+                Q(name__icontains=cd) | Q(description__icontains=cd)
+            )
         return queryset
 
-'''class Menu(View):
+
+"""class Menu(View):
     def get(self, request, *args, **kwargs):
         item_pk = request.GET.get("pk", None)
         check = None
@@ -52,7 +58,8 @@ class MenuSearch(ListView):
 
         if check:
             response = add_to_cart(request, response, item_pk)
-        return response'''
+        return response"""
+
 
 class Menu(ListView):
     model = CafeItem
@@ -65,13 +72,16 @@ class Menu(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
+        context["footer"] = Footer.objects.get(footer_name="main")
+
         return context
 
 
-'''class MenuDetail(View):
+"""class MenuDetail(View):
     def get(self, request, cafeitme_name):
         cafeitem = CafeItem.objects.get(name=cafeitme_name)
-        return render(request, "menus/detail.html", {"cafeitem": cafeitem})'''
+        return render(request, "menus/detail.html", {"cafeitem": cafeitem})"""
+
 
 class MenuDetail(DetailView):
     model = CafeItem
@@ -80,12 +90,13 @@ class MenuDetail(DetailView):
     slug_field = "name"
     slug_url_kwarg = "cafeitme_name"
 
-class autocomplete(View) :
-    def get(request) :
-        if 'term' in request.GET:
-            Qs = CafeItem.objects.filter(name__icontains=request.Get.get('term'))
+
+class autocomplete(View):
+    def get(request):
+        if "term" in request.GET:
+            Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
             names = list()
             for i in Qs:
                 names.append(i.name)
-            return JsonResponse(names, safe = False)
+            return JsonResponse(names, safe=False)
         return render(request, "menu.html")

@@ -18,9 +18,11 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="category", blank=True, null=True)
 
-    date_added = models.DateTimeField(default=timezone.now,
-                                      editable=False,
-                                      blank=True, )
+    date_added = models.DateTimeField(
+        default=timezone.now,
+        editable=False,
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return self.name
@@ -32,9 +34,11 @@ class CafeItem(models.Model):
     image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
     price = models.IntegerField()
-    date_added = models.DateTimeField(default=timezone.now,
-                                      editable=False,
-                                      blank=True, )
+    date_added = models.DateTimeField(
+        default=timezone.now,
+        editable=False,
+        blank=True,
+    )
 
     category = models.ForeignKey(
         "Category",
