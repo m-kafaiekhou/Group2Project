@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "django_filters",
     "widget_tweaks",
-    "admin_honeypot",
 ]
 
 
