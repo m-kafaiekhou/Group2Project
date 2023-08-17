@@ -92,3 +92,8 @@ class Footer(models.Model):
 
     def __str__(self):
         return self.footer_name
+
+
+class HomePage(models.Model):
+    homepage_name = models.CharField(max_length=25, default="main", unique=True)
+    webpage_title = models.CharField(max_length=25, default="TEHRAN Coffee Shop")
