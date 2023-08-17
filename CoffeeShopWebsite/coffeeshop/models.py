@@ -125,3 +125,7 @@ class HomePage(models.Model):
     )
     right_about_us_button_text = models.CharField(max_length=25, default="Learn More")
 
+    our_services_section_is_active = models.BooleanField(default=True)
+    our_services_section_title = models.CharField(max_length=25, default="OUR SERVICES")
+    our_services_section_description = models.TextField(default="Fresh & Organic Beans")
+
