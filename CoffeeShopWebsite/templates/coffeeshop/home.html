@@ -1,4 +1,6 @@
 {% load static %}
+{% for hp in homepage %}
+    {% if hp.homepage_name == "main" %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -360,5 +362,8 @@
 </body>
 
 </html>
+
+    {% endif %}
+{% endfor %}
 
 	
