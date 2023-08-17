@@ -135,3 +135,11 @@ class HomePage(models.Model):
     offer_section_long_description = models.TextField(
         default="Only for Sunday from 1st Jan to 30th Jan 2045"
     )
+
+    menu_special_items_section_is_active = models.BooleanField(default=True)
+    menu_special_items_section_title = models.CharField(
+        max_length=25, default="TOP RATED ITEMS"
+    )
+    menu_special_items_section_description = models.TextField(
+        default="The Best Items According to Our Customers"
+    )
