@@ -4,6 +4,8 @@ from django.views import View
 from django.http import JsonResponse
 from .models import CafeItem, Category
 from django.views.generic import ListView, DetailView
+from coffeeshop.models import Footer
+
 
 # Create your views here.
 
