@@ -9,11 +9,16 @@ class OrderItemInLine(admin.TabularInline):
 
 
 class FilterOrder(admin.ModelAdmin) :
+    actions = ('cancel_order',)
     list_display = ('phone_number', 'status', 'order_date')
     list_filter = ('phone_number', 'status')
-    inlines = [
-        OrderItemInLine
-]
+    inlines = [OrderItemInLine]
+
+    def cancel_order(self, modeladmin, request, queryset):
+        queryset.update(status='C')
+    cancel_order.short_description = "Cancel Orders"
+
+
 
 
 class FilterOrderItem(admin.ModelAdmin) :
