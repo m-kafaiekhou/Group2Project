@@ -18,7 +18,9 @@ class FilterOrder(admin.ModelAdmin) :
         queryset.update(status='C')
     cancel_order.short_description = "Cancel Orders"
 
-
+    def accept_order(self, modeladmin, request, queryset):
+        queryset.update(status='A')
+    accept_order.short_description = "Accept Orders"
 
 
 class FilterOrderItem(admin.ModelAdmin) :
