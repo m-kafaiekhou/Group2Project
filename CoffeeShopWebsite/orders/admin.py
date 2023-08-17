@@ -11,7 +11,7 @@ class OrderItemInLine(admin.TabularInline):
 class FilterOrder(admin.ModelAdmin) :
     actions = ('cancel_order',)
     list_display = ('phone_number', 'status', 'order_date')
-    list_filter = ('phone_number', 'status')
+    list_filter = ('phone_number', 'status', 'table_number', 'order_date')
     inlines = [OrderItemInLine]
 
     def cancel_order(self, modeladmin, request, queryset):
