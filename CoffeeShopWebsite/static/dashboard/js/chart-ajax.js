@@ -97,15 +97,16 @@ function loadChart(chart, endpoint) {
     });
 }
 
-function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown,) {
+function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown, chartSMCenterdown, chartSMRightdown) {
     loadChart(BigMainChart, links["day-sales"]);
     loadChart(BigMainChart2, links["top-day"]);
     loadChart(chartSMLEFTdown, links["sale-cat"]);
     loadChart(chartSMRightup, links["sale-status-c"]);
     loadChart(chartSMCenterup, links["sale-status-d"]);
     loadChart(chartSMLeftup, links["sale-status-a"]);
-
-
+    loadChart(chartSMLEFTdown, links["sale-cat"]);
+    loadChart(chartSMCenterdown, links["peak-hour"]);
+    loadChart(chartSMRightdown, links["best-customer"]);
 }
 
 links = {
@@ -118,7 +119,9 @@ links = {
   'sale-cat': `/dashboard/chart/sales/category-sale/`,
   'sale-status-c': `/dashboard/chart/sales/status/C/`,
   'sale-status-d': `/dashboard/chart/sales/status/D/`,
-  'sale-status-a': `/dashboard/chart/sales/status/A/`
+  'sale-status-a': `/dashboard/chart/sales/status/A/`,
+  'best-customer': `/dashboard/chart/sales/best-customers/`,
+  'peak-hour': `/dashboard/chart/sales/peak-hour/`,
 }
 
 type = ['primary', 'info', 'success', 'warning', 'danger'];
@@ -545,6 +548,83 @@ demo = {
     });
 
 
+    // added charts
+
+    var ctx = document.getElementById("chartLinePurple2").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+    gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+
+    var data = {
+      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      datasets: [{
+        label: "Data",
+        fill: true,
+        backgroundColor: gradientStroke,
+        borderColor: '#d048b6',
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        pointBackgroundColor: '#d048b6',
+        pointBorderColor: 'rgba(255,255,255,0)',
+        pointHoverBackgroundColor: '#d048b6',
+        pointBorderWidth: 20,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 15,
+        pointRadius: 4,
+        data: [80, 100, 70, 80, 120, 80],
+      }]
+    };
+
+    var chartSMLeftdown = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: gradientChartOptionsConfigurationWithTooltipPurple
+    });
+
+
+    var ctxGreen = document.getElementById("chartLineGreen2").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
+    gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
+    gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
+
+    var data = {
+      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
+      datasets: [{
+        label: "My First dataset",
+        fill: true,
+        backgroundColor: gradientStroke,
+        borderColor: '#00d6b4',
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        pointBackgroundColor: '#00d6b4',
+        pointBorderColor: 'rgba(255,255,255,0)',
+        pointHoverBackgroundColor: '#00d6b4',
+        pointBorderWidth: 20,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 15,
+        pointRadius: 4,
+        data: [90, 27, 60, 12, 80],
+      }]
+    };
+
+    let chartSMRightdown = new Chart(ctxGreen, {
+      type: 'line',
+      data: data,
+      options: gradientChartOptionsConfigurationWithTooltipGreen
+
+    });
+
+    // added charts
+
+
 
     var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
     var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
@@ -661,7 +741,30 @@ demo = {
       },
       options: gradientBarChartConfiguration
     })
-      loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, )
+
+    // added charts
+
+    var ctx10 = document.getElementById("CountryChart2").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+    gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+
+    let chartSMCenterdown = new Chart(ctx10, {
+      type: 'bar',
+      responsive: true,
+      legend: {
+        display: false
+      },
+      options: gradientBarChartConfiguration
+    })
+
+    // added charts
+
+      loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLeftdown, chartSMCenterdown, chartSMRightdown)
   },
 
 
