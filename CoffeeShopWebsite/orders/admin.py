@@ -22,6 +22,10 @@ class FilterOrder(admin.ModelAdmin) :
         queryset.update(status='A')
     accept_order.short_description = "Accept Orders"
 
+    def draft_order(self, modeladmin, request, queryset):
+        queryset.update(status='D')
+    draft_order.short_description = "Draft Orders"
+
 
 class FilterOrderItem(admin.ModelAdmin) :
     list_display = ('order','cafeitem' , 'quantity', 'price')
