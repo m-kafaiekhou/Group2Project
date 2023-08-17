@@ -149,3 +149,18 @@ class HomePage(models.Model):
     testimonial_section_description = models.TextField(default="Our Clients Say")
 
 
+class CarouselItem(models.Model):
+    image = models.ImageField(
+        upload_to="home_images", default="home_images/carousel-1.jpg"
+    )
+    first_line_text = models.TextField(default="We Have Been Serving")
+    second_line_text = models.CharField(max_length=25, default="COFFEE")
+    third_line_text = models.TextField(default="* SINCE 2023 *")
+    page = models.ForeignKey(
+        HomePage,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="carousel_items",
+    )
+
+
