@@ -1,4 +1,5 @@
 from django.test import TestCase
+from menus.models import CafeItem, Category
 
 class CafeItemTestClass(TestCase) :
     @classmethod
