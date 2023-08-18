@@ -22,3 +22,5 @@ class DashboardTests(TestCase):
     def test_url_exits_at_correct_location_for_detail_view(self):
         response7 = self.client.get("order-details/1/")
         self.assertNotEqual(response7.status_code, 200)
+        response8 = self.client.get("order-details/1/quantity/")
+        self.assertNotEqual(response8.status_code, 200)
