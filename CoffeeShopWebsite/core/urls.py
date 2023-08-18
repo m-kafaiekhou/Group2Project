@@ -5,6 +5,7 @@ from .admin import main_site
 
 app_name = "core"
 urlpatterns = [
+    
     path("admin/", main_site.urls),
     # path("", include("pages.urls")),
     # path("phone/", views.PhoneNumberEntryView.as_view(), name="phone_entry"),
