@@ -1,5 +1,6 @@
 from django.test import TestCase
 from menus.models import CafeItem, Category
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 class CafeItemTestClass(TestCase) :
     @classmethod
@@ -22,7 +23,7 @@ class CafeItemTestClass(TestCase) :
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
 
-    def setUp(self) -> None:
-        return super().setUp()
+    # def setUp(self) -> None:
+    #     return super().setUp()
     
     
