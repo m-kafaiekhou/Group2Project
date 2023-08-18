@@ -17,6 +17,11 @@ class CafeItemTestClass(TestCase) :
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
     
+    def test_name_max_length(self):
+        cafeitem = CafeItem.objects.get(id=1)
+        max_length = cafeitem._meta.get_field('name').max_length
+        self.assertEqual(max_length, 50)
+        
     def setUp(self) -> None:
         return super().setUp()
     
