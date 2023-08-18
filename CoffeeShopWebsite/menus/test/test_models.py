@@ -25,27 +25,17 @@ class CafeItemTestClass(TestCase) :
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
 
-    def get_temporary_image(temp_file):
-        size = (200, 200)
-        color = (255, 0, 0, 0)
-        image = Image.new("RGBA", size, color)
-        image.save(temp_file, 'jpeg')
-        return temp_file
+
+def get_temporary_image(temp_file):
+    size = (200, 200)
+    color = (255, 0, 0, 0)
+    image = Image.new("RGBA", size, color)
+    image.save(temp_file, 'jpeg')
+    return temp_file
     
 
-class PictureDummyTest(TestCase):
-    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_dummy_test(self):
-            temp_file = tempfile.NamedTemporaryFile()
-            test_image = get_temporary_image(temp_file)
-            #test_image.seek(0)
-            picture = Picture.objects.create(picture=test_image.name)
-            print ('It Worked! picture.picture')
-            self.assertEqual(len(Picture.objects.all()), 1)
-    # def test_image(self) :
-    #     pic = tempfile.NamedTemporaryFile(suffix=".jpg").name
-    #     self.image = SimpleUploadedFile(content=open(pic, 'rb').read(), content_type = 'jpg')
+
+
     # def setUp(self) -> None:
     #     return super().setUp()
-    
-    
+
