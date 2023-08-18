@@ -13,4 +13,5 @@ class DashboardTests(TestCase):
         self.assertNotEqual(response3.status_code, 200)
         response4 = self.client.get("item-list/")
         self.assertNotEqual(response4.status_code, 200)
-        
+        response5 = self.client.get("order-list/")
+        self.assertNotEqual(response5.status_code, 200)
