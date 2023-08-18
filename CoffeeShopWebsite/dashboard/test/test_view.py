@@ -9,3 +9,5 @@ class DashboardTests(TestCase):
         self.assertNotEqual(response1.status_code, 200)
         response2 = self.client.get("add-item/")
         self.assertNotEqual(response2.status_code, 200)
+        response3 = self.client.get("category-list/")
+        self.assertNotEqual(response3.status_code, 200)
