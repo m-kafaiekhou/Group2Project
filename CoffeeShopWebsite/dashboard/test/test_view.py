@@ -36,3 +36,5 @@ class DashboardTests(TestCase):
         self.assertNotEqual(response12.status_code, 200)
         response13 = self.client.get("chart/month-filter-options/")
         self.assertNotEqual(response13.status_code, 200)
+        response14 = self.client.get("chart/day-filter-options/")
+        self.assertNotEqual(response14.status_code, 200)
