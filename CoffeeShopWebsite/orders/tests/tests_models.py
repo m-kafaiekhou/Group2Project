@@ -1,6 +1,7 @@
 from django.test import TestCase
-from CoffeeShopWebsite.orders.models import Order
-from CoffeeShopWebsite.staff.models import CustomUserModel
+from orders.models import Order
+from staff.models import CustomUserModel
+from datetime import datetime
 
 
 class OrderTestCase(TestCase):
@@ -22,17 +23,12 @@ class OrderTestCase(TestCase):
             table_number=1,
         )
 
-    def test_status(self):
-        pass
+    def test_str_method(self):
+        self.assertEqual(str(self.order, '09036138552'))  # Test for phone number field happens here
 
-    def test_phone_number(self):
-        pass
-
-    def test_order_date(self):
-        pass
-
-    def test_table_number(self):
-        pass
+    def test_fields(self):
+        self.assertIsInstance(self.order.order_date, datetime)
+        self.assertEqual(self.order.staff, self.staff)
 
     def test_staff(self):
         pass
