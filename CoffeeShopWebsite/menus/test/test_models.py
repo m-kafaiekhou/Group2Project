@@ -12,16 +12,16 @@ class CafeItemTestClass(TestCase) :
         field_label = cafeitem._meta.get_field('name').verbose_name
         self.assertEqual(field_label, 'name')
     
-    def test_name_max_length(self):
+    def test_description_max_length(self):
         cafeitem = CafeItem.objects.get(id=1)
-        max_length = cafeitem._meta.get_field('name').max_length
-        self.assertEqual(max_length, 50)
+        max_length = cafeitem._meta.get_field('description').max_length
+        self.assertEqual(max_length, 250)
     
     def test_name_max_length(self):
         cafeitem = CafeItem.objects.get(id=1)
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
-        
+
     def setUp(self) -> None:
         return super().setUp()
     
