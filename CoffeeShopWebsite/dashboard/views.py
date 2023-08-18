@@ -710,7 +710,7 @@ def order_status_report(request, status: str):  # Table, not a Chart. status= "D
     sale_dict = month_dict()
 
     for group in grouped_orders:
-        sale_dict[day[group["day"]]] = group["count"]
+        sale_dict[day[group["day"]-1]] = group["count"]
 
     return JsonResponse({
         "title": f"Order Status Count",
