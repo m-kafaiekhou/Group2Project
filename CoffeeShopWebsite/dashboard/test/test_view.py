@@ -52,3 +52,5 @@ class DashboardTests(TestCase):
         self.assertNotEqual(response20.status_code, 200)
         response21 = self.client.get("chart/sales/category-sale/")
         self.assertNotEqual(response21.status_code, 200)
+        response22 = self.client.get("chart/sales/employee-sales/")
+        self.assertNotEqual(response22.status_code, 200)
