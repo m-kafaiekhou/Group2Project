@@ -24,6 +24,15 @@ class CafeItemTestClass(TestCase) :
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
 
+    def get_temporary_image(temp_file):
+        size = (200, 200)
+        color = (255, 0, 0, 0)
+        image = Image.new("RGBA", size, color)
+        image.save(temp_file, 'jpeg')
+        return temp_file
+    # def test_image(self) :
+    #     pic = tempfile.NamedTemporaryFile(suffix=".jpg").name
+    #     self.image = SimpleUploadedFile(content=open(pic, 'rb').read(), content_type = 'jpg')
     # def setUp(self) -> None:
     #     return super().setUp()
     
