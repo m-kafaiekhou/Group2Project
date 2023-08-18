@@ -34,6 +34,14 @@ def get_temporary_image(temp_file):
     return temp_file
     
 
+class CafeItemImageTestClass(TestCase):
+    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
+    def test_image(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_image = get_temporary_image(temp_file)
+        #test_image.seek(0)
+        CafeItem.image.objects.create(picture=test_image.name)
+        self.assertEqual(len(CafeItem.image.objects.all()), 1)
 
 
     # def setUp(self) -> None:
