@@ -63,3 +63,5 @@ class DashboardTests(TestCase):
     def test_url_exits_at_correct_location_for_chart_detail_view(self):
         response25 = self.client.get("chart/sales/top-selling/year/")
         self.assertNotEqual(response25.status_code, 200)
+        response26 = self.client.get("chart/sales/status/C/")
+        self.assertNotEqual(response26.status_code, 200)
