@@ -5,7 +5,7 @@ class CafeItemTestClass(TestCase) :
     @classmethod
     def setUpTestData(cls) -> None:
         # return super().setUpTestData()
-        CafeItem.objects.create(name='Espresso', description='Single')
+        CafeItem.objects.create(name='Test', description='Just testing...')
     
     def test_name_label(self) :
         cafeitem = CafeItem.objects.get(id=1)
