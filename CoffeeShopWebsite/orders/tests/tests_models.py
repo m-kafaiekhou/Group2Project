@@ -7,16 +7,20 @@ class OrderTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.staff = CustomUserModel.objects.create(
-            phone_number = '09036138552',
-            first_name = 'testfirstname',
-            last_name = 'testlastname',
-            password = 'Test123@',
-            is_staff = True,
-            is_active = True
+            phone_number='09036138552',
+            first_name='testfirstname',
+            last_name='testlastname',
+            password='Test123@',
+            is_staff=True,
+            is_active=True
         )
 
     def setUp(self):
-
+        self.order = Order.objects.create(
+            status='D',
+            staff=self.staff,
+            table_number=1,
+        )
 
     def test_status(self):
         pass
