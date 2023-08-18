@@ -1,10 +1,22 @@
 from django.test import TestCase
-from orders.models import Order
+from CoffeeShopWebsite.orders.models import Order
+from CoffeeShopWebsite.staff.models import CustomUserModel
 
 
 class OrderTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.staff = CustomUserModel.objects.create(
+            phone_number = '09036138552',
+            first_name = 'testfirstname',
+            last_name = 'testlastname',
+            password = 'Test123@',
+            is_staff = True,
+            is_active = True
+        )
+
     def setUp(self):
-        pass
+
 
     def test_status(self):
         pass
