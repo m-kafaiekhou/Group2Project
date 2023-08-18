@@ -1,5 +1,6 @@
-from django.test import TestCase
+import tempfile
 from menus.models import CafeItem, Category
+from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 class CafeItemTestClass(TestCase) :
