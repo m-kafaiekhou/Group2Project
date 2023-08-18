@@ -1,4 +1,5 @@
 import tempfile
+from PIL import Image
 from menus.models import CafeItem, Category
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
