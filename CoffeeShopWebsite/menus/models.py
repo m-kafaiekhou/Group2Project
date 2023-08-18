@@ -7,7 +7,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-
 class Category(models.Model):
     parent_category = models.ForeignKey(
         "self",
