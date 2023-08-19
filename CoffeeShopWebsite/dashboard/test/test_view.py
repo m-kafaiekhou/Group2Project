@@ -131,7 +131,7 @@ class DashboardTests(TestCase):
         pass
 
 
-    def test_url_exits_at_correct_location_for_chart_detail_view(self):
+    def test_chart_detail_view(self):
         # response25 = self.client.get("chart/sales/top-selling/year/")
         # self.assertEqual(response25.status_code, 200)
         # response26 = self.client.get("chart/sales/status/C/")
