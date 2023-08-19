@@ -86,3 +86,6 @@ class FooterModelTest(TestCase):
     def test_unique_footer_name(self):
         with self.assertRaises(IntegrityError):
             Footer.objects.create(footer_name="test footer")
+
+
+class HomePageModelTest(TestCase):
