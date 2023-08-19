@@ -22,7 +22,12 @@ class DashboardTests(TestCase):
 
         cls.category = Category.objects.create(name='test')
 
-        
+        cls.order = Order.objects.create(
+            status='C',
+            staff=cls.staff,
+            phone_number='09030384898',
+            table_number=1,
+        )
 
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         response1 = self.client.get("add-category/")
