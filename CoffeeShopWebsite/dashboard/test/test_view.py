@@ -29,6 +29,14 @@ class DashboardTests(TestCase):
             table_number=1,
         )
 
+        cls.cafeitem1 = CafeItem.objects.create(
+            name='test1',
+            description='test1',
+            is_available=True,
+            price=50,
+            category=cls.category
+        )
+
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         response1 = self.client.get("add-category/")
         self.assertEqual(response1.status_code, 200)
