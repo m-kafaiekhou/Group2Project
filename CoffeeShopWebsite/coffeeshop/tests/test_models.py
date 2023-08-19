@@ -25,3 +25,13 @@ class ReviewModelTest(TestCase):
         self.assertEqual(self.review.review, "This is test review")
         self.assertEqual(self.review.cafeitem, self.cafeitem)
         self.assertIsInstance(self.review.date_added, datetime.datetime)
+
+    def test_default_rating(self):
+        review = Review.objects.create(
+            review="test default rating",
+            cafeitem=self.cafeitem,
+        )
+
+        self.assertEqual(review.rating, Review.Rating.HIGH)
+        self.assertEqual(review.rating, 4)
+
