@@ -75,7 +75,12 @@ class ViewsOrderTests(TestCase):
         order = Order.objects.all().last()
         self.assertEqual(order.get_total_price(), 70)
 
-
+    def test_delete_cart(self):
+        self.client.cookies = SimpleCookie({'cart': self.cart})
+        response = self.client.get(reverse('orders:delete_cart'))
+        self.assertEqual(response.status_code, 200)
+        cart_after = response.wsgi_request.COOKIES.get('cart')
+        self.assertEqual(cart_after, None)
 
 
 
