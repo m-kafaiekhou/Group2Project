@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db import IntegrityError
 from coffeeshop.models import Review, Footer
 from menus.models import CafeItem, Category
 import datetime
