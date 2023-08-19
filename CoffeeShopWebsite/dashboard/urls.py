@@ -40,5 +40,5 @@ urlpatterns += [
     path("chart/sales/employee-sales/", sales_by_employee, name="employee-sales"),
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
-    path("chart/sales/status/<str:status>/", order_status_report, name="status"),
+    path("chart/sales/status/<str:start_date>/<str:end_date>/<str:status>/", order_status_report, name="status"),
 ]
