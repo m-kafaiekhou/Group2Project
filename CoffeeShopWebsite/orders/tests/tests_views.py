@@ -56,6 +56,11 @@ class ViewsOrderTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '70')
 
+    def test_checkoutempty_get(self):
+        self.client.cookies = SimpleCookie({'cart': None})
+        response = self.client.get(reverse("orders:checkout"))
+        self.assertEqual(response.status_code, 302)
+
     def test_checkout_post(self):
         self.client.cookies = SimpleCookie({'cart': self.cart})
         data = {
@@ -70,7 +75,10 @@ class ViewsOrderTests(TestCase):
         order = Order.objects.all().last()
         self.assertEqual(order.get_total_price(), 70)
 
-    def
+
+
+
+
 
 
 
