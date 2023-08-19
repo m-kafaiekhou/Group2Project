@@ -701,19 +701,17 @@ def most_popular_items(request):
     })
 
 
-def order_status_report(request, status: str):  # Table, not a Chart. status= "D", "C", "A"
-    month = datetime.now().month
-    orders = Order.objects.filter(order_date__month=month, status=status)
-    grouped_orders = orders.annotate(p=F("status")).annotate(day=ExtractDay("order_date")) \
-        .values("day").annotate(count=Count("status")).values("day", "count").order_by("day")
+def order_status_report(request, start_date, end_date, status: str):  # Table, not a Chart. status= "D", "C", "A"
+    orders = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date, status=status)
+    grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
 
-    sale_dict = month_dict()
+    sale_dict = dict()
 
     for group in grouped_orders:
-        sale_dict[day[group["day"]-1]] = group["count"]
+        sale_dict[group["status"]] = group["count"]
 
     return JsonResponse({
-        "title": f"Order Status Count",
+        "title": f"Order Status Count between {start_date} and {end_date}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
