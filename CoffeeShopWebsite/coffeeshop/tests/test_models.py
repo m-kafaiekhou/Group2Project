@@ -1,6 +1,9 @@
 from django.test import TestCase
 from coffeeshop.models import Review, Footer
 from menus.models import CafeItem, Category
+import datetime
+
+
 class ReviewModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
