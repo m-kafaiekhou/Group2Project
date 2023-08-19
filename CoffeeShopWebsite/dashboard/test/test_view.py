@@ -51,6 +51,12 @@ class DashboardTests(TestCase):
             category=cls.category
         )
 
+        cls.orderitem2 = OrderItem.objects.create(
+            order=cls.order,
+            cafeitem=cls.cafeitem2,
+            quantity=3,
+        ).set_price()
+
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         response1 = self.client.get("add-category/")
         self.assertEqual(response1.status_code, 200)
