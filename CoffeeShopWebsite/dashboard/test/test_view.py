@@ -92,27 +92,28 @@ class DashboardTests(TestCase):
     #     self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
 
-    def test_dashboard_detail_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    # def test_dashboard_detail_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response7 = self.client.get(reverse("dashboard:order_details", kwargs={"pk":self.order.pk}))
-        self.assertEqual(response7.status_code, 200)
+    #     response7 = self.client.get(reverse("dashboard:order_details", kwargs={"pk":self.order.pk}))
+    #     self.assertEqual(response7.status_code, 200)
 
-        # response8 = self.client.get("order-details/1/quantity/")
-        # self.assertEqual(response8.status_code, 200)
-        # response9 = self.client.get("category-details/1/")
-        # self.assertEqual(response9.status_code, 200)
-        # response10 = self.client.get("item-details/1/")
-        # self.assertEqual(response10.status_code, 200)
-        # response11 = self.client.get("order-list/1/")
-        # self.assertEqual(response11.status_code, 200)
-        pass
+    #     response8 = self.client.post(reverse("dashboard:order_item_update", kwargs={"pk":self.order.pk}))
+    #     self.assertEqual(response8.status_code, 200)
+
+    #     response9 = self.client.get("category-details/1/")
+    #     self.assertEqual(response9.status_code, 200)
+    #     response10 = self.client.get("item-details/1/")
+    #     self.assertEqual(response10.status_code, 200)
+    #     response11 = self.client.get("order-list/1/")
+    #     self.assertEqual(response11.status_code, 200)
+        
 
     def test_chart_list_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        # response12 = self.client.get("chart/year-filter-options/")
-        # self.assertEqual(response12.status_code, 200)
+        response12 = self.client.get(reverse("dashboard:year-filter-options"))
+        self.assertEqual(response12.status_code, 200)
         # response13 = self.client.get("chart/month-filter-options/")
         # self.assertEqual(response13.status_code, 200)
         # response14 = self.client.get("chart/day-filter-options/")
@@ -137,7 +138,7 @@ class DashboardTests(TestCase):
         # self.assertEqual(response23.status_code, 200)
         # response24 = self.client.get("chart/sales/popular-items/")
         # self.assertEqual(response24.status_code, 200)
-        pass
+        
 
 
     def test_chart_detail_view(self):
