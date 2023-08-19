@@ -90,7 +90,7 @@ class DashboardTests(TestCase):
 
     def test_dashboard_detail_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        
+
         # response7 = self.client.get("order-details/1/")
         # self.assertEqual(response7.status_code, 200)
         # response8 = self.client.get("order-details/1/quantity/")
@@ -104,6 +104,8 @@ class DashboardTests(TestCase):
         pass
 
     def test_chart_list_view(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+
         # response12 = self.client.get("chart/year-filter-options/")
         # self.assertEqual(response12.status_code, 200)
         # response13 = self.client.get("chart/month-filter-options/")
