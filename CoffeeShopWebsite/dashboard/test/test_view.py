@@ -20,6 +20,8 @@ class DashboardTests(TestCase):
             is_active=True
         )
 
+        cls.category = Category.objects.create(name='test')
+
         
 
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
