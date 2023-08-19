@@ -21,3 +21,7 @@ class GalleryPageUrlTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "coffeeshop/gallery.html")
+
+    def test_name_space(self):
+        with self.assertRaises(NoReverseMatch):
+            reverse("gallery")
