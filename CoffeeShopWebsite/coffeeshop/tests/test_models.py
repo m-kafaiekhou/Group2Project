@@ -92,3 +92,7 @@ class HomePageModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.homepage = HomePage.objects.create(homepage_name="test homepage")
+
+    def test_create_homepage(self):
+        self.assertEqual(HomePage.objects.count(), 1)
+        self.assertEqual(self.homepage.homepage_name, "test homepage")
