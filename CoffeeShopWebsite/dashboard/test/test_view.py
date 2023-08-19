@@ -1,8 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from coffeeshop.models import Footer
 
 class DashboardTests(TestCase):
+
+    def setUpTestData(cls):
+        cls.footer = Footer.objects.create()
 
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         response1 = self.client.get("add-category/")
@@ -16,7 +20,7 @@ class DashboardTests(TestCase):
         response5 = self.client.get("order-list/")
         self.assertNotEqual(response5.status_code, 200)
         response6 = self.client.get("")
-        self.assertNotEqual(response6.status_code, 200)
+        self.assertEqual(response6.status_code, 200)
 
 
     def test_url_exits_at_correct_location_for_dashboard_detail_view(self):
