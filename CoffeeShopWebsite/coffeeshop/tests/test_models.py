@@ -82,3 +82,6 @@ class FooterModelTest(TestCase):
         expected_str = "test footer"
         self.assertEqual(str(self.footer), expected_str)
 
+    def test_unique_footer_name(self):
+        with self.assertRaises(IntegrityError):
+            Footer.objects.create(footer_name="test footer")
