@@ -88,7 +88,7 @@ class DashboardTests(TestCase):
         self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
 
-    def test_url_exits_at_correct_location_for_dashboard_detail_view(self):
+    def test_dashboard_detail_view(self):
         # response7 = self.client.get("order-details/1/")
         # self.assertEqual(response7.status_code, 200)
         # response8 = self.client.get("order-details/1/quantity/")
