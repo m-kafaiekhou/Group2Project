@@ -43,3 +43,4 @@ class ReviewModelTest(TestCase):
         self.assertEqual(str(self.review), expected_str)
 
 
+class FooterModelTest(TestCase):
