@@ -57,7 +57,7 @@ class ViewsOrderTests(TestCase):
         self.assertContains(response, '70')
 
     def test_checkoutempty_get(self):
-        self.client.cookies = SimpleCookie({'cart': None})
+        self.client.cookies = SimpleCookie({'cart': ''})
         response = self.client.get(reverse("orders:checkout"))
         self.assertEqual(response.status_code, 302)
 
@@ -77,9 +77,9 @@ class ViewsOrderTests(TestCase):
     def test_delete_cart(self):
         self.client.cookies = SimpleCookie({'cart': self.cart})
         response = self.client.get(reverse('orders:delete_cart'))
-        self.assertEqual(response.status_code, 200)
-        cart_after = response.wsgi_request.COOKIES.get('cart')
-        self.assertEqual(cart_after, None)
+        self.assertEqual(response.status_code, 302)
+        cart_after = self.client.cookies['cart'].value
+        self.assertEqual(cart_after, '')
 
 
 
