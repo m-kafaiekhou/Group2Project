@@ -136,6 +136,8 @@ class DashboardTests(TestCase):
 
 
     def test_chart_detail_view(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        
         # response25 = self.client.get("chart/sales/top-selling/year/")
         # self.assertEqual(response25.status_code, 200)
         # response26 = self.client.get("chart/sales/status/C/")
