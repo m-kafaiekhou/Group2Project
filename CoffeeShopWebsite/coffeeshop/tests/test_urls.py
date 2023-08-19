@@ -15,3 +15,4 @@ class HomePageUrlTestCase(TestCase):
             reverse("home")
 
 
+class GalleryPageUrlTestCase(TestCase):
