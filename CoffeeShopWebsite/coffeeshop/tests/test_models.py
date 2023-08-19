@@ -96,3 +96,50 @@ class HomePageModelTest(TestCase):
     def test_create_homepage(self):
         self.assertEqual(HomePage.objects.count(), 1)
         self.assertEqual(self.homepage.homepage_name, "test homepage")
+
+    def test_default_vlaues(self):
+        self.assertEqual(self.homepage.webpage_title, "TEHRAN Coffee Shop")
+        self.assertEqual(self.homepage.search_section_is_active, True)
+        self.assertEqual(self.homepage.search_section_title, "SEARCH")
+        self.assertEqual(self.homepage.search_section_description, "Search for Drinks")
+        self.assertEqual(self.homepage.search_placeholder, "Search Here")
+        self.assertEqual(self.homepage.about_us_section_is_active, True)
+        self.assertEqual(self.homepage.about_us_section_title, "ABOUT US")
+        self.assertEqual(
+            self.homepage.about_us_section_description, "Serving Since 2023"
+        )
+        self.assertEqual(self.homepage.about_us_image, "home_images/about.png")
+        self.assertEqual(self.homepage.left_about_us_title, "Our Story")
+        self.assertEqual(self.homepage.left_about_us_button_text, "Learn More")
+        self.assertEqual(self.homepage.right_about_us_title, "Our Vision")
+        self.assertEqual(
+            self.homepage.right_about_us_first_option, "Lorem ipsum dolor sit amet"
+        )
+        self.assertEqual(self.homepage.our_services_section_is_active, True)
+        self.assertEqual(self.homepage.our_services_section_title, "OUR SERVICES")
+        self.assertEqual(
+            self.homepage.our_services_section_description, "Fresh & Organic Beans"
+        )
+        self.assertEqual(self.homepage.offer_section_is_active, True)
+        self.assertEqual(self.homepage.offer_section_title, "50% OFF")
+        self.assertEqual(
+            self.homepage.offer_section_short_description, "Sunday Special Offer"
+        )
+        self.assertEqual(
+            self.homepage.offer_section_long_description,
+            "Only for Sunday from 1st Jan to 30th Jan 2045",
+        )
+        self.assertEqual(self.homepage.menu_special_items_section_is_active, True)
+        self.assertEqual(
+            self.homepage.menu_special_items_section_title, "TOP RATED ITEMS"
+        )
+        self.assertEqual(
+            self.homepage.menu_special_items_section_description,
+            "The Best Items According to Our Customers",
+        )
+        self.assertEqual(self.homepage.testimonial_section_is_active, True)
+        self.assertEqual(self.homepage.testimonial_section_title, "TESTIMONIAL")
+        self.assertEqual(
+            self.homepage.testimonial_section_description, "Our Clients Say"
+        )
+
