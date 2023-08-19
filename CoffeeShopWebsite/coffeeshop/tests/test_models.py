@@ -47,3 +47,8 @@ class FooterModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.footer = Footer.objects.create(footer_name="test footer")
+
+    def test_create_footer(self):
+        self.assertEqual(Footer.objects.count(), 1)
+        self.assertEqual(self.footer.footer_name, "test footer")
+
