@@ -4,6 +4,7 @@ from coffeeshop.models import Footer
 from orders.views import get_cart
 from django.urls import reverse
 from http.cookies import SimpleCookie
+from orders.models import OrderItem, Order
 import tempfile
 import json
 
@@ -41,6 +42,35 @@ class ViewsOrderTests(TestCase):
         self.assertContains(response, self.cafeitem1.name)
         self.assertContains(response, self.cafeitem2.name)
 
+    def test_cartempty_view(self):
+        self.client.cookies = SimpleCookie({'cart': ''})
+        response = self.client.get(reverse("orders:cart"))
+        cart, total = get_cart(response.wsgi_request)
+        self.assertEqual(cart, None)
+        self.assertEqual(total, None)
+        self.assertEqual(response.context['show_modal'], True)
+
+    def test_checkout_get(self):
+        self.client.cookies = SimpleCookie({'cart': self.cart})
+        response = self.client.get(reverse("orders:checkout"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '70')
+
+    def test_checkout_post(self):
+        self.client.cookies = SimpleCookie({'cart': self.cart})
+        data = {
+            'phone_number': '09377584728',
+            'table_number': '2'
+        }
+        response = self.client.post(reverse("orders:checkout"), data)
+        print(response.status_code)
+        orderitems = OrderItem.objects.all()
+        self.assertEqual(orderitems[0].cafeitem, self.cafeitem1)
+        self.assertEqual(orderitems[1].cafeitem, self.cafeitem2)
+        order = Order.objects.all().last()
+        self.assertEqual(order.get_total_price(), 70)
+
+    def
 
 
 
