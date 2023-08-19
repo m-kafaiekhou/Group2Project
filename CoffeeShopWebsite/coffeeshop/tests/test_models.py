@@ -78,3 +78,7 @@ class FooterModelTest(TestCase):
         )
         self.assertEqual(self.footer.newsletter_is_active, True)
 
+    def test_str_method(self):
+        expected_str = "test footer"
+        self.assertEqual(str(self.footer), expected_str)
+
