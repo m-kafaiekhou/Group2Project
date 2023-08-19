@@ -2,13 +2,25 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from coffeeshop.models import Footer
+from menus.models import Category, CafeItem
+from staff.models import CustomUserModel
+from orders.models import Order, OrderItem
 
 class DashboardTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         cls.footer = Footer.objects.create()
+        cls.staff = CustomUserModel.objects.create(
+            phone_number='09030384898',
+            first_name='testfname',
+            last_name='testlname',
+            password='Test123@',
+            is_staff=True,
+            is_active=True
+        )
 
+        
 
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         response1 = self.client.get("add-category/")
