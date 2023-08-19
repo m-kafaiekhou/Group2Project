@@ -148,8 +148,8 @@ class DashboardTests(TestCase):
         response23 = self.client.get(reverse("dashboard:peak-hour"))
         self.assertEqual(response23.status_code, 200)
 
-        # response24 = self.client.get("chart/sales/popular-items/")
-        # self.assertEqual(response24.status_code, 200)
+        response24 = self.client.get(reverse("dashboard:popular-items"))
+        self.assertEqual(response24.status_code, 200)
         
 
 
