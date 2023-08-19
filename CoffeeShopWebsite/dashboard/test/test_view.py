@@ -60,7 +60,7 @@ class DashboardTests(TestCase):
 
         
 
-    def test_url_exits_at_correct_location_for_dashboard_list_view(self):
+    def test_dashboard_list_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
         response1 = self.client.get("add_category/")
