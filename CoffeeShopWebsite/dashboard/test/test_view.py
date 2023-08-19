@@ -114,8 +114,9 @@ class DashboardTests(TestCase):
 
         response12 = self.client.get(reverse("dashboard:year-filter-options"))
         self.assertEqual(response12.status_code, 200)
-        # response13 = self.client.get("chart/month-filter-options/")
-        # self.assertEqual(response13.status_code, 200)
+
+        response13 = self.client.get(reverse("dashboard:month-filter-options"))
+        self.assertEqual(response13.status_code, 200)
         # response14 = self.client.get("chart/day-filter-options/")
         # self.assertEqual(response14.status_code, 200)
         # response15 = self.client.get("chart/sales/this-year/")
