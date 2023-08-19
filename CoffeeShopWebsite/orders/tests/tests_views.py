@@ -68,7 +68,6 @@ class ViewsOrderTests(TestCase):
             'table_number': '2'
         }
         response = self.client.post(reverse("orders:checkout"), data)
-        print(response.status_code)
         orderitems = OrderItem.objects.all()
         self.assertEqual(orderitems[0].cafeitem, self.cafeitem1)
         self.assertEqual(orderitems[1].cafeitem, self.cafeitem2)
