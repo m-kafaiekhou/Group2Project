@@ -35,3 +35,8 @@ class ReviewModelTest(TestCase):
         self.assertEqual(review.rating, Review.Rating.HIGH)
         self.assertEqual(review.rating, 4)
 
+    def test_str_method(self):
+        expected_str = "This is test re ..."
+        self.assertEqual(str(self.review), expected_str)
+
+
