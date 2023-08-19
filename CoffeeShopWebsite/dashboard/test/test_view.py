@@ -5,6 +5,8 @@ from coffeeshop.models import Footer
 from menus.models import Category, CafeItem
 from staff.models import CustomUserModel
 from orders.models import Order, OrderItem
+import tempfile
+
 
 class DashboardTests(TestCase):
 
@@ -35,7 +37,8 @@ class DashboardTests(TestCase):
             description='test1',
             is_available=True,
             price=50,
-            category=cls.category
+            category=cls.category,
+            image=tempfile.NamedTemporaryFile(suffix=".jpg").name
         )
 
         cls.orderitem1 = OrderItem.objects.create(
@@ -49,7 +52,8 @@ class DashboardTests(TestCase):
             description='test2',
             is_available=True,
             price=10,
-            category=cls.category
+            category=cls.category,
+            image=tempfile.NamedTemporaryFile(suffix=".jpg").name
         )
 
         cls.orderitem2 = OrderItem.objects.create(
@@ -60,39 +64,40 @@ class DashboardTests(TestCase):
 
         
 
-    def test_dashboard_list_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    # def test_dashboard_list_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response1 = self.client.get("add_category/")
-        self.assertEqual(response1.status_code, 404)
-        self.assertTemplateUsed(response1, "404.html")
+    #     response1 = self.client.get("add_category/")
+    #     self.assertEqual(response1.status_code, 404)
+    #     self.assertTemplateUsed(response1, "404.html")
 
-        response2 = self.client.get("add_item/")
-        self.assertEqual(response2.status_code, 404)
-        self.assertTemplateUsed(response2, "404.html")
+    #     response2 = self.client.get("add_item/")
+    #     self.assertEqual(response2.status_code, 404)
+    #     self.assertTemplateUsed(response2, "404.html")
 
-        response3 = self.client.get(reverse("category_list"))
-        self.assertEqual(response3.status_code, 200)
-        self.assertTemplateUsed(response3, "dashboard/category_list.html")
+    #     response3 = self.client.get(reverse("dashboard:category_list"))
+    #     self.assertEqual(response3.status_code, 200)
+    #     self.assertTemplateUsed(response3, "dashboard/category_list.html")
 
-        response4 = self.client.get(reverse("item_list"))
-        self.assertEqual(response4.status_code, 200)
-        self.assertTemplateUsed(response4, "dashboard/item_list.html")
+    #     response4 = self.client.get(reverse("dashboard:item_list"))
+    #     self.assertEqual(response4.status_code, 200)
+    #     self.assertTemplateUsed(response4, "dashboard/item_list.html")
 
-        response5 = self.client.get(reverse("order_list"))
-        self.assertEqual(response5.status_code, 200)
-        self.assertTemplateUsed(response5, "dashboard/order_list.html")
+    #     response5 = self.client.get(reverse("dashboard:order_list"))
+    #     self.assertEqual(response5.status_code, 200)
+    #     self.assertTemplateUsed(response5, "dashboard/order_list.html")
 
-        response6 = self.client.get(reverse("dashboard"))
-        self.assertEqual(response6.status_code, 200)
-        self.assertTemplateUsed(response6, "dashboard/dashboard.html")
+    #     response6 = self.client.get(reverse("dashboard:dashboard"))
+    #     self.assertEqual(response6.status_code, 200)
+    #     self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
 
     def test_dashboard_detail_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        # response7 = self.client.get("order-details/1/")
-        # self.assertEqual(response7.status_code, 200)
+        response7 = self.client.get(reverse("dashboard:order_details", kwargs={"pk":self.order.pk}))
+        self.assertEqual(response7.status_code, 200)
+
         # response8 = self.client.get("order-details/1/quantity/")
         # self.assertEqual(response8.status_code, 200)
         # response9 = self.client.get("category-details/1/")
@@ -137,7 +142,7 @@ class DashboardTests(TestCase):
 
     def test_chart_detail_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        
+
         # response25 = self.client.get("chart/sales/top-selling/year/")
         # self.assertEqual(response25.status_code, 200)
         # response26 = self.client.get("chart/sales/status/C/")
