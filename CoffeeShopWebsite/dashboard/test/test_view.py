@@ -101,7 +101,7 @@ class DashboardTests(TestCase):
         # self.assertEqual(response11.status_code, 200)
         pass
 
-    def test_url_exits_at_correct_location_for_chart_list_view(self):
+    def test_chart_list_view(self):
         # response12 = self.client.get("chart/year-filter-options/")
         # self.assertEqual(response12.status_code, 200)
         # response13 = self.client.get("chart/month-filter-options/")
