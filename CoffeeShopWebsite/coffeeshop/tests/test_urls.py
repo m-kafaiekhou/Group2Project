@@ -16,3 +16,8 @@ class HomePageUrlTestCase(TestCase):
 
 
 class GalleryPageUrlTestCase(TestCase):
+    def test_gallery_page_url(self):
+        url = reverse("coffeeshop:gallery")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "coffeeshop/gallery.html")
