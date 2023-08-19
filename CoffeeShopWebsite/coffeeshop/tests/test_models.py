@@ -89,3 +89,6 @@ class FooterModelTest(TestCase):
 
 
 class HomePageModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.homepage = HomePage.objects.create(homepage_name="test homepage")
