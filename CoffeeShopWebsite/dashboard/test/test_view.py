@@ -62,18 +62,30 @@ class DashboardTests(TestCase):
 
     def test_url_exits_at_correct_location_for_dashboard_list_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response1 = self.client.get(reverse("add_category"))
-        self.assertNotEqual(response1.status_code, 200)
-        # response2 = self.client.get("add-item/")
-        # self.assertEqual(response2.status_code, 200)
-        # response3 = self.client.get("category-list/")
-        # self.assertEqual(response3.status_code, 200)
-        # response4 = self.client.get("item-list/")
-        # self.assertEqual(response4.status_code, 200)
-        # response5 = self.client.get("order-list/")
-        # self.assertEqual(response5.status_code, 200)
-        # response6 = self.client.get("")
-        # self.assertEqual(response6.status_code, 200)
+
+        response1 = self.client.get("add_category/")
+        self.assertEqual(response1.status_code, 404)
+        self.assertTemplateUsed(response1, "404.html")
+
+        response2 = self.client.get("add_item/")
+        self.assertEqual(response2.status_code, 404)
+        self.assertTemplateUsed(response2, "404.html")
+
+        response3 = self.client.get(reverse("category_list"))
+        self.assertEqual(response3.status_code, 200)
+        self.assertTemplateUsed(response3, "dashboard/category_list.html")
+
+        response4 = self.client.get(reverse("item_list"))
+        self.assertEqual(response4.status_code, 200)
+        self.assertTemplateUsed(response4, "dashboard/item_list.html")
+
+        response5 = self.client.get(reverse("order_list"))
+        self.assertEqual(response5.status_code, 200)
+        self.assertTemplateUsed(response5, "dashboard/order_list.html")
+
+        response6 = self.client.get(reverse("dashboard"))
+        self.assertEqual(response6.status_code, 200)
+        self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
 
     def test_url_exits_at_correct_location_for_dashboard_detail_view(self):
