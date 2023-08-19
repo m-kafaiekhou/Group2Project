@@ -141,8 +141,10 @@ class DashboardTests(TestCase):
 
         response21 = self.client.get(reverse("dashboard:category-sale"))
         self.assertEqual(response21.status_code, 200)
-        # response22 = self.client.get("chart/sales/employee-sales/")
-        # self.assertEqual(response22.status_code, 200)
+
+        response22 = self.client.get(reverse("dashboard:employee-sales"))
+        self.assertEqual(response22.status_code, 200)
+
         # response23 = self.client.get("chart/sales/peak-hour/")
         # self.assertEqual(response23.status_code, 200)
         # response24 = self.client.get("chart/sales/popular-items/")
