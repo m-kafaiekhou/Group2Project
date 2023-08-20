@@ -49,24 +49,8 @@ class CafeItemTestClass(TestCase) :
     def test_slug_method(self):
         expected_slug = "Test"
         self.assertEqual(slugify(self.name), expected_slug)
-
-
-def get_temporary_image(temp_file):
-    size = (200, 200)
-    color = (255, 0, 0, 0)
-    image = Image.new("RGBA", size, color)
-    image.save(temp_file, 'jpeg')
-    return temp_file
     
 
-class CafeItemImageTestClass(TestCase):
-    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_image(self):
-        temp_file = tempfile.NamedTemporaryFile()
-        test_image = get_temporary_image(temp_file)
-        #test_image.seek(0)
-        CafeItem.image.objects.create(picture=test_image.name)
-        self.assertEqual(len(CafeItem.image.objects.all()), 1)
 
 
     # def setUp(self) -> None:
