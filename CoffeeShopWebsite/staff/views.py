@@ -2,7 +2,6 @@ from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import login
-
 from .forms import PhoneNumberForm, OtpForm
 from staff.backends import CustomUserBackend
 from core.utils import set_otp
@@ -44,6 +43,7 @@ class LoginUserView(View):
                 )
             context = {"form1": self.form1, "form2": otp_form}
             return render(request, self.template_name, context=context)
+
 
 
 
