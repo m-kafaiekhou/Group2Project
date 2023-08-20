@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import *
 
-app_name = "dashboard"
+
 urlpatterns = [
     path("add-category/", AddCategoryView.as_view(), name="add_category"),
     path("add-item/", AddItemView.as_view(), name="add_item"),

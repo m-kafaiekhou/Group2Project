@@ -75,19 +75,19 @@ class DashboardTests(TestCase):
         self.assertEqual(response2.status_code, 404)
         self.assertTemplateUsed(response2, "404.html")
 
-        response3 = self.client.get(reverse("dashboard:category_list"))
+        response3 = self.client.get(reverse("category_list"))
         self.assertEqual(response3.status_code, 200)
         self.assertTemplateUsed(response3, "dashboard/category_list.html")
 
-        response4 = self.client.get(reverse("dashboard:item_list"))
+        response4 = self.client.get(reverse("item_list"))
         self.assertEqual(response4.status_code, 200)
         self.assertTemplateUsed(response4, "dashboard/item_list.html")
 
-        response5 = self.client.get(reverse("dashboard:order_list"))
+        response5 = self.client.get(reverse("order_list"))
         self.assertEqual(response5.status_code, 200)
         self.assertTemplateUsed(response5, "dashboard/order_list.html")
 
-        response6 = self.client.get(reverse("dashboard:dashboard"))
+        response6 = self.client.get(reverse("dashboard"))
         self.assertEqual(response6.status_code, 200)
         self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
@@ -112,43 +112,43 @@ class DashboardTests(TestCase):
     def test_chart_list_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response12 = self.client.get(reverse("dashboard:year-filter-options"))
+        response12 = self.client.get(reverse("year-filter-options"))
         self.assertEqual(response12.status_code, 200)
 
-        response13 = self.client.get(reverse("dashboard:month-filter-options"))
+        response13 = self.client.get(reverse("month-filter-options"))
         self.assertEqual(response13.status_code, 200)
 
-        response14 = self.client.get(reverse("dashboard:day-filter-options"))
+        response14 = self.client.get(reverse("day-filter-options"))
         self.assertEqual(response14.status_code, 200)
 
-        response15 = self.client.get(reverse("dashboard:this-year-sales"))
+        response15 = self.client.get(reverse("this-year-sales"))
         self.assertEqual(response15.status_code, 200)
 
-        response16 = self.client.get(reverse("dashboard:month-sales"))
+        response16 = self.client.get(reverse("month-sales"))
         self.assertEqual(response16.status_code, 200)
 
-        response17 = self.client.get(reverse("dashboard:day-sales"))
+        response17 = self.client.get(reverse("day-sales"))
         self.assertEqual(response17.status_code, 200)
 
-        response18 = self.client.get(reverse("dashboard:day-sales-sum"))
+        response18 = self.client.get(reverse("day-sales-sum"))
         self.assertEqual(response18.status_code, 200)
 
-        response19 = self.client.get(reverse("dashboard:all-time-sales"))
+        response19 = self.client.get(reverse("all-time-sales"))
         self.assertEqual(response19.status_code, 200)
 
-        response20 = self.client.get(reverse("dashboard:best-customers"))
+        response20 = self.client.get(reverse("best-customers"))
         self.assertEqual(response20.status_code, 200)
 
-        response21 = self.client.get(reverse("dashboard:category-sale"))
+        response21 = self.client.get(reverse("category-sale"))
         self.assertEqual(response21.status_code, 200)
 
-        response22 = self.client.get(reverse("dashboard:employee-sales"))
+        response22 = self.client.get(reverse("employee-sales"))
         self.assertEqual(response22.status_code, 200)
 
-        response23 = self.client.get(reverse("dashboard:peak-hour"))
+        response23 = self.client.get(reverse("peak-hour"))
         self.assertEqual(response23.status_code, 200)
 
-        response24 = self.client.get(reverse("dashboard:popular-items"))
+        response24 = self.client.get(reverse("popular-items"))
         self.assertEqual(response24.status_code, 200)
         
 
