@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
+from CoffeeShopWebsite.coffeeshop.models import Footer
 
 class StaffUrlsTestCase(TestCase):
-
+    def setUp(self):
+        self.footer = Footer.objects.create()
 
     def test_login_url(self):
         #url = reverse('staff:login')

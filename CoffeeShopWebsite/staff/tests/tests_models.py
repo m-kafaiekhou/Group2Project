@@ -10,9 +10,8 @@ class CustomUserModelTestCase(TestCase):
                                                     first_name='John', last_name='Doe',
                                                     is_staff=True, is_active=True )
     def test_phone_number_validation(self):
-    # Valid phone number should not raise any validation error
         self.user.phone_number = '0912345678'
-        self.user.full_clean() # Invalid phone number should raise a validation error
+        self.user.full_clean()
         with self.assertRaises(ValidationError):
             self.user.phone_number = '1234567890'
             self.user.full_clean()
@@ -22,13 +21,13 @@ class CustomUserModelTestCase(TestCase):
         self.assertEqual(str(self.user), expected_str)
 
     def test_default_values(self):
-        now = timezone.now() # Newly created user should have default values set correctly
+        now = timezone.now()
         user = CustomUserModel.objects.create(phone_number='0987654321')
         self.assertEqual(user.is_staff, False)
         self.assertEqual(user.is_active, False)
         self.assertEqual(user.date_added.date(), now.date())
 
-    def test_required_fields(self): # Required fields should be specified correctly in the model
+    def test_required_fields(self):
         required_fields = ['first_name', 'last_name']
         for field in required_fields:
             with self.assertRaises(ValidationError) as cm:
