@@ -19,7 +19,11 @@ class CafeItemTestClass(TestCase) :
         )
     
     def test_create_cafeitem(self) :
-        self.assertEqual()
+        self.assertEqual(self.cafeitem.name, "Test")
+        self.assertEqual(self.cafeitem.description, 'Just testing...')
+        self.assertEqual(self.cafeitem.is_available, True)
+        self.assertEqual(self.cafeitem.price, 50)
+        self.assertEqual(self.cafeitem.category, self.category)
         self.assertIsInstance(self.cafeitem.date_added, datetime.datetime)
     
     def test_name_label(self) :
