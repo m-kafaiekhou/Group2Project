@@ -1,4 +1,5 @@
 import tempfile
+import datetime
 from PIL import Image
 from menus.models import CafeItem, Category
 from django.test import TestCase, override_settings
