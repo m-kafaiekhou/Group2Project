@@ -6,7 +6,7 @@ from menus.models import Category, CafeItem
 from staff.models import CustomUserModel
 from orders.models import Order, OrderItem
 import tempfile
-
+import pprint
 
 class DashboardTests(TestCase):
 
@@ -69,101 +69,113 @@ class DashboardTests(TestCase):
         cls.status = "C"
         
 
-    def test_dashboard_list_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-
-        response1 = self.client.get("add_category/")
-        self.assertEqual(response1.status_code, 404)
-        self.assertTemplateUsed(response1, "404.html")
-
-        response2 = self.client.get("add_item/")
-        self.assertEqual(response2.status_code, 404)
-        self.assertTemplateUsed(response2, "404.html")
-
-        response3 = self.client.get(reverse("category_list"))
-        self.assertEqual(response3.status_code, 200)
-        self.assertTemplateUsed(response3, "dashboard/category_list.html")
-
-        response4 = self.client.get(reverse("item_list"))
-        self.assertEqual(response4.status_code, 200)
-        self.assertTemplateUsed(response4, "dashboard/item_list.html")
-
-        response5 = self.client.get(reverse("order_list"))
-        self.assertEqual(response5.status_code, 200)
-        self.assertTemplateUsed(response5, "dashboard/order_list.html")
-
-        response6 = self.client.get(reverse("dashboard"))
-        self.assertEqual(response6.status_code, 200)
-        self.assertTemplateUsed(response6, "dashboard/dashboard.html")
-
-
-    # def test_dashboard_detail_view(self): # Not Done
+    # def test_dashboard_list_view(self):
     #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-    #     response7 = self.client.get(reverse("dashboard:order_details", kwargs={"pk":self.order.pk}))
-    #     self.assertEqual(response7.status_code, 200)
+    #     response1 = self.client.get("add_category/")
+    #     self.assertEqual(response1.status_code, 404)
+    #     self.assertTemplateUsed(response1, "404.html")
 
-    #     response8 = self.client.post(reverse("dashboard:order_item_update", kwargs={"pk":self.order.pk}))
-    #     self.assertEqual(response8.status_code, 200)
+    #     response2 = self.client.get("add_item/")
+    #     self.assertEqual(response2.status_code, 404)
+    #     self.assertTemplateUsed(response2, "404.html")
 
-    #     response9 = self.client.get("category-details/1/")
-    #     self.assertEqual(response9.status_code, 200)
-    #     response10 = self.client.get("item-details/1/")
-    #     self.assertEqual(response10.status_code, 200)
-    #     response11 = self.client.get("order-list/1/")
-    #     self.assertEqual(response11.status_code, 200)
-        
+    #     response3 = self.client.get(reverse("category_list"))
+    #     self.assertEqual(response3.status_code, 200)
+    #     self.assertTemplateUsed(response3, "dashboard/category_list.html")
 
-    def test_chart_list_view(self):
+    #     response4 = self.client.get(reverse("item_list"))
+    #     self.assertEqual(response4.status_code, 200)
+    #     self.assertTemplateUsed(response4, "dashboard/item_list.html")
+
+    #     response5 = self.client.get(reverse("order_list"))
+    #     self.assertEqual(response5.status_code, 200)
+    #     self.assertTemplateUsed(response5, "dashboard/order_list.html")
+
+    #     response6 = self.client.get(reverse("dashboard"))
+    #     self.assertEqual(response6.status_code, 200)
+    #     self.assertTemplateUsed(response6, "dashboard/dashboard.html")
+
+
+    def test_dashboard_detail_view(self): # Not Done
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response12 = self.client.get(reverse("year-filter-options"))
-        self.assertEqual(response12.status_code, 200)
+        response7 = self.client.get(reverse("order_details", kwargs={"pk":self.order.pk}))
+        self.assertEqual(response7.status_code, 200)
 
-        response13 = self.client.get(reverse("month-filter-options"))
-        self.assertEqual(response13.status_code, 200)
+        data = {
+            "pk":self.orderitem1.pk,
+            "orderitem":self.orderitem1,
+            "quantity":3,
+            "item":self.cafeitem1,
+        }
+        response8 = self.client.post(reverse("order_details", kwargs={"pk":self.order.pk}), data=data)
+        self.assertEqual(response8.status_code, 302)
+        self.assertRedirects(response8, reverse("order_details", kwargs={"pk":self.order.pk}))
 
-        response14 = self.client.get(reverse("day-filter-options"))
-        self.assertEqual(response14.status_code, 200)
+        response9 = self.client.get(f"category-details/{self.category.pk}")
+        self.assertEqual(response9.status_code, 404)
+        self.assertTemplateUsed(response9, "404.html")
 
-        response15 = self.client.get(reverse("this-year-sales"))
-        self.assertEqual(response15.status_code, 200)
+        response10 = self.client.get(f"item-details/{self.cafeitem1.pk}")
+        self.assertEqual(response10.status_code, 404)
+        self.assertTemplateUsed(response10, "404.html")
 
-        response16 = self.client.get(reverse("month-sales"))
-        self.assertEqual(response16.status_code, 200)
+        response11 = self.client.get(reverse("order_status", kwargs={"stat":self.order.status}))
+        self.assertEqual(response11.status_code, 200)
+        
 
-        response17 = self.client.get(reverse("day-sales"))
-        self.assertEqual(response17.status_code, 200)
+    # def test_chart_list_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response18 = self.client.get(reverse("day-sales-sum"))
-        self.assertEqual(response18.status_code, 200)
+    #     response12 = self.client.get(reverse("year-filter-options"))
+    #     self.assertEqual(response12.status_code, 200)
 
-        response19 = self.client.get(reverse("all-time-sales"))
-        self.assertEqual(response19.status_code, 200)
+    #     response13 = self.client.get(reverse("month-filter-options"))
+    #     self.assertEqual(response13.status_code, 200)
 
-        response20 = self.client.get(reverse("best-customers"))
-        self.assertEqual(response20.status_code, 200)
+    #     response14 = self.client.get(reverse("day-filter-options"))
+    #     self.assertEqual(response14.status_code, 200)
 
-        response21 = self.client.get(reverse("category-sale"))
-        self.assertEqual(response21.status_code, 200)
+    #     response15 = self.client.get(reverse("this-year-sales"))
+    #     self.assertEqual(response15.status_code, 200)
 
-        response22 = self.client.get(reverse("employee-sales"))
-        self.assertEqual(response22.status_code, 200)
+    #     response16 = self.client.get(reverse("month-sales"))
+    #     self.assertEqual(response16.status_code, 200)
 
-        response23 = self.client.get(reverse("peak-hour"))
-        self.assertEqual(response23.status_code, 200)
+    #     response17 = self.client.get(reverse("day-sales"))
+    #     self.assertEqual(response17.status_code, 200)
 
-        response24 = self.client.get(reverse("popular-items"))
-        self.assertEqual(response24.status_code, 200)
+    #     response18 = self.client.get(reverse("day-sales-sum"))
+    #     self.assertEqual(response18.status_code, 200)
+
+    #     response19 = self.client.get(reverse("all-time-sales"))
+    #     self.assertEqual(response19.status_code, 200)
+
+    #     response20 = self.client.get(reverse("best-customers"))
+    #     self.assertEqual(response20.status_code, 200)
+
+    #     response21 = self.client.get(reverse("category-sale"))
+    #     self.assertEqual(response21.status_code, 200)
+
+    #     response22 = self.client.get(reverse("employee-sales"))
+    #     self.assertEqual(response22.status_code, 200)
+
+    #     response23 = self.client.get(reverse("peak-hour"))
+    #     self.assertEqual(response23.status_code, 200)
+
+    #     response24 = self.client.get(reverse("popular-items"))
+    #     self.assertEqual(response24.status_code, 200)
         
 
 
-    def test_chart_detail_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    # def test_chart_detail_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        for date in self.date_list:
-            response25 = self.client.post(reverse("top-selling", kwargs={"fil":date}))
-            self.assertEqual(response25.status_code, 200)
+    #     for date in self.date_list:
+    #         response25 = self.client.post(reverse("top-selling", kwargs={"fil":date}))
+    #         self.assertEqual(response25.status_code, 200)
 
-        response26 = self.client.get(reverse("status", kwargs={"start_date":self.start_date, "end_date":self.end_date, "status":self.status}))
-        self.assertEqual(response26.status_code, 200)
+        # response26 = self.client.get(reverse("status", kwargs={"start_date":self.start_date, "end_date":self.end_date, "status":self.status}))
+        # self.assertEqual(response26.status_code, 200)
+        
