@@ -59,6 +59,11 @@ class CategoryTestClass(TestCase) :
             name = 'Cat Test',
         )
 
+    def test_create_category(self) :
+        self.assertEqual(self.category.name, "Cat Test")
+        self.assertEqual(self.category.parent_category, "Parent Test")
+        self.assertIsInstance(self.cafeitem.date_added, datetime.datetime)
+
     def test_str_method(self):
         expected_str = "Cat Test"
         self.assertEqual(str(self.name), expected_str)
