@@ -92,11 +92,12 @@ class MenuDetail(DetailView):
 
 
 class autocomplete(View):
-    def get(request):
-        if "term" in request.GET:
-            Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
-            names = list()
-            for i in Qs:
-                names.append(i.name)
-            return JsonResponse(names, safe=False)
-        return render(request, "menu.html")
+#     def get(request):
+#         if "term" in request.GET:
+#             Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
+#             names = list()
+#             for i in Qs:
+#                 names.append(i.name)
+#             return JsonResponse(names, safe=False)
+#         return render(request, "menu.html")
+    pass
