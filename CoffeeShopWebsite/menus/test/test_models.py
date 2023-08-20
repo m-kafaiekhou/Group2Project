@@ -59,3 +59,7 @@ class CategoryTestClass(TestCase) :
             name = 'Cat Test',
         )
 
+    def test_str_method(self):
+        expected_str = "Cat Test"
+        self.assertEqual(str(self.name), expected_str)
+
