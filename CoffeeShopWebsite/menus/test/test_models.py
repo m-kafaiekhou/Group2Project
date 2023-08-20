@@ -41,6 +41,12 @@ class CafeItemTestClass(TestCase) :
         max_length = cafeitem._meta.get_field('name').max_length
         self.assertEqual(max_length, 50)
 
+    def test_str_method(self):
+        expected_str = "Test"
+        self.assertEqual(str(self.review), expected_str)
+
+    
+
 
 def get_temporary_image(temp_file):
     size = (200, 200)
