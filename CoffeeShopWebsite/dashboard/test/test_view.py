@@ -97,7 +97,7 @@ class DashboardTests(TestCase):
         self.assertTemplateUsed(response6, "dashboard/dashboard.html")
 
 
-    # def test_dashboard_detail_view(self):
+    # def test_dashboard_detail_view(self): # Not Done
     #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
     #     response7 = self.client.get(reverse("dashboard:order_details", kwargs={"pk":self.order.pk}))
