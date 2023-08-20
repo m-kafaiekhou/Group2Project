@@ -64,6 +64,9 @@ class DashboardTests(TestCase):
 
         cls.year = "year"
 
+        cls.start_date = "2023-8-05"
+        cls.end_date = "2023-8-20"
+        cls.status = "C"
         
 
     # def test_dashboard_list_view(self):
@@ -161,5 +164,5 @@ class DashboardTests(TestCase):
         response25 = self.client.post(reverse("top-selling", kwargs={"fil":self.year}))
         self.assertEqual(response25.status_code, 200)
 
-        # response26 = self.client.get("chart/sales/status/C/")
-        # self.assertEqual(response26.status_code, 200)
+        response26 = self.client.get(reverse("status", kwargs={"start_date":self.start_date, "end_date":self.end_date, "status":self.status}))
+        self.assertEqual(response26.status_code, 200)
