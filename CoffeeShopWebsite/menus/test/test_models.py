@@ -9,13 +9,17 @@ class CafeItemTestClass(TestCase) :
     def setUpTestData(cls) -> None:
         cls.category = Category.objects.create(name="Test Category")
         # return super().setUpTestData()
-        CafeItem.objects.create(
+        cls.cafeitem = CafeItem.objects.create(
             name='Test', 
             description='Just testing...',
             is_available=True,
             price=50,
             category=cls.category,
         )
+    
+    def test_create_cafeitem(self) :
+        self.assertEqual()
+        self.assertIsInstance(self.cafeitem.date_added, datetime.datetime)
     
     def test_name_label(self) :
         cafeitem = CafeItem.objects.get(id=1)
