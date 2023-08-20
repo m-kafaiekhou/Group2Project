@@ -51,8 +51,11 @@ class CafeItemTestClass(TestCase) :
         self.assertEqual(slugify(self.name), expected_slug)
     
 
-
-
-    # def setUp(self) -> None:
-    #     return super().setUp()
+class CategoryTestClass(TestCase) :
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.category = Category.objects.create(
+            parent_category = 'Parent Test',
+            name = 'Cat Test',
+        )
 
