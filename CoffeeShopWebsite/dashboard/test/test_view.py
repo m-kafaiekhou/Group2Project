@@ -62,7 +62,7 @@ class DashboardTests(TestCase):
             quantity=3,
         ).set_price()
 
-        cls.year = "year"
+        cls.date_list = ["year", "month", "day"]
 
         cls.start_date = "2023-8-05"
         cls.end_date = "2023-8-20"
@@ -161,8 +161,9 @@ class DashboardTests(TestCase):
     def test_chart_detail_view(self):
         self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-        response25 = self.client.post(reverse("top-selling", kwargs={"fil":self.year}))
-        self.assertEqual(response25.status_code, 200)
+        for date in self.date_list:
+            response25 = self.client.post(reverse("top-selling", kwargs={"fil":date}))
+            self.assertEqual(response25.status_code, 200)
 
         response26 = self.client.get(reverse("status", kwargs={"start_date":self.start_date, "end_date":self.end_date, "status":self.status}))
         self.assertEqual(response26.status_code, 200)
