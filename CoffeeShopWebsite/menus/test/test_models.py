@@ -7,8 +7,15 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 class CafeItemTestClass(TestCase) :
     @classmethod
     def setUpTestData(cls) -> None:
+        cls.category = Category.objects.create(name="Test Category")
         # return super().setUpTestData()
-        CafeItem.objects.create(name='Test', description='Just testing...')
+        CafeItem.objects.create(
+            name='Test', 
+            description='Just testing...',
+            is_available=True,
+            price=50,
+            category=cls.category,
+        )
     
     def test_name_label(self) :
         cafeitem = CafeItem.objects.get(id=1)
