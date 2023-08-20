@@ -114,47 +114,47 @@ class DashboardTests(TestCase):
     #     self.assertEqual(response11.status_code, 200)
         
 
-    # def test_chart_list_view(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    def test_chart_list_view(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
 
-    #     response12 = self.client.get(reverse("year-filter-options"))
-    #     self.assertEqual(response12.status_code, 200)
+        response12 = self.client.get(reverse("year-filter-options"))
+        self.assertEqual(response12.status_code, 200)
 
-    #     response13 = self.client.get(reverse("month-filter-options"))
-    #     self.assertEqual(response13.status_code, 200)
+        response13 = self.client.get(reverse("month-filter-options"))
+        self.assertEqual(response13.status_code, 200)
 
-    #     response14 = self.client.get(reverse("day-filter-options"))
-    #     self.assertEqual(response14.status_code, 200)
+        response14 = self.client.get(reverse("day-filter-options"))
+        self.assertEqual(response14.status_code, 200)
 
-    #     response15 = self.client.get(reverse("this-year-sales"))
-    #     self.assertEqual(response15.status_code, 200)
+        response15 = self.client.get(reverse("this-year-sales"))
+        self.assertEqual(response15.status_code, 200)
 
-    #     response16 = self.client.get(reverse("month-sales"))
-    #     self.assertEqual(response16.status_code, 200)
+        response16 = self.client.get(reverse("month-sales"))
+        self.assertEqual(response16.status_code, 200)
 
-    #     response17 = self.client.get(reverse("day-sales"))
-    #     self.assertEqual(response17.status_code, 200)
+        response17 = self.client.get(reverse("day-sales"))
+        self.assertEqual(response17.status_code, 200)
 
-    #     response18 = self.client.get(reverse("day-sales-sum"))
-    #     self.assertEqual(response18.status_code, 200)
+        response18 = self.client.get(reverse("day-sales-sum"))
+        self.assertEqual(response18.status_code, 200)
 
-    #     response19 = self.client.get(reverse("all-time-sales"))
-    #     self.assertEqual(response19.status_code, 200)
+        response19 = self.client.get(reverse("all-time-sales"))
+        self.assertEqual(response19.status_code, 200)
 
-    #     response20 = self.client.get(reverse("best-customers"))
-    #     self.assertEqual(response20.status_code, 200)
+        response20 = self.client.get(reverse("best-customers"))
+        self.assertEqual(response20.status_code, 200)
 
-    #     response21 = self.client.get(reverse("category-sale"))
-    #     self.assertEqual(response21.status_code, 200)
+        response21 = self.client.get(reverse("category-sale"))
+        self.assertEqual(response21.status_code, 200)
 
-    #     response22 = self.client.get(reverse("employee-sales"))
-    #     self.assertEqual(response22.status_code, 200)
+        response22 = self.client.get(reverse("employee-sales"))
+        self.assertEqual(response22.status_code, 200)
 
-    #     response23 = self.client.get(reverse("peak-hour"))
-    #     self.assertEqual(response23.status_code, 200)
+        response23 = self.client.get(reverse("peak-hour"))
+        self.assertEqual(response23.status_code, 200)
 
-    #     response24 = self.client.get(reverse("popular-items"))
-    #     self.assertEqual(response24.status_code, 200)
+        response24 = self.client.get(reverse("popular-items"))
+        self.assertEqual(response24.status_code, 200)
         
 
 
