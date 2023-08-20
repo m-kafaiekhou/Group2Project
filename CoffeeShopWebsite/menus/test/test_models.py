@@ -43,9 +43,11 @@ class CafeItemTestClass(TestCase) :
 
     def test_str_method(self):
         expected_str = "Test"
-        self.assertEqual(str(self.review), expected_str)
+        self.assertEqual(str(self.name), expected_str)
 
-    
+    def test_slug_method(self):
+        expected_slug = "Test"
+        self.assertEqual(slugify(self.name), expected_slug)
 
 
 def get_temporary_image(temp_file):
