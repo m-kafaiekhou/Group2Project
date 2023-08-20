@@ -22,6 +22,8 @@ class MenuViewTest(TestCase):
         
         self.menu_url = reverse("menus:menu")
         self.menu_detail_url = reverse("menus:detail")
+        self.menu_search_url = reverse("menus:search_result")
+
     def test_Menu_view(self):
         resp = self.client.get(self.menu_url)
         self.assertEqual(resp.status_code,200)
@@ -31,3 +33,8 @@ class MenuViewTest(TestCase):
         resp = self.client.get(self.menu_detail_url)
         self.assertEqual(resp.status_code,200)
         self.assertTemplateUsed(resp,'menus/detail.html')
+
+    def test_MenuSearch_view(self):
+        resp = self.client.get(self.menu_search_url)
+        self.assertEqual(resp.status_code,200)
+        self.assertTemplateUsed(resp,'menus/search_result.html')
