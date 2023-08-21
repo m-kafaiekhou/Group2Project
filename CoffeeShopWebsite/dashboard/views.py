@@ -923,26 +923,26 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
 
     if st_date and nd_date:
         orders = Order.objects.filter(
-            order_date__gt=st_date, 
-            order_date__lt=nd_date, 
+            order_date__date__gt=st_date, 
+            order_date__date__lt=nd_date, 
             status=status,
             )
     elif nd_date == None:
         today = datetime.now().date()
         orders = Order.objects.filter(
-            order_date__gt=st_date, 
-            order_date__lt=today, 
+            order_date__date__gt=st_date, 
+            order_date__date__lt=today, 
             status=status,
             )
     elif st_date == None:
         orders = Order.objects.filter( 
-            order_date=nd_date, 
+            order_date__date=nd_date, 
             status=status,
             )
     elif (st_date and nd_date == None):
         today = datetime.now().date()
         orders = Order.objects.filter(
-            order_date=today, 
+            order_date__date=today, 
             status=status,
             )
 
@@ -967,4 +967,90 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
 
 
 def customer_order_history(request):
-    pass
+    '''
+    Returns a context of data(customer_orderitem_data, customer_order_data) to 
+    The dashboard template using render method.
+    '''
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    phone = request.GET.get("phone_number", None)
+
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if phone == None:
+        context = {
+        "customer_orderitem_data":"",
+        "customer_order_data":"",
+        }
+        return render(request, "dashboard/dashboard.html", context)
+    
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+            order__phone_number=phone,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+            order__phone_number=phone,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date,
+            order__phone_number=phone, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+            order__phone_number=phone,
+        )
+
+    if st_date and nd_date:
+        order_data = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=nd_date, 
+            phone_number=phone,
+            )
+    elif nd_date == None:
+        today = datetime.now().date()
+        order_data = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=today, 
+            phone_number=phone,
+            )
+    elif st_date == None:
+        order_data = Order.objects.filter( 
+            order_date_date=nd_date, 
+            phone_number=phone,
+            )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        order_data = Order.objects.filter(
+            order_date__date=today, 
+            phone_number=phone,
+            )
+    
+    context = {
+        "customer_orderitem_data":orders,
+        "customer_order_data":order_data,
+        }
+    return render(request, "dashboard/dashboard.html", context)
