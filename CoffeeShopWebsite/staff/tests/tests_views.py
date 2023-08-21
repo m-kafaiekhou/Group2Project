@@ -1,21 +1,26 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
+from staff.models import CustomUserModel
 from staff.forms import PhoneNumberForm, OtpForm
+from coffeeshop.models import Footer
 
 
 class LoginUserViewTest(TestCase):
     def setUp(self):
         self.url = reverse('staff:login')
-        self.user = User.objects.create_user(phone_number='09123456789', password='Password@123')
-        self.client.login(username='testuser', password='testpassword')
+        self.user = CustomUserModel.objects.create_user(
+            phone_number='09123456789', password='Password@123',
+            first_name='john', last_name='doe'
+            )
+        self.client.login(username='testuser', password='Password@123')
+        self.footer = Footer.objects.create()
 
     def test_get(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/login.html')
-        self.assertIsInstance(response.context['form1'], PhoneNumberForm)
-        self.assertIsInstance(response.context['form2'], OtpForm)
+        self.assertEqual(response.context['form1'], PhoneNumberForm)
+        self.assertEqual(response.context['form2'], OtpForm)
 
     def test_post_form1_submit_valid(self):
         data = {'form1_submit': '', 'phone_number': '1234567890'}
