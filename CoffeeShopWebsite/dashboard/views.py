@@ -415,6 +415,60 @@ def daily_sales_chart(request):
     })
 
 
+def sales_by_time_of_day(request):
+    '''
+    Chart view function to get the amount of sale between two seprate times
+    In a day in this month.
+    day = the day of month 
+    month = this month
+    st_time = the start of time 
+    nd_time = the end of time  
+    '''
+    day = request.GET.get("day", None)
+    month = datetime.now().month
+    st_time = request.GET.get("start_time", None)
+    nd_time = request.GET.get("end_time", None)
+
+    if day and st_time and nd_time:
+        orders = OrderItem.objects.filter(
+            order__order_date__month=month ,order__order_date__day=day, 
+            order__order_date__hour__gt=st_time, order__order_date__hour__lt=nd_time,
+        )
+    elif day == None:
+        today = datetime.now().day
+        orders = OrderItem.objects.filter(
+            order__order_date__month=month ,order__order_date__day=today, 
+            order__order_date__hour__gt=st_time, order__order_date__hour__lt=nd_time,
+        )
+    elif nd_time == None:
+        now = datetime.now().hour
+        orders = OrderItem.objects.filter(
+            order__order_date__month=month ,order__order_date__day=day, 
+            order__order_date__hour__gt=st_time, order__order_date__hour__lt=now,
+        )
+    elif (st_time and nd_time == None) or (day and st_time and nd_time == None):
+        today = datetime.now().day
+        orders = OrderItem.objects.filter(
+            order__order_date__month=month ,order__order_date__day=today, 
+        )
+    
+    time_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    total = 0
+    for order in time_sales:
+        total += order["total"]
+
+    return JsonResponse({
+        "title": f"Sales in Today",
+        "data": {
+            "labels": ["total"],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [total],
+            }]
+        }
+    })
+
+
 def daily_sales_sum(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
