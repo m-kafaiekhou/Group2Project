@@ -7,7 +7,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-
 class Category(models.Model):
     parent_category = models.ForeignKey(
         "self",
@@ -30,7 +29,7 @@ class Category(models.Model):
 
 class CafeItem(models.Model):
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=150)
+    description = models.CharField(max_length=250)
     image = models.ImageField(upload_to="cafe_item/", blank=True, null=True)
     is_available = models.BooleanField()
     price = models.IntegerField()
