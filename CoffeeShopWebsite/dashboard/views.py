@@ -436,12 +436,21 @@ def daily_sales_sum(request):
     })
 
 
-def all_time_sales(request):
-    orders = OrderItem.objects.all()
-    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+def total_sales(request):
+    st_date = request.GET.get("start_date", None)
+    nd_date = request.GET.get("end_date", None)
+    
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(order__order_date__gt=st_date, order__order_date__lt=nd_date)
+    elif nd_date == None:
+        orders = OrderItem.objects.filter(order__order_date__gt=st_date, order__order_date__lt=datetime.now())
+    elif st_date and nd_date == None:
+        orders = OrderItem.objects.all()
+    
+    all_orders_in_range = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
     
     total = 0
-    for order in all_orders:
+    for order in all_orders_in_range:
         total += order["total"]
 
     return JsonResponse({
