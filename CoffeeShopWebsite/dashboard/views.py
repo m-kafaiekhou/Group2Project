@@ -492,6 +492,17 @@ def sales_by_time_of_day(request):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -632,6 +643,17 @@ def top_10_customers(requests):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
