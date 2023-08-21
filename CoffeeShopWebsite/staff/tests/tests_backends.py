@@ -5,11 +5,10 @@ from django.shortcuts import get_object_or_404
 from django.test import TestCase
 from staff.models import CustomUserModel
 
+
 class CustomUserBackendTest(TestCase):
-
-
     def setUp(self):
-        self.user = CustomUserModel.objects.create_user( phone_number='1234567890', password='testpassword' )
+        self.user = CustomUserModel.objects.create_user(phone_number='1234567890', password='testpassword')
 
     def test_authenticate_with_valid_credentials(self):
         request = self.client.request().wsgi_request
@@ -32,4 +31,3 @@ class CustomUserBackendTest(TestCase):
         user = backend.authenticate(request, phone_number='1234567890', otp_code='1234')
         self.assertIsNone(user)
         self.assertMessageCount(messages.ERROR, 1)
-
