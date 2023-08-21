@@ -22,6 +22,14 @@ class CustomUserManagerTestCase(TestCase):
         self.assertFalse(user.is_superuser)
         self.assertTrue(user.is_active)
 
+    def test_phone_not_provided_error(self):
+        phone_number = None
+        first_name = 'John'
+        last_name = 'Doe'
+        password = 'Password@123'
+        with self.assertRaises(ValueError):
+            self.model.objects.create_user(phone_number, first_name, last_name, password)
+
     def test_create_superuser(self):
         phone_number = '1234567890'
         first_name = 'John'
