@@ -38,3 +38,10 @@ class MenuViewTest(TestCase):
         resp = self.client.get(self.menu_search_url)
         self.assertEqual(resp.status_code,200)
         self.assertTemplateUsed(resp,'menus/search_result.html')
+
+    def test_search_view(self):
+        resp = self.client.get(self.search_url,{'search':'esp'})
+        self.assertEqual(CafeItem.objects.filter(title__contains='esp').count(),1)
+        self.assertEqual(CafeItem.objects.filter(title__contains='kljhgfcb').count(),0)
+        self.assertEqual(resp.status_code,200)
+        self.assertTemplateUsed(resp,'menus/search_result.html')
