@@ -426,14 +426,14 @@ def sales_by_time_of_day(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 == None:
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
         st_date = None
         nd_date = date2
     elif date2 == None:
         st_date = date1
-        nd_date = None
-    elif date1 and date2 == None:
-        st_date = None
         nd_date = None
     elif date2 > date1:
         st_date = date1
