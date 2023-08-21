@@ -508,6 +508,9 @@ def total_sales(request):
     elif date2 == None:
         st_date = date1
         nd_date = None
+    elif date1 and date2 == None:
+        st_date = None
+        nd_date = None
     elif date2 > date1:
         st_date = date1
         nd_date = date2
@@ -516,9 +519,20 @@ def total_sales(request):
         nd_date = date1
 
     if st_date and nd_date:
-        orders = OrderItem.objects.filter(order__order_date__gt=st_date, order__order_date__lt=nd_date)
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+            )
     elif nd_date == None:
-        orders = OrderItem.objects.filter(order__order_date__gt=st_date, order__order_date__lt=datetime.now())
+        now = datetime.now()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=now,
+            )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+            )
     elif st_date and nd_date == None:
         orders = OrderItem.objects.all()
     
