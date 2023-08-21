@@ -1,18 +1,19 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from staff.manager import CustomUserManager
+from staff.managers import CustomUserManager
+from staff.models import CustomUserModel
+
 
 class CustomUserManagerTestCase(TestCase):
-
-
     def setUp(self):
+        self.model = CustomUserModel
         self.manager = CustomUserManager()
 
     def test_create_user(self):
         phone_number = '1234567890'
         first_name = 'John'
         last_name = 'Doe'
-        password = 'password123'
+        password = 'Password@123'
         user = self.manager.create_user(phone_number, first_name, last_name, password)
         self.assertEqual(user.phone_number, phone_number)
         self.assertEqual(user.first_name, first_name)
@@ -26,7 +27,7 @@ class CustomUserManagerTestCase(TestCase):
         phone_number = '1234567890'
         first_name = 'John'
         last_name = 'Doe'
-        password = 'password123'
+        password = 'Password@123'
         user = self.manager.create_superuser(phone_number, first_name, last_name, password)
         self.assertEqual(user.phone_number, phone_number)
         self.assertEqual(user.first_name, first_name)
