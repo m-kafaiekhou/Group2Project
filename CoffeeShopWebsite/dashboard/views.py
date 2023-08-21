@@ -469,27 +469,6 @@ def sales_by_time_of_day(request):
     })
 
 
-def daily_sales_sum(request):
-    today = datetime.now().day
-    orders = OrderItem.objects.filter(order__order_date__day=today)
-    daily_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
-    
-    total = 0
-    for order in daily_sales:
-        total += order["total"]
-
-    return JsonResponse({
-        "title": f"Sales in Today",
-        "data": {
-            "labels": ["total"],
-            "datasets": [{
-                "label": "Amount (T)",
-                "data": [total],
-            }]
-        }
-    })
-
-
 def total_sales(request):
     st_date = request.GET.get("start_date", None)
     nd_date = request.GET.get("end_date", None)
