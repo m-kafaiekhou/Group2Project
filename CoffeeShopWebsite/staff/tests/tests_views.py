@@ -4,11 +4,10 @@ from django.contrib.auth.models import User
 from staff.views import LoginUserView
 from staff.forms import PhoneNumberForm, OtpForm
 
+
 class LoginUserViewTest(TestCase):
-
-
     def setUp(self):
-        self.url = reverse('login')
+        self.url = reverse('staff:login')
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.client.login(username='testuser', password='testpassword')
 
