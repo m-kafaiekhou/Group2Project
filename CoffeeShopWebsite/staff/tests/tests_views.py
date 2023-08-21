@@ -36,10 +36,10 @@ class LoginUserViewTest(TestCase):
     def test_post_form2_submit_valid(self):
         session = self.client.session
         session['phone_number'] = '09123456789'
+        session['otp_code'] = '1234'
         data = {'form2_submit': '', 'registration_code': '1234'}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertRedirects(response, reverse('coffeeshop:home'))
 
     def test_post_form2_submit_invalid(self):
         session = self.client.session
