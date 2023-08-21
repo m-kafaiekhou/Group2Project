@@ -888,8 +888,65 @@ def most_popular_items(request):
     })
 
 
-def order_status_report(request, start_date, end_date, status: str):  # Table, not a Chart. status= "D", "C", "A"
-    orders = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date, status=status)
+def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    status = request.GET.get("status", None)
+
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if status == None:
+        return JsonResponse({
+        "title": f"No Data",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
+            }]
+        }
+    })
+
+    if st_date and nd_date:
+        orders = Order.objects.filter(
+            order_date__gt=st_date, 
+            order_date__lt=nd_date, 
+            status=status,
+            )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = Order.objects.filter(
+            order_date__gt=st_date, 
+            order_date__lt=today, 
+            status=status,
+            )
+    elif st_date == None:
+        orders = Order.objects.filter( 
+            order_date=nd_date, 
+            status=status,
+            )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = Order.objects.filter(
+            order_date=today, 
+            status=status,
+            )
+
+    
     grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
 
     sale_dict = dict()
@@ -898,7 +955,7 @@ def order_status_report(request, start_date, end_date, status: str):  # Table, n
         sale_dict[group["status"]] = group["count"]
 
     return JsonResponse({
-        "title": f"Order Status Count between {start_date} and {end_date}",
+        "title": f"Order Status Count between {st_date} and {nd_date}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
