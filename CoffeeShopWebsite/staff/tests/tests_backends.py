@@ -36,3 +36,9 @@ class CustomUserBackendTest(TestCase):
         backend = CustomUserBackend()
         user = backend.authenticate(request, phone_number='1234567890', otp_code='1234')
         self.assertIsNone(user)
+
+    def test_phone_number_not_provided(self):
+        request = self.client.request().wsgi_request
+        backend = CustomUserBackend()
+        user = backend.authenticate(request, phone_number=None, otp_code=None)
+        self.assertIsNone(user)
