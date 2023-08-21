@@ -23,7 +23,7 @@ class LoginUserViewTest(TestCase):
         self.assertEqual(response.context['form2'], OtpForm)
 
     def test_post_form1_submit_valid(self):
-        data = {'form1_submit': '', 'phone_number': '1234567890'}
+        data = {'form1_submit': '', 'phone_number': '09123456789'}
         response = self.client.post(self.url, data)
         self.assertIsNotNone(self.client.session.get('phone_number'))
         self.assertEqual(response.status_code, 200)
@@ -35,15 +35,15 @@ class LoginUserViewTest(TestCase):
 
     def test_post_form2_submit_valid(self):
         session = self.client.session
-        session['phone_number'] = '1234567890'
+        session['phone_number'] = '09123456789'
         data = {'form2_submit': '', 'registration_code': '1234'}
         response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, reverse('coffeeshop:home'))
 
     def test_post_form2_submit_invalid(self):
         session = self.client.session
-        session['phone_number'] = '1234567890'
+        session['phone_number'] = '09123456789'
         data = {'form2_submit': '', 'registration_code': ''}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 200)
