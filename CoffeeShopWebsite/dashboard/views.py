@@ -283,7 +283,7 @@ class DashboardView(View):
         return render(request, self.template_view)
 
 
-# ********************************* Chart Area ********************************* #
+# ************************************************* Chart Area ************************************************* #
 
 def year_filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
@@ -970,6 +970,9 @@ def customer_order_history(request):
     '''
     Returns a context of data(customer_orderitem_data, customer_order_data) to 
     The dashboard template using render method.
+    st_date = the start of date yyyy/mm/dd
+    nd_date = the end of date yyyy/mm/dd
+    phone = the customer phone number(order__phone_number).
     '''
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
@@ -1054,3 +1057,8 @@ def customer_order_history(request):
         "customer_order_data":order_data,
         }
     return render(request, "dashboard/dashboard.html", context)
+
+
+
+# ************************************************* Customer Demographic ************************************************* #
+
