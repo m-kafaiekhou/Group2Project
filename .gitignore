@@ -40,5 +40,5 @@ package-lock.json
 *.sqlite3
 *.bak
 *.orig
-
+*.coverage
 *ssh*
