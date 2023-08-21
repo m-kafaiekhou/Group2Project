@@ -699,7 +699,46 @@ def sales_by_category(requests):
 
 
 def sales_by_employee(request): # Table, or a bar Chart.
-    orders = OrderItem.objects.all()
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+        )
+
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
     
     new_list = list()
