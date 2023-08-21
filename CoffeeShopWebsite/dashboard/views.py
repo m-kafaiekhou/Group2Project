@@ -419,51 +419,77 @@ def sales_by_time_of_day(request):
     '''
     Chart view function to get the amount of sale between two seprate times
     In a day in this month.
-    day = the day of month 
-    month = this month
-    st_time = the start of time 
-    nd_time = the end of time  
-    '''
-    day = request.GET.get("day", None)
-    month = datetime.now().month
-    st_time = request.GET.get("start_time", None)
-    nd_time = request.GET.get("end_time", None)
-
-    if day and st_time and nd_time:
-        orders = OrderItem.objects.filter(
-            order__order_date__month=month ,order__order_date__day=day, 
-            order__order_date__hour__gt=st_time, order__order_date__hour__lt=nd_time,
-        )
-    elif day == None:
-        today = datetime.now().day
-        orders = OrderItem.objects.filter(
-            order__order_date__month=month ,order__order_date__day=today, 
-            order__order_date__hour__gt=st_time, order__order_date__hour__lt=nd_time,
-        )
-    elif nd_time == None:
-        now = datetime.now().hour
-        orders = OrderItem.objects.filter(
-            order__order_date__month=month ,order__order_date__day=day, 
-            order__order_date__hour__gt=st_time, order__order_date__hour__lt=now,
-        )
-    elif (st_time and nd_time == None) or (day and st_time and nd_time == None):
-        today = datetime.now().day
-        orders = OrderItem.objects.filter(
-            order__order_date__month=month ,order__order_date__day=today, 
-        )
+    st_date = the start of date yyyy/mm/dd
+    nd_date = the end of date yyyy/mm/dd
     
-    time_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
-    total = 0
-    for order in time_sales:
-        total += order["total"]
+    '''
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    
+    if date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+        )
+
+    time_sales = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("order__order_date__date" ,"hour" ,"total")
+
+    
+    new_list = list()
+    for d in time_sales:
+        new_dict = {"datetime":str(d["order__order_date__date"])+ " " + str(d["hour"])+":00:00", "total": d["total"]}
+        new_list.append(new_dict)
+    
+
+    new_dicts = defaultdict(int)
+    for d in new_list:
+        new_dicts[d["datetime"]] += int(d["total"])
+
+    date_list = [{"datetime": date, "total":price} for date, price in new_dicts.items()]
+    sorted_date_list = sorted(date_list, key=lambda x: x["total"], reverse=True)
+
+    sale_dict = dict()
+    for d in sorted_date_list:
+        sale_dict[d["datetime"]] = round(d["total"], 2)
+
 
     return JsonResponse({
         "title": f"Sales in Today",
         "data": {
-            "labels": ["total"],
+            "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
-                "data": [total],
+                "data": list(sale_dict.values()),
             }]
         }
     })
@@ -629,11 +655,11 @@ def sales_by_employee(request): # Table, or a bar Chart.
         new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
         new_list.append(new_dict)
     
-    new_dict = defaultdict(int)
+    new_dicts = defaultdict(int)
     for d in new_list:
-        new_dict[d["staff_name"]] += int(d["total"])
+        new_dicts[d["staff_name"]] += int(d["total"])
 
-    staff_list = [{"staff_name": name, "total":price} for name, price in new_dict.items()]
+    staff_list = [{"staff_name": name, "total":price} for name, price in new_dicts.items()]
     sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
     print(sorted_staff_list)
 
@@ -641,8 +667,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
     for d in sorted_staff_list:
         sale_dict[d["staff_name"]] = round(d["total"], 2)
 
-    # context = {}
-    # return render(request, "dashboard/dashboard.html", context)
+    
     return JsonResponse({
         "title": "Category Sales",
         "data": {
