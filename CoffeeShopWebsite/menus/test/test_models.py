@@ -59,7 +59,7 @@ class CategoryTestClass(TestCase) :
             name = 'Par Cat Test',
         )
         cls.category = Category.objects.create(
-            parent_category = 'Parent Test',
+            parent_category = cls.parCategory,
             name = 'Cat Test',
         )
 
