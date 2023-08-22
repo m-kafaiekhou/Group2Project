@@ -219,8 +219,8 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect('order_details', kwargs["pk"])
 
 
-class OrderItemUpdateView(View):
-    permission_required = "orders.change_order"
+class OrderItemUpdateView(PermissionRequiredMixin, View):
+    permission_required = "orders.change_orderitem"
 
     def post(self, request, *args, **kwargs):
         order_id = kwargs['pk']
@@ -234,10 +234,11 @@ class OrderItemUpdateView(View):
         return redirect('order_details', order_id)
 
 
-class OrderListView(LoginRequiredMixin, View):
+class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_list.html"
     model_class = Order
     filter_class = OrderFilterSet
+    permission_required = "orders.view_order"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
