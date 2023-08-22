@@ -1083,6 +1083,7 @@ def total_money_spent(request):
     return render(request, "", context)
 
 
+
 def average_money_spent(request): # Not Done
     phone = request.GET.get("phone_number", None)
     
@@ -1106,6 +1107,7 @@ def average_money_spent(request): # Not Done
     return render(request, "", context)
 
 
+
 def number_of_items_bought(request):
     phone = request.GET.get("phone_number", None)
 
@@ -1125,12 +1127,12 @@ def number_of_items_bought(request):
         order__phone_number=phone 
         )
     
-    all_orders = orders.annotate(p=F("quantity")).annotate(total=Sum("quantity")).values("cafeitem__name" ,"total")
+    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
 
     sale_dict = dict()
 
     for order in all_orders:
-        sale_dict[order["cafeitem__name"]] = order["total"]
+        sale_dict[order["cafeitem__name"]] = order["quantity"]
 
     return JsonResponse({
         "title": f"Number of Each Item Bought By Customer",
@@ -1144,12 +1146,39 @@ def number_of_items_bought(request):
     })
 
 
+
 def favorite_item(request):
-    pass
+    phone = request.GET.get("phone_number", None)
+    
+    if not phone:
+        context = {}
+        return render(request, "", context)
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+
+    new_dicts = defaultdict(int)
+    for d in all_orders:
+        new_dicts[d["cafeitem__name"]] += int(d["total"])
+
+    quantity_list = [{"cafeitem__name": name, "quantity":quantity} for name, quantity in new_dicts.items()]
+    sorted_quantity_list = sorted(quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_item = sorted_quantity_list[0]
+    
+    # Favorite item is a dictionary {}
+    context = {"favorite_item":favorite_item}
+
+    return render(request, "", context)
+
 
 
 def favorite_category(request):
     pass
+
 
 
 def days_customer_went_to_coffeeshop(request):
