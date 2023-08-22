@@ -968,7 +968,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
 
 def customer_order_history(request):
     '''
-    Returns a context of data(customer_orderitem_data, customer_order_data) to 
+    Returns a context of data(customer_orderitem_data, customer_order_data)<<list of dictionaries>> to 
     The dashboard template using render method.
     st_date = the start of date yyyy/mm/dd
     nd_date = the end of date yyyy/mm/dd
@@ -1133,6 +1133,13 @@ def customer_data(request):
     # Customer ranking
     rank = ranking(phone)
 
+    # Customer attendance
+    attended_orders = Order.objects.filter(
+        phone_number=phone 
+        )
+    
+    all_attended_days = attended_orders.values("order_date")
+
 
     context = {
         "total_money_spent":total_money_spent,       # int
@@ -1140,6 +1147,7 @@ def customer_data(request):
         "favorite_item":favorite_item,               # dictionary
         "favorite_category":favorite_category,       # dictionary
         "rank":rank,                                 # int
+        "all_attended_days":all_attended_days,       # list[dict], obj
         }
 
     return render(request, "", context)
@@ -1185,6 +1193,3 @@ def number_of_items_bought(request):
     })
 
 
-
-def customer_attendance(request):
-    pass
