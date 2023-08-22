@@ -29,6 +29,20 @@ orderitem_permission = Permission.objects.filter(content_type=orderitem_content_
 
 groups = {'MANAGER':manager_group, 'CHIEF_STAFF':chief_staff_group, 'STAFF':staff_group}
 
+for perm in cafeitem_permission:
+    if perm.codename == "delete_cafeitem":
+        publisher_group.permissions.add(perm)
+
+    elif perm.codename == "change_cafeitem":
+        editor_group.permissions.add(perm)
+        publisher_group.permissions.add(perm)
+
+    elif perm.codename == "add_cafeitem":
+        author_group.permissions.add(perm)
+        editor_group.permissions.add(perm)
+        publisher_group.permissions.add(perm)
+
+    elif perm.codename == "view_cafeitem":
 
 
 class CustomUserBackend(ModelBackend):
