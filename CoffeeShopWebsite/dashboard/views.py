@@ -467,7 +467,7 @@ def all_time_sales(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def top_10_selling_items(request, fil): # year, month, day
     if fil == "year":
         year = datetime.now().year
