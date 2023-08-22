@@ -47,7 +47,7 @@ class CafeItemTestClass(TestCase):
         self.assertEqual(str(self.cafeitem.name), expected_str)
 
     def test_slug_method(self):
-        expected_slug = "Test"
+        expected_slug = "test"
         self.assertEqual(slugify(self.cafeitem.name), expected_slug)
 
 
