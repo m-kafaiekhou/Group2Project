@@ -589,7 +589,7 @@ def sales_by_category(requests):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def sales_by_employee(request): # Table, or a bar Chart.
     orders = OrderItem.objects.all()
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
