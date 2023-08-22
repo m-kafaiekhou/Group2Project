@@ -1062,3 +1062,39 @@ def customer_order_history(request):
 
 # ************************************************* Customer Demographic ************************************************* #
 
+def total_money_spent(request):
+    phone = request.GET.get("phone_number", None)
+
+    if not phone:
+        context = {}
+        return render(request, "", context)
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    
+    total = 0
+    for order in all_orders:
+        total += order["total"]
+
+    context = {"total":total}
+    return render(request, "", context)
+
+
+def number_of_items_bought(request):
+    pass
+
+
+def favorite_item(request):
+    pass
+
+
+def days_customer_went_to_coffeeshop(request):
+    pass
+
+
+def customer_rating(request):
+    pass
+
