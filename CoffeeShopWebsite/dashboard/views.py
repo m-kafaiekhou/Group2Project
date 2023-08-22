@@ -1062,49 +1062,88 @@ def customer_order_history(request):
 
 # ************************************************* Customer Demographic ************************************************* #
 
-def total_money_spent(request):
+def ranking(phone_number: str):
+    '''
+    Calculates the ranking of the Customer based on money spent.
+    '''
+    all_customers = OrderItem.objects.all()
+    all_orders = all_customers.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number" ,"total")
+
+    new_dicts = defaultdict(int)
+    for d in all_orders:
+        new_dicts[d["order__phone_number"]] += int(d["total"])
+
+    ranking_list = [{"order__phone_number": number, "total":total} for number, total in new_dicts.items()]
+    sorted_ranking_list = sorted(ranking_list, key=lambda x: x["total"], reverse=True)
+
+    ranking = 0
+    for r in range(len(sorted_ranking_list)):
+        if phone_number in sorted_ranking_list[r].keys():
+            ranking = r + 1
+            return ranking
+        else:
+            return None
+    
+
+
+def customer_data(request):
     phone = request.GET.get("phone_number", None)
 
-    if not phone:
+    if phone == None:
         context = {}
         return render(request, "", context)
 
     orders = OrderItem.objects.filter(
         order__phone_number=phone 
         )
-    
-    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
-    
-    total = 0
-    for order in all_orders:
-        total += order["total"]
 
-    context = {"total":total}
+    # Total money spent by customer
+    all_orders_price = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    total_money = 0
+    for order in all_orders_price:
+        total_money += order["total"]
+
+    total_money_spent = round(total_money, 2)
+
+    # Average of money spent by customer
+    average_money_spent = round((total_money_spent / len(all_orders_price)), 2)
+
+    # Favorite item
+    all_orders_quantity = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+    new_dicti = defaultdict(int)
+    for d in all_orders_quantity:
+        new_dicti[d["cafeitem__name"]] += int(d["quantity"])
+
+    item_quantity_list = [{"cafeitem__name": name, "quantity":quantity} for name, quantity in new_dicti.items()]
+    sorted_item_quantity_list = sorted(item_quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_item = sorted_item_quantity_list[0]
+
+    # Favorite category
+    all_orders_category = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__category__name" ,"quantity")
+    new_dictc = defaultdict(int)
+    for d in all_orders_category:
+        new_dictc[d["cafeitem__category__name"]] += int(d["quantity"])
+
+    category_quantity_list = [{"cafeitem__category__name": name, "quantity":quantity} for name, quantity in new_dictc.items()]
+    sorted_category_quantity_list= sorted(category_quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_category = sorted_category_quantity_list[0]
+
+    # Customer ranking
+    rank = ranking(phone)
+
+
+    context = {
+        "total_money_spent":total_money_spent,       # int
+        "average_money_spent":average_money_spent,   # int
+        "favorite_item":favorite_item,               # dictionary
+        "favorite_category":favorite_category,       # dictionary
+        "rank":rank,                                 # int
+        }
+
     return render(request, "", context)
 
-
-
-def average_money_spent(request): # Not Done
-    phone = request.GET.get("phone_number", None)
-    
-    if not phone:
-        context = {}
-        return render(request, "", context)
-
-    orders = OrderItem.objects.filter(
-        order__phone_number=phone 
-        )
-    
-    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
-
-    average = 0
-    for order in all_orders:
-        average += order["total"]
-
-    average = average / len(all_orders)
-
-    context = {"total":average}
-    return render(request, "", context)
 
 
 
@@ -1113,7 +1152,7 @@ def number_of_items_bought(request):
 
     if not phone:
         return JsonResponse({
-        "title": f"No Data Found",
+        "title": f"No Data Found!",
         "data": {
             "labels": [],
             "datasets": [{
@@ -1147,68 +1186,5 @@ def number_of_items_bought(request):
 
 
 
-def favorite_item(request):
-    phone = request.GET.get("phone_number", None)
-    
-    if not phone:
-        context = {}
-        return render(request, "", context)
-
-    orders = OrderItem.objects.filter(
-        order__phone_number=phone 
-        )
-    
-    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
-
-    new_dicts = defaultdict(int)
-    for d in all_orders:
-        new_dicts[d["cafeitem__name"]] += int(d["total"])
-
-    quantity_list = [{"cafeitem__name": name, "quantity":quantity} for name, quantity in new_dicts.items()]
-    sorted_quantity_list = sorted(quantity_list, key=lambda x: x["quantity"], reverse=True)
-
-    favorite_item = sorted_quantity_list[0]
-    
-    # Favorite item is a dictionary {}
-    context = {"favorite_item":favorite_item}
-
-    return render(request, "", context)
-
-
-
-def favorite_category(request):
-    phone = request.GET.get("phone_number", None)
-    
-    if not phone:
-        context = {}
-        return render(request, "", context)
-
-    orders = OrderItem.objects.filter(
-        order__phone_number=phone 
-        )
-    
-    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__category__name" ,"quantity")
-
-    new_dicts = defaultdict(int)
-    for d in all_orders:
-        new_dicts[d["cafeitem__category__name"]] += int(d["quantity"])
-
-    quantity_list = [{"cafeitem__category__name": name, "quantity":quantity} for name, quantity in new_dicts.items()]
-    sorted_quantity_list = sorted(quantity_list, key=lambda x: x["quantity"], reverse=True)
-
-    favorite_category = sorted_quantity_list[0]
-    
-    # Favorite category is a dictionary {}
-    context = {"favorite_category":favorite_category}
-
-    return render(request, "", context)
-
-
-
-def days_customer_went_to_coffeeshop(request):
+def customer_attendance(request):
     pass
-
-
-def customer_rating(request):
-    pass
-
