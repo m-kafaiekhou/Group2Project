@@ -12,7 +12,7 @@ class CustomUserAdminTest(TestCase):
         self.user_admin = UserAdmin(CustomUserModel, self.site)
 
     def test_search_fields(self):
-        self.assertEqual(self.user_admin.search_fields, ('phone_number', 'last_name', 'first_name'))
+        self.assertEqual(self.user_admin.search_fields, ('username', 'first_name', 'last_name', 'email'))
 
     def test_list_filter(self):
         expected_list_filter = ('phone_number', 'last_name', 'first_name', 'is_active', 'is_staff')
