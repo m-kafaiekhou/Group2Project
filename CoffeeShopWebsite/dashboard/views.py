@@ -447,7 +447,7 @@ def daily_sales_sum(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def all_time_sales(request):
     orders = OrderItem.objects.all()
     all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
