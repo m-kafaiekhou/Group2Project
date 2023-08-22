@@ -999,7 +999,7 @@ def customer_order_history(request):
         "customer_orderitem_data":"",
         "customer_order_data":"",
         }
-        return render(request, "dashboard/dashboard.html", context)
+        return render(request, "", context)
     
 
     if st_date and nd_date:
@@ -1056,7 +1056,7 @@ def customer_order_history(request):
         "customer_orderitem_data":orders,
         "customer_order_data":order_data,
         }
-    return render(request, "dashboard/dashboard.html", context)
+    return render(request, "", context)
 
 
 
@@ -1101,7 +1101,7 @@ def average_money_spent(request): # Not Done
         average += order["total"]
 
     average = average / len(all_orders)
-    
+
     context = {"total":average}
     return render(request, "", context)
 
