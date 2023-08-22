@@ -6,6 +6,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from .models import CustomUserModel
 import datetime
+from menus.models import CafeItem, Category
+from order.models import Order, OrderItem
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+
 
 
 class CustomUserBackend(ModelBackend):
