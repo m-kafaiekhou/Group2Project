@@ -1064,7 +1064,7 @@ def customer_order_history(request):
 
 def ranking(phone_number: str):
     '''
-    Calculates the ranking of the Customer based on money spent.
+    This function Calculates the ranking of the Customer based on money spent.
     '''
     all_customers = OrderItem.objects.all()
     all_orders = all_customers.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number" ,"total")
