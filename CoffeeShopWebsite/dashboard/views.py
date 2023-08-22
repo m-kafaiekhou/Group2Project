@@ -712,7 +712,7 @@ def most_popular_items(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def order_status_report(request, start_date, end_date, status: str):  # Table, not a Chart. status= "D", "C", "A"
     orders = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date, status=status)
     grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
