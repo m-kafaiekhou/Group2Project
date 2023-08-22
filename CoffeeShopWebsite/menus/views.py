@@ -87,8 +87,6 @@ class MenuDetail(DetailView):
     model = CafeItem
     template_name = "menus/detail.html"
     context_object_name = "cafeitem"
-    slug_field = "name"
-    slug_url_kwarg = "cafeitem_name"
 
 
 class autocomplete(View):
