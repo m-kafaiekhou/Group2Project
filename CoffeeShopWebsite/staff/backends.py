@@ -15,7 +15,17 @@ manager_group, created = Group.objects.get_or_create(name="MANAGER")
 chief_staff_group, created = Group.objects.get_or_create(name="CHIEF_STAFF")
 staff_group, created = Group.objects.get_or_create(name="STAFF")
 
+cafeitem_content_type = ContentType.objects.get_for_model(CafeItem)
+cafeitem_permission = Permission.objects.filter(content_type=cafeitem_content_type)
 
+category_content_type = ContentType.objects.get_for_model(Category)
+category_permission = Permission.objects.filter(content_type=category_content_type)
+
+order_content_type = ContentType.objects.get_for_model(Order)
+order_permission = Permission.objects.filter(content_type=order_content_type)
+
+orderitem_content_type = ContentType.objects.get_for_model(OrderItem)
+orderitem_permission = Permission.objects.filter(content_type=orderitem_content_type)
 
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):
