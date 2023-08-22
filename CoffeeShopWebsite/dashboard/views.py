@@ -1083,11 +1083,53 @@ def total_money_spent(request):
     return render(request, "", context)
 
 
-def number_of_items_bought(request):
+def average_money_spent_per_month(request):
     pass
 
 
+def number_of_items_bought(request):
+    phone = request.GET.get("phone_number", None)
+
+    if not phone:
+        return JsonResponse({
+        "title": f"No Data Found",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
+            }]
+        }
+    })
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("quantity")).annotate(total=Sum("quantity")).values("cafeitem__name" ,"total")
+
+    sale_dict = dict()
+
+    for order in all_orders:
+        sale_dict[order["cafeitem__name"]] = order["total"]
+
+    return JsonResponse({
+        "title": f"Number of Each Item Bought By Customer",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
 def favorite_item(request):
+    pass
+
+
+def favorite_category(request):
     pass
 
 
