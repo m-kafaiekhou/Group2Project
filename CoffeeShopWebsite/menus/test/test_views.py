@@ -2,11 +2,15 @@ from django.test import TestCase
 from django.urls import reverse
 # from menus.views import Menu, MenuDetail, MenuSearch
 from menus.models import Category, CafeItem
+from coffeeshop.models import Footer
+import tempfile
 
 
 class MenuViewTest(TestCase):
 
     def setUp(self) -> None:
+        self.footer = Footer.objects.create()
+
         self.parCategory = Category.objects.create(
             name='Par Cat Test',
         )
@@ -21,6 +25,7 @@ class MenuViewTest(TestCase):
             is_available=True,
             price=50,
             category=self.category,
+            image=tempfile.NamedTemporaryFile(suffix=".jpg").name
         )
 
         self.menu_url = reverse("menus:menu")
@@ -43,8 +48,8 @@ class MenuViewTest(TestCase):
         self.assertTemplateUsed(resp, 'menus/search_result.html')
 
     def test_search_view(self):
-        resp = self.client.get(self.search_url, {'search': 'esp'})
-        self.assertEqual(CafeItem.objects.filter(title__contains='esp').count(), 1)
-        self.assertEqual(CafeItem.objects.filter(title__contains='kljhgfcb').count(), 0)
+        resp = self.client.get(self.menu_search_url, {'search': 'esp'})
+        self.assertEqual(CafeItem.objects.filter(name__contains='Tes').count(), 1)
+        self.assertEqual(CafeItem.objects.filter(name__contains='kljhgfcb').count(), 0)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'menus/search_result.html')
