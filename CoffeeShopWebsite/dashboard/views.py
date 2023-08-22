@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import permission_required
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
@@ -9,6 +10,7 @@ from django.http import JsonResponse
 # Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
+from coffeeshop.models import Review
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
@@ -294,7 +296,7 @@ class DashboardView(View):
 
 
 # ********************************* Chart Area ********************************* #
-
+@permission_required("coffeeshop.view_review")
 def year_filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
     options = [order["year"] for order in grouped_orders]
