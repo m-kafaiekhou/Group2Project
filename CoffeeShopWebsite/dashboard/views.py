@@ -357,7 +357,7 @@ def yearly_sales_chart(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def monthly_sales_chart(request):
     month = datetime.now().month
     month_name = datetime.now().strftime("%B")
