@@ -24,8 +24,8 @@ class MenuViewTest(TestCase):
         )
 
         self.menu_url = reverse("menus:menu")
-        self.menu_detail_url = reverse("menus:menu_detail")
-        self.menu_search_url = reverse("menus:search_result")
+        self.menu_detail_url = reverse("menus:menu_detail", kwargs={'cafeitem_name': self.cafeitem.slug()})
+        self.menu_search_url = reverse("menus:menu_search")
 
     def test_Menu_view(self):
         resp = self.client.get(self.menu_url)
