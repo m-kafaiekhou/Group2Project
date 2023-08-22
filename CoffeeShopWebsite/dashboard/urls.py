@@ -43,4 +43,6 @@ urlpatterns += [
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
     path("chart/sales/status/", order_status_report, name="status"),
     path("chart/sales/customer-history/", customer_order_history, name="customer-history"),
+    path("chart/sales/customer-money-spent/", total_money_spent, name="customer-money-spent"),
+    path("chart/sales/customer-average-spent/", average_money_spent, name="customer-average-spent"),
 ]
