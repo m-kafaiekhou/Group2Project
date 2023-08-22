@@ -551,7 +551,7 @@ def top_10_customers(requests):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def sales_by_category(requests):
     orders = OrderItem.objects.all()
     all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
