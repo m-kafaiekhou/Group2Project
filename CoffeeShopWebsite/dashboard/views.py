@@ -635,7 +635,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
     grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
