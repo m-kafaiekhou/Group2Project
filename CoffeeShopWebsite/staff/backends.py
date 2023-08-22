@@ -80,6 +80,21 @@ for perm in order_permission:
         chief_staff_group.permissions.add(perm)
         staff_group.permissions.add(perm)
 
+for perm in orderitem_permission:
+    if perm.codename == "delete_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "change_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "add_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "view_order":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):
         username = phone_number
