@@ -46,7 +46,26 @@ for perm in cafeitem_permission:
         manager_group.permissions.add(perm)
         chief_staff_group.permissions.add(perm)
         staff_group.permissions.add(perm)
-        
+
+for perm in category_permission:
+    if perm.codename == "delete_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "change_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "add_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "view_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+
+
 
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):
