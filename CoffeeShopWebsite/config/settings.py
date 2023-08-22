@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+import sys
 
 # Initialise environment variables
 env = environ.Env()
@@ -105,6 +106,12 @@ DATABASES = {
         "PORT": env("DATABASE_PORT"),
     }
 }
+
+if 'test' in sys.argv:
+    for db_test in ['default']: # Add other DBs if needed
+        DATABASES[db_test]['ENGINE'] = 'django.db.backends.sqlite3'
+        if '--keepdb' in sys.argv:
+            DATABASES[db_test]['TEST']['NAME'] = '/dev/shm/' + db_test + '.test.db.sqlite3'
 
 
 # Password validation
