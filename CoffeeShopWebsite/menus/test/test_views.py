@@ -24,7 +24,7 @@ class MenuViewTest(TestCase):
         )
 
         self.menu_url = reverse("menus:menu")
-        self.menu_detail_url = reverse("menus:detail")
+        self.menu_detail_url = reverse("menus:menu_detail")
         self.menu_search_url = reverse("menus:search_result")
 
     def test_Menu_view(self):
