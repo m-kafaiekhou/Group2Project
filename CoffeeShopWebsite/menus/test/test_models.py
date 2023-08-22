@@ -11,7 +11,6 @@ class CafeItemTestClass(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.category = Category.objects.create(name="Test Category")
-        # return super().setUpTestData()
         cls.cafeitem = CafeItem.objects.create(
             name='Test',
             description='Just testing...',
@@ -65,9 +64,9 @@ class CategoryTestClass(TestCase):
 
     def test_create_category(self):
         self.assertEqual(self.category.name, "Cat Test")
-        self.assertEqual(self.category.parent_category, "Parent Test")
+        self.assertEqual(self.category.parent_category, self.parCategory)
         self.assertIsInstance(self.cafeitem.date_added, datetime.datetime)
 
     def test_str_method(self):
         expected_str = "Cat Test"
-        self.assertEqual(str(self.name), expected_str)
+        self.assertEqual(str(self.category), expected_str)
