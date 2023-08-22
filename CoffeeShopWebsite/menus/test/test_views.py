@@ -1,14 +1,17 @@
 from django.test import TestCase
 from django.urls import reverse
-from views import Menu, MenuDetail, MenuSearch
-from models import Category, CafeItem
+# from menus.views import Menu, MenuDetail, MenuSearch
+from menus.models import Category, CafeItem
 
 
 class MenuViewTest(TestCase):
     
     def setUp(self) -> None:
+        self.parCategory = Category.objects.create(
+            name='Par Cat Test',
+        )
         self.category = Category.objects.create(
-            parent_category = 'Parent Test',
+            parent_category = self.parCategory,
             name = 'Cat Test',
         )
         
