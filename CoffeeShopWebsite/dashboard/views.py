@@ -1083,8 +1083,27 @@ def total_money_spent(request):
     return render(request, "", context)
 
 
-def average_money_spent_per_month(request):
-    pass
+def average_money_spent(request): # Not Done
+    phone = request.GET.get("phone_number", None)
+    
+    if not phone:
+        context = {}
+        return render(request, "", context)
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+
+    average = 0
+    for order in all_orders:
+        average += order["total"]
+
+    average = average / len(all_orders)
+    
+    context = {"total":average}
+    return render(request, "", context)
 
 
 def number_of_items_bought(request):
