@@ -305,7 +305,7 @@ def year_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def month_filter_options(request):
     grouped_orders = Order.objects.annotate(day=ExtractMonth("order_date")).values("day").order_by("-day").distinct()
     options = [order["day"] for order in grouped_orders]
@@ -314,7 +314,7 @@ def month_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def day_filter_options(request):
     grouped_orders = Order.objects.annotate(hour=ExtractHour("order_date")).values("hour").order_by("-hour").distinct()
     options = [order["hour"] for order in grouped_orders]
