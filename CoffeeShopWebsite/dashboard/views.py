@@ -668,7 +668,7 @@ def peak_business_hour(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def most_popular_items(request):
     orders = OrderItem.objects.all()
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
