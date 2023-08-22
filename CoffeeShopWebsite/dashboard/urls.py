@@ -46,5 +46,4 @@ urlpatterns += [
     # Customer Demographic
     path("chart/sales/customer-data/", customer_data, name="customer-data"),
     path("chart/sales/customer-items-bought/", number_of_items_bought, name="customer-items-bought"),
-    path("chart/sales/customer-attendance/", customer_attendance, name="customer-attendance"),
 ]
