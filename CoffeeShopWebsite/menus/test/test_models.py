@@ -44,11 +44,11 @@ class CafeItemTestClass(TestCase):
 
     def test_str_method(self):
         expected_str = "Test"
-        self.assertEqual(str(self.name), expected_str)
+        self.assertEqual(str(self.cafeitem.name), expected_str)
 
     def test_slug_method(self):
         expected_slug = "Test"
-        self.assertEqual(slugify(self.name), expected_slug)
+        self.assertEqual(slugify(self.cafeitem.name), expected_slug)
 
 
 class CategoryTestClass(TestCase):
@@ -60,6 +60,13 @@ class CategoryTestClass(TestCase):
         cls.category = Category.objects.create(
             parent_category=cls.parCategory,
             name='Cat Test',
+        )
+        cls.cafeitem = CafeItem.objects.create(
+            name='Test',
+            description='Just testing...',
+            is_available=True,
+            price=50,
+            category=cls.category,
         )
 
     def test_create_category(self):
