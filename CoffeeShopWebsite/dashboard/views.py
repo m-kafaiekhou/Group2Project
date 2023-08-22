@@ -283,7 +283,7 @@ class DashboardView(View):
         return render(request, self.template_view)
 
 
-# ********************************* Chart Area ********************************* #
+# ************************************************* Chart Area ************************************************* #
 
 def year_filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
@@ -415,17 +415,146 @@ def daily_sales_chart(request):
     })
 
 
-def daily_sales_sum(request):
-    today = datetime.now().day
-    orders = OrderItem.objects.filter(order__order_date__day=today)
-    daily_sales = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+def sales_by_time_of_day(request):
+    '''
+    Chart view function to get the amount of sale between two seprate times
+    In a day in this month.
+    st_date = the start of date yyyy/mm/dd
+    nd_date = the end of date yyyy/mm/dd
+    
+    '''
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+        )
+
+    time_sales = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
+        .values("hour").annotate(total=Sum("price")).values("order__order_date__date" ,"hour" ,"total")
+
+    
+    new_list = list()
+    for d in time_sales:
+        new_dict = {"datetime":str(d["order__order_date__date"])+ " " + str(d["hour"])+":00:00", "total": d["total"]}
+        new_list.append(new_dict)
+    
+
+    new_dicts = defaultdict(int)
+    for d in new_list:
+        new_dicts[d["datetime"]] += int(d["total"])
+
+    date_list = [{"datetime": date, "total":price} for date, price in new_dicts.items()]
+    sorted_date_list = sorted(date_list, key=lambda x: x["total"], reverse=True)
+
+    sale_dict = dict()
+    for d in sorted_date_list:
+        sale_dict[d["datetime"]] = round(d["total"], 2)
+
+
+    return JsonResponse({
+        "title": f"Sales by Time of Day Between {st_date} and {nd_date}",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
+def total_sales(request):
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+            )
+    elif nd_date == None:
+        now = datetime.now()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=now,
+            )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+            )
+    elif st_date and nd_date == None:
+        orders = OrderItem.objects.all()
+    
+    all_orders_in_range = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
     
     total = 0
-    for order in daily_sales:
+    for order in all_orders_in_range:
         total += order["total"]
 
     return JsonResponse({
-        "title": f"Sales in Today",
+        "title": f"Total Sales Between {st_date} and {nd_date}",
         "data": {
             "labels": ["total"],
             "datasets": [{
@@ -436,36 +565,45 @@ def daily_sales_sum(request):
     })
 
 
-def all_time_sales(request):
-    orders = OrderItem.objects.all()
-    all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+def top_10_selling_items(request): # year, month, day
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
     
-    total = 0
-    for order in all_orders:
-        total += order["total"]
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
 
-    return JsonResponse({
-        "title": "All Time Sales",
-        "data": {
-            "labels": ["total"],
-            "datasets": [{
-                "label": "Amount (T)",
-                "data": [total],
-            }]
-        }
-    })
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+            )
+    elif nd_date == None:
+        now = datetime.now()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=now,
+            )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+            )
+    elif st_date and nd_date == None:
+        orders = OrderItem.objects.all()
 
 
-def top_10_selling_items(request, fil): # year, month, day
-    if fil == "year":
-        year = datetime.now().year
-        orders = OrderItem.objects.filter(order__order_date__year=year)
-    elif fil == "month":
-        month = datetime.now().month
-        orders = OrderItem.objects.filter(order__order_date__month=month)
-    elif fil == "day":
-        day = datetime.now().day
-        orders = OrderItem.objects.filter(order__order_date__day=day)
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
 
     new_dict = defaultdict(int)
@@ -486,7 +624,7 @@ def top_10_selling_items(request, fil): # year, month, day
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
 
     return JsonResponse({
-        "title": f"Top 10 Best Sellers in {fil}",
+        "title": f"Top 10 Best Sellers",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -534,6 +672,17 @@ def top_10_customers(requests):
             "labels": list(sale_dict.keys()),
             "datasets": [{
                 "label": "Amount (T)",
+                'borderColor': '#d048b6',
+                'borderWidth': 2,
+                'borderDash': [],
+                'borderDashOffset': 0.0,
+                'pointBackgroundColor': '#d048b6',
+                'pointBorderColor': 'rgba(255,255,255,0)',
+                'pointHoverBackgroundColor': '#d048b6',
+                'pointBorderWidth': 20,
+                'pointHoverRadius': 4,
+                'pointHoverBorderWidth': 15,
+                'pointRadius': 4,
                 "data": list(sale_dict.values()),
             }]
         }
@@ -579,7 +728,46 @@ def sales_by_category(requests):
 
 
 def sales_by_employee(request): # Table, or a bar Chart.
-    orders = OrderItem.objects.all()
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+        )
+
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
     
     new_list = list()
@@ -587,11 +775,11 @@ def sales_by_employee(request): # Table, or a bar Chart.
         new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
         new_list.append(new_dict)
     
-    new_dict = defaultdict(int)
+    new_dicts = defaultdict(int)
     for d in new_list:
-        new_dict[d["staff_name"]] += int(d["total"])
+        new_dicts[d["staff_name"]] += int(d["total"])
 
-    staff_list = [{"staff_name": name, "total":price} for name, price in new_dict.items()]
+    staff_list = [{"staff_name": name, "total":price} for name, price in new_dicts.items()]
     sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
     print(sorted_staff_list)
 
@@ -599,10 +787,9 @@ def sales_by_employee(request): # Table, or a bar Chart.
     for d in sorted_staff_list:
         sale_dict[d["staff_name"]] = round(d["total"], 2)
 
-    # context = {}
-    # return render(request, "dashboard/dashboard.html", context)
+    
     return JsonResponse({
-        "title": "Category Sales",
+        "title": "Employee Sales",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -635,7 +822,7 @@ def peak_business_hour(request):
         sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
 
     return JsonResponse({
-        "title": f"Peak Hour Sales",
+        "title": f"Peak Business Hour Sales",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -701,8 +888,65 @@ def most_popular_items(request):
     })
 
 
-def order_status_report(request, start_date, end_date, status: str):  # Table, not a Chart. status= "D", "C", "A"
-    orders = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date, status=status)
+def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    status = request.GET.get("status", None)
+
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if status == None:
+        return JsonResponse({
+        "title": f"No Data",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
+            }]
+        }
+    })
+
+    if st_date and nd_date:
+        orders = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=nd_date, 
+            status=status,
+            )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=today, 
+            status=status,
+            )
+    elif st_date == None:
+        orders = Order.objects.filter( 
+            order_date__date=nd_date, 
+            status=status,
+            )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = Order.objects.filter(
+            order_date__date=today, 
+            status=status,
+            )
+
+    
     grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
 
     sale_dict = dict()
@@ -711,7 +955,7 @@ def order_status_report(request, start_date, end_date, status: str):  # Table, n
         sale_dict[group["status"]] = group["count"]
 
     return JsonResponse({
-        "title": f"Order Status Count between {start_date} and {end_date}",
+        "title": f"Order Status Count between {st_date} and {nd_date}",
         "data": {
             "labels": list(sale_dict.keys()),
             "datasets": [{
@@ -720,3 +964,232 @@ def order_status_report(request, start_date, end_date, status: str):  # Table, n
             }]
         }
     })
+
+
+def customer_order_history(request):
+    '''
+    Returns a context of data(customer_orderitem_data, customer_order_data)<<list of dictionaries>> to 
+    The dashboard template using render method.
+    st_date = the start of date yyyy/mm/dd
+    nd_date = the end of date yyyy/mm/dd
+    phone = the customer phone number(order__phone_number).
+    '''
+    date1 = request.GET.get("start_date", None)
+    date2 = request.GET.get("end_date", None)
+    phone = request.GET.get("phone_number", None)
+
+    if date1 and date2 == None:
+        st_date = None
+        nd_date = None
+    elif date1 == None:
+        st_date = None
+        nd_date = date2
+    elif date2 == None:
+        st_date = date1
+        nd_date = None
+    elif date2 > date1:
+        st_date = date1
+        nd_date = date2
+    elif date1 > date2:
+        st_date = date2
+        nd_date = date1
+
+    if phone == None:
+        context = {
+        "customer_orderitem_data":"",
+        "customer_order_data":"",
+        }
+        return render(request, "", context)
+    
+
+    if st_date and nd_date:
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=nd_date,
+            order__phone_number=phone,
+        )
+    elif nd_date == None:
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date__gt=st_date, 
+            order__order_date__date__lt=today,
+            order__phone_number=phone,
+        )
+    elif st_date == None:
+        orders = OrderItem.objects.filter(
+            order__order_date__date=nd_date,
+            order__phone_number=phone, 
+        )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        orders = OrderItem.objects.filter(
+            order__order_date__date=today, 
+            order__phone_number=phone,
+        )
+
+    if st_date and nd_date:
+        order_data = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=nd_date, 
+            phone_number=phone,
+            )
+    elif nd_date == None:
+        today = datetime.now().date()
+        order_data = Order.objects.filter(
+            order_date__date__gt=st_date, 
+            order_date__date__lt=today, 
+            phone_number=phone,
+            )
+    elif st_date == None:
+        order_data = Order.objects.filter( 
+            order_date_date=nd_date, 
+            phone_number=phone,
+            )
+    elif (st_date and nd_date == None):
+        today = datetime.now().date()
+        order_data = Order.objects.filter(
+            order_date__date=today, 
+            phone_number=phone,
+            )
+    
+    context = {
+        "customer_orderitem_data":orders,
+        "customer_order_data":order_data,
+        }
+    return render(request, "", context)
+
+
+
+# ************************************************* Customer Demographic ************************************************* #
+
+def ranking(phone_number: str):
+    '''
+    This function Calculates the ranking of the Customer based on money spent.
+    '''
+    all_customers = OrderItem.objects.all()
+    all_orders = all_customers.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number" ,"total")
+
+    new_dicts = defaultdict(int)
+    for d in all_orders:
+        new_dicts[d["order__phone_number"]] += int(d["total"])
+
+    ranking_list = [{"order__phone_number": number, "total":total} for number, total in new_dicts.items()]
+    sorted_ranking_list = sorted(ranking_list, key=lambda x: x["total"], reverse=True)
+
+    ranking = 0
+    for r in range(len(sorted_ranking_list)):
+        if phone_number in sorted_ranking_list[r].keys():
+            ranking = r + 1
+            return ranking
+        else:
+            return None
+    
+
+
+def customer_data(request):
+    phone = request.GET.get("phone_number", None)
+
+    if phone == None:
+        context = {}
+        return render(request, "", context)
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+
+    # Total money spent by customer
+    all_orders_price = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
+    total_money = 0
+    for order in all_orders_price:
+        total_money += order["total"]
+
+    total_money_spent = round(total_money, 2)
+
+    # Average of money spent by customer
+    average_money_spent = round((total_money_spent / len(all_orders_price)), 2)
+
+    # Favorite item
+    all_orders_quantity = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+    new_dicti = defaultdict(int)
+    for d in all_orders_quantity:
+        new_dicti[d["cafeitem__name"]] += int(d["quantity"])
+
+    item_quantity_list = [{"cafeitem__name": name, "quantity":quantity} for name, quantity in new_dicti.items()]
+    sorted_item_quantity_list = sorted(item_quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_item = sorted_item_quantity_list[0]
+
+    # Favorite category
+    all_orders_category = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__category__name" ,"quantity")
+    new_dictc = defaultdict(int)
+    for d in all_orders_category:
+        new_dictc[d["cafeitem__category__name"]] += int(d["quantity"])
+
+    category_quantity_list = [{"cafeitem__category__name": name, "quantity":quantity} for name, quantity in new_dictc.items()]
+    sorted_category_quantity_list= sorted(category_quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_category = sorted_category_quantity_list[0]
+
+    # Customer ranking
+    rank = ranking(phone)
+
+    # Customer attendance
+    attended_orders = Order.objects.filter(
+        phone_number=phone 
+        )
+    
+    all_attended_days = attended_orders.values("order_date")
+
+
+    context = {
+        "total_money_spent":total_money_spent,       # int
+        "average_money_spent":average_money_spent,   # int
+        "favorite_item":favorite_item,               # dictionary
+        "favorite_category":favorite_category,       # dictionary
+        "rank":rank,                                 # int
+        "all_attended_days":all_attended_days,       # list[dict], obj
+        }
+
+    return render(request, "", context)
+
+
+
+
+def number_of_items_bought(request):
+    phone = request.GET.get("phone_number", None)
+
+    if not phone:
+        return JsonResponse({
+        "title": f"No Data Found!",
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": [],
+            }]
+        }
+    })
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+
+    sale_dict = dict()
+
+    for order in all_orders:
+        sale_dict[order["cafeitem__name"]] = order["quantity"]
+
+    return JsonResponse({
+        "title": f"Number of Each Item Bought By Customer",
+        "data": {
+            "labels": list(sale_dict.keys()),
+            "datasets": [{
+                "label": "Amount (T)",
+                "data": list(sale_dict.values()),
+            }]
+        }
+    })
+
+
