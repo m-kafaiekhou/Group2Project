@@ -1,6 +1,6 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
@@ -19,10 +19,11 @@ from datetime import datetime
 from collections import defaultdict
 
 
-class ItemListView(LoginRequiredMixin, View):
+class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
     filter_class = ItemFilterSet
+    permission_required = "menus.view_cafeitem"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
