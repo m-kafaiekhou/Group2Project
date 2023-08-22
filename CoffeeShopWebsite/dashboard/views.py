@@ -160,10 +160,11 @@ class AddItemView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect('add_item')
 
 
-class AddCategoryView(LoginRequiredMixin, View):
+class AddCategoryView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "staff/category_add.html"
     model_class = Category
     form_class = forms.AddCategoryForm
+    permission_required = "menus.add_category"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
