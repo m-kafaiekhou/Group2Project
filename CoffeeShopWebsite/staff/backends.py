@@ -8,6 +8,7 @@ from .models import CustomUserModel
 import datetime
 from menus.models import CafeItem, Category
 from order.models import Order, OrderItem
+from coffeeshop.models import Review
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
@@ -27,7 +28,14 @@ order_permission = Permission.objects.filter(content_type=order_content_type)
 orderitem_content_type = ContentType.objects.get_for_model(OrderItem)
 orderitem_permission = Permission.objects.filter(content_type=orderitem_content_type)
 
+review_content_type = ContentType.objects.get_for_model(Review)
+orderitem_permission = Permission.objects.filter(content_type=review_content_type)
+
 groups = {'MANAGER':manager_group, 'CHIEF_STAFF':chief_staff_group, 'STAFF':staff_group}
+
+for perm in orderitem_permission:
+    if perm.codename == "view_review":
+        manager_group.permissions.add(perm)
 
 for perm in cafeitem_permission:
     if perm.codename == "delete_cafeitem":
