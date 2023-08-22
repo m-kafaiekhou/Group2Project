@@ -179,10 +179,11 @@ class AddCategoryView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect('add_category')
 
 
-class OrderDetailView(LoginRequiredMixin, View):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_detail.html"
     model_class = Order
     form_class = forms.OrderUpdateForm
+    permission_required = "orders.change_order"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
@@ -219,6 +220,8 @@ class OrderDetailView(LoginRequiredMixin, View):
 
 
 class OrderItemUpdateView(View):
+    permission_required = "orders.change_order"
+
     def post(self, request, *args, **kwargs):
         order_id = kwargs['pk']
         order_item_id = request.POST.get('orderitem')
