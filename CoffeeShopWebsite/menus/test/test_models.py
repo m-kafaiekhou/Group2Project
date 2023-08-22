@@ -6,7 +6,8 @@ from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.defaultfilters import slugify
 
-class CafeItemTestClass(TestCase) :
+
+class CafeItemTestClass(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.category = Category.objects.create(name="Test Category")
@@ -54,6 +55,9 @@ class CafeItemTestClass(TestCase) :
 class CategoryTestClass(TestCase) :
     @classmethod
     def setUpTestData(cls) -> None:
+        cls.parCategory = Category.objects.create(
+            name = 'Par Cat Test',
+        )
         cls.category = Category.objects.create(
             parent_category = 'Parent Test',
             name = 'Cat Test',
