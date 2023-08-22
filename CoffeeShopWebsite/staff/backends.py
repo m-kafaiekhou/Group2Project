@@ -27,6 +27,10 @@ order_permission = Permission.objects.filter(content_type=order_content_type)
 orderitem_content_type = ContentType.objects.get_for_model(OrderItem)
 orderitem_permission = Permission.objects.filter(content_type=orderitem_content_type)
 
+groups = {'MANAGER':manager_group, 'CHIEF_STAFF':chief_staff_group, 'STAFF':staff_group}
+
+
+
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):
         username = phone_number
@@ -49,6 +53,7 @@ class CustomUserBackend(ModelBackend):
                         CustomUserModel, phone_number=request.session["phone_number"]
                     )
                     del request.session["otp"]
+                    user.groups.add(groups[user.get_status()])
                     return user
                 else:
                     messages.error(

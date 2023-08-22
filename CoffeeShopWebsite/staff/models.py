@@ -30,4 +30,4 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
         return self.phone_number
 
     def get_status(self):
-        pass
+        pass # it must return 'MANAGER' OR 'CHIEF_STAFF' OR 'STAFF'.
