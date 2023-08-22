@@ -519,7 +519,7 @@ def top_10_selling_items(request, fil): # year, month, day
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def top_10_customers(requests):
     orders = OrderItem.objects.all()
     all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
