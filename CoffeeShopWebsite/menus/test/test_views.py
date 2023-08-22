@@ -29,7 +29,7 @@ class MenuViewTest(TestCase):
         )
 
         self.menu_url = reverse("menus:menu")
-        self.menu_detail_url = reverse("menus:menu_detail", kwargs={'cafeitem_name': self.cafeitem.slug()})
+        self.menu_detail_url = reverse("menus:menu_detail", kwargs={'pk': self.cafeitem.pk})
         self.menu_search_url = reverse("menus:menu_search")
 
     def test_Menu_view(self):
@@ -37,8 +37,10 @@ class MenuViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'menus/menu.html')
 
-    def test_MenuDeatail_view(self):
+    def test_MenuDetail_view(self):
+        print("********************************", self.menu_detail_url, "*****************************************")
         resp = self.client.get(self.menu_detail_url)
+        print(resp)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'menus/detail.html')
 
