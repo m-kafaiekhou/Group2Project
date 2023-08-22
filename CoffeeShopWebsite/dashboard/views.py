@@ -1177,7 +1177,31 @@ def favorite_item(request):
 
 
 def favorite_category(request):
-    pass
+    phone = request.GET.get("phone_number", None)
+    
+    if not phone:
+        context = {}
+        return render(request, "", context)
+
+    orders = OrderItem.objects.filter(
+        order__phone_number=phone 
+        )
+    
+    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__category__name" ,"quantity")
+
+    new_dicts = defaultdict(int)
+    for d in all_orders:
+        new_dicts[d["cafeitem__category__name"]] += int(d["quantity"])
+
+    quantity_list = [{"cafeitem__category__name": name, "quantity":quantity} for name, quantity in new_dicts.items()]
+    sorted_quantity_list = sorted(quantity_list, key=lambda x: x["quantity"], reverse=True)
+
+    favorite_category = sorted_quantity_list[0]
+    
+    # Favorite category is a dictionary {}
+    context = {"favorite_category":favorite_category}
+
+    return render(request, "", context)
 
 
 
