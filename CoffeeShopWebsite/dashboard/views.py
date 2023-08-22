@@ -392,7 +392,7 @@ def monthly_sales_chart(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def daily_sales_chart(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
