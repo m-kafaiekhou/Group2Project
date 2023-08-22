@@ -9,5 +9,5 @@ class UrlsTestClass(SimpleTestCase):
         self.assertEquals(resolve(url).func.view_class, Menu)
 
     def test_menu_details(self):
-        url = reverse("menus:detail", kwargs={'id': 1})
+        url = reverse("menus:menu_detail", kwargs={'id': 1})
         self.assertEquals(resolve(url).func.view_class, MenuDetail)
