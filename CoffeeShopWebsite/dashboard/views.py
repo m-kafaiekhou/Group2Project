@@ -323,7 +323,7 @@ def day_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def yearly_sales_chart(request):
     this_year = datetime.now().year
     orders = OrderItem.objects.filter(order__order_date__year=this_year)
