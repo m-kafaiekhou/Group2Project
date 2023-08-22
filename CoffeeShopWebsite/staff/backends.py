@@ -31,19 +31,22 @@ groups = {'MANAGER':manager_group, 'CHIEF_STAFF':chief_staff_group, 'STAFF':staf
 
 for perm in cafeitem_permission:
     if perm.codename == "delete_cafeitem":
-        publisher_group.permissions.add(perm)
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
 
     elif perm.codename == "change_cafeitem":
-        editor_group.permissions.add(perm)
-        publisher_group.permissions.add(perm)
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
 
     elif perm.codename == "add_cafeitem":
-        author_group.permissions.add(perm)
-        editor_group.permissions.add(perm)
-        publisher_group.permissions.add(perm)
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
 
     elif perm.codename == "view_cafeitem":
-
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+        
 
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):
