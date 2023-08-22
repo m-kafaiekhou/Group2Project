@@ -58,10 +58,11 @@ class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
         pass
 
 
-class CategoryListView(LoginRequiredMixin, View):
+class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/category_list.html"
     model_class = Category
     filter_class = CategoryFilterSet
+    permission_required = "menus.view_category"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
@@ -95,10 +96,11 @@ class CategoryListView(LoginRequiredMixin, View):
         pass
 
 
-class ItemDetailView(LoginRequiredMixin, View):
+class ItemDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/item_detail.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
+    permission_required = "menus.add_cafeitem"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
@@ -117,10 +119,11 @@ class ItemDetailView(LoginRequiredMixin, View):
         redirect('item_detail', kwargs['pk'])
 
 
-class CategoryDetailView(LoginRequiredMixin, View):
+class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/category_detail.html"
     model_class = Category
     form_class = forms.AddCategoryForm
+    permission_required = "menus.add_category"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
