@@ -84,17 +84,20 @@
     <!--================ Search End ================-->
 
     <!--================ Logo Start ================-->
+    {% if hp.logo_section_is_active %}
     <div class="container-fluid py-5">
         <div class="container">
             <div class="section-title">
-                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Logo Fun</h4>
-                <h1 class="display-4">Our Beloved Logo</h1>
+                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">{{ hp.logo_section_title }}</h4>
+                <h1 class="display-4">{{ hp.logo_section_description }}</h1>
             </div>
             <div class="d-flex justify-content-center ">
-                <img style="width: 75%;" src="{% static '/logo.png' %}" alt="">
+                <img style="width: 75%;" src="{{ hp.logo_image.url }}" alt="">
             </div>
         </div>
     </div>
+    {% endif %}
+
     <!--================ Logo End ================-->
 
     <!--================ About Start ================-->
