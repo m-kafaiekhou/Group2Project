@@ -85,6 +85,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "coffeeshop.context_processors.homepage_context",
+                "coffeeshop.context_processors.footer_context",
             ],
         },
     },
@@ -107,11 +108,13 @@ DATABASES = {
     }
 }
 
-if 'test' in sys.argv:
-    for db_test in ['default']: # Add other DBs if needed
-        DATABASES[db_test]['ENGINE'] = 'django.db.backends.sqlite3'
-        if '--keepdb' in sys.argv:
-            DATABASES[db_test]['TEST']['NAME'] = '/dev/shm/' + db_test + '.test.db.sqlite3'
+if "test" in sys.argv:
+    for db_test in ["default"]:  # Add other DBs if needed
+        DATABASES[db_test]["ENGINE"] = "django.db.backends.sqlite3"
+        if "--keepdb" in sys.argv:
+            DATABASES[db_test]["TEST"]["NAME"] = (
+                "/dev/shm/" + db_test + ".test.db.sqlite3"
+            )
 
 
 # Password validation
