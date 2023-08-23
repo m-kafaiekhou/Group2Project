@@ -435,8 +435,7 @@ def sales_by_time_of_day(request):
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
@@ -524,8 +523,7 @@ def total_sales(request):
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
@@ -582,8 +580,7 @@ def top_10_selling_items(request): # year, month, day
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
@@ -746,8 +743,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
@@ -910,8 +906,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
@@ -997,8 +992,7 @@ def customer_order_history(request):
     elif date2 == None:
         st_date = date1
         nd_date = None
-    
-    if date2 > date1:
+    elif date2 > date1:
         st_date = date1
         nd_date = date2
     elif date1 > date2:
