@@ -458,7 +458,7 @@ def sales_by_time_of_day(request):
         orders = OrderItem.objects.filter(
             order__order_date__date=nd_date, 
         )
-    elif (st_date and nd_date == None):
+    elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
             order__order_date__date=today, 
@@ -544,7 +544,7 @@ def total_sales(request):
         orders = OrderItem.objects.filter(
             order__order_date__date=nd_date, 
             )
-    elif st_date and nd_date == None:
+    elif st_date == None and nd_date == None:
         orders = OrderItem.objects.all()
     
     all_orders_in_range = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
@@ -600,7 +600,7 @@ def top_10_selling_items(request): # year, month, day
         orders = OrderItem.objects.filter(
             order__order_date__date=nd_date, 
             )
-    elif st_date and nd_date == None:
+    elif st_date == None and nd_date == None:
         orders = OrderItem.objects.all()
 
 
@@ -762,7 +762,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
         orders = OrderItem.objects.filter(
             order__order_date__date=nd_date, 
         )
-    elif (st_date and nd_date == None):
+    elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
             order__order_date__date=today, 
@@ -939,7 +939,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
             order_date__date=nd_date, 
             status=status,
             )
-    elif (st_date and nd_date == None):
+    elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = Order.objects.filter(
             order_date__date=today, 
@@ -1020,7 +1020,7 @@ def customer_order_history(request):
             order__order_date__date=nd_date,
             order__phone_number=phone, 
         )
-    elif (st_date and nd_date == None):
+    elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
             order__order_date__date=today, 
@@ -1045,7 +1045,7 @@ def customer_order_history(request):
             order_date_date=nd_date, 
             phone_number=phone,
             )
-    elif (st_date and nd_date == None):
+    elif st_date == None and nd_date == None:
         today = datetime.now().date()
         order_data = Order.objects.filter(
             order_date__date=today, 
