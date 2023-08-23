@@ -1,6 +1,5 @@
 from django.test import TestCase
 from menus.models import Category, CafeItem
-from coffeeshop.models import Footer
 from orders.views import get_cart
 from django.urls import reverse
 from http.cookies import SimpleCookie
@@ -12,8 +11,7 @@ import json
 class ViewsOrderTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.footer = Footer.objects.create()
-        cls.category = Category.objects.create(name='test')
+        cls.category = Category.objects.create(name="test")
         cls.cafeitem1 = CafeItem.objects.create(
             name='test1',
             description='test1',
