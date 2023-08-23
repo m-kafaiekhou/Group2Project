@@ -987,7 +987,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
         }
     })
 
-@permission_required("coffeeshop.view_review")
+#@permission_required("coffeeshop.view_review")
 def customer_order_history(request):
     '''
     Returns a context of data(customer_orderitem_data, customer_order_data)<<list of dictionaries>> to 
@@ -1109,7 +1109,7 @@ def ranking(phone_number: str):
             return None
     
 
-@permission_required("coffeeshop.view_review")
+#@permission_required("coffeeshop.view_review")
 def customer_data(request):
     phone = request.GET.get("phone_number", None)
 
