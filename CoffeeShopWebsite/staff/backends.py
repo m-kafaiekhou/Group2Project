@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import CustomUserModel
 import datetime
 from menus.models import CafeItem, Category
-from order.models import Order, OrderItem
+from orders.models import Order, OrderItem
 from coffeeshop.models import Review
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -125,7 +125,7 @@ class CustomUserBackend(ModelBackend):
                         CustomUserModel, phone_number=request.session["phone_number"]
                     )
                     del request.session["otp"]
-                    user.groups.add(groups[user.get_status()]) # get_status function returns 'MANAGER' OR 'CHIEF_STAFF' OR 'STAFF'.
+                    #user.groups.add(groups[user.get_status()]) # get_status function returns 'MANAGER' OR 'CHIEF_STAFF' OR 'STAFF'.
                     return user
                 else:
                     messages.error(
