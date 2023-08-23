@@ -785,7 +785,6 @@ def sales_by_employee(request): # Table, or a bar Chart.
 
     staff_list = [{"staff_name": name, "total":price} for name, price in new_dicts.items()]
     sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
-    print(sorted_staff_list)
 
     sale_dict = dict()
     for d in sorted_staff_list:
@@ -1165,7 +1164,7 @@ def customer_data(request):
 def number_of_items_bought(request):
     phone = request.GET.get("phone_number", None)
 
-    if not phone:
+    if phone == None:
         return JsonResponse({
         "title": f"No Data Found!",
         "data": {
@@ -1181,12 +1180,12 @@ def number_of_items_bought(request):
         order__phone_number=phone 
         )
     
-    all_orders = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+    all_orders = orders.annotate(p=F("quantity")).annotate(number=Sum("quantity")).values("cafeitem__name" ,"number")
 
     sale_dict = dict()
 
     for order in all_orders:
-        sale_dict[order["cafeitem__name"]] = order["quantity"]
+        sale_dict[order["cafeitem__name"]] = order["number"]
 
     return JsonResponse({
         "title": f"Number of Each Item Bought By Customer",
