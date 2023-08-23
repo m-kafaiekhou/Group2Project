@@ -103,6 +103,12 @@ class HomePage(models.Model):
     search_section_description = models.TextField(default="Search for Drinks")
     search_placeholder = models.CharField(max_length=100, default="Search Here")
 
+    logo_section_is_active = models.BooleanField(default=True)
+    logo_section_title = models.CharField(max_length=25, default="LOGO FUN")
+    logo_section_description = models.TextField(default="Our Beloved Logo")
+    logo_image = models.ImageField(
+        upload_to="home_images", default="home_images/logo.png"
+    )
     about_us_section_is_active = models.BooleanField(default=True)
     about_us_section_title = models.CharField(max_length=25, default="ABOUT US")
     about_us_section_description = models.TextField(default="Serving Since 2023")
