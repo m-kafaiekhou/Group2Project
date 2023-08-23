@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from CoffeeShopWebsite.coffeeshop.models import Footer
+from coffeeshop.models import Footer
 
 class StaffUrlsTestCase(TestCase):
     def setUp(self):

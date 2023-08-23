@@ -87,16 +87,15 @@ class MenuDetail(DetailView):
     model = CafeItem
     template_name = "menus/detail.html"
     context_object_name = "cafeitem"
-    slug_field = "name"
-    slug_url_kwarg = "cafeitme_name"
 
 
 class autocomplete(View):
-    def get(request):
-        if "term" in request.GET:
-            Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
-            names = list()
-            for i in Qs:
-                names.append(i.name)
-            return JsonResponse(names, safe=False)
-        return render(request, "menu.html")
+#     def get(request):
+#         if "term" in request.GET:
+#             Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
+#             names = list()
+#             for i in Qs:
+#                 names.append(i.name)
+#             return JsonResponse(names, safe=False)
+#         return render(request, "menu.html")
+    pass
