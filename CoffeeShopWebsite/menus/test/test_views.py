@@ -2,15 +2,11 @@ from django.test import TestCase
 from django.urls import reverse
 # from menus.views import Menu, MenuDetail, MenuSearch
 from menus.models import Category, CafeItem
-from coffeeshop.models import Footer
 import tempfile
 
 
 class MenuViewTest(TestCase):
-
     def setUp(self) -> None:
-        self.footer = Footer.objects.create()
-
         self.parCategory = Category.objects.create(
             name='Par Cat Test',
         )
