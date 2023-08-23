@@ -1,6 +1,7 @@
 from django.views import View
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import permission_required
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
@@ -9,6 +10,7 @@ from django.http import JsonResponse
 # Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
+from coffeeshop.models import Review
 from . import forms
 from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
 
@@ -19,10 +21,11 @@ from datetime import datetime
 from collections import defaultdict
 
 
-class ItemListView(LoginRequiredMixin, View):
+class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/item_list.html"
     model_class = CafeItem
     filter_class = ItemFilterSet
+    permission_required = "menus.view_cafeitem"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
@@ -57,10 +60,11 @@ class ItemListView(LoginRequiredMixin, View):
         pass
 
 
-class CategoryListView(LoginRequiredMixin, View):
+class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/category_list.html"
     model_class = Category
     filter_class = CategoryFilterSet
+    permission_required = "menus.view_category"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
@@ -94,10 +98,11 @@ class CategoryListView(LoginRequiredMixin, View):
         pass
 
 
-class ItemDetailView(LoginRequiredMixin, View):
+class ItemDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/item_detail.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
+    permission_required = "menus.view_cafeitem"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
@@ -116,10 +121,11 @@ class ItemDetailView(LoginRequiredMixin, View):
         redirect('item_detail', kwargs['pk'])
 
 
-class CategoryDetailView(LoginRequiredMixin, View):
+class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/category_detail.html"
     model_class = Category
     form_class = forms.AddCategoryForm
+    permission_required = "menus.view_category"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
@@ -137,10 +143,11 @@ class CategoryDetailView(LoginRequiredMixin, View):
         redirect('category_detail', kwargs['pk'])
 
 
-class AddItemView(LoginRequiredMixin, View):
+class AddItemView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "staff/item_add.html"
     model_class = CafeItem
     form_class = forms.AddItemForm
+    permission_required = "menus.add_cafeitem"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -155,10 +162,11 @@ class AddItemView(LoginRequiredMixin, View):
         return redirect('add_item')
 
 
-class AddCategoryView(LoginRequiredMixin, View):
+class AddCategoryView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "staff/category_add.html"
     model_class = Category
     form_class = forms.AddCategoryForm
+    permission_required = "menus.add_category"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -173,10 +181,11 @@ class AddCategoryView(LoginRequiredMixin, View):
         return redirect('add_category')
 
 
-class OrderDetailView(LoginRequiredMixin, View):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_detail.html"
     model_class = Order
     form_class = forms.OrderUpdateForm
+    permission_required = "orders.change_order"
 
     def get(self, request, *args, **kwargs):
         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
@@ -212,7 +221,9 @@ class OrderDetailView(LoginRequiredMixin, View):
         return redirect('order_details', kwargs["pk"])
 
 
-class OrderItemUpdateView(View):
+class OrderItemUpdateView(PermissionRequiredMixin, View):
+    permission_required = "orders.change_orderitem"
+
     def post(self, request, *args, **kwargs):
         order_id = kwargs['pk']
         order_item_id = request.POST.get('orderitem')
@@ -225,10 +236,11 @@ class OrderItemUpdateView(View):
         return redirect('order_details', order_id)
 
 
-class OrderListView(LoginRequiredMixin, View):
+class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_list.html"
     model_class = Order
     filter_class = OrderFilterSet
+    permission_required = "orders.view_order"
 
     def get(self, request, *args, **kwargs):
         data = request.GET.copy()
@@ -284,7 +296,7 @@ class DashboardView(View):
 
 
 # ********************************* Chart Area ********************************* #
-
+@permission_required("coffeeshop.view_review")
 def year_filter_options(request):
     grouped_orders = Order.objects.annotate(year=ExtractYear("order_date")).values("year").order_by("-year").distinct()
     options = [order["year"] for order in grouped_orders]
@@ -293,7 +305,7 @@ def year_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def month_filter_options(request):
     grouped_orders = Order.objects.annotate(day=ExtractMonth("order_date")).values("day").order_by("-day").distinct()
     options = [order["day"] for order in grouped_orders]
@@ -302,7 +314,7 @@ def month_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def day_filter_options(request):
     grouped_orders = Order.objects.annotate(hour=ExtractHour("order_date")).values("hour").order_by("-hour").distinct()
     options = [order["hour"] for order in grouped_orders]
@@ -311,7 +323,7 @@ def day_filter_options(request):
         "options":options,
     })
 
-
+@permission_required("coffeeshop.view_review")
 def yearly_sales_chart(request):
     this_year = datetime.now().year
     orders = OrderItem.objects.filter(order__order_date__year=this_year)
@@ -345,7 +357,7 @@ def yearly_sales_chart(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def monthly_sales_chart(request):
     month = datetime.now().month
     month_name = datetime.now().strftime("%B")
@@ -380,7 +392,7 @@ def monthly_sales_chart(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def daily_sales_chart(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
@@ -414,7 +426,7 @@ def daily_sales_chart(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def daily_sales_sum(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
@@ -435,7 +447,7 @@ def daily_sales_sum(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def all_time_sales(request):
     orders = OrderItem.objects.all()
     all_orders = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
@@ -455,7 +467,7 @@ def all_time_sales(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def top_10_selling_items(request, fil): # year, month, day
     if fil == "year":
         year = datetime.now().year
@@ -507,7 +519,7 @@ def top_10_selling_items(request, fil): # year, month, day
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def top_10_customers(requests):
     orders = OrderItem.objects.all()
     all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
@@ -539,7 +551,7 @@ def top_10_customers(requests):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def sales_by_category(requests):
     orders = OrderItem.objects.all()
     all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
@@ -577,7 +589,7 @@ def sales_by_category(requests):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def sales_by_employee(request): # Table, or a bar Chart.
     orders = OrderItem.objects.all()
     all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
@@ -623,7 +635,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
     grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
@@ -656,7 +668,7 @@ def peak_business_hour(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def most_popular_items(request):
     orders = OrderItem.objects.all()
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
@@ -700,7 +712,7 @@ def most_popular_items(request):
         }
     })
 
-
+@permission_required("coffeeshop.view_review")
 def order_status_report(request, start_date, end_date, status: str):  # Table, not a Chart. status= "D", "C", "A"
     orders = Order.objects.filter(order_date__gt=start_date, order_date__lt=end_date, status=status)
     grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
