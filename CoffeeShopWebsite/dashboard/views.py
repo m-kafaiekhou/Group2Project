@@ -426,7 +426,7 @@ def sales_by_time_of_day(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -514,7 +514,7 @@ def total_sales(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -571,7 +571,7 @@ def top_10_selling_items(request): # year, month, day
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -734,7 +734,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -897,7 +897,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
     date2 = request.GET.get("end_date", None)
     status = request.GET.get("status", None)
 
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -983,7 +983,7 @@ def customer_order_history(request):
     date2 = request.GET.get("end_date", None)
     phone = request.GET.get("phone_number", None)
 
-    if date1 and date2 == None:
+    if date1 == None and date2 == None:
         st_date = None
         nd_date = None
     elif date1 == None:
