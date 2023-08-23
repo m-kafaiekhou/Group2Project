@@ -1084,7 +1084,7 @@ def customer_order_history(request):
 
 
 # ************************************************* Customer Demographic ************************************************* #
-@permission_required("coffeeshop.view_review")
+# @permission_required("coffeeshop.view_review")
 def ranking(phone_number: str):
     '''
     This function Calculates the ranking of the Customer based on money spent.
