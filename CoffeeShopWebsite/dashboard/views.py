@@ -871,10 +871,9 @@ def most_popular_items(request):
     })
 
 @permission_required("coffeeshop.view_review")
-def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
+def order_status_report(request, status: str):  # Table, not a Chart. status= "D", "C", "A"
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    status = request.GET.get("status", None)
 
     if date1 == None and date2 == None:
         st_date = None
@@ -892,17 +891,6 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
         st_date = date2
         nd_date = date1
 
-    if status == None:
-        return JsonResponse({
-        "title": f"No Data",
-        "data": {
-            "labels": [],
-            "datasets": [{
-                "label": "Amount (T)",
-                "data": [],
-            }]
-        }
-    })
 
     if st_date and nd_date:
         orders = Order.objects.filter(
