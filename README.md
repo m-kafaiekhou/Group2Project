@@ -266,7 +266,7 @@ An example:
         self.assertAlmostEqual(response.json(), expected_data)
     ```
 
-Which tests the sale by time of day chart data between to dates. start date and end date...
+Which tests the sale by time of day chart data between two dates. start date and end date...
 
 coverage: a testing tool for django which tests the test files and returns reporsts in html, or on terminal. 
 
