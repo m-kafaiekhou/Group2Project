@@ -29,5 +29,4 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.phone_number
 
-    def get_status(self):
-        pass # it must return 'MANAGER' OR 'CHIEF_STAFF' OR 'STAFF'.
+    
