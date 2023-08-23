@@ -125,7 +125,6 @@ class CustomUserBackend(ModelBackend):
                         CustomUserModel, phone_number=request.session["phone_number"]
                     )
                     del request.session["otp"]
-                    #user.groups.add(groups[user.get_status()]) # get_status function returns 'MANAGER' OR 'CHIEF_STAFF' OR 'STAFF'.
                     return user
                 else:
                     messages.error(
