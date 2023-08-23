@@ -5,14 +5,48 @@ Welcome to our humble coffee shop where we serve the finest coffee and cafe drin
 
 ## 🔥 Programming Team 🔥
 ### Group 2 >>>
-### Scrum Master: Alireza Arvin
-### Team Leader: Mahdiyar kafaie khou
-### Developer: Zahra Mahjour
-### Developer: Sevda Hayati
-### Developer: Mohammad Ali Soltan Hosseini
+### Scrum Master: Alireza Arvin                 [GitHub Account](https://github.com/AradArvin)
+### Team Leader: Mahdiyar kafaie khou           [GitHub Account](https://github.com/m-kafaiekhou)
+### Developer: Zahra Mahjour                    [GitHub Account](https://github.com/zmahjour)
+### Developer: Sevda Hayati                     [GitHub Account](https://github.com/arta16h)
+### Developer: Mohammad Ali Soltan Hosseini     [GitHub Account](https://github.com/mohammadali127)
 
 ## Project Details 💻 👏	
 This is a Django Fullstack Project and it features a website to order coffee in a coffee shop in tehran city(The Quest city). It uses django version 4.2.3 (The God of Frameworks) to bring all the new features into the code(The Pain and Suffering of Programmers). We used all the knowledge we gained so far (XP Gained) to code a website for the wise manager(The Demon Lord) who tasked us with this group project(Literally the Quest). the project tasks start with a general knowledge over the project structure(Buying Wepons and Healing Potions). As we learned from the details, first we needed to draw an ERD(World Map) then build the base of the project using django frame-work from there we had to choose our site interface template to style the site(Choose the way to procede with your quest). once all of these steps were done we could finaly start the main coding of the app. We bring to you our best, using all we learned from Maktab 98.
+
+
+## Installation Guide
+
+Since this project uses the django project technology I recommend you to read this part to properly set up the project.
+
+- fork this project to your own repo by clicking on fork button in the top-right corner.
+
+<img width="100%" src="fork.png">
+
+
+
+- clone the forked repo to you'r local storage >>>
+    
+    `git clone https://github.com/m-kafaiekhou/Group2Project.git`
+
+
+- make a virtual environment for the django project >>>
+    
+    `python3 -m venv .venv`
+
+
+- activate the venv like this.
+
+    `source .venv/bin/activate`
+
+
+- now you can install the required packages using this method. in the root directory of the project:
+
+    `pip install -r requirements.txt`
+
+this will automatically install all the tools and packages needed for the project, so it could work.(Django will be installed as well)
+
+> Now you are ready to start browsing this project.
 
 ## Project Sprints
 With all said and done we now start the story of our progress in the project >>>
@@ -87,5 +121,5 @@ cookies were done but it was done blindly without having any view functions writ
 it works so dont touch it!
 
 
-And with this last step of the first sprint came to an end.
-Our journy for the coffee continues...
+### Sprint 2 Progressing to the Next Step(fixed what we could from sprint1)
+
