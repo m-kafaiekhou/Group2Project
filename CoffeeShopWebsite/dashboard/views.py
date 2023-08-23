@@ -310,7 +310,7 @@ def year_filter_options(request):
         "options":options,
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def month_filter_options(request):
     grouped_orders = Order.objects.annotate(day=ExtractMonth("order_date")).values("day").order_by("-day").distinct()
     options = [order["day"] for order in grouped_orders]
@@ -319,7 +319,7 @@ def month_filter_options(request):
         "options":options,
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def day_filter_options(request):
     grouped_orders = Order.objects.annotate(hour=ExtractHour("order_date")).values("hour").order_by("-hour").distinct()
     options = [order["hour"] for order in grouped_orders]
@@ -328,7 +328,7 @@ def day_filter_options(request):
         "options":options,
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def yearly_sales_chart(request):
     this_year = datetime.now().year
     orders = OrderItem.objects.filter(order__order_date__year=this_year)
@@ -362,7 +362,7 @@ def yearly_sales_chart(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def monthly_sales_chart(request):
     month = datetime.now().month
     month_name = datetime.now().strftime("%B")
@@ -397,7 +397,7 @@ def monthly_sales_chart(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def daily_sales_chart(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
@@ -431,7 +431,7 @@ def daily_sales_chart(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def sales_by_time_of_day(request):
     '''
     Chart view function to get the amount of sale between two seprate times
@@ -526,7 +526,7 @@ def sales_by_time_of_day(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def total_sales(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
@@ -583,7 +583,7 @@ def total_sales(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def top_10_selling_items(request): # year, month, day
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
@@ -665,7 +665,7 @@ def top_10_selling_items(request): # year, month, day
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def top_10_customers(requests):
     orders = OrderItem.objects.all()
     all_numbers = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number", "total")
@@ -708,7 +708,7 @@ def top_10_customers(requests):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def sales_by_category(requests):
     orders = OrderItem.objects.all()
     all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
@@ -746,7 +746,7 @@ def sales_by_category(requests):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def sales_by_employee(request): # Table, or a bar Chart.
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
@@ -831,7 +831,7 @@ def sales_by_employee(request): # Table, or a bar Chart.
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
     grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
@@ -864,7 +864,7 @@ def peak_business_hour(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def most_popular_items(request):
     orders = OrderItem.objects.all()
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
@@ -908,7 +908,7 @@ def most_popular_items(request):
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
@@ -987,7 +987,7 @@ def order_status_report(request):  # Table, not a Chart. status= "D", "C", "A"
         }
     })
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def customer_order_history(request):
     '''
     Returns a context of data(customer_orderitem_data, customer_order_data)<<list of dictionaries>> to 
@@ -1085,7 +1085,7 @@ def customer_order_history(request):
 
 
 # ************************************************* Customer Demographic ************************************************* #
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def ranking(phone_number: str):
     '''
     This function Calculates the ranking of the Customer based on money spent.
@@ -1109,7 +1109,7 @@ def ranking(phone_number: str):
             return None
     
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def customer_data(request):
     phone = request.GET.get("phone_number", None)
 
@@ -1178,7 +1178,7 @@ def customer_data(request):
 
 
 
-@permission_required("blog.view_post")
+@permission_required("coffeeshop.view_review")
 def number_of_items_bought(request):
     phone = request.GET.get("phone_number", None)
 
