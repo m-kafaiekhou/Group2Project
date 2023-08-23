@@ -143,43 +143,6 @@ class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
         redirect('category_detail', kwargs['pk'])
 
 
-class AddItemView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "staff/item_add.html"
-    model_class = CafeItem
-    form_class = forms.AddItemForm
-    permission_required = 'menus.add_cafeitem'
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, context={'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-        return redirect('add_item')
-
-
-class AddCategoryView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "staff/category_add.html"
-    model_class = Category
-    form_class = forms.AddCategoryForm
-    permission_required = 'menus.add_category'
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, context={'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-        return redirect('add_category')
-
 
 class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_detail.html"
