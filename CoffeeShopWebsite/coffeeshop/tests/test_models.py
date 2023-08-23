@@ -143,6 +143,10 @@ class HomePageModelTest(TestCase):
             self.homepage.testimonial_section_description, "Our Clients Say"
         )
 
+    def test_str_method(self):
+        expected_str = "test homepage"
+        self.assertEqual(str(self.homepage), expected_str)
+
     def test_unique_homepage_name(self):
         with self.assertRaises(IntegrityError):
             HomePage.objects.create(homepage_name="test homepage")
