@@ -154,6 +154,9 @@ class HomePage(models.Model):
     testimonial_section_title = models.CharField(max_length=25, default="TESTIMONIAL")
     testimonial_section_description = models.TextField(default="Our Clients Say")
 
+    def __str__(self):
+        return self.homepage_name
+
 
 class CarouselItem(models.Model):
     image = models.ImageField(
