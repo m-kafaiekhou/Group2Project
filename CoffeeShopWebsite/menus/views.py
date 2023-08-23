@@ -4,7 +4,6 @@ from django.views import View
 from django.http import JsonResponse
 from .models import CafeItem, Category
 from django.views.generic import ListView, DetailView
-from coffeeshop.models import Footer
 
 
 # Create your views here.
@@ -72,7 +71,6 @@ class Menu(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
-        context["footer"] = Footer.objects.get(footer_name="main")
 
         return context
 
@@ -90,12 +88,12 @@ class MenuDetail(DetailView):
 
 
 class autocomplete(View):
-#     def get(request):
-#         if "term" in request.GET:
-#             Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
-#             names = list()
-#             for i in Qs:
-#                 names.append(i.name)
-#             return JsonResponse(names, safe=False)
-#         return render(request, "menu.html")
+    #     def get(request):
+    #         if "term" in request.GET:
+    #             Qs = CafeItem.objects.filter(name__icontains=request.Get.get("term"))
+    #             names = list()
+    #             for i in Qs:
+    #                 names.append(i.name)
+    #             return JsonResponse(names, safe=False)
+    #         return render(request, "menu.html")
     pass
