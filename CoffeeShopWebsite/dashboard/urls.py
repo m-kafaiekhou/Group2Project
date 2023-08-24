@@ -3,19 +3,9 @@ from .views import *
 
 
 urlpatterns = [
-    path("add-category/", AddCategoryView.as_view(), name="add_category"),
-    path("add-item/", AddItemView.as_view(), name="add_item"),
     path("order-details/<int:pk>/", OrderDetailView.as_view(), name="order_details"),
-    path(
-        "order-details/<int:pk>/quantity/",
-        OrderItemUpdateView.as_view(),
-        name="order_item_update",
-    ),
-    path(
-        "category-details/<int:pk>/",
-        CategoryDetailView.as_view(),
-        name="category_details",
-    ),
+    path("order-details/<int:pk>/quantity/", OrderItemUpdateView.as_view(), name="order_item_update"),
+    path("category-details/<int:pk>/", CategoryDetailView.as_view(), name="category_details"),
     path("item-details/<int:pk>/", ItemDetailView.as_view(), name="item_details"),
     path("category-list/", CategoryListView.as_view(), name="category_list"),
     path("item-list/", ItemListView.as_view(), name="item_list"),
@@ -41,7 +31,7 @@ urlpatterns += [
     path("chart/sales/employee-sales/", sales_by_employee, name="employee-sales"),
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
-    path("chart/sales/status/", order_status_report, name="status"),
+    path("chart/sales/status/<str:status>/", order_status_report, name="status"),
     path("chart/sales/customer-history/", customer_order_history, name="customer-history"),
     # Customer Demographic
     path("chart/sales/customer-data/", customer_data, name="customer-data"),
