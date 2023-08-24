@@ -780,8 +780,11 @@ def sales_by_employee(request): # Table, or a bar Chart.
     
     new_list = list()
     for d in all_staff:
-        new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
-        new_list.append(new_dict)
+        try:
+            new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
+            new_list.append(new_dict)
+        except:
+            pass
     
     new_dicts = defaultdict(int)
     for d in new_list:
