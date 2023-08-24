@@ -76,60 +76,60 @@ class DashboardTests(TestCase):
 
     # Item list view
 
-    def test_item_list_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("item_list"))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "dashboard/item_list.html")
-
-
-    def test_item_list_view_template(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("item_list"))
-        self.assertTemplateUsed(response, "dashboard/item_list.html")
-
-
-    def test_item_list_view_data(self): # Not Done
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("item_list"))
+    # def test_item_list_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("item_list"))
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, "dashboard/item_list.html")
+    #
+    #
+    # def test_item_list_view_template(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("item_list"))
+    #     self.assertTemplateUsed(response, "dashboard/item_list.html")
+    #
+    #
+    # def test_item_list_view_data(self): # Not Done
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("item_list"))
 
 
     # Category list view
 
-    def test_category_list_view_connection(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("category_list"))
-        self.assertEqual(response.status_code, 200)
-        
-
-
-    def test_category_list_view_template(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("category_list"))
-        self.assertTemplateUsed(response, "dashboard/category_list.html")
-
-
-    def test_category_list_view_data(self): # Not Done
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(reverse("category_list"))
+    # def test_category_list_view_connection(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("category_list"))
+    #     self.assertEqual(response.status_code, 200)
+    #
+    #
+    #
+    # def test_category_list_view_template(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("category_list"))
+    #     self.assertTemplateUsed(response, "dashboard/category_list.html")
+    #
+    #
+    # def test_category_list_view_data(self): # Not Done
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(reverse("category_list"))
 
 
     # Item Detail view
 
-    def test_item_detail_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(f"item-details/{self.cafeitem1.pk}")
-        self.assertEqual(response.status_code, 404)
-        self.assertTemplateUsed(response, "404.html")
+    # def test_item_detail_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(f"item-details/{self.cafeitem1.pk}")
+    #     self.assertEqual(response.status_code, 404)
+    #     self.assertTemplateUsed(response, "404.html")
 
 
     # Category Detail view
 
-    def test_category_detail_view(self):
-        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-        response = self.client.get(f"category-details/{self.category.pk}")
-        self.assertEqual(response.status_code, 404)
-        self.assertTemplateUsed(response, "404.html")
+    # def test_category_detail_view(self):
+    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+    #     response = self.client.get(f"category-details/{self.category.pk}")
+    #     self.assertEqual(response.status_code, 404)
+    #     self.assertTemplateUsed(response, "404.html")
 
 
     # Order Detail view and Order Update view

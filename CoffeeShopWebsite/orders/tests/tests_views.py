@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from menus.models import Category, CafeItem
 from coffeeshop.models import Footer
 from orders.views import get_cart
@@ -82,7 +82,37 @@ class ViewsOrderTests(TestCase):
         self.assertEqual(cart_after, '')
 
 
+class OrderHistoryViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.order = Order.objects.create(phone_number='09023987265', table_number='3', status='A')
+        s = self.client.session
+        s.update({'last_order_id': self.order.id, 'phone_number': self.order.phone_number})
+        s.save()
 
 
+    def test_get_with_last_order(self):
+        response = self.client.get(reverse('orders:order_history'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'orders/order_history.html')
+        self.assertEqual(response.context['orders'].count(), 1)
+        self.assertIsNone(response.context['form'])
 
+    def test_get_without_last_order(self):
+        s = self.client.session
+        s.update({'last_order_id': None})
+        s.save()
+        response = self.client.get(reverse('orders:order_history'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'orders/order_history.html')
+        self.assertEqual(len(response.context['orders']), 0)
+        self.assertIsNotNone(response.context['form'])
 
+    def test_get_with_cancelled_last_order(self):
+        self.order.status = 'C'
+        self.order.save()
+        response = self.client.get(reverse('orders:order_history'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'orders/order_history.html')
+        self.assertEqual(response.context['orders'].last(), self.order)
+        self.assertIsNone(response.context['form'])

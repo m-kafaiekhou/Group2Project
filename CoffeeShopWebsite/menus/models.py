@@ -45,24 +45,19 @@ class CafeItem(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("cafeitem_detail", kwargs={"slug": self.slug})
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)
+        return reverse("menus:menu_detail", kwargs={"pk": self.pk})
 
     @property
     def item_rate(self):
         reviews = self.review_set
-        rates = [rev.rating for rev in reviews]
+        rates = [rev.rating for rev in self.review_set.all()]
         return sum(rates) / len(rates)
 
-    @classmethod
-    def top_rated_items(cls):
-        return CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
-            "-item_rate"
-        )[:3]
+    # @classmethod
+    # def top_rated_items(cls):
+    #     return CafeItem.objects.annotate(item_rate=Avg("review_set__rating")).order_by(
+    #         "-item_rate"
+    #     )[:3]
 
     def category_name(self):
         return self.category.parent_category
