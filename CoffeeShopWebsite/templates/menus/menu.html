@@ -32,11 +32,10 @@
                         <h5 class="menu-price">T{{ item.price }}</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>{{ item.name }}</h4>
+                        <a class="btn-link" href="{% url 'menus:menu_detail' item.pk %}"><h4>{{ item.name }}</h4></a>
                         <p class="m-0">{{ item.description }}</p>
                         <div class="d-flex justify-content-end mx-3">
                             <button class="btn btn-primary justify d-flex" name="{{ item.id }}" value="0"
-                                    href="?pk={{ item.id }}"
                                     onclick="increment(this)">Add to Cart
                             </button>
                         </div>
