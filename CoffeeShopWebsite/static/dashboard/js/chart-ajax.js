@@ -115,7 +115,7 @@ function loadChart(chart, endpoint, dnld, start_date = null, end_date = null) {
     });
 }
 
-function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown, chartSMCenterdown, chartSMRightdown, BigMainChart3) {
+function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown, chartSMCenterdown, chartSMRightdown, BigMainChart3, mdChartLeft, mdChartRight) {
     loadChart(BigMainChart, links["day-sales"], "dnld-big1");
     loadChart(BigMainChart2, links["top-selling"], "dnld-big2");
     loadChart(chartSMCenterup, links["sale-status-d"], "dnld-scu");
@@ -125,6 +125,8 @@ function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeft
     loadChart(chartSMCenterdown, links["sale-cat"], "dnld-scd");
     loadChart(chartSMRightdown, links["best-customer"], "dnld-srd");
     loadChart(BigMainChart3, links["popular-items"], "dnld-big3");
+    loadChart(mdChartLeft, links["sales-by-timeOf-day"], "dnld-ddl");
+    loadChart(mdChartRight, links["sales-by-employee"], "dnld-ddr");
 }
 
 links = {
@@ -887,7 +889,7 @@ demo = {
 
         // added charts
 
-        loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLeftdown, chartSMCenterdown, chartSMRightdown, BigMainChart3)
+        loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLeftdown, chartSMCenterdown, chartSMRightdown, BigMainChart3, mdChartLeft, mdChartRight)
 
         // Big Chart2 date picker
         $(function () {
@@ -897,6 +899,7 @@ demo = {
                     format: 'DD-MM-YYYY',
                 }
             }, function (start, end, label) {
+                console.log(start.format('YYYY-MM-DD'))
                 loadChart(BigMainChart2, links["top-selling"], "dnld-big2", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
             });
         });
