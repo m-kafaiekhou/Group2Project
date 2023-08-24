@@ -878,7 +878,7 @@ def order_status_report(request, status: str):  # Table, not a Chart. status= "D
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
 
-    if date1 == None and date2 == None:
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
