@@ -139,6 +139,8 @@ links = {
     'best-customer': `/dashboard/chart/sales/best-customers/`,
     'peak-hour': `/dashboard/chart/sales/peak-hour/`,
     'popular-items': `/dashboard/chart/sales/popular-items/`,
+    'sales-by-timeOf-day': '/dashboard/chart/sales/daily-time-sale/',
+    'sales-by-employee': '/dashboard/chart/sales/employee-sales/',
 }
 
 type = ['primary', 'info', 'success', 'warning', 'danger'];
@@ -812,6 +814,77 @@ demo = {
             options: gradientBarChartConfiguration
         })
 
+        var ctx = document.getElementById("md-chart-left").getContext("2d");
+
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+
+        var data = {
+            labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+                label: "Data",
+                fill: true,
+                backgroundColor: gradientStroke,
+                borderColor: '#d048b6',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: '#d048b6',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: '#d048b6',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: [80, 100, 70, 80, 120, 80],
+            }]
+        };
+
+        var mdChartLeft = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: gradientChartOptionsConfigurationWithTooltipPurple
+        });
+
+
+        var ctx = document.getElementById("md-chart-right").getContext("2d");
+
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+
+        var data = {
+            labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+                label: "Data",
+                fill: true,
+                backgroundColor: gradientStroke,
+                borderColor: '#d048b6',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: '#d048b6',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: '#d048b6',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: [80, 100, 70, 80, 120, 80],
+            }]
+        };
+
+        var mdChartRight = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: gradientChartOptionsConfigurationWithTooltipPurple
+        });
+
         // added charts
 
         loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLeftdown, chartSMCenterdown, chartSMRightdown, BigMainChart3)
@@ -861,6 +934,30 @@ demo = {
                 }
             }, function (start, end, label) {
                 loadChart(chartSMRightup, links["sale-status-c"], "dnld-sru", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
+
+        // sales by employee date
+        $(function () {
+            $('input[name="sale-by-employee"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(mdChartRight, links["sales-by-employee"], "dnld-ddr", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
+
+        // sales by time of day date
+        $(function () {
+            $('input[name="sale-by-time-day"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(mdChartLeft, links["sales-by-timeOf-day"], "dnld-ddl", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
             });
         });
     },
