@@ -1,72 +1,73 @@
 // // JSON response part
 window.onload = loadAllCharts
-window.onclick = loadAllCharts
+
+// window.onclick = loadAllCharts
 
 function convertChartDataToCSV(args) {
-  let result, columnDelimiter, lineDelimiter, labels, data;
+    let result, columnDelimiter, lineDelimiter, labels, data;
 
-  data = args.data || null;
-  if (data == null || !data.length) {
-    return null;
-  }
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
 
-  labels = args.labels || null;
-  if (labels == null || !labels.length) {
-    return null;
-  }
+    labels = args.labels || null;
+    if (labels == null || !labels.length) {
+        return null;
+    }
 
-  columnDelimiter = args.columnDelimiter || ',';
-  lineDelimiter = args.lineDelimiter || '\n';
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
 
-  result = '';
-  result += labels.join(columnDelimiter);
-  result += lineDelimiter;
+    result = '';
+    result += labels.join(columnDelimiter);
+    result += lineDelimiter;
 
-  for (let i = 0; i < data.length; i++) {
-    result += data[i];
-    result += columnDelimiter;
-  }
+    for (let i = 0; i < data.length; i++) {
+        result += data[i];
+        result += columnDelimiter;
+    }
 
-  return result;
+    return result;
 }
 
 function downloadCSV(chart) {
-  var dataLabels = chart.data.labels;
-  var datasets = chart.data.datasets;
-  var csv = '';
+    var dataLabels = chart.data.labels;
+    var datasets = chart.data.datasets;
+    var csv = '';
 
-  for (var i = 0; i < datasets.length; i++) {
-    var datasetCSV = convertChartDataToCSV({
-      data: datasets[i].data,
-      labels: dataLabels,
-      columnDelimiter: ',',
-      lineDelimiter: '\n'
-    });
-    csv += datasetCSV;
-  }
-
-  if (csv == null) return;
-
-  var filename = 'chart-data.csv';
-  var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-
-  if (navigator.msSaveBlob) {
-    // IE 10+
-    navigator.msSaveBlob(csvData, filename);
-  } else {
-    // Other browsers
-    var link = document.createElement('a');
-    if (link.download !== undefined) {
-      // Browsers that support HTML5 download attribute
-      var url = URL.createObjectURL(csvData);
-      link.setAttribute('href', url);
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    for (var i = 0; i < datasets.length; i++) {
+        var datasetCSV = convertChartDataToCSV({
+            data: datasets[i].data,
+            labels: dataLabels,
+            columnDelimiter: ',',
+            lineDelimiter: '\n'
+        });
+        csv += datasetCSV;
     }
-  }
+
+    if (csv == null) return;
+
+    var filename = 'chart-data.csv';
+    var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+
+    if (navigator.msSaveBlob) {
+        // IE 10+
+        navigator.msSaveBlob(csvData, filename);
+    } else {
+        // Other browsers
+        var link = document.createElement('a');
+        if (link.download !== undefined) {
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(csvData);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
 }
 
 // function downloadChart(chart) {
@@ -80,10 +81,14 @@ function downloadCSV(chart) {
 // }
 
 
-function loadChart(chart, endpoint, dnld) {
+function loadChart(chart, endpoint, dnld, start_date = null, end_date = null) {
     $.ajax({
         url: endpoint,
         type: "GET",
+        data: {
+            start_date: start_date,
+            end_date: end_date
+        },
         dataType: "json",
         success: (jsonResponse) => {
             const title = jsonResponse.title;
@@ -112,7 +117,7 @@ function loadChart(chart, endpoint, dnld) {
 
 function loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLEFTdown, chartSMCenterdown, chartSMRightdown, BigMainChart3) {
     loadChart(BigMainChart, links["day-sales"], "dnld-big1");
-    loadChart(BigMainChart2, links["top-day"], "dnld-big2");
+    loadChart(BigMainChart2, links["top-selling"], "dnld-big2");
     loadChart(chartSMCenterup, links["sale-status-d"], "dnld-scu");
     loadChart(chartSMLeftup, links["sale-status-a"], "dnld-slu");
     loadChart(chartSMRightup, links["sale-status-c"], "dnld-sru");
@@ -126,9 +131,7 @@ links = {
     'year-sales': `/dashboard/chart/sales/this-year/`,
     'month-sales': `/dashboard/chart/sales/this-month/`,
     'day-sales': `/dashboard/chart/sales/this-day/`,
-    'top-day': `/dashboard/chart/sales/top-selling/day/`,
-    'top-month': `/dashboard/chart/sales/top-selling/month/`,
-    'top-year': `/dashboard/chart/sales/top-selling/year/`,
+    'top-selling': `/dashboard/chart/sales/top-selling/`,
     'sale-cat': `/dashboard/chart/sales/category-sale/`,
     'sale-status-c': `/dashboard/chart/sales/status/C/`,
     'sale-status-d': `/dashboard/chart/sales/status/D/`,
@@ -614,13 +617,13 @@ demo = {
                 label: "My First dataset",
                 fill: true,
                 backgroundColor: gradientStroke,
-                borderColor: '#00d6b4',
+                borderColor: '#d048b6',
                 borderWidth: 2,
                 borderDash: [],
                 borderDashOffset: 0.0,
-                pointBackgroundColor: '#00d6b4',
+                pointBackgroundColor: '#d048b6',
                 pointBorderColor: 'rgba(255,255,255,0)',
-                pointHoverBackgroundColor: '#00d6b4',
+                pointHoverBackgroundColor: '#d048b6',
                 pointBorderWidth: 20,
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
@@ -630,7 +633,7 @@ demo = {
         };
 
         let chartSMRightdown = new Chart(ctxGreen, {
-            type: 'line',
+            type: 'doughnut',
             data: data,
             options: gradientChartOptionsConfigurationWithTooltipGreen
 
@@ -812,6 +815,54 @@ demo = {
         // added charts
 
         loadAllCharts(BigMainChart, BigMainChart2, chartSMCenterup, chartSMLeftup, chartSMRightup, chartSMLeftdown, chartSMCenterdown, chartSMRightdown, BigMainChart3)
+
+        // Big Chart2 date picker
+        $(function () {
+            $('input[name="big2-date"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(BigMainChart2, links["top-selling"], "dnld-big2", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
+
+        // status accept date picker
+        $(function () {
+            $('input[name="status-accept"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(chartSMLeftup, links["sale-status-a"], "dnld-slu", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
+
+        // status draft date picker
+        $(function () {
+            $('input[name="status-draft"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(chartSMCenterup, links["sale-status-d"], "dnld-scu", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
+
+        // status cancel date picker
+        $(function () {
+            $('input[name="status-cancel"]').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD-MM-YYYY',
+                }
+            }, function (start, end, label) {
+                loadChart(chartSMRightup, links["sale-status-c"], "dnld-sru", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+        });
     },
 
 
@@ -833,3 +884,5 @@ demo = {
     }
 
 };
+
+
