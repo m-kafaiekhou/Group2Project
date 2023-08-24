@@ -28,3 +28,5 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone_number
+
+

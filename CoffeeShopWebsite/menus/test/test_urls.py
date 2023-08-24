@@ -24,5 +24,5 @@ class UrlsTestClass(SimpleTestCase):
         self.assertEquals(resolve(url).func.view_class, Menu)
 
     def test_menu_details(self):
-        url = reverse("menus:menu_detail", kwargs={'cafeitem_name': self.cafeitem.slug()})
+        url = reverse("menus:menu_detail", kwargs={'pk': self.cafeitem.pk})
         self.assertEquals(resolve(url).func.view_class, MenuDetail)

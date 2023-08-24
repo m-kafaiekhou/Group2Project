@@ -6,7 +6,102 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from .models import CustomUserModel
 import datetime
+from menus.models import CafeItem, Category
+from orders.models import Order, OrderItem
+from coffeeshop.models import Review
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
+manager_group, created = Group.objects.get_or_create(name="MANAGER")
+chief_staff_group, created = Group.objects.get_or_create(name="CHIEF_STAFF")
+staff_group, created = Group.objects.get_or_create(name="STAFF")
+
+cafeitem_content_type = ContentType.objects.get_for_model(CafeItem)
+cafeitem_permission = Permission.objects.filter(content_type=cafeitem_content_type)
+
+category_content_type = ContentType.objects.get_for_model(Category)
+category_permission = Permission.objects.filter(content_type=category_content_type)
+
+order_content_type = ContentType.objects.get_for_model(Order)
+order_permission = Permission.objects.filter(content_type=order_content_type)
+
+orderitem_content_type = ContentType.objects.get_for_model(OrderItem)
+orderitem_permission = Permission.objects.filter(content_type=orderitem_content_type)
+
+review_content_type = ContentType.objects.get_for_model(Review)
+orderitem_permission = Permission.objects.filter(content_type=review_content_type)
+
+groups = {'MANAGER':manager_group, 'CHIEF_STAFF':chief_staff_group, 'STAFF':staff_group}
+
+for perm in orderitem_permission:
+    if perm.codename == "view_review":
+        manager_group.permissions.add(perm)
+
+for perm in cafeitem_permission:
+    if perm.codename == "delete_cafeitem":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "change_cafeitem":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "add_cafeitem":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "view_cafeitem":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+
+for perm in category_permission:
+    if perm.codename == "delete_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "change_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "add_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+
+    elif perm.codename == "view_category":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+
+for perm in order_permission:
+    if perm.codename == "delete_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "change_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "add_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "view_order":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
+
+for perm in orderitem_permission:
+    if perm.codename == "delete_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "change_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "add_order":
+        manager_group.permissions.add(perm)
+
+    elif perm.codename == "view_order":
+        manager_group.permissions.add(perm)
+        chief_staff_group.permissions.add(perm)
+        staff_group.permissions.add(perm)
 
 class CustomUserBackend(ModelBackend):
     def authenticate(self, request, phone_number=None, otp_code=None, **kwargs):

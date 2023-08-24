@@ -9,21 +9,39 @@
 
 <!--================ Detail Area =================-->
 {% block content %}
-  <div class="card" style="width: 25rem;  height: 25rem;">
-    <img class="card-img-top" src="{{cafeitem.image.url}}" alt="">
-    <div class="card-body">
-      <h5 class="card-title"><div class="text-right">{{cafeitem.name}}</div></h5>
-      <p class="card-text"><div class="text-right">{{cafeitem.description}}</div></p>
+    <div class="container-fluid d-flex justify-content-center pb-5">
+        <div class="card" style="width: 25rem;  height: 30rem;">
+            <img class="card-img-top" src="{{ cafeitem.image.url }}" alt="">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <div class="text-left">{{ cafeitem.name }}</div>
+                </h5>
+                <p class="card-text">
+                <div class="text-left">{{ cafeitem.description }}</div>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item pull-left">
+                    <div class="text-left">Category: {{ cafeitem.category.name }}</div>
+                </li>
+                <li class="list-group-item">
+                    <div class="text-left">Price: {{ cafeitem.price }}</div>
+                </li>
+                {% if cafeitem.is_available %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary justify d-flex" name="{{ item.id }}" value="0"
+                                    onclick="increment(this)">Add to Cart
+                            </button>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">
+                        <div class="text-right">Unfortunately this item is not available.</div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item pull-right"><div class="text-right">Category: {{cafeitem.category.name}}</div></li>
-      <li class="list-group-item"><div class="text-right">Price: {{cafeitem.price}}</div></li>
-      {% if cafeitem.is_available %}
-      <li class="list-group-item"><div class="text-right">This item is available.</div></li>
-      {% else %}
-      <li class="list-group-item"><div class="text-right">Unfortunately this item is not available.</div></li>
-      {% endif %}
-    </ul>
-  </div>
 {% endblock %}
 <!--================ End Detail Area =================-->

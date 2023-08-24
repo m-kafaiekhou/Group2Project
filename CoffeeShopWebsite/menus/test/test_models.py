@@ -5,6 +5,8 @@ from menus.models import CafeItem, Category
 from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.defaultfilters import slugify
+from coffeeshop.models import Review
+from django.urls import reverse
 
 
 class CafeItemTestClass(TestCase):
@@ -18,6 +20,9 @@ class CafeItemTestClass(TestCase):
             price=50,
             category=cls.category,
         )
+        cls.review1 = Review.objects.create(review='test', cafeitem=cls.cafeitem)
+        cls.review2 = Review.objects.create(rating=5, review='test', cafeitem=cls.cafeitem)
+
 
     def test_create_cafeitem(self):
         self.assertEqual(self.cafeitem.name, "Test")
@@ -48,7 +53,18 @@ class CafeItemTestClass(TestCase):
 
     def test_slug_method(self):
         expected_slug = "test"
-        self.assertEqual(slugify(self.cafeitem.name), expected_slug)
+        self.assertEqual(self.cafeitem.slug(), expected_slug)
+
+    def test_get_absolute_url(self):
+        exc = reverse("menus:menu_detail", kwargs={"pk": self.cafeitem.pk})
+        self.assertEqual(self.cafeitem.get_absolute_url(), exc)
+
+    def test_item_rate(self):
+        exc = 4.5
+        self.assertEqual(self.cafeitem.item_rate, exc)
+
+    def test_category_name(self):
+        self.assertEqual(self.cafeitem.category_name(), None)
 
 
 class CategoryTestClass(TestCase):

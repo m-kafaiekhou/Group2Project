@@ -27,11 +27,11 @@ class CustomUserAdminTest(TestCase):
 
     def test_fieldsets(self):
         expected_fieldsets = ((None, {'fields': ('phone_number', 'last_name', 'first_name')}),
-                              ('Permissions', {'fields': ('is_staff', 'is_active')}),)
+                              ('Permissions', {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),)
         self.assertEqual(self.user_admin.fieldsets, expected_fieldsets)
 
     def test_add_fieldsets(self):
         expected_add_fieldsets = ((None, {'classes': ('wide',),
                                           'fields': ('phone_number', 'last_name', 'first_name',
-                                                     'password1', 'password2', 'is_active', 'is_staff')}),)
+                                                     'password1', 'password2', 'is_active', 'is_staff', 'groups', 'user_permissions')}),)
         self.assertEqual(self.user_admin.add_fieldsets, expected_add_fieldsets)
