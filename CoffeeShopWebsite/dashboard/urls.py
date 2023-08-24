@@ -42,8 +42,10 @@ urlpatterns += [
     path("chart/sales/peak-hour/", peak_business_hour, name="peak-hour"),
     path("chart/sales/popular-items/", most_popular_items, name="popular-items"),
     path("chart/sales/status/", order_status_report, name="status"),
+    # Context response
     path("chart/sales/customer-history/", customer_order_history, name="customer-history"),
     # Customer Demographic
     path("chart/sales/customer-data/", customer_data, name="customer-data"),
+    # Chart
     path("chart/sales/customer-items-bought/", number_of_items_bought, name="customer-items-bought"),
 ]
