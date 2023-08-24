@@ -21,126 +21,126 @@ from datetime import datetime
 from collections import defaultdict
 
 
-class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "dashboard/item_list.html"
-    model_class = CafeItem
-    filter_class = ItemFilterSet
-    permission_required = 'menus.view_cafeitem'
-
-    def get(self, request, *args, **kwargs):
-        data = request.GET.copy()
-        items = self.model_class.objects.all()
-        filter_set = self.filter_class(data, items)
-
-        order_by = data.get('orderby', 'df')
-        if order_by == 'df':
-            query_set = filter_set.qs.order_by('name')
-        elif order_by == 'mo':
-            query_set = filter_set.qs.order_by('-price')
-        elif order_by == 'le':
-            query_set = filter_set.qs.order_by('price')
-        else:
-            query_set = filter_set.qs
-        paginator = Paginator(query_set, 2)
-        page_number = request.GET.get("page", 1)
-        page_obj = paginator.get_page(page_number)
-
-        context = {
-            'page_obj': page_obj,
-            'filter_set': filter_set,
-            'name': data.get('name', ''),
-            'category': data.get('category', ''),
-            'is_available': data.get('is_available', ''),
-            'orderby': order_by,
-        }
-
-        return render(request, self.template_name, context=context)
-
-    def post(self, request, *args, **kwargs):
-        pass
-
-
-class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "dashboard/category_list.html"
-    model_class = Category
-    filter_class = CategoryFilterSet
-    permission_required = 'menus.view_category'
-
-    def get(self, request, *args, **kwargs):
-        data = request.GET.copy()
-        items = self.model_class.objects.all()
-        filter_set = self.filter_class(data, items)
-
-        order_by = data.get('orderby', 'df')
-        if order_by == 'df':
-            query_set = filter_set.qs.order_by('name')
-        elif order_by == 'mo':
-            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
-        elif order_by == 'le':
-            query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('sale_count')
-        else:
-            query_set = filter_set.qs
-
-        paginator = Paginator(query_set, 2)
-        page_number = request.GET.get("page", 1)
-        page_obj = paginator.get_page(page_number)
-
-        context = {
-            'page_obj': page_obj,
-            'filter_set': filter_set,
-            'name': data.get('name', ''),
-            'orderby': order_by,
-        }
-
-        return render(request, self.template_name, context=context)
-
-    def post(self, request, *args, **kwargs):
-        pass
+# class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
+#     template_name = "dashboard/item_list.html"
+#     model_class = CafeItem
+#     filter_class = ItemFilterSet
+#     permission_required = 'menus.view_cafeitem'
+#
+#     def get(self, request, *args, **kwargs):
+#         data = request.GET.copy()
+#         items = self.model_class.objects.all()
+#         filter_set = self.filter_class(data, items)
+#
+#         order_by = data.get('orderby', 'df')
+#         if order_by == 'df':
+#             query_set = filter_set.qs.order_by('name')
+#         elif order_by == 'mo':
+#             query_set = filter_set.qs.order_by('-price')
+#         elif order_by == 'le':
+#             query_set = filter_set.qs.order_by('price')
+#         else:
+#             query_set = filter_set.qs
+#         paginator = Paginator(query_set, 2)
+#         page_number = request.GET.get("page", 1)
+#         page_obj = paginator.get_page(page_number)
+#
+#         context = {
+#             'page_obj': page_obj,
+#             'filter_set': filter_set,
+#             'name': data.get('name', ''),
+#             'category': data.get('category', ''),
+#             'is_available': data.get('is_available', ''),
+#             'orderby': order_by,
+#         }
+#
+#         return render(request, self.template_name, context=context)
+#
+#     def post(self, request, *args, **kwargs):
+#         pass
 
 
-class ItemDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "dashboard/item_detail.html"
-    model_class = CafeItem
-    form_class = forms.AddItemForm
-    permission_required = 'menus.view_cafeitem'
+# class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, View):
+#     template_name = "dashboard/category_list.html"
+#     model_class = Category
+#     filter_class = CategoryFilterSet
+#     permission_required = 'menus.view_category'
+#
+#     def get(self, request, *args, **kwargs):
+#         data = request.GET.copy()
+#         items = self.model_class.objects.all()
+#         filter_set = self.filter_class(data, items)
+#
+#         order_by = data.get('orderby', 'df')
+#         if order_by == 'df':
+#             query_set = filter_set.qs.order_by('name')
+#         elif order_by == 'mo':
+#             query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('-sale_count')
+#         elif order_by == 'le':
+#             query_set = filter_set.qs.annotate(sale_count=Count('cafeitem__orderitem')).order_by('sale_count')
+#         else:
+#             query_set = filter_set.qs
+#
+#         paginator = Paginator(query_set, 2)
+#         page_number = request.GET.get("page", 1)
+#         page_obj = paginator.get_page(page_number)
+#
+#         context = {
+#             'page_obj': page_obj,
+#             'filter_set': filter_set,
+#             'name': data.get('name', ''),
+#             'orderby': order_by,
+#         }
+#
+#         return render(request, self.template_name, context=context)
+#
+#     def post(self, request, *args, **kwargs):
+#         pass
 
-    def get(self, request, *args, **kwargs):
-        item = get_object_or_404(self.model_class, pk=kwargs["pk"])
-        initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
-        form = self.form_class(initial=initial_data)
 
-        return render(request, self.template_name, context={'item': item, 'form': form})
+# class ItemDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
+#     template_name = "dashboard/item_detail.html"
+#     model_class = CafeItem
+#     form_class = forms.AddItemForm
+#     permission_required = 'menus.view_cafeitem'
+#
+#     def get(self, request, *args, **kwargs):
+#         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
+#         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
+#         form = self.form_class(initial=initial_data)
+#
+#         return render(request, self.template_name, context={'item': item, 'form': form})
+#
+#     def post(self, request, *args, **kwargs):
+#         item = get_object_or_404(self.model_class, pk=kwargs['pk'])
+#         form = self.form_class(request.POST, instance=item)
+#
+#         if form.is_valid():
+#             form.save()
+#
+#         redirect('item_detail', kwargs['pk'])
 
-    def post(self, request, *args, **kwargs):
-        item = get_object_or_404(self.model_class, pk=kwargs['pk'])
-        form = self.form_class(request.POST, instance=item)
 
-        if form.is_valid():
-            form.save()
-
-        redirect('item_detail', kwargs['pk'])
-
-
-class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    template_name = "dashboard/category_detail.html"
-    model_class = Category
-    form_class = forms.AddCategoryForm
-    permission_required = 'menus.view_category'
-
-    def get(self, request, *args, **kwargs):
-        item = get_object_or_404(self.model_class, pk=kwargs["pk"])
-        initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
-        form = self.form_class(initial=initial_data)
-        return render(request, self.template_name, context={'item': item, 'form': form})
-
-    def post(self, request, *args, **kwargs):
-        item = get_object_or_404(self.model_class, pk=kwargs['pk'])
-        form = self.form_class(request.POST, instance=item)
-
-        if form.is_valid():
-            form.save()
-
-        redirect('category_detail', kwargs['pk'])
+# class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
+#     template_name = "dashboard/category_detail.html"
+#     model_class = Category
+#     form_class = forms.AddCategoryForm
+#     permission_required = 'menus.view_category'
+#
+#     def get(self, request, *args, **kwargs):
+#         item = get_object_or_404(self.model_class, pk=kwargs["pk"])
+#         initial_data = model_to_dict(item, fields=[field.name for field in item._meta.fields])
+#         form = self.form_class(initial=initial_data)
+#         return render(request, self.template_name, context={'item': item, 'form': form})
+#
+#     def post(self, request, *args, **kwargs):
+#         item = get_object_or_404(self.model_class, pk=kwargs['pk'])
+#         form = self.form_class(request.POST, instance=item)
+#
+#         if form.is_valid():
+#             form.save()
+#
+#         redirect('category_detail', kwargs['pk'])
 
 
 
@@ -202,8 +202,6 @@ class OrderItemUpdateView(View, PermissionRequiredMixin):
 
 
 class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, View):
-
-
     template_name = "dashboard/order_list.html"
     model_class = Order
     filter_class = OrderFilterSet
@@ -233,6 +231,7 @@ class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, View):
             'phone_number': data.get('phone_number', ''),
             'order_date': data.get('order_date', ''),
             'status': data.get('status', ''),
+            'table_number': data.get('table_number', ''),
             'orderby': order_by,
         }
 
