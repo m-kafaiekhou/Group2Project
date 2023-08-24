@@ -426,7 +426,7 @@ def sales_by_time_of_day(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 == None and date2 == None:
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -573,7 +573,7 @@ def top_10_selling_items(request): # year, month, day
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 == None and date2 == None:
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -736,8 +736,8 @@ def sales_by_category(requests):
 def sales_by_employee(request): # Table, or a bar Chart.
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    
-    if date1 == None and date2 == None:
+
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
