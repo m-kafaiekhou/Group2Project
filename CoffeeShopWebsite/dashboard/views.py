@@ -406,7 +406,7 @@ def sales_by_time_of_day(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 == None and date2 == None:
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -551,7 +551,7 @@ def top_10_selling_items(request): # year, month, day
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
     
-    if date1 == None and date2 == None:
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -713,8 +713,8 @@ def sales_by_category(requests):
 def sales_by_employee(request): # Table, or a bar Chart.
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    
-    if date1 == None and date2 == None:
+
+    if not date1 and not date2:
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -756,8 +756,11 @@ def sales_by_employee(request): # Table, or a bar Chart.
     
     new_list = list()
     for d in all_staff:
-        new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
-        new_list.append(new_dict)
+        try:
+            new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
+            new_list.append(new_dict)
+        except:
+            pass
     
     new_dicts = defaultdict(int)
     for d in new_list:
