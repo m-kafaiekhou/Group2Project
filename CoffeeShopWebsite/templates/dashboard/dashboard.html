@@ -34,6 +34,7 @@
     <link href="{% static 'dashboard/css/black-dashboard.css' %}" rel="stylesheet">
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body class="">
@@ -183,7 +184,6 @@
             </div>
         </div>
         <!--================ End Navbar ================-->
-
         <div class="content">
             <div class="row">
                 <div class="col-12">
@@ -240,9 +240,8 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="btn-group float-right" data-toggle="buttons">
-                                        <button id="dnld-big2" class="btn btn-light" style="padding: 0; width: 3rem"><i class="fa fa-download"></i></button>
-                                        <input type="date" name="start_date" class="form-control lg- mt-1 mr-1" style="width: auto">
-                                        <input type="date" name="start_date" class="form-control mt-1" style="width: auto">
+                                        <button id="dnld-big2" class="btn btn-light mr-1" style="padding: 0; height: 2rem; width: 3rem"><i class="fa fa-download"></i></button>
+                                        <input type="text" name="big2-date" class="form-control"/>
                                     </div>
                                 </div>
                             </div>
@@ -265,9 +264,12 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                             <h5 class="card-category">Order status</h5>
-                            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> Accept</h3>
+                            <h3 class="card-title">Accept</h3>
                                 </div>
-                                <a id="dnld-slu" class="btn btn-light">Download</a>
+                                <div class="d-flex">
+                                <button id="dnld-slu" class="btn btn-light mr-1" style="padding: 0; height: 2rem; width: 3rem"><i class="fa fa-download"></i></button>
+                                <input type="text" name="status-accept" class="form-control" style="width: 15rem"/>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -283,9 +285,12 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                             <h5 class="card-category">Order status</h5>
-                            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> Draft</h3>
+                            <h3 class="card-title">Draft</h3>
                                 </div>
-                                <a id="dnld-scu" class="btn btn-light">Download</a>
+                                <div class="d-flex">
+                                <button id="dnld-scu" class="btn btn-light mr-1" style="padding: 0; height: 2rem; width: 3rem"><i class="fa fa-download"></i></button>
+                                <input type="text" name="status-draft" class="form-control" style="width: 15rem"/>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -301,9 +306,12 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                             <h5 class="card-category">Order status</h5>
-                            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> Cancel</h3>
+                            <h3 class="card-title">Cancel</h3>
                                 </div>
-                                <a id="dnld-sru" class="btn btn-light">Download</a>
+                                <div class="d-flex">
+                                <button id="dnld-sru" class="btn btn-light mr-1" style="padding: 0; height: 2rem; width: 3rem"><i class="fa fa-download"></i></button>
+                                <input type="text" name="status-cancel" class="form-control" style="width: 15rem"/>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -928,10 +936,11 @@
     });
 </script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-<script>
 
-</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </body>
 
 </html>
