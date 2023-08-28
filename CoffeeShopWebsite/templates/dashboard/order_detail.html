@@ -60,17 +60,20 @@
                                         <td class="justify-content-center">
                                             <form action="{% url 'order_item_update' order.id %}" method="post">
                                                 {% csrf_token %}
-                                                <div class="d-flex align-items-center">
+                                                <div class="d-lg-flex align-items-center d-inline-block">
                                                     <input class="form-control me-2" name="quantity"
                                                            style="max-width: 12rem;" type="number"
                                                            value="{{ item.quantity }}">
-                                                    <button type="submit" class="btn btn-success">&#10004;</button>
+                                                    <button type="submit" class="btn btn-success" style="width: 40px;">&#10004;</button>
+                                                    <button type="submit" class="btn btn-danger" style="width: 40px;">&#11436;</button>
                                                     <input name="orderitem" style="visibility: hidden; width: 0px;"
                                                            value="{{ item.pk }}">
                                                 </div>
                                             </form>
                                         </td>
-                                        <td class="text-end">{{ item.price }} T</td>
+                                        <td class="text-end">
+                                            {{ item.price }} T
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 <!-- Additional row for adding new items -->
