@@ -5,19 +5,17 @@ from django.contrib.auth.decorators import permission_required
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear, Extract
+from django.db.models import Count, F, Sum, Avg
+from datetime import datetime
+from collections import defaultdict
 
 # Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
-from coffeeshop.models import Review
 from . import forms
-from .filters import ItemFilterSet, OrderFilterSet, CategoryFilterSet
-
-from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, ExtractMonth, ExtractYear, Extract
-from django.db.models import Count, F, Sum, Avg
+from .filters import OrderFilterSet
 from .chart_utils import year_dict, months, month_dict, month, day_dict, day
-from datetime import datetime
-from collections import defaultdict
 
 
 # class ItemListView(LoginRequiredMixin, PermissionRequiredMixin, View):
