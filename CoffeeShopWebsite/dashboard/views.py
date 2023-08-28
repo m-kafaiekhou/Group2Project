@@ -9,6 +9,7 @@ from django.db.models.functions import ExtractHour, ExtractDay, ExtractWeek, Ext
 from django.db.models import Count, F, Sum, Avg
 from datetime import datetime
 from collections import defaultdict
+from django.contrib import messages
 
 # Local Imports
 from menus.models import CafeItem, Category
@@ -166,7 +167,10 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
             item = request.POST.get('item')
 
             if item.isdigit() and quantity.isdigit():
-                OrderItem.objects.create(order_id=kwargs['pk'], cafeitem_id=item, quantity=int(quantity))
+                if OrderItem.objects.filter(order_id=kwargs['pk'], cafeitem_id=item):
+                    messages.error(request, "Item already exists in the order", "Warning")
+                else:
+                    OrderItem.objects.create(order_id=kwargs['pk'], cafeitem_id=item, quantity=int(quantity))
 
         else:
             item = get_object_or_404(self.model_class, pk=kwargs['pk'])
