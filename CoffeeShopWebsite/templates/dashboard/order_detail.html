@@ -65,7 +65,7 @@
                                                            style="max-width: 12rem;" type="number"
                                                            value="{{ item.quantity }}">
                                                     <button type="submit" class="btn btn-success" style="width: 40px;">&#10004;</button>
-                                                    <button type="submit" class="btn btn-danger" style="width: 40px;">&#11436;</button>
+                                                    <a href="{% url 'orderitem_delete' item.pk order.pk %}" class="btn btn-danger" style="width: 40px;">&#11436;</a>
                                                     <input name="orderitem" style="visibility: hidden; width: 0px;"
                                                            value="{{ item.pk }}">
                                                 </div>
