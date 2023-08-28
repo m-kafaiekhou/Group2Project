@@ -6,7 +6,6 @@ from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 
-
 # Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
@@ -143,7 +142,6 @@ from collections import defaultdict
 #         redirect('category_detail', kwargs['pk'])
 
 
-
 class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
     template_name = "dashboard/order_detail.html"
     model_class = Order
@@ -185,8 +183,6 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 
 class OrderItemUpdateView(View, PermissionRequiredMixin):
-
-
     permission_required = 'orders.change_orderitem'
 
     def post(self, request, *args, **kwargs):
@@ -269,8 +265,9 @@ def year_filter_options(request):
     options = [order["year"] for order in grouped_orders]
 
     return JsonResponse({
-        "options":options,
+        "options": options,
     })
+
 
 @permission_required("coffeeshop.view_review")
 def month_filter_options(request):
@@ -278,8 +275,9 @@ def month_filter_options(request):
     options = [order["day"] for order in grouped_orders]
 
     return JsonResponse({
-        "options":options,
+        "options": options,
     })
+
 
 @permission_required("coffeeshop.view_review")
 def day_filter_options(request):
@@ -287,20 +285,21 @@ def day_filter_options(request):
     options = [order["hour"] for order in grouped_orders]
 
     return JsonResponse({
-        "options":options,
+        "options": options,
     })
+
 
 @permission_required("coffeeshop.view_review")
 def yearly_sales_chart(request):
     this_year = datetime.now().year
     orders = OrderItem.objects.filter(order__order_date__year=this_year)
-    grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date"))\
-        .values("month").annotate(total=Sum("price")).values("month","total").order_by("month")
-    
+    grouped_orders = orders.annotate(p=F("price")).annotate(month=ExtractMonth("order__order_date")) \
+        .values("month").annotate(total=Sum("price")).values("month", "total").order_by("month")
+
     sale_dict = year_dict()
 
     for group in grouped_orders:
-        sale_dict[months[group["month"]-1]] = round(group["total"], 2)
+        sale_dict[months[group["month"] - 1]] = round(group["total"], 2)
 
     return JsonResponse({
         "title": f"Sales in {this_year}",
@@ -324,18 +323,19 @@ def yearly_sales_chart(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def monthly_sales_chart(request):
     month = datetime.now().month
     month_name = datetime.now().strftime("%B")
     orders = OrderItem.objects.filter(order__order_date__month=month)
-    grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date"))\
-        .values("day").annotate(total=Sum("price")).values("day","total").order_by("day")
-    
+    grouped_orders = orders.annotate(p=F("price")).annotate(day=ExtractDay("order__order_date")) \
+        .values("day").annotate(total=Sum("price")).values("day", "total").order_by("day")
+
     sale_dict = month_dict()
 
     for group in grouped_orders:
-        sale_dict[day[group["day"]-1]] = round(group["total"], 2)
+        sale_dict[day[group["day"] - 1]] = round(group["total"], 2)
 
     return JsonResponse({
         "title": f"Sales in {month_name}",
@@ -359,17 +359,18 @@ def monthly_sales_chart(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def daily_sales_chart(request):
     today = datetime.now().day
     orders = OrderItem.objects.filter(order__order_date__day=today)
-    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
-        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
-    
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date")) \
+        .values("hour").annotate(total=Sum("price")).values("hour", "total").order_by("hour")
+
     sale_dict = day_dict()
 
     for group in grouped_orders:
-        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+        sale_dict[day[group["hour"] - 1]] = round(group["total"], 2)
 
     return JsonResponse({
         "title": f"Sales in Today",
@@ -393,6 +394,7 @@ def daily_sales_chart(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def sales_by_time_of_day(request):
     '''
@@ -404,7 +406,7 @@ def sales_by_time_of_day(request):
     '''
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    
+
     if not date1 and not date2:
         st_date = None
         nd_date = None
@@ -421,50 +423,46 @@ def sales_by_time_of_day(request):
         st_date = date2
         nd_date = date1
 
-
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=nd_date,
         )
     elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date=today, 
+            order__order_date__date=today,
         )
     elif nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=today,
         )
     elif st_date == None:
         orders = OrderItem.objects.filter(
-            order__order_date__date=nd_date, 
+            order__order_date__date=nd_date,
         )
-    
 
-    time_sales = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
-        .values("hour").annotate(total=Sum("price")).values("order__order_date__date" ,"hour" ,"total")
+    time_sales = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date")) \
+        .values("hour").annotate(total=Sum("price")).values("order__order_date__date", "hour", "total")
 
-    
     new_list = list()
     for d in time_sales:
-        new_dict = {"datetime":str(d["order__order_date__date"])+ " " + str(d["hour"])+":00:00", "total": d["total"]}
+        new_dict = {"datetime": str(d["order__order_date__date"]) + " " + str(d["hour"]) + ":00:00",
+                    "total": d["total"]}
         new_list.append(new_dict)
-    
 
     new_dicts = defaultdict(int)
     for d in new_list:
         new_dicts[d["datetime"]] += int(d["total"])
 
-    date_list = [{"datetime": date, "total":price} for date, price in new_dicts.items()]
+    date_list = [{"datetime": date, "total": price} for date, price in new_dicts.items()]
     sorted_date_list = sorted(date_list, key=lambda x: x["total"], reverse=True)
 
     sale_dict = dict()
     for d in sorted_date_list:
         sale_dict[d["datetime"]] = round(d["total"], 2)
-
 
     return JsonResponse({
         "title": f"Sales by Time of Day Between {st_date} and {nd_date}",
@@ -488,11 +486,12 @@ def sales_by_time_of_day(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def total_sales(request):
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    
+
     if date1 == None and date2 == None:
         st_date = None
         nd_date = None
@@ -511,25 +510,24 @@ def total_sales(request):
 
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=nd_date,
-            )
+        )
     elif st_date == None and nd_date == None:
         orders = OrderItem.objects.all()
     elif nd_date == None:
         now = datetime.now()
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=now,
-            )
+        )
     elif st_date == None:
         orders = OrderItem.objects.filter(
-            order__order_date__date=nd_date, 
-            )
-    
-    
+            order__order_date__date=nd_date,
+        )
+
     all_orders_in_range = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
-    
+
     total = 0
     for order in all_orders_in_range:
         total += order["total"]
@@ -545,11 +543,12 @@ def total_sales(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
-def top_10_selling_items(request): # year, month, day
+def top_10_selling_items(request):  # year, month, day
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
-    
+
     if not date1 and not date2:
         st_date = None
         nd_date = None
@@ -568,39 +567,36 @@ def top_10_selling_items(request): # year, month, day
 
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=nd_date,
-            )
+        )
     elif st_date == None and nd_date == None:
         orders = OrderItem.objects.all()
     elif nd_date == None:
         now = datetime.now()
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=now,
-            )
+        )
     elif st_date == None:
         orders = OrderItem.objects.filter(
-            order__order_date__date=nd_date, 
-            )
-    
-
+            order__order_date__date=nd_date,
+        )
 
     all_items = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__name", "total")
 
     new_dict = defaultdict(int)
     for d in all_items:
         new_dict[d["cafeitem__name"]] += int(d["total"])
-    
-    chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
-    sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
+
+    chart_items = [{"cafeitem__name": name, "total": price} for name, price in new_dict.items()]
+    sorted_chart_items = sorted(chart_items, key=lambda x: x["total"], reverse=True)
 
     top_items = list()
     for d in sorted_chart_items:
         if len(top_items) < 10:
             top_items.append(d)
-    
-    
+
     sale_dict = dict()
     for i in top_items:
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
@@ -627,6 +623,7 @@ def top_10_selling_items(request): # year, month, day
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def top_10_customers(requests):
     orders = OrderItem.objects.all()
@@ -636,7 +633,7 @@ def top_10_customers(requests):
     for d in all_numbers:
         new_dict[d["order__phone_number"]] += int(d["total"])
 
-    chart_ph_numbers = [{"order__phone_number": number, "total":price} for number, price in new_dict.items()]
+    chart_ph_numbers = [{"order__phone_number": number, "total": price} for number, price in new_dict.items()]
     sorted_ph_numbers = sorted(chart_ph_numbers, key=lambda x: x["total"], reverse=True)
 
     top_customers = list()
@@ -670,16 +667,18 @@ def top_10_customers(requests):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def sales_by_category(requests):
     orders = OrderItem.objects.all()
-    all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name", "total")
+    all_caterories = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("cafeitem__category__name",
+                                                                                       "total")
 
     new_dict = defaultdict(int)
     for d in all_caterories:
         new_dict[d["cafeitem__category__name"]] += int(d["total"])
 
-    chart_category = [{"cafeitem__category__name": name, "total":price} for name, price in new_dict.items()]
+    chart_category = [{"cafeitem__category__name": name, "total": price} for name, price in new_dict.items()]
     sorted_category = sorted(chart_category, key=lambda x: x["total"], reverse=True)
 
     sale_dict = dict()
@@ -708,8 +707,9 @@ def sales_by_category(requests):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
-def sales_by_employee(request): # Table, or a bar Chart.
+def sales_by_employee(request):  # Table, or a bar Chart.
     date1 = request.GET.get("start_date", None)
     date2 = request.GET.get("end_date", None)
 
@@ -731,48 +731,48 @@ def sales_by_employee(request): # Table, or a bar Chart.
 
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=nd_date,
         )
     elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date=today, 
+            order__order_date__date=today,
         )
     elif nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=today,
         )
     elif st_date == None:
         orders = OrderItem.objects.filter(
-            order__order_date__date=nd_date, 
+            order__order_date__date=nd_date,
         )
-    
 
-    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name", "order__staff__last_name", "total")
-    
+    all_staff = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("order__staff__first_name",
+                                                                                  "order__staff__last_name", "total")
+
     new_list = list()
     for d in all_staff:
         try:
-            new_dict = {"staff_name":d["order__staff__first_name"]+ " " + d["order__staff__last_name"], "total": d["total"]}
+            new_dict = {"staff_name": d["order__staff__first_name"] + " " + d["order__staff__last_name"],
+                        "total": d["total"]}
             new_list.append(new_dict)
         except:
             pass
-    
+
     new_dicts = defaultdict(int)
     for d in new_list:
         new_dicts[d["staff_name"]] += int(d["total"])
 
-    staff_list = [{"staff_name": name, "total":price} for name, price in new_dicts.items()]
+    staff_list = [{"staff_name": name, "total": price} for name, price in new_dicts.items()]
     sorted_staff_list = sorted(staff_list, key=lambda x: x["total"], reverse=True)
 
     sale_dict = dict()
     for d in sorted_staff_list:
         sale_dict[d["staff_name"]] = round(d["total"], 2)
 
-    
     return JsonResponse({
         "title": "Employee Sales",
         "data": {
@@ -795,16 +795,17 @@ def sales_by_employee(request): # Table, or a bar Chart.
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def peak_business_hour(request):
     orders = OrderItem.objects.all()
-    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date"))\
-        .values("hour").annotate(total=Sum("price")).values("hour","total").order_by("hour")
-    
+    grouped_orders = orders.annotate(p=F("price")).annotate(hour=ExtractHour("order__order_date")) \
+        .values("hour").annotate(total=Sum("price")).values("hour", "total").order_by("hour")
+
     sale_dict = day_dict()
 
     for group in grouped_orders:
-        sale_dict[day[group["hour"]-1]] = round(group["total"], 2)
+        sale_dict[day[group["hour"] - 1]] = round(group["total"], 2)
 
     return JsonResponse({
         "title": f"Peak Business Hour Sales",
@@ -828,6 +829,7 @@ def peak_business_hour(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def most_popular_items(request):
     orders = OrderItem.objects.all()
@@ -836,16 +838,15 @@ def most_popular_items(request):
     new_dict = defaultdict(int)
     for d in all_items:
         new_dict[d["cafeitem__name"]] += int(d["total"])
-    
-    chart_items = [{"cafeitem__name":name, "total": price} for name, price in new_dict.items()]
-    sorted_chart_items = sorted(chart_items,key=lambda x: x["total"], reverse=True)
+
+    chart_items = [{"cafeitem__name": name, "total": price} for name, price in new_dict.items()]
+    sorted_chart_items = sorted(chart_items, key=lambda x: x["total"], reverse=True)
 
     top_items = list()
     for d in sorted_chart_items:
         if len(top_items) < 10:
             top_items.append(d)
-    
-    
+
     sale_dict = dict()
     for i in top_items:
         sale_dict[i["cafeitem__name"]] = round(i["total"], 2)
@@ -872,6 +873,7 @@ def most_popular_items(request):
         }
     })
 
+
 @permission_required("coffeeshop.view_review")
 def order_status_report(request, status: str):  # Table, not a Chart. status= "D", "C", "A"
     date1 = request.GET.get("start_date", None)
@@ -893,35 +895,33 @@ def order_status_report(request, status: str):  # Table, not a Chart. status= "D
         st_date = date2
         nd_date = date1
 
-
     if st_date and nd_date:
         orders = Order.objects.filter(
-            order_date__date__gt=st_date, 
-            order_date__date__lt=nd_date, 
+            order_date__date__gt=st_date,
+            order_date__date__lt=nd_date,
             status=status,
-            )
+        )
     elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = Order.objects.filter(
-            order_date__date=today, 
+            order_date__date=today,
             status=status,
-            )
+        )
     elif nd_date == None:
         today = datetime.now().date()
         orders = Order.objects.filter(
-            order_date__date__gt=st_date, 
-            order_date__date__lt=today, 
+            order_date__date__gt=st_date,
+            order_date__date__lt=today,
             status=status,
-            )
+        )
     elif st_date == None:
-        orders = Order.objects.filter( 
-            order_date__date=nd_date, 
+        orders = Order.objects.filter(
+            order_date__date=nd_date,
             status=status,
-            )
-    
+        )
 
-    
-    grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status","count").order_by("-count")
+    grouped_orders = orders.annotate(p=F("status")).annotate(count=Count("status")).values("status", "count").order_by(
+        "-count")
 
     sale_dict = dict()
 
@@ -939,7 +939,8 @@ def order_status_report(request, status: str):  # Table, not a Chart. status= "D
         }
     })
 
-#@permission_required("coffeeshop.view_review")
+
+# @permission_required("coffeeshop.view_review")
 def customer_order_history(request):
     '''
     Returns a context of data(customer_orderitem_data, customer_order_data)<<list of dictionaries>> to 
@@ -970,70 +971,66 @@ def customer_order_history(request):
 
     if phone == None:
         context = {
-        "customer_orderitem_data":"",
-        "customer_order_data":"",
+            "customer_orderitem_data": "",
+            "customer_order_data": "",
         }
         return render(request, "", context)
-    
 
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=nd_date,
             order__phone_number=phone,
         )
     elif st_date == None and nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date=today, 
+            order__order_date__date=today,
             order__phone_number=phone,
         )
     elif nd_date == None:
         today = datetime.now().date()
         orders = OrderItem.objects.filter(
-            order__order_date__date__gt=st_date, 
+            order__order_date__date__gt=st_date,
             order__order_date__date__lt=today,
             order__phone_number=phone,
         )
     elif st_date == None:
         orders = OrderItem.objects.filter(
             order__order_date__date=nd_date,
-            order__phone_number=phone, 
+            order__phone_number=phone,
         )
-    
 
     if st_date and nd_date:
         order_data = Order.objects.filter(
-            order_date__date__gt=st_date, 
-            order_date__date__lt=nd_date, 
+            order_date__date__gt=st_date,
+            order_date__date__lt=nd_date,
             phone_number=phone,
-            )
+        )
     elif st_date == None and nd_date == None:
         today = datetime.now().date()
         order_data = Order.objects.filter(
-            order_date__date=today, 
+            order_date__date=today,
             phone_number=phone,
-            )
+        )
     elif nd_date == None:
         today = datetime.now().date()
         order_data = Order.objects.filter(
-            order_date__date__gt=st_date, 
-            order_date__date__lt=today, 
+            order_date__date__gt=st_date,
+            order_date__date__lt=today,
             phone_number=phone,
-            )
+        )
     elif st_date == None:
-        order_data = Order.objects.filter( 
-            order_date_date=nd_date, 
+        order_data = Order.objects.filter(
+            order_date_date=nd_date,
             phone_number=phone,
-            )
-    
-    
-    context = {
-        "customer_orderitem_data":orders,
-        "customer_order_data":order_data,
-        }
-    return render(request, "", context)
+        )
 
+    context = {
+        "customer_orderitem_data": orders,
+        "customer_order_data": order_data,
+    }
+    return render(request, "", context)
 
 
 # ************************************************* Customer Demographic ************************************************* #
@@ -1043,13 +1040,14 @@ def ranking(phone_number: str):
     This function Calculates the ranking of the Customer based on money spent.
     '''
     all_customers = OrderItem.objects.all()
-    all_orders = all_customers.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number" ,"total")
+    all_orders = all_customers.annotate(p=F("price")).annotate(total=Sum("price")).values("order__phone_number",
+                                                                                          "total")
 
     new_dicts = defaultdict(int)
     for d in all_orders:
         new_dicts[d["order__phone_number"]] += int(d["total"])
 
-    ranking_list = [{"order__phone_number": number, "total":total} for number, total in new_dicts.items()]
+    ranking_list = [{"order__phone_number": number, "total": total} for number, total in new_dicts.items()]
     sorted_ranking_list = sorted(ranking_list, key=lambda x: x["total"], reverse=True)
 
     ranking = 0
@@ -1059,9 +1057,9 @@ def ranking(phone_number: str):
             return ranking
         else:
             return None
-    
 
-#@permission_required("coffeeshop.view_review")
+
+# @permission_required("coffeeshop.view_review")
 def customer_data(request):
     phone = request.GET.get("phone_number", None)
 
@@ -1070,8 +1068,8 @@ def customer_data(request):
         return render(request, "", context)
 
     orders = OrderItem.objects.filter(
-        order__phone_number=phone 
-        )
+        order__phone_number=phone
+    )
 
     # Total money spent by customer
     all_orders_price = orders.annotate(p=F("price")).annotate(total=Sum("price")).values("total")
@@ -1085,24 +1083,27 @@ def customer_data(request):
     average_money_spent = round((total_money_spent / len(all_orders_price)), 2)
 
     # Favorite item
-    all_orders_quantity = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name" ,"quantity")
+    all_orders_quantity = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__name",
+                                                                                                     "quantity")
     new_dicti = defaultdict(int)
     for d in all_orders_quantity:
         new_dicti[d["cafeitem__name"]] += int(d["quantity"])
 
-    item_quantity_list = [{"cafeitem__name": name, "quantity":quantity} for name, quantity in new_dicti.items()]
+    item_quantity_list = [{"cafeitem__name": name, "quantity": quantity} for name, quantity in new_dicti.items()]
     sorted_item_quantity_list = sorted(item_quantity_list, key=lambda x: x["quantity"], reverse=True)
 
     favorite_item = sorted_item_quantity_list[0]
 
     # Favorite category
-    all_orders_category = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values("cafeitem__category__name" ,"quantity")
+    all_orders_category = orders.annotate(p=F("quantity")).annotate(quantity=Sum("quantity")).values(
+        "cafeitem__category__name", "quantity")
     new_dictc = defaultdict(int)
     for d in all_orders_category:
         new_dictc[d["cafeitem__category__name"]] += int(d["quantity"])
 
-    category_quantity_list = [{"cafeitem__category__name": name, "quantity":quantity} for name, quantity in new_dictc.items()]
-    sorted_category_quantity_list= sorted(category_quantity_list, key=lambda x: x["quantity"], reverse=True)
+    category_quantity_list = [{"cafeitem__category__name": name, "quantity": quantity} for name, quantity in
+                              new_dictc.items()]
+    sorted_category_quantity_list = sorted(category_quantity_list, key=lambda x: x["quantity"], reverse=True)
 
     favorite_category = sorted_category_quantity_list[0]
 
@@ -1111,23 +1112,21 @@ def customer_data(request):
 
     # Customer attendance
     attended_orders = Order.objects.filter(
-        phone_number=phone 
-        )
-    
+        phone_number=phone
+    )
+
     all_attended_days = attended_orders.values("order_date")
 
-
     context = {
-        "total_money_spent":total_money_spent,       # int
-        "average_money_spent":average_money_spent,   # int
-        "favorite_item":favorite_item,               # dictionary
-        "favorite_category":favorite_category,       # dictionary
-        "rank":rank,                                 # int
-        "all_attended_days":all_attended_days,       # list[dict], obj
-        }
+        "total_money_spent": total_money_spent,  # int
+        "average_money_spent": average_money_spent,  # int
+        "favorite_item": favorite_item,  # dictionary
+        "favorite_category": favorite_category,  # dictionary
+        "rank": rank,  # int
+        "all_attended_days": all_attended_days,  # list[dict], obj
+    }
 
     return render(request, "", context)
-
 
 
 @permission_required("coffeeshop.view_review")
@@ -1136,21 +1135,21 @@ def number_of_items_bought(request):
 
     if phone == None:
         return JsonResponse({
-        "title": f"No Data Found!",
-        "data": {
-            "labels": [],
-            "datasets": [{
-                "label": "Amount (T)",
-                "data": [],
-            }]
-        }
-    })
+            "title": f"No Data Found!",
+            "data": {
+                "labels": [],
+                "datasets": [{
+                    "label": "Amount (T)",
+                    "data": [],
+                }]
+            }
+        })
 
     orders = OrderItem.objects.filter(
-        order__phone_number=phone 
-        )
-    
-    all_orders = orders.annotate(p=F("quantity")).annotate(number=Sum("quantity")).values("cafeitem__name" ,"number")
+        order__phone_number=phone
+    )
+
+    all_orders = orders.annotate(p=F("quantity")).annotate(number=Sum("quantity")).values("cafeitem__name", "number")
 
     sale_dict = dict()
 
@@ -1167,5 +1166,3 @@ def number_of_items_bought(request):
             }]
         }
     })
-
-
