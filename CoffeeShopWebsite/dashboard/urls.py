@@ -11,6 +11,7 @@ urlpatterns = [
     # path("item-list/", ItemListView.as_view(), name="item_list"),
     path("order-list/", OrderListView.as_view(), name="order_list"),
     path("order-list/<str:stat>/", OrderListView.as_view(), name="order_status"),
+    path("orderitem-delete/<int:pk>/<int:order_pk>/", OrderItemDeleteView.as_view(), name="orderitem_delete"),
     path("", DashboardView.as_view(), name="dashboard"),
 ]
 
