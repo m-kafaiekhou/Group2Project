@@ -180,7 +180,7 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
         return redirect('order_details', kwargs["pk"])
 
 
-class OrderItemUpdateView(View, PermissionRequiredMixin):
+class OrderItemUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'orders.change_orderitem'
 
     def post(self, request, *args, **kwargs):
@@ -193,6 +193,15 @@ class OrderItemUpdateView(View, PermissionRequiredMixin):
         order_item.save()
 
         return redirect('order_details', order_id)
+
+
+class OrderItemDeleteView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'orders.view_order'
+    model_class = OrderItem
+
+    def get(self, request, *args, **kwargs):
+        OrderItem.objects.filter(pk=kwargs['pk']).delete()
+        return redirect('order_details', kwargs['order_pk'])
 
 
 class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, View):
