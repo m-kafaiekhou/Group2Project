@@ -12,3 +12,6 @@ def footer_context(request):
 def pages_context(request):
     return {"pages": Page.objects.all()}
 
+
+def navbar_context(request):
+    return {"navbar": Navbar.objects.get(navbar_name="main")}
