@@ -45,10 +45,15 @@ class OrderFilterSet(django_filters.FilterSet):
         empty_label='Select Status',
         widget=forms.Select(attrs={'placeholder': 'Status'})
     )
+    table_number = django_filters.CharFilter(
+        field_name='table_number',
+        lookup_expr='exact',
+        widget=forms.TextInput(attrs={'placeholder': 'Table'})
+    )
 
     class Meta:
         model = Order
-        fields = ['phone_number', 'order_date', 'status']
+        fields = ['phone_number', 'order_date', 'status', 'table_number']
 
 
 class CategoryFilterSet(django_filters.FilterSet):

@@ -171,7 +171,8 @@ AUTHENTICATION_BACKENDS = [
     "staff.backends.CustomUserBackend",
 ]
 
-LOGIN_REDIRECT_URL = "/admin/"
+LOGIN_REDIRECT_URL = "/dashboard/"
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # DEBUG = False
 ALLOWED_HOSTS = ["*"]

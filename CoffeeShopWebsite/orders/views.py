@@ -111,16 +111,10 @@ class OrderHistoryView(View):
         orders = []
 
         if last_order_id:
-            last_order = request.session.get("last_order_id")
-
-            if last_order.status == "A":
-                orders = self.model_class.objects.filter(
-                    phone_number=request.session.get("phone_number")
-                )
-                form = None
-
-            else:
-                orders = last_order
+            orders = self.model_class.objects.filter(
+                phone_number=request.session.get("phone_number")
+            )
+            form = None
 
         return render(
             request, self.template_name, context={"orders": orders, "form": form}
