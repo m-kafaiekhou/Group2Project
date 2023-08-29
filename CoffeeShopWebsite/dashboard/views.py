@@ -267,7 +267,8 @@ class DashboardView(View, PermissionRequiredMixin):
     permission_required = ('menus.view_cafeitem', 'menus.view_category', 'orders.view_order', 'orders.view_orderitem')
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_view)
+        context = {"dashboard": Dashboard.objects.get(dashboard_name="main")}
+        return render(request, self.template_view, context=context)
 
 
 # ************************************************* Chart Area ************************************************* #
