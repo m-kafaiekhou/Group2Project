@@ -5,7 +5,6 @@ from menus.models import CafeItem
 from django.views import View
 from .forms import OrderHistoryForm
 from django.views.generic import TemplateView
-from coffeeshop.models import Footer
 
 
 class CartView(View):
@@ -13,8 +12,8 @@ class CartView(View):
 
     def get(self, request, *args, **kwargs):
         cart, total = get_cart(request)
-        context = {"items": cart, "total": total}
-        context["footer"] = Footer.objects.get(footer_name="main")
+        context = {"items": cart, "total": total, "page_name": "shopping cart"}
+
         if not cart:
             context["show_modal"] = True
         return render(request, self.template_name, context=context)

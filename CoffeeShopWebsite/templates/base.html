@@ -1,10 +1,12 @@
 {% load static %}
 {% load humanize %}
+{% for page in pages %}
+{% if page.page_name == page_name %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ page.webpage_title }}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Coffee Shop in Tehran Website" name="keywords">
         <meta content="Coffee Shop" name="description">
@@ -38,11 +40,11 @@
         <!--================ Header Start ================-->
         <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
             <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-                <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">{% block headername %}{% endblock %}</h1>
+                <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">{{ page.headername }}</h1>
                 <div class="d-inline-flex mb-lg-5">
                     <p class="m-0 text-white"><a class="text-white" href="{% url 'coffeeshop:home' %}">Home</a></p>
                     <p class="m-0 text-white px-2">/</p>
-                    <p class="m-0 text-white">{% block nestname %}{% endblock %}</p>
+                    <p class="m-0 text-white">{{ page.nestname }}</p>
                 </div>
             </div>
         </div>
@@ -104,3 +106,6 @@
         {% endblock %}
     </body>
 </html>
+
+{% endif %}
+{% endfor %}
