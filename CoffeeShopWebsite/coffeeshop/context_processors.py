@@ -1,4 +1,4 @@
-from .models import HomePage, Footer, Page
+from .models import HomePage, Footer, Page, Navbar
 
 
 def homepage_context(request):
