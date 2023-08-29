@@ -14,6 +14,7 @@ from django.contrib import messages
 # Local Imports
 from menus.models import CafeItem, Category
 from orders.models import Order, OrderItem
+from coffeeshop.models import Dashboard
 from . import forms
 from .filters import OrderFilterSet
 from .chart_utils import year_dict, months, month_dict, month, day_dict, day
