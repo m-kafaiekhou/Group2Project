@@ -200,3 +200,5 @@ class Navbar(models.Model):
     navbar_name = models.CharField(max_length=25, unique=True, default="main")
     cafe_name = models.CharField(max_length=50, default="TEHRAN")
 
+    def __str__(self):
+        return self.navbar_name
