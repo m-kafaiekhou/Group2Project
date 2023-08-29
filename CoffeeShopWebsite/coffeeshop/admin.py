@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Review, Footer, HomePage, CarouselItem, Service, Page
+from .models import Review, Footer, HomePage, CarouselItem, Service, Page, Navbar
 
 
 admin.site.register(Review)
