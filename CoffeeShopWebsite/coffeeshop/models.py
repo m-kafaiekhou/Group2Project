@@ -209,3 +209,5 @@ class Dashboard(models.Model):
     short_name = models.CharField(max_length=10, default="G2")
     cafe_name = models.CharField(max_length=50, default="TEHRAN")
 
+    def __str__(self):
+        return self.dashboard_name
