@@ -192,3 +192,7 @@ class Page(models.Model):
     headername = models.CharField(max_length=25)
     nestname = models.CharField(max_length=25)
 
+    def __str__(self):
+        return self.page_name
+
+
