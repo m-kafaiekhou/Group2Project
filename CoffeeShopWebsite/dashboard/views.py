@@ -175,7 +175,7 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
             if item.isdigit() and quantity.isdigit():
                 if OrderItem.objects.filter(order_id=kwargs["pk"], cafeitem_id=item):
                     messages.error(
-                        request, "Item already exists in the order", "Warning"
+                        request, "Item already exists in the order", "warning"
                     )
                 else:
                     OrderItem.objects.create(
