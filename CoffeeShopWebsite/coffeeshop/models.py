@@ -184,3 +184,11 @@ class Service(models.Model):
         null=True,
         related_name="services_list",
     )
+
+
+class Page(models.Model):
+    page_name = models.CharField(max_length=25, unique=True)
+    webpage_title = models.CharField(max_length=25)
+    headername = models.CharField(max_length=25)
+    nestname = models.CharField(max_length=25)
+
