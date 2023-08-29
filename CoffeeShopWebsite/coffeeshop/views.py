@@ -36,3 +36,9 @@ class GalleryPage(ListView):
     template_name = "coffeeshop/gallery.html"
     model = CafeItem
     context_object_name = "items"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_name"] = "gallery"
+
+        return context
