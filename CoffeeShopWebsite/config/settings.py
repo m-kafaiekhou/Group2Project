@@ -86,6 +86,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "coffeeshop.context_processors.homepage_context",
                 "coffeeshop.context_processors.footer_context",
+                "coffeeshop.context_processors.pages_context",
             ],
         },
     },
