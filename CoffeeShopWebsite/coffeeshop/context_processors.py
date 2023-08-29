@@ -7,3 +7,8 @@ def homepage_context(request):
 
 def footer_context(request):
     return {"footer": Footer.objects.all()}
+
+
+def pages_context(request):
+    return {"pages": Page.objects.all()}
+
