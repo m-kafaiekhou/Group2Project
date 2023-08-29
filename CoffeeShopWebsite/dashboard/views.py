@@ -175,7 +175,7 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, View):
             if item.isdigit() and quantity.isdigit():
                 if OrderItem.objects.filter(order_id=kwargs["pk"], cafeitem_id=item):
                     messages.error(
-                        request, "Item already exists in the order", "Warning"
+                        request, "Item already exists in the order", "warning"
                     )
                 else:
                     OrderItem.objects.create(
@@ -1106,6 +1106,17 @@ def order_status_report(
                 "datasets": [
                     {
                         "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
                         "data": list(sale_dict.values()),
                     }
                 ],
