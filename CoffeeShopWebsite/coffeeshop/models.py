@@ -202,3 +202,10 @@ class Navbar(models.Model):
 
     def __str__(self):
         return self.navbar_name
+
+
+class Dashboard(models.Model):
+    dashboard_name = models.CharField(max_length=25, unique=True, default="main")
+    short_name = models.CharField(max_length=10, default="G2")
+    cafe_name = models.CharField(max_length=50, default="TEHRAN")
+
