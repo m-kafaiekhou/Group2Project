@@ -14,4 +14,4 @@ def pages_context(request):
 
 
 def navbar_context(request):
-    return {"navbar": Navbar.objects.get(navbar_name="main")}
+    return {"navbars": Navbar.objects.all()}
