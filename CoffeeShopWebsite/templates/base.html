@@ -1,10 +1,12 @@
 {% load static %}
 {% load humanize %}
+{% for page in pages %}
+{% if page.page_name == page_name %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ page.webpage_title }}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Coffee Shop in Tehran Website" name="keywords">
         <meta content="Coffee Shop" name="description">
@@ -25,6 +27,9 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+        <!-- auto complete -->
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
         
         <!-- Django Tags for Cart & Checkout css -->
         {% block style %}
@@ -38,11 +43,11 @@
         <!--================ Header Start ================-->
         <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
             <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-                <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">{% block headername %}{% endblock %}</h1>
+                <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">{{ page.headername }}</h1>
                 <div class="d-inline-flex mb-lg-5">
                     <p class="m-0 text-white"><a class="text-white" href="{% url 'coffeeshop:home' %}">Home</a></p>
                     <p class="m-0 text-white px-2">/</p>
-                    <p class="m-0 text-white">{% block nestname %}{% endblock %}</p>
+                    <p class="m-0 text-white">{{ page.nestname }}</p>
                 </div>
             </div>
         </div>
@@ -57,7 +62,7 @@
                 </div>
                 <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menus:menu_search' %}" method="get">
                     <div class="input-group" style="height: 3rem; width: 100%;">
-                        <input type="text" class="form-control p-4" placeholder="Search..." name="search">
+                        <input type="text" class="form-control p-4" placeholder="Search..." name="search" id="autosearch">
                         <div class="input-group-append">
                             <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
                         </div>
@@ -88,6 +93,8 @@
         <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
         <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
         <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 
         <!-- Contact Javascript File -->
         <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
@@ -98,9 +105,26 @@
 
         <!-- Cookie javascript -->
         <script src="{% static 'cookie.js' %}"></script>
+
+        <!-- Autocomplete -->
+        <script>
+          $( function() {
+            var availableItems = [
+                {% for item in autocomp_cafeitems %}
+                    "{{item.name}}",
+                {% endfor %}
+            ];
+            $("#autosearch").autocomplete({
+              source: availableItems
+            });
+          } );
+        </script>
         
         <!-- Django Tags for Cart & Checkout Scripts -->
         {% block script %}
         {% endblock %}
     </body>
 </html>
+
+{% endif %}
+{% endfor %}

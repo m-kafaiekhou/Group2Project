@@ -12,7 +12,7 @@ class UserAdminConfig(UserAdmin):
     list_display = ('phone_number', 'last_name', 'first_name', 'is_active', 'is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('phone_number', 'last_name', 'first_name',)}),
-        ('Permissions', {'fields': ('is_staff', 'is_active')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),
     )
     # formfield_overrides = {
     #     NewUser.about: {'widget': Textarea(attrs={'rows': 10, 'cols': 40})},
@@ -20,6 +20,9 @@ class UserAdminConfig(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('phone_number', 'last_name', 'first_name', 'password1', 'password2', 'is_active', 'is_staff')}
+            'fields': ('phone_number', 'last_name', 'first_name',
+                       'password1', 'password2', 'is_active',
+                       'is_staff', 'groups', 'user_permissions')
+        }
          ),
     )

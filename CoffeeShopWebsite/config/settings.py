@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+import sys
 
 # Initialise environment variables
 env = environ.Env()
@@ -84,6 +85,10 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "coffeeshop.context_processors.homepage_context",
+                "coffeeshop.context_processors.footer_context",
+                "coffeeshop.context_processors.pages_context",
+                "coffeeshop.context_processors.navbar_context",
+                "coffeeshop.context_processors.autocomplete_context",
             ],
         },
     },
@@ -105,6 +110,14 @@ DATABASES = {
         "PORT": env("DATABASE_PORT"),
     }
 }
+
+if "test" in sys.argv:
+    for db_test in ["default"]:  # Add other DBs if needed
+        DATABASES[db_test]["ENGINE"] = "django.db.backends.sqlite3"
+        if "--keepdb" in sys.argv:
+            DATABASES[db_test]["TEST"]["NAME"] = (
+                "/dev/shm/" + db_test + ".test.db.sqlite3"
+            )
 
 
 # Password validation
@@ -159,7 +172,8 @@ AUTHENTICATION_BACKENDS = [
     "staff.backends.CustomUserBackend",
 ]
 
-LOGIN_REDIRECT_URL = "/admin/"
+LOGIN_REDIRECT_URL = "/dashboard/"
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # DEBUG = False
 ALLOWED_HOSTS = ["*"]

@@ -103,6 +103,12 @@ class HomePage(models.Model):
     search_section_description = models.TextField(default="Search for Drinks")
     search_placeholder = models.CharField(max_length=100, default="Search Here")
 
+    logo_section_is_active = models.BooleanField(default=True)
+    logo_section_title = models.CharField(max_length=25, default="LOGO FUN")
+    logo_section_description = models.TextField(default="Our Beloved Logo")
+    logo_image = models.ImageField(
+        upload_to="home_images", default="home_images/logo.png"
+    )
     about_us_section_is_active = models.BooleanField(default=True)
     about_us_section_title = models.CharField(max_length=25, default="ABOUT US")
     about_us_section_description = models.TextField(default="Serving Since 2023")
@@ -148,6 +154,9 @@ class HomePage(models.Model):
     testimonial_section_title = models.CharField(max_length=25, default="TESTIMONIAL")
     testimonial_section_description = models.TextField(default="Our Clients Say")
 
+    def __str__(self):
+        return self.homepage_name
+
 
 class CarouselItem(models.Model):
     image = models.ImageField(
@@ -175,3 +184,30 @@ class Service(models.Model):
         null=True,
         related_name="services_list",
     )
+
+
+class Page(models.Model):
+    page_name = models.CharField(max_length=25, unique=True)
+    webpage_title = models.CharField(max_length=25)
+    headername = models.CharField(max_length=25)
+    nestname = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.page_name
+
+
+class Navbar(models.Model):
+    navbar_name = models.CharField(max_length=25, unique=True, default="main")
+    cafe_name = models.CharField(max_length=50, default="TEHRAN")
+
+    def __str__(self):
+        return self.navbar_name
+
+
+class Dashboard(models.Model):
+    dashboard_name = models.CharField(max_length=25, unique=True, default="main")
+    short_name = models.CharField(max_length=10, default="G2")
+    cafe_name = models.CharField(max_length=50, default="TEHRAN")
+
+    def __str__(self):
+        return self.dashboard_name

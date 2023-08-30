@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views import View
 from menus.models import CafeItem
 from django.views.generic import ListView, TemplateView
-from .models import Footer
 
 # Create your views here.
 
@@ -21,7 +20,6 @@ class HomePage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["top_rated_items"] = None
-        context["footer"] = Footer.objects.get(footer_name="main")
         return context
 
 
@@ -38,3 +36,9 @@ class GalleryPage(ListView):
     template_name = "coffeeshop/gallery.html"
     model = CafeItem
     context_object_name = "items"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_name"] = "gallery"
+
+        return context

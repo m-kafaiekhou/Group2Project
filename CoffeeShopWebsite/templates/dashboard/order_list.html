@@ -28,7 +28,7 @@
                                         </div>
 
                                     {% endfor %}
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-2">
                                         <div class="selection-widget">
                                             <select class="form-select bg-transparent text-light border-default" data-trigger="true"
                                                     name="orderby"
@@ -40,7 +40,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 mt-1">
                                         <div>
                                             <button type="submit" class="btn btn-primary" href="#"><i
                                                     class="uil uil-filter"></i> Filter
@@ -111,12 +111,9 @@
                             </div>
                             <div class="price p-lg-2 align">
                                 <li class="list-inline-item my-2"><i class="mdi mdi-wallet"></i>
-                                    ${{ item.get_total_price }}
+                                    {{ item.get_total_price }}T
                                 </li>
                                 <li class="list-inline-item my-2">
-                        <span
-                                class="badge bg-success"><i
-                                class="mdi mdi-star"></i>4.8</span>
                                 </li>
                             </div>
                         </div>
@@ -130,7 +127,7 @@
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page=1&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
+                                       href="?page=1&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}&table_number={{ table_number }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">begin</span>
@@ -144,7 +141,7 @@
                                     </li>
                                 {% elif n > page_obj.number|add:'-4' and n < page_obj.number|add:'4' %}
                                     <li class="page-item"><a class="page-link"
-                                                             href="?page={{ n }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}">{{ n }}</a>
+                                                             href="?page={{ n }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}&table_number={{ table_number }}">{{ n }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -152,7 +149,7 @@
                             {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="?page={{ page_obj.paginator.num_pages }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}"
+                                       href="?page={{ page_obj.paginator.num_pages }}&phone_number={{ phone_number }}&order_date={{ order_date }}&status={{ status }}&orderby={{ orderby }}&table_number={{ table_number }}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">end</span>

@@ -20,25 +20,25 @@ def create_session(request, order_id: int, phone_number: int) -> None:
     request.session["phone_number"] = phone_number
 
 
-def access_session(request):
-    """
-    checks if the session exists and then returnes a context containing
-    order_history and last_order.
+# def access_session(request):
+#     """
+#     checks if the session exists and then returnes a context containing
+#     order_history and last_order.
 
-    if it does not exist an empty context will be returned.
-    """
-    if "last_order_id" and "phone_number" in request.session:
-        order_id = request.session.get("last_order_id")
-        last_order = Order.objects.get(pk=order_id)
+#     if it does not exist an empty context will be returned.
+#     """
+#     if "last_order_id" and "phone_number" in request.session:
+#         order_id = request.session.get("last_order_id")
+#         last_order = Order.objects.get(pk=order_id)
 
-        phone_number = request.session.get("phone_number")
-        orders = Order.objects.filter(phone_number=phone_number)
+#         phone_number = request.session.get("phone_number")
+#         orders = Order.objects.filter(phone_number=phone_number)
 
-        context = {"order_history": orders, "last_order": last_order}
-        return render(request, "", context)
-    else:
-        context = {}
-        return render(request, "", context)
+#         context = {"order_history": orders, "last_order": last_order}
+#         return render(request, "", context)
+#     else:
+#         context = {}
+#         return render(request, "", context)
 
 
 def send_otp_code(phone_number, code):

@@ -21,7 +21,7 @@
             aria-controls="offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand text-light" href="#">Staff Panel</a>
+    <a class="navbar-brand text-light" href="#">{{ user.first_name|slice:":1"|upper }}.{{ user.last_name }}</a>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ user.first_name|slice:":1"|upper }}.{{ user.last_name }}</h5>
