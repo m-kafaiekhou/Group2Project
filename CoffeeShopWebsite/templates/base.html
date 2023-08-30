@@ -27,6 +27,9 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+        <!-- auto complete -->
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
         
         <!-- Django Tags for Cart & Checkout css -->
         {% block style %}
@@ -59,7 +62,7 @@
                 </div>
                 <form class="form-inline justify-content-center mb-4 mx-5" action="{% url 'menus:menu_search' %}" method="get">
                     <div class="input-group" style="height: 3rem; width: 100%;">
-                        <input type="text" class="form-control p-4" placeholder="Search..." name="search">
+                        <input type="text" class="form-control p-4" placeholder="Search..." name="search" id="autosearch">
                         <div class="input-group-append">
                             <button class="btn btn-primary font-weight-bold px-4" type="submit">Search</button>
                         </div>
@@ -90,6 +93,8 @@
         <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
         <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
         <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 
         <!-- Contact Javascript File -->
         <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
@@ -100,6 +105,20 @@
 
         <!-- Cookie javascript -->
         <script src="{% static 'cookie.js' %}"></script>
+
+        <!-- Autocomplete -->
+        <script>
+          $( function() {
+            var availableItems = [
+                {% for item in autocomp_cafeitems %}
+                    "{{item.name}}",
+                {% endfor %}
+            ];
+            $("#autosearch").autocomplete({
+              source: availableItems
+            });
+          } );
+        </script>
         
         <!-- Django Tags for Cart & Checkout Scripts -->
         {% block script %}
