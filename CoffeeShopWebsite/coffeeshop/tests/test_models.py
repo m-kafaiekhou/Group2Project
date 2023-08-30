@@ -175,3 +175,21 @@ class PageModelTest(TestCase):
         expected_str = "test page"
         self.assertEqual(str(self.page), expected_str)
 
+
+class NavbarModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.navbar = Navbar.objects.create(
+            navbar_name="test navbar",
+            cafe_name="test cafe",
+        )
+
+    def test_create_navbar(self):
+        self.assertEqual(Navbar.objects.count(), 1)
+        self.assertEqual(self.navbar.navbar_name, "test navbar")
+        self.assertEqual(self.navbar.cafe_name, "test cafe")
+
+    def test_str_method(self):
+        expected_str = "test navbar"
+        self.assertEqual(str(self.navbar), expected_str)
+
