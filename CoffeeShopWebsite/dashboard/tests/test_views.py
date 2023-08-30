@@ -5,6 +5,7 @@ from coffeeshop.models import Footer
 from menus.models import Category, CafeItem
 from staff.models import CustomUserModel
 from orders.models import Order, OrderItem
+from coffeeshop.models import Dashboard
 from datetime import datetime
 import tempfile
 from model_bakery import baker
