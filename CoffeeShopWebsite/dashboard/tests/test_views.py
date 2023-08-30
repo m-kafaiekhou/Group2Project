@@ -1021,98 +1021,116 @@ class DashboardTests(TestCase):
 
     # customer_order_history Does not have a template
 
-    # def test_customer_order_history(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     response = self.client.get(reverse("customer-history"))
-    #     self.assertEqual(response.status_code, 200)
+    def test_customer_order_history(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse("customer-history"))
+        self.assertEqual(response.status_code, 200)
 
-    # def test_customer_order_history_check_template(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     response = self.client.get(reverse("customer-history"))
-    #     self.assertTemplateUsed(response, "")
+    def test_customer_order_history_check_template(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse("customer-history"))
+        self.assertTemplateUsed(response, "dashboard/order_history.html")
 
-    # def test_customer_order_history_data_start_date_smaller(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     start_date = "2023-8-10"
-    #     end_date = "2023-8-20"
-    #     phone = self.order.phone_number
-    #     url = reverse("customer-history")
-    #     data = {'start_date': start_date, 'end_date': end_date, 'phone_number': phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_start_date_smaller(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        start_date = "2023-8-10"
+        end_date = "2023-8-20"
+        phone = self.order.phone_number
+        url = reverse("customer-history")
+        data = {'start_date': start_date, 'end_date': end_date, 'phone_number': phone}
+        response = self.client.get(url, data=data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+            'st_date': start_date,
+            'nd_date': end_date,
+            'phone_number': phone
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [])
 
-    #     expected_data = expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
 
-    # def test_customer_order_history_data_start_date_bigger(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     start_date = "2023-8-10"
-    #     end_date = "2023-8-20"
-    #     phone = self.order.phone_number
-    #     url = reverse("customer-history")
-    #     data = {'start_date': start_date, 'end_date': end_date, 'phone_number': phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_start_date_bigger(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        start_date = "2023-8-10"
+        end_date = "2023-8-20"
+        phone = self.order.phone_number
+        url = reverse("customer-history")
+        data = {'start_date': start_date, 'end_date': end_date, 'phone_number': phone}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+            'st_date': start_date,
+            'nd_date': end_date,
+            'phone_number': phone
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [])
 
-    # def test_customer_order_history_data_start_date_none(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     end_date = "2023-8-20"
-    #     phone = self.order.phone_number
-    #     url = reverse("customer-history")
-    #     data = {'end_date': end_date, 'phone_number': phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_start_date_none(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        end_date = "2023-8-20"
+        phone = self.order.phone_number
+        url = reverse("customer-history")
+        data = {'end_date': end_date, 'phone_number': phone}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [])
 
-    # def test_customer_order_history_data_end_date_none(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     start_date = "2023-8-10"
-    #     phone = self.order.phone_number
-    #     url = reverse("customer-history")
-    #     data = {'start_date': start_date, 'phone_number': phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_end_date_none(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        start_date = "2023-8-10"
+        phone = self.order.phone_number
+        url = reverse("customer-history")
+        data = {'start_date': start_date, 'phone_number': phone}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+            'st_date': start_date,
+            'nd_date': '',
+            'phone_number': phone
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [])
 
-    # def test_customer_order_history_data_date_none(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     phone = self.order.phone_number
-    #     url = reverse("customer-history")
-    #     data = {'phone_number': phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_date_none(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        phone = self.order.phone_number
+        url = reverse("customer-history")
+        data = {'phone_number': phone}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+            'st_date': '',
+            'nd_date': '',
+            'phone_number': phone
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [self.orderitem1, self.orderitem2])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [self.order])
 
-    # def test_customer_order_history_data_all_none(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     url = reverse("customer-history")
-    #     data = {}
-    #     response = self.client.get(url, data=data)
+    def test_customer_order_history_data_all_none(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        url = reverse("customer-history")
+        data = {}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = {
-    #         "customer_orderitem_data":"",
-    #         "customer_order_data":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+            "customer_orderitem_data":"",
+            "customer_order_data":"",
+        }
+        self.assertQuerySetEqual(response.context['customer_orderitem_data'], [])
+        self.assertQuerySetEqual(response.context['customer_order_data'], [])
 
     # -------- Customer Demographic tests -------- #
 
@@ -1124,41 +1142,42 @@ class DashboardTests(TestCase):
 
     # customer_data Does not have a template
 
-    # def test_customer_data(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     response = self.client.get(reverse("customer-data"))
-    #     self.assertEqual(response.status_code, 200)
+    def test_customer_data(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse("customer-data"))
+        self.assertEqual(response.status_code, 200)
 
-    # def test_customer_data_check_template(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     response = self.client.get(reverse("customer-data"))
-    #     self.assertTemplateUsed(response, "")
+    def test_customer_data_check_template(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        response = self.client.get(reverse("customer-data"))
+        self.assertTemplateUsed(response, "dashboard/demographic.html")
 
-    # def test_customer_data_phone_none(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     url = reverse("customer-data")
-    #     data = {}
-    #     response = self.client.get(url, data=data)
+    def test_customer_data_phone_none(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        url = reverse("customer-data")
+        data = {}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = {}
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {}
+        with self.assertRaises(KeyError):
+            response.context['total_money_spent']
 
-    # def test_customer_data(self):
-    #     self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
-    #     phone = self.orderitem1.order.phone_number
-    #     url = reverse("customer-data")
-    #     data = {"phone_number":phone}
-    #     response = self.client.get(url, data=data)
+    def test_customer_data(self):
+        self.client.login(phone_number='09030001122', password='1X<ISRUkw+tuK')
+        phone = self.orderitem1.order.phone_number
+        url = reverse("customer-data")
+        data = {"phone_number":phone}
+        response = self.client.get(url, data=data)
 
-    #     expected_data = {
-    #     "total_money_spent":"",
-    #     "average_money_spent":"",
-    #     "favorite_item":"",
-    #     "favorite_category":"",
-    #     "rank":"",
-    #     "all_attended_days":"",
-    #     }
-    #     self.assertEqual(response.context, expected_data)
+        expected_data = {
+        "total_money_spent":"",
+        "average_money_spent":"",
+        "favorite_item":"",
+        "favorite_category":"",
+        "rank":"",
+        "all_attended_days":"",
+        }
+        self.assertEqual(response.context, expected_data)
 
     def test_number_of_items_bought_connection(self):
         self.client.login(phone_number="09030001122", password="1X<ISRUkw+tuK")

@@ -1138,7 +1138,7 @@ def customer_order_history(request):
     date2 = request.GET.get("end_date", None)
     phone = request.GET.get("phone_number", None)
 
-    if date1 == None and date2 == None:
+    if (date1 == None or date1 == '') and (date2 == None or date2 == ''):
         st_date = None
         nd_date = None
     elif date1 == None:
@@ -1159,7 +1159,7 @@ def customer_order_history(request):
             "customer_orderitem_data": "",
             "customer_order_data": "",
         }
-        return render(request, "", context)
+        return render(request, "dashboard/order_history.html", context)
 
     if st_date and nd_date:
         orders = OrderItem.objects.filter(
@@ -1207,18 +1207,18 @@ def customer_order_history(request):
         )
     elif st_date == None:
         order_data = Order.objects.filter(
-            order_date_date=nd_date,
+            order_date__date=nd_date,
             phone_number=phone,
         )
 
     context = {
-        "customer_orderitem_data": orders,
-        "customer_order_data": order_data,
+        "customer_orderitem_data": orders.distinct(),
+        "customer_order_data": order_data.distinct(),
         'st_date': st_date,
         'nd_date': nd_date,
         'phone_number': phone
     }
-    return render(request, "", context)
+    return render(request, "dashboard/order_history.html", context)
 
 
 # ************************************************* Customer Demographic ************************************************* #
@@ -1259,7 +1259,7 @@ def customer_data(request):
 
     if phone == None:
         context = {}
-        return render(request, "", context)
+        return render(request, "dashboard/demographic.html", context)
 
     orders = OrderItem.objects.filter(order__phone_number=phone)
 
@@ -1333,7 +1333,7 @@ def customer_data(request):
         "all_attended_days": all_attended_days,  # list[dict], obj
     }
 
-    return render(request, "", context)
+    return render(request, "dashboard/demographic.html", context)
 
 
 @permission_required("coffeeshop.view_review")
