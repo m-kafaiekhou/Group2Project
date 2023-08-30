@@ -152,3 +152,26 @@ class HomePageModelTest(TestCase):
     def test_unique_homepage_name(self):
         with self.assertRaises(IntegrityError):
             HomePage.objects.create(homepage_name="test homepage")
+
+
+class PageModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.page = Page.objects.create(
+            page_name="test page",
+            webpage_title="test title",
+            headername="test header",
+            nestname="test nest",
+        )
+
+    def test_create_page(self):
+        self.assertEqual(Page.objects.count(), 1)
+        self.assertEqual(self.page.page_name, "test page")
+        self.assertEqual(self.page.webpage_title, "test title")
+        self.assertEqual(self.page.headername, "test header")
+        self.assertEqual(self.page.nestname, "test nest")
+
+    def test_str_method(self):
+        expected_str = "test page"
+        self.assertEqual(str(self.page), expected_str)
+
