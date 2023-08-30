@@ -1,4 +1,5 @@
 from .models import HomePage, Footer, Page, Navbar
+from menus.models import CafeItem, Category
 
 
 def homepage_context(request):
@@ -15,3 +16,7 @@ def pages_context(request):
 
 def navbar_context(request):
     return {"navbars": Navbar.objects.all()}
+
+
+def autocomplete_context(request):
+    return {"autocomp_cafeitems": CafeItem.objects.all()}
