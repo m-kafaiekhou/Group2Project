@@ -120,5 +120,5 @@ class OrderHistoryView(View):
             request, self.template_name, context={"orders": orders, "form": form}
         )
 
-    def post(self, request, *args, **kwargs):
-        pass
+    # def post(self, request, *args, **kwargs):
+    #     pass
