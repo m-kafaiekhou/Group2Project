@@ -193,3 +193,22 @@ class NavbarModelTest(TestCase):
         expected_str = "test navbar"
         self.assertEqual(str(self.navbar), expected_str)
 
+
+class DashboardModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.dashboard = Dashboard.objects.create(
+            dashboard_name="test dashboard",
+            short_name="test",
+            cafe_name="test cafe",
+        )
+
+    def test_create_dashboard(self):
+        self.assertEqual(Dashboard.objects.count(), 1)
+        self.assertEqual(self.dashboard.dashboard_name, "test dashboard")
+        self.assertEqual(self.dashboard.short_name, "test")
+        self.assertEqual(self.dashboard.cafe_name, "test cafe")
+
+    def test_str_method(self):
+        expected_str = "test dashboard"
+        self.assertEqual(str(self.dashboard), expected_str)
