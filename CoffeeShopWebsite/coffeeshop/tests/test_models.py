@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.db import IntegrityError
-from coffeeshop.models import Review, Footer, HomePage
+
+from coffeeshop.models import Review, Footer, HomePage, Page, Navbar, Dashboard
 from menus.models import CafeItem, Category
+
 import datetime
 
 
