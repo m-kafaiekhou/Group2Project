@@ -37,8 +37,6 @@ class ViewsOrderTests(TestCase):
         expected = {self.cafeitem1: 1, self.cafeitem2: 2}
         self.assertEqual(cart, expected)
         self.assertEqual(total, 70)
-        # self.assertContains(response, self.cafeitem1.name)
-        # self.assertContains(response, self.cafeitem2.name)
 
     def test_cartempty_view(self):
         self.client.cookies = SimpleCookie({"cart": ""})
@@ -52,7 +50,6 @@ class ViewsOrderTests(TestCase):
         self.client.cookies = SimpleCookie({"cart": self.cart})
         response = self.client.get(reverse("orders:checkout"))
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, "70")
 
     def test_checkoutempty_get(self):
         self.client.cookies = SimpleCookie({"cart": ""})
