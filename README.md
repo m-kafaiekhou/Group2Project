@@ -1,4 +1,4 @@
-# 🌟 Coffee Shop RPG ☕ 🌟
+# 🌟 Tehran Coffee Shop RPG ☕ 🌟
 Welcome to our humble coffee shop where we serve the finest coffee and cafe drinks in the world. For our coffee beans we use only the best offerd by coffee farmers around the world. Ladies and Gentlemen please enjoy your day with our special made coffee to your hearts desire. It needs to be said that we work for customer satisfaction and our staff are trained to serve you the best taste with the best manners. Now, The journey begins 🪶>>>
 
 ### Maktab 98 🚀
@@ -11,7 +11,7 @@ Welcome to our humble coffee shop where we serve the finest coffee and cafe drin
 ### Developer: Sevda Hayati                     [GitHub Account](https://github.com/arta16h)
 ### Developer: Mohammad Ali Soltan Hosseini     [GitHub Account](https://github.com/mohammadali127)
 
-## Project Details 💻 👏	
+## Project Details 💻 👏
 This is a Django Fullstack Project and it features a website to order coffee in a coffee shop in tehran city(The Quest city). It uses django version 4.2.3 (The God of Frameworks) to bring all the new features into the code(The Pain and Suffering of Programmers). We used all the knowledge we gained so far (XP Gained) to code a website for the wise manager(The Demon Lord) who tasked us with this group project(Literally the Quest). the project tasks start with a general knowledge over the project structure(Buying Wepons and Healing Potions). As we learned from the details, first we needed to draw an ERD(World Map) then build the base of the project using django frame-work from there we had to choose our site interface template to style the site(Choose the way to procede with your quest). once all of these steps were done we could finaly start the main coding of the app. We bring to you our best, using all we learned from Maktab 98.
 
 
@@ -44,14 +44,18 @@ Since this project uses the django project technology I recommend you to read th
 
     `pip install -r requirements.txt`
 
-this will automatically install all the tools and packages needed for the project, so it could work.(Django will be installed as well)
+this will automatically install all the tools and packages needed for the project, so the project could run.(Django will be installed as well)
 
 > Now you are ready to start browsing this project.
+## Documentation
+
+In order to access the documentation you need to first, go to this path `CoffeeShopWebsite/docs/build/html` and simply open
+the `index.html` file by double clicking or running the html file using **LiveServer** extension for **VsCode**.(There are tools like LiveServer for other IDLE's. for more info -> [GOOGLE](https://www.google.com/))
 
 ## Project Sprints
 With all said and done we now start the SCRUM sprints of our project >>>
 
-### Sprint 1 Start with Basics & Build Design
+### <><><> Sprint 1 Start with Basics & Build Design
 
 #### ERD(Entity Relationship Diagram)
 Everything starts with a good planning, in our case: we programmers need to draw the ERD for our project so we could configure the base build of our database which alows us to build the program upon it. you can see our team effort below. 
@@ -122,7 +126,7 @@ cookies were done but it was done blindly without having any view functions writ
 it works so dont touch it!
 
 
-### Sprint 2 Progressing to the Next Step(fixed what we could from sprint1)
+### <><><> Sprint 2 Progressing to the Next Step(fixed what we could from sprint1)
 
 #### CBV View & template(staff panel)
 Now we just realized that we need to change all our function based views to class based views :|
@@ -167,7 +171,7 @@ There were Some big problems. first our template was not very good so we had to 
 
 > All Done
 
-### Sprint 3 Website has More Details and its Only one Sprint Away from Completion
+### <><><> Sprint 3 Website has More Details and its Only one Sprint Away from Completion
 
 #### Dashboard page for staff panel(template)
 We didn't have a staff panel dashboard before. so the solution was to find a free template on line which was a good choice since it was so beautiful. A good choice for all of our charts.
@@ -175,6 +179,9 @@ Dashboard template: Black-Dashboard by Creative Tim
 
 <img width="100%" src="dashboard.png">
 
+
+** Since dashboard is apart from the main site where customers order coffee it is located in dashboard url 
+in order to access the dashboard simply add /dashboard to the end of localhost adress. example:`127.0.0.1:8000/dashboard` **
 
 #### Admin Panel Customize
 This was one of the main tasks we had. its about changing the colors and ordering of models in admin page, plus adding filters and stuff like that. Which was done very well.
@@ -210,7 +217,7 @@ Responsive means, that if the size of display changes the website should still b
 
 > These fixes were done
 
-### Sprint 3 The Final Steps and Finishing Touches
+### <><><> Sprint 4 The Final Steps and Finishing Touches
 
 #### Customer Behavior
 This is all about analizing the customer behavior data to then use it with charts.
@@ -282,13 +289,13 @@ This is normally done by installing the sphinx python-django package so that it 
 
 Then make a directory in the project root named `docs`. cd to this directory and then use this command to start sphinx process.
 
-    `quickstart sphinx`
+    `sphinx-quickstart`
 
 this will then make some files in the `docs directory`. these files are used for project documentation. the main file that we need to use is `index.rst` which is the main file that holdes the documentation of the project. you can add more detail to this file and when you are done, you can use this command:
 
     `make html`
 
 to make a html file from your documentation.
-the next steps are to make a documentation repository for your repo and getting your documentation on read the docs which its tuturial can be accessed from [Here.](https://docs.readthedocs.io/en/stable/tutorial/index.html) 
+the next steps are to make a documentation repository for your repo and getting your documentation on read the docs which its tuturial can be accessed from [Here](https://docs.readthedocs.io/en/stable/tutorial/index.html).
 
 The End
