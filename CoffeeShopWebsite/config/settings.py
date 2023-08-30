@@ -88,6 +88,7 @@ TEMPLATES = [
                 "coffeeshop.context_processors.footer_context",
                 "coffeeshop.context_processors.pages_context",
                 "coffeeshop.context_processors.navbar_context",
+                "coffeeshop.context_processors.autocomplete_context",
             ],
         },
     },
