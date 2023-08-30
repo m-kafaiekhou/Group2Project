@@ -22,6 +22,7 @@ django-widget-tweaks==1.4.12
 docutils==0.19
 environ==1.0
 frozenlist==1.4.0
+gunicorn==21.2.0
 idna==3.4
 imagesize==1.4.1
 isodate==0.6.1
