@@ -19,6 +19,7 @@ class DashboardTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.footer = Footer.objects.create()
+        cls.dashboard = Dashboard.objects.create()
 
         cls.user = CustomUserModel.objects.create_superuser(
             phone_number='09030001122',
