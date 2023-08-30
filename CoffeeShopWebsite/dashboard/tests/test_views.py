@@ -882,11 +882,24 @@ class DashboardTests(TestCase):
             "title": f"Order Status Count between {start_date} and {end_date}",
             "data": {
                 "labels": [],
-                "datasets": [{
-                    "label": "Amount (T)",
-                    "data": [],
-                }]
-            }
+                "datasets": [
+                    {
+                        "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
+                        "data": [],
+                    }
+                ],
+            },
         }
         self.assertEqual(response.json(), expected_data)
 
@@ -903,11 +916,19 @@ class DashboardTests(TestCase):
             "title": f"Order Status Count between {start_date} and {end_date}",
             "data": {
                 "labels": [],
-                "datasets": [{
-                    "label": "Amount (T)",
-                    "data": [],
-                }]
-            }
+                        "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
+                        "data": [],
         }
         self.assertEqual(response.json(), expected_data)
 
@@ -923,11 +944,19 @@ class DashboardTests(TestCase):
             "title": f"Order Status Count between {None} and {end_date}",
             "data": {
                 "labels": [],
-                "datasets": [{
-                    "label": "Amount (T)",
-                    "data": [],
-                }]
-            }
+                        "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
+                        "data": [],
         }
         self.assertEqual(response.json(), expected_data)
 
@@ -943,11 +972,19 @@ class DashboardTests(TestCase):
             "title": f"Order Status Count between {start_date} and {None}",
             "data": {
                 "labels": [],
-                "datasets": [{
-                    "label": "Amount (T)",
-                    "data": [],
-                }]
-            }
+                        "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
+                        "data": [],
         }
         self.assertEqual(response.json(), expected_data)
 
@@ -963,11 +1000,19 @@ class DashboardTests(TestCase):
             "title": f"Order Status Count between {None} and {None}",
             "data": {
                 "labels": ["C"],
-                "datasets": [{
-                    "label": "Amount (T)",
-                    "data": [1],
-                }]
-            }
+                        "label": "Amount (T)",
+                        "borderColor": "#d048b6",
+                        "borderWidth": 2,
+                        "borderDash": [],
+                        "borderDashOffset": 0.0,
+                        "pointBackgroundColor": "#d048b6",
+                        "pointBorderColor": "rgba(255,255,255,0)",
+                        "pointHoverBackgroundColor": "#d048b6",
+                        "pointBorderWidth": 20,
+                        "pointHoverRadius": 4,
+                        "pointHoverBorderWidth": 15,
+                        "pointRadius": 4,
+                        "data": [1],
         }
         self.assertEqual(response.json(), expected_data)
 
