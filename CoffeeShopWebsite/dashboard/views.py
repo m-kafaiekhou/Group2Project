@@ -1214,6 +1214,9 @@ def customer_order_history(request):
     context = {
         "customer_orderitem_data": orders,
         "customer_order_data": order_data,
+        'st_date': st_date,
+        'nd_date': nd_date,
+        'phone_number': phone
     }
     return render(request, "", context)
 
