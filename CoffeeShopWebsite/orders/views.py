@@ -117,7 +117,9 @@ class OrderHistoryView(View):
             form = None
 
         return render(
-            request, self.template_name, context={"orders": orders, "form": form}
+            request,
+            self.template_name,
+            context={"orders": orders, "form": form, "page_name": "order history"},
         )
 
     # def post(self, request, *args, **kwargs):
