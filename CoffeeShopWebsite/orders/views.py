@@ -65,7 +65,7 @@ class CheckoutView(View):
             return render(
                 request,
                 self.template_name,
-                context={"items": cart, "total": total},
+                context={"items": cart, "total": total, "page_name": "checkout"},
             )
         else:
             return redirect(self.fail_redirect_url)
