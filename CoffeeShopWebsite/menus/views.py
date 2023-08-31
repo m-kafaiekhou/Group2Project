@@ -40,6 +40,12 @@ class MenuSearch(ListView):
             )
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_name"] = "search"
+
+        return context
+
 
 """class Menu(View):
     def get(self, request, *args, **kwargs):
