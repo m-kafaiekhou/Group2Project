@@ -28,7 +28,7 @@ class LoginUserView(View):
             if phone_form.is_valid():
                 phone_number = phone_form.cleaned_data["phone_number"]
                 set_otp(request, phone_number)
-            context = {"form1": phone_form, "form2": self.form2}
+            context = {"form1": phone_form, "form2": self.form2, "page_name": "login"}
             return render(request, self.template_name, context=context)
 
         if "form2_submit" in request.POST:
