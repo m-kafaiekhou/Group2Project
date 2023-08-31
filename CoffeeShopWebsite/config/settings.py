@@ -104,11 +104,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DATABASE_NAME"),
-        "USER": env("DATABASE_USER"),
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
+        "NAME": 'neondb',
+        "USER": 'm.kafaiekhou',
+        "PASSWORD": 'VUG74XItSxiw',
+        "HOST": 'ep-round-dream-23233303.eu-central-1.aws.neon.tech',
+        "PORT": '5432',
     }
 }
 
