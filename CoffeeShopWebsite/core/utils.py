@@ -47,8 +47,8 @@ def send_otp_code(phone_number, code):
     print(f"{phone_number}: {code}")
     print("*" * 120)
 
-    username = '09036018172'
-    password = '@!504'
+    username = env("OTP_USERNAME")
+    password = env("OTP_PASSWORD")
     api = Api(username, password)
     sms = api.sms()
     to = phone_number
