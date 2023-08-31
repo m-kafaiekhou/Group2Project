@@ -8,13 +8,18 @@ from core.utils import set_otp
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 
+
 class LoginUserView(View):
     template_name = "registration/login.html"
     form1 = PhoneNumberForm
     form2 = OtpForm
 
     def get(self, request, *args, **kwargs):
-        context = {"form1": self.form1, "form2": self.form2}
+        context = {
+            "form1": self.form1,
+            "form2": self.form2,
+            "page_name": "login",
+        }
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
@@ -45,9 +50,7 @@ class LoginUserView(View):
             return render(request, self.template_name, context=context)
 
 
-
-
-'''class LoginUserView(FormView):
+"""class LoginUserView(FormView):
     template_name = "registration/login.html"
     form_class1 = PhoneNumberForm
     form_class2 = OtpForm
@@ -75,25 +78,25 @@ class LoginUserView(View):
                 messages.success(self.request, "You logged in successfully!", "success")
                 return super().form_valid(form)
             messages.error(self.request, "Phone number or registration code is wrong!", "warning")
-        return self.render_to_response(self.get_context_data(form=form))'''
+        return self.render_to_response(self.get_context_data(form=form))"""
 
-    # def post(self, request, *args, **kwargs):
-    #     print(request.POST)
-    #     form = CustomAuthenticationForm(request.POST)
-    #     try:
-    #         if form.is_valid():
-    #             CUB = CustomUserBackend()
-    #             user = CUB.authenticate(
-    #                 request,
-    #                 phone_number=form.cleaned_data["phone_number"],
-    #                 password=form.cleaned_data["password"],
-    #             )
-    #             if user:
-    #                 set_otp(request, user.phone_number)
-    #                 return redirect("code_entry")
-    #         else:
-    #             messages.error(request, "Wrong Credentials!!")
-    #             return render(request, self.template_name, context={"form": form})
-    #     except:
-    #         messages.error(request, "Please enter email and password for login!")
-    #         return redirect("login")
+# def post(self, request, *args, **kwargs):
+#     print(request.POST)
+#     form = CustomAuthenticationForm(request.POST)
+#     try:
+#         if form.is_valid():
+#             CUB = CustomUserBackend()
+#             user = CUB.authenticate(
+#                 request,
+#                 phone_number=form.cleaned_data["phone_number"],
+#                 password=form.cleaned_data["password"],
+#             )
+#             if user:
+#                 set_otp(request, user.phone_number)
+#                 return redirect("code_entry")
+#         else:
+#             messages.error(request, "Wrong Credentials!!")
+#             return render(request, self.template_name, context={"form": form})
+#     except:
+#         messages.error(request, "Please enter email and password for login!")
+#         return redirect("login")
