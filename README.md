@@ -95,7 +95,7 @@ The first build of models in the project are done. using django models module, t
 The Basic layout of the site templates was created in this step(django tags & starting templates).
 
 #### Authentication
-A very tricky and chalenging step in the first sprint of the project but it was done with Style and Elegance. The custome authentication had to be done using phone number. At first it was thought that we need a complete backend for User in this project but then we realized that it wasn't the case, We only needed to customize the username to phone-number.
+A very tricky and challenging step in the first sprint of the project but it was done with Style and Elegance. The custome authentication had to be done using phone number. At first it was thought that we need a complete backend for User in this project but then we realized that it wasn't the case, We only needed to customize the username to phone-number.
 
 #### OTP(One Time Password)
 In the process of the project a problem was surfaced, which was the security of the user accounts and trust issues of the project. So it was decided to implant an OTP system to solve this problem. This system sends a 4-digit one time password to the user which then, the user can use to authenticate into website. but since it was too dificult for our first sprint we kept it for the next one.
